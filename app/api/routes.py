@@ -1,6 +1,9 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends, Request
 from app.services.scoring import calculate_score
 from app.services.stress import calculate_stress
+from app.core.security import verify_founder_key
+from app.core.rate_limit import check_rate_limit
+from app.core.config import get_public_routes, get_protected_routes, get_rate_limit_per_minute
 
 router = APIRouter()
 
@@ -27,7 +30,61 @@ def version():
         "stress_model": "zentra_stress_v1_phase1"
     }
 
-@router.get("/founder/status")
+@router.get("/score")
+def score_get(
+    request: Request,
+    amount: float = 0,
+    payment_delay_days: int = 0,
+    sector: str = "",
+    customer_score: float = 0,
+    exposure_ratio: float = 0,
+):
+    rl = check_rate_limit(request)
+
+    data = {
+        "amount": amount,
+        "payment_delay_days": payment_delay_days,
+        "sector": sector,
+        "customer_score": customer_score,
+        "exposure_ratio": exposure_ratio,
+    }
+
+    result = calculate_score(data)
+    result["control"] = {
+        "rate_limit_checked": True,
+        "client_ip": rl["client_ip"],
+        "limit_per_minute": rl["limit_per_minute"]
+    }
+    return result
+
+@router.get("/stress")
+def stress_get(
+    request: Request,
+    amount: float = 0,
+    payment_delay_days: int = 0,
+    sector: str = "",
+    customer_score: float = 0,
+    exposure_ratio: float = 0,
+):
+    rl = check_rate_limit(request)
+
+    data = {
+        "amount": amount,
+        "payment_delay_days": payment_delay_days,
+        "sector": sector,
+        "customer_score": customer_score,
+        "exposure_ratio": exposure_ratio,
+    }
+
+    result = calculate_stress(data)
+    result["control"] = {
+        "rate_limit_checked": True,
+        "client_ip": rl["client_ip"],
+        "limit_per_minute": rl["limit_per_minute"]
+    }
+    return result
+
+@router.get("/founder/status", dependencies=[Depends(verify_founder_key)])
 def founder_status():
     return {
         "system": "online",
@@ -40,42 +97,28 @@ def founder_status():
             "/version",
             "/score",
             "/stress",
-            "/founder/status"
+            "/founder/status",
+            "/founder/config",
+            "/founder/healthcheck"
         ],
         "score_model": "zentra_v1_phase1",
-        "stress_model": "zentra_stress_v1_phase1"
+        "stress_model": "zentra_stress_v1_phase1",
+        "control_layer": "active"
     }
 
-@router.get("/score")
-def score_get(
-    amount: float = 0,
-    payment_delay_days: int = 0,
-    sector: str = "",
-    customer_score: float = 0,
-    exposure_ratio: float = 0,
-):
-    data = {
-        "amount": amount,
-        "payment_delay_days": payment_delay_days,
-        "sector": sector,
-        "customer_score": customer_score,
-        "exposure_ratio": exposure_ratio,
+@router.get("/founder/config", dependencies=[Depends(verify_founder_key)])
+def founder_config():
+    return {
+        "public_routes": get_public_routes(),
+        "protected_routes": get_protected_routes(),
+        "rate_limit_per_minute": get_rate_limit_per_minute(),
+        "auth_mode": "x-api-key"
     }
-    return calculate_score(data)
 
-@router.get("/stress")
-def stress_get(
-    amount: float = 0,
-    payment_delay_days: int = 0,
-    sector: str = "",
-    customer_score: float = 0,
-    exposure_ratio: float = 0,
-):
-    data = {
-        "amount": amount,
-        "payment_delay_days": payment_delay_days,
-        "sector": sector,
-        "customer_score": customer_score,
-        "exposure_ratio": exposure_ratio,
+@router.get("/founder/healthcheck", dependencies=[Depends(verify_founder_key)])
+def founder_healthcheck():
+    return {
+        "founder_access": "ok",
+        "system": "zentra-core",
+        "control_layer": "ok"
     }
-    return calculate_stress(data)
