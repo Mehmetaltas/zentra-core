@@ -8,6 +8,18 @@ router = APIRouter()
 def health():
     return {"status": "ok"}
 
+@router.get("/")
+def api_root():
+    return {"api": "ZENTRA CORE ROUTES ACTIVE"}
+
+@router.get("/version")
+def version():
+    return {
+        "name": "zentra-core",
+        "version": "0.1.0",
+        "model": "zentra_v1"
+    }
+
 @router.get("/score")
 def score_get(
     amount: float = 0,
