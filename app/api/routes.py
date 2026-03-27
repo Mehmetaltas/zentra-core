@@ -1,6 +1,5 @@
 from fastapi import APIRouter
 from app.services.scoring import calculate_score
-from app.models.risk import RiskInput
 
 router = APIRouter()
 
@@ -21,7 +20,7 @@ def version():
     }
 
 @router.get("/score")
-def score_get(
+def score(
     amount: float = 0,
     payment_delay_days: int = 0,
     sector: str = "",
@@ -36,7 +35,3 @@ def score_get(
         "exposure_ratio": exposure_ratio,
     }
     return calculate_score(data)
-
-@router.post("/score")
-def score_post(data: RiskInput):
-    return calculate_score(data.dict())
