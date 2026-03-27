@@ -8,7 +8,6 @@ app.add_middleware(
     CORSMiddleware,
     allow_origins=[
         "https://mehmetaltas.github.io",
-        "https://mehmetaltas.github.io/zentra-v2",
         "https://zentrarisk.com",
         "https://www.zentrarisk.com",
     ],
@@ -22,4 +21,3 @@ app.include_router(router)
 @app.get("/")
 def root():
     return {"system": "ZENTRA ACTIVE"}
-
