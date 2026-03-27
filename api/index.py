@@ -1,43 +1,44 @@
-from fastapi import FastAPI, Request
-from fastapi.middleware.cors import CORSMiddleware
-from app.api.routes import router
-import uuid
-import time
+from fastapi import FastAPI
+import requests
 
-app = FastAPI(title="ZENTRA CORE SYSTEM")
+app = FastAPI()
 
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=[
-        "https://mehmetaltas.github.io",
-        "https://zentrarisk.com",
-        "https://www.zentrarisk.com",
-    ],
-    allow_credentials=False,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
+def get_global():
+    try:
+        fx = requests.get("https://api.exchangerate.host/latest?base=USD&symbols=TRY").json()
+        usdtry = fx["rates"]["TRY"]
+    except:
+        usdtry = 30
 
-@app.middleware("http")
-async def request_context_middleware(request: Request, call_next):
-    request_id = str(uuid.uuid4())
-    started_at = time.time()
+    return {
+        "usdtry": usdtry,
+        "oil": 80,
+        "gold": 1900
+    }
 
-    response = await call_next(request)
+def calculate_risk(delay, score, exp, global_data):
+    risk = delay*1.5 + exp*50 + (100-score)
 
-    duration_ms = round((time.time() - started_at) * 1000, 2)
+    if global_data["usdtry"] > 30:
+        risk += 10
 
-    response.headers["X-Request-Id"] = request_id
-    response.headers["X-Response-Time-Ms"] = str(duration_ms)
+    return max(0, min(100, risk))
 
-    return response
+def decision(risk):
+    if risk < 40:
+        return "Proceed"
+    elif risk < 70:
+        return "Monitor"
+    else:
+        return "Restrict"
 
-app.include_router(router)
+@app.get("/engine/run")
+def run(delay: float, score: float, exp: float):
+    global_data = get_global()
+    risk = calculate_risk(delay, score, exp, global_data)
 
-@app.get("/")
-def root():
-    return {"system": "ZENTRA ACTIVE"}
-
-@app.options("/{full_path:path}")
-async def options_handler(full_path: str):
-    return {}
+    return {
+        "risk": risk,
+        "decision": decision(risk),
+        "global": global_data
+    }
