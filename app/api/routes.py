@@ -1,6 +1,7 @@
 from fastapi import APIRouter, Depends, Request
 from app.services.scoring import calculate_score
 from app.services.stress import calculate_stress
+from app.services.lens import get_lens_catalog, get_lens_detail
 from app.core.security import verify_founder_key
 from app.core.rate_limit import check_rate_limit
 from app.core.config import get_public_routes, get_protected_routes, get_rate_limit_per_minute
@@ -109,6 +110,18 @@ def stress_get(
 
     return result
 
+@router.get("/lens/list")
+def lens_list():
+    return {
+        "phase": "phase1",
+        "lens_count": 5,
+        "lenses": get_lens_catalog()
+    }
+
+@router.get("/lens/{lens_id}")
+def lens_detail(lens_id: str):
+    return get_lens_detail(lens_id)
+
 @router.get("/founder/status", dependencies=[Depends(verify_founder_key)])
 def founder_status():
     return {
@@ -122,6 +135,8 @@ def founder_status():
             "/version",
             "/score",
             "/stress",
+            "/lens/list",
+            "/lens/{lens_id}",
             "/founder/status",
             "/founder/config",
             "/founder/healthcheck",
@@ -130,19 +145,23 @@ def founder_status():
         ],
         "score_model": "zentra_v1_phase1",
         "stress_model": "zentra_stress_v1_phase1",
-        "control_layer": "active"
+        "control_layer": "active",
+        "lens_layer": "active_skeleton"
     }
 
 @router.get("/founder/config", dependencies=[Depends(verify_founder_key)])
 def founder_config():
     return {
-        "public_routes": get_public_routes(),
+        "public_routes": get_public_routes() + [
+            "/lens/list",
+            "/lens/{lens_id}"
+        ],
         "protected_routes": get_protected_routes() + [
             "/founder/usage/summary",
             "/founder/usage/recent"
         ],
         "rate_limit_per_minute": get_rate_limit_per_minute(),
-        "auth_mode": "x-api-key"
+        "auth_mode": "x-api-key-or-query-api_key"
     }
 
 @router.get("/founder/healthcheck", dependencies=[Depends(verify_founder_key)])
@@ -150,7 +169,8 @@ def founder_healthcheck():
     return {
         "founder_access": "ok",
         "system": "zentra-core",
-        "control_layer": "ok"
+        "control_layer": "ok",
+        "lens_layer": "ok"
     }
 
 @router.get("/founder/usage/summary", dependencies=[Depends(verify_founder_key)])
