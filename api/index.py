@@ -37,3 +37,7 @@ app.include_router(router)
 @app.get("/")
 def root():
     return {"system": "ZENTRA ACTIVE"}
+
+@app.options("/{full_path:path}")
+async def options_handler(full_path: str):
+    return {}
