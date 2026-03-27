@@ -1,19 +1,12 @@
 [project]
-name =
-"zentra-core"
-version =
-"0.1.0"
-requires-python =
-">=3.12"
+name = "zentra-core"
+version = "0.1.0"
+requires-python = ">=3.12"
 dependencies = [
- 
-"fastapi==0.110.0",
-
-"uvicorn==0.29.0",
- 
-"pydantic>=1.10.20,<2",
- 
-"starlette<0.37"
+  "fastapi==0.110.0",
+  "uvicorn==0.29.0",
+  "pydantic>=1.10.20,<2",
+  "starlette<0.37"
 ]
 
 [project.scripts]
