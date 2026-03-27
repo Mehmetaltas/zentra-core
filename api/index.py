@@ -89,3 +89,14 @@ def engine_run(delay: float, score: float, exp: float):
         "decision": decision,
         "global": global_data
     }
+@app.get("/engine/run")
+def engine_run(delay: float, score: float, exp: float):
+    global_data = get_global_data()
+    risk = calculate_risk(delay, score, exp, global_data)
+    decision = make_decision(risk)
+
+    return {
+        "risk": round(risk, 2),
+        "decision": decision,
+        "global": global_data
+    }
