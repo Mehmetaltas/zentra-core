@@ -542,6 +542,7 @@ def stress(
     decision = build_stress_decision(final_score, macro_pressure, sector, deviation)
 
     return {
+<<<<<<< HEAD
         "base_stress_score": base_score,
         "macro_adjustment": macro_adj,
         "macro_adjusted_stress_score": round(macro_score, 2),
@@ -562,4 +563,162 @@ def stress(
         },
         "decision": decision,
         "control": rl
+=======
+        "phase": "phase1",
+        "lens_count": 5,
+        "lenses": get_lens_catalog()
     }
+
+@router.get("/lens/{lens_id}")
+def lens_detail(lens_id: str):
+    return get_lens_detail(lens_id)
+
+@router.get("/founder/status", dependencies=[Depends(verify_founder_key)])
+def founder_status():
+    return {
+        "system": "online",
+        "phase": "phase1",
+        "public_frontend": "zentra-v2",
+        "core_backend": "zentra-core",
+        "active_endpoints": [
+            "/",
+            "/health",
+            "/version",
+            "/score",
+            "/stress",
+            "/lens/list",
+            "/lens/{lens_id}",
+            "/founder/status",
+            "/founder/config",
+            "/founder/healthcheck",
+            "/founder/usage/summary",
+            "/founder/usage/recent"
+        ],
+        "score_model": "zentra_v1_phase1",
+        "stress_model": "zentra_stress_v1_phase1",
+        "control_layer": "active",
+        "lens_layer": "active_skeleton"
+    }
+
+@router.get("/founder/config", dependencies=[Depends(verify_founder_key)])
+def founder_config():
+    return {
+        "public_routes": get_public_routes() + [
+            "/lens/list",
+            "/lens/{lens_id}"
+        ],
+        "protected_routes": get_protected_routes() + [
+            "/founder/usage/summary",
+            "/founder/usage/recent"
+        ],
+        "rate_limit_per_minute": get_rate_limit_per_minute(),
+        "auth_mode": "x-api-key-or-query-api_key"
+    }
+
+@router.get("/founder/healthcheck", dependencies=[Depends(verify_founder_key)])
+def founder_healthcheck():
+    return {
+        "founder_access": "ok",
+        "system": "zentra-core",
+        "control_layer": "ok",
+        "lens_layer": "ok"
+    }
+
+@router.get("/founder/usage/summary", dependencies=[Depends(verify_founder_key)])
+def founder_usage_summary():
+    return get_usage_summary()
+
+@router.get("/founder/usage/recent", dependencies=[Depends(verify_founder_key)])
+def founder_usage_recent(limit: int = 20):# FINAL WORDING ALIGNMENT
+    if action == "Restrict":
+        if "monitoring zone" in rationale:
+            rationale = rationale.replace("monitoring zone", "restrictive zone")
+        if not rationale.startswith("Stress score entered the restrictive zone."):
+            rationale = "Stress score entered the restrictive zone. " + rationale
+        if not alert.startswith("High scenario pressure"):
+            alert = "High scenario pressure / " + alert
+
+    elif action == "Monitor":
+        if "restrictive zone" in rationale:
+            rationale = rationale.replace("restrictive zone", "monitoring zone")
+        if not rationale.startswith("Stress score entered the monitoring zone."):
+            rationale = "Stress score entered the monitoring zone. " + rationale
+        if not (alert.startswith("Moderate scenario pressure") or alert.startswith("Scenario set stable")):
+            alert = "Moderate scenario pressure / " + alert
+
+    else:
+        if not rationale.startswith("Stress remains within acceptable range."):
+            rationale = "Stress remains within acceptable range. " + rationale
+        if not alert.startswith("Low scenario pressure"):
+            alert = "Low scenario pressure / " + alert# FINAL WORDING ALIGNMENT
+    if action == "Restrict":
+        if "monitoring zone" in rationale:
+            rationale = rationale.replace("monitoring zone", "restrictive zone")
+        if not rationale.startswith("Final risk score entered the restrictive zone."):
+            rationale = "Final risk score entered the restrictive zone. " + rationale
+        if not alert.startswith("High risk context"):
+            alert = "High risk context / " + alert
+
+    elif action == "Monitor":
+        if "restrictive zone" in rationale:
+            rationale = rationale.replace("restrictive zone", "monitoring zone")
+        if not rationale.startswith("Final risk score entered the monitoring zone."):
+            rationale = "Final risk score entered the monitoring zone. " + rationale
+        if not (alert.startswith("Moderate risk context") or alert.startswith("Emerging pressure")):
+            alert = "Moderate risk context / " + alert
+
+    else:
+        if not rationale.startswith("Final risk score remains within acceptable range."):
+            rationale = "Final risk score remains within acceptable range. " + rationale
+        if not alert.startswith("Low risk context"):
+            alert = "Low risk context / " + alert
+    return {
+        "limit": limit,
+        "events": get_recent_usage(limit=limit)
+>>>>>>> ce98618 (fix decision wording alignment)
+    }
+# FINAL WORDING ALIGNMENT
+    if action == "Restrict":
+        if "monitoring zone" in rationale:
+            rationale = rationale.replace("monitoring zone", "restrictive zone")
+        if not rationale.startswith("Stress score entered the restrictive zone."):
+            rationale = "Stress score entered the restrictive zone. " + rationale
+        if not alert.startswith("High scenario pressure"):
+            alert = "High scenario pressure / " + alert
+
+    elif action == "Monitor":
+        if "restrictive zone" in rationale:
+            rationale = rationale.replace("restrictive zone", "monitoring zone")
+        if not rationale.startswith("Stress score entered the monitoring zone."):
+            rationale = "Stress score entered the monitoring zone. " + rationale
+        if not (alert.startswith("Moderate scenario pressure") or alert.startswith("Scenario set stable")):
+            alert = "Moderate scenario pressure / " + alert
+
+    else:
+        if not rationale.startswith("Stress remains within acceptable range."):
+            rationale = "Stress remains within acceptable range. " + rationale
+        if not alert.startswith("Low scenario pressure"):
+            alert = "Low scenario pressure / " + alert
+# FINAL WORDING ALIGNMENT
+    if action == "Restrict":
+        if "monitoring zone" in rationale:
+            rationale = rationale.replace("monitoring zone", "restrictive zone")
+        if not rationale.startswith("Stress score entered the restrictive zone."):
+            rationale = "Stress score entered the restrictive zone. " + rationale
+        if not alert.startswith("High scenario pressure"):
+            alert = "High scenario pressure / " + alert
+
+    elif action == "Monitor":
+        if "restrictive zone" in rationale:
+            rationale = rationale.replace("restrictive zone", "monitoring zone")
+        if not rationale.startswith("Stress score entered the monitoring zone."):
+            rationale = "Stress score entered the monitoring zone. " + rationale
+        if not (alert.startswith("Moderate scenario pressure") or alert.startswith("Scenario set stable")):
+            alert = "Moderate scenario pressure / " + alert
+
+    else:
+        if not rationale.startswith("Stress remains within acceptable range."):
+            rationale = "Stress remains within acceptable range. " + rationale
+        if not alert.startswith("Low scenario pressure"):
+            alert = "Low scenario pressure / " + alert
++
