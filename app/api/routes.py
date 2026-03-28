@@ -196,6 +196,112 @@ def attach_lens_global_context(lens_data: dict, market: dict):
 
 
 # ---------------------------
+# DEVIATION LAYER (Phase 4 Foundation)
+# ---------------------------
+
+def safe_ratio(actual: float, planned: float):
+    if planned == 0:
+        return None
+    return round((actual - planned) / planned, 6)
+
+
+def classify_impact_from_ratio(ratio):
+    if ratio is None:
+        return "unknown"
+    ar = abs(ratio)
+    if ar < 0.05:
+        return "low"
+    if ar < 0.15:
+        return "moderate"
+    return "high"
+
+
+def metric_direction(actual: float, planned: float, preferred: str):
+    if actual == planned:
+        return "neutral"
+
+    if preferred == "lower":
+        return "adverse" if actual > planned else "favorable"
+
+    if preferred == "higher":
+        return "adverse" if actual < planned else "favorable"
+
+    return "neutral"
+
+
+def build_metric_deviation(name: str, planned, actual, preferred: str):
+    if planned is None:
+        return None
+
+    planned_f = float(planned)
+    actual_f = float(actual)
+    absolute_deviation = round(actual_f - planned_f, 6)
+    deviation_ratio = safe_ratio(actual_f, planned_f)
+    impact_level = classify_impact_from_ratio(deviation_ratio)
+    direction = metric_direction(actual_f, planned_f, preferred)
+
+    return {
+        "metric": name,
+        "planned": planned_f,
+        "actual": actual_f,
+        "absolute_deviation": absolute_deviation,
+        "deviation_ratio": deviation_ratio,
+        "direction": direction,
+        "impact_level": impact_level
+    }
+
+
+def aggregate_deviation_context(
+    planned_amount,
+    planned_payment_delay_days,
+    planned_customer_score,
+    planned_exposure_ratio,
+    amount,
+    payment_delay_days,
+    customer_score,
+    exposure_ratio
+):
+    metrics = []
+
+    amount_dev = build_metric_deviation("amount", planned_amount, amount, "neutral")
+    delay_dev = build_metric_deviation("payment_delay_days", planned_payment_delay_days, payment_delay_days, "lower")
+    customer_dev = build_metric_deviation("customer_score", planned_customer_score, customer_score, "higher")
+    exposure_dev = build_metric_deviation("exposure_ratio", planned_exposure_ratio, exposure_ratio, "lower")
+
+    for item in [amount_dev, delay_dev, customer_dev, exposure_dev]:
+        if item is not None:
+            metrics.append(item)
+
+    adverse_metrics = [m for m in metrics if m["direction"] == "adverse"]
+
+    overall_level = "none"
+    if adverse_metrics:
+        if any(m["impact_level"] == "high" for m in adverse_metrics):
+            overall_level = "high"
+        elif any(m["impact_level"] == "moderate" for m in adverse_metrics):
+            overall_level = "moderate"
+        else:
+            overall_level = "low"
+
+    reasons = [f'{m["metric"]}_{m["direction"]}_{m["impact_level"]}' for m in adverse_metrics]
+
+    risk_adjustment = 0
+    if overall_level == "high":
+        risk_adjustment = 10
+    elif overall_level == "moderate":
+        risk_adjustment = 5
+    elif overall_level == "low":
+        risk_adjustment = 2
+
+    return {
+        "metrics": metrics,
+        "overall_level": overall_level,
+        "reasons": reasons,
+        "risk_adjustment": risk_adjustment
+    }
+
+
+# ---------------------------
 # PHASE 3 DECISION LAYER
 # ---------------------------
 
@@ -213,7 +319,7 @@ def normalize_sector_to_lens(sector: str):
     return "sme"
 
 
-def build_decision(risk_score: float, pressure: dict, sector: str):
+def build_decision(risk_score: float, pressure: dict, sector: str, deviation_context: dict = None):
     lens = normalize_sector_to_lens(sector)
     level = pressure.get("level", "stable")
 
@@ -252,6 +358,27 @@ def build_decision(risk_score: float, pressure: dict, sector: str):
         strategy = "Proceed with caution and keep exposure under review"
         alert = "Moderate macro pressure"
         rationale = "Base risk remains manageable but macro context adds caution"
+
+    if deviation_context:
+        deviation_level = deviation_context.get("overall_level", "none")
+        deviation_reasons = deviation_context.get("reasons", [])
+
+        if deviation_level == "high":
+            if action == "Proceed":
+                action = "Monitor"
+            elif action == "Monitor":
+                action = "Restrict"
+            strategy = "Investigate high deviation drivers and tighten response discipline"
+            alert = alert + " / high deviation"
+            rationale = rationale + f" Adverse deviation materially changed the operating picture: {', '.join(deviation_reasons)}."
+        elif deviation_level == "moderate":
+            if action == "Proceed":
+                action = "Monitor"
+            alert = alert + " / moderate deviation"
+            rationale = rationale + f" Adverse deviation requires review: {', '.join(deviation_reasons)}."
+        elif deviation_level == "low":
+            alert = alert + " / low deviation"
+            rationale = rationale + " Minor adverse deviation is present and should stay under observation."
 
     if lens == "invoice":
         if action == "Restrict":
@@ -302,7 +429,7 @@ def build_decision(risk_score: float, pressure: dict, sector: str):
     }
 
 
-def build_stress_decision(stress_score: float, pressure: dict, sector: str):
+def build_stress_decision(stress_score: float, pressure: dict, sector: str, deviation_context: dict = None):
     lens = normalize_sector_to_lens(sector)
     level = pressure.get("level", "stable")
 
@@ -328,6 +455,17 @@ def build_stress_decision(stress_score: float, pressure: dict, sector: str):
         strategy = "Re-evaluate scenario tolerance under macro pressure"
         alert = alert + " / macro amplified"
         rationale = rationale + " Global pressure amplifies scenario fragility."
+
+    if deviation_context:
+        deviation_level = deviation_context.get("overall_level", "none")
+        if deviation_level == "high":
+            if action == "Proceed":
+                action = "Monitor"
+            alert = alert + " / high deviation"
+            rationale = rationale + " Adverse deviation suggests the stress profile may deteriorate faster."
+        elif deviation_level == "moderate":
+            alert = alert + " / moderate deviation"
+            rationale = rationale + " Adverse deviation adds caution to the scenario view."
 
     if lens == "logistics":
         strategy = strategy + " Focus on route cost and shipment continuity."
@@ -361,7 +499,8 @@ def health():
         "phase": "phase1",
         "phase2_global_layer": "started",
         "phase2_binding_layer": "started",
-        "phase3_decision_binding": "started"
+        "phase3_decision_binding": "started",
+        "phase4_deviation_layer": "started"
     }
 
 
@@ -381,7 +520,8 @@ def version():
         "stress_model": "zentra_stress_v1_phase1",
         "global_layer": "phase2_fx_started",
         "binding_layer": "phase2_score_stress_lens_connected",
-        "decision_layer": "phase3_started"
+        "decision_layer": "phase3_started",
+        "deviation_layer": "phase4_started"
     }
 
 
@@ -397,6 +537,35 @@ def global_market():
     }
 
 
+@router.get("/deviation")
+def deviation_get(
+    amount: float = 0,
+    payment_delay_days: float = 0,
+    customer_score: float = 0,
+    exposure_ratio: float = 0,
+    planned_amount: float = None,
+    planned_payment_delay_days: float = None,
+    planned_customer_score: float = None,
+    planned_exposure_ratio: float = None,
+):
+    deviation_context = aggregate_deviation_context(
+        planned_amount=planned_amount,
+        planned_payment_delay_days=planned_payment_delay_days,
+        planned_customer_score=planned_customer_score,
+        planned_exposure_ratio=planned_exposure_ratio,
+        amount=amount,
+        payment_delay_days=payment_delay_days,
+        customer_score=customer_score,
+        exposure_ratio=exposure_ratio
+    )
+
+    return {
+        "phase": "phase4",
+        "layer": "deviation",
+        "deviation": deviation_context
+    }
+
+
 @router.get("/score")
 def score_get(
     request: Request,
@@ -405,6 +574,10 @@ def score_get(
     sector: str = "",
     customer_score: float = 0,
     exposure_ratio: float = 0,
+    planned_amount: float = None,
+    planned_payment_delay_days: float = None,
+    planned_customer_score: float = None,
+    planned_exposure_ratio: float = None,
 ):
     rl = check_rate_limit(request)
 
@@ -414,15 +587,37 @@ def score_get(
         "sector": sector,
         "customer_score": customer_score,
         "exposure_ratio": exposure_ratio,
+        "planned_amount": planned_amount,
+        "planned_payment_delay_days": planned_payment_delay_days,
+        "planned_customer_score": planned_customer_score,
+        "planned_exposure_ratio": planned_exposure_ratio,
     }
 
     result = calculate_score(data)
 
     market = get_global_market()
     pressure = get_global_pressure_context(market)
+
     base_score = float(result.get("risk_score", 0))
     adjusted_score, adjustment_reasons = apply_global_adjustment(base_score, market)
-    decision = build_decision(adjusted_score, pressure, sector)
+
+    deviation_context = aggregate_deviation_context(
+        planned_amount=planned_amount,
+        planned_payment_delay_days=planned_payment_delay_days,
+        planned_customer_score=planned_customer_score,
+        planned_exposure_ratio=planned_exposure_ratio,
+        amount=amount,
+        payment_delay_days=payment_delay_days,
+        customer_score=customer_score,
+        exposure_ratio=exposure_ratio
+    )
+
+    adjusted_score = max(
+        0.0,
+        min(100.0, round(adjusted_score + deviation_context.get("risk_adjustment", 0), 2))
+    )
+
+    decision = build_decision(adjusted_score, pressure, sector, deviation_context)
 
     result["base_risk_score"] = base_score
     result["risk_score"] = adjusted_score
@@ -431,6 +626,7 @@ def score_get(
         "pressure": pressure,
         "adjustment_reasons": adjustment_reasons
     }
+    result["deviation"] = deviation_context
     result["decision"] = decision
     result["control"] = {
         "rate_limit_checked": True,
@@ -448,6 +644,7 @@ def score_get(
             "risk_band": result.get("risk_band"),
             "model": result.get("model"),
             "global_adjustments": adjustment_reasons,
+            "deviation_level": deviation_context.get("overall_level"),
             "decision_action": decision.get("action")
         }
     )
@@ -463,6 +660,10 @@ def stress_get(
     sector: str = "",
     customer_score: float = 0,
     exposure_ratio: float = 0,
+    planned_amount: float = None,
+    planned_payment_delay_days: float = None,
+    planned_customer_score: float = None,
+    planned_exposure_ratio: float = None,
 ):
     rl = check_rate_limit(request)
 
@@ -472,6 +673,10 @@ def stress_get(
         "sector": sector,
         "customer_score": customer_score,
         "exposure_ratio": exposure_ratio,
+        "planned_amount": planned_amount,
+        "planned_payment_delay_days": planned_payment_delay_days,
+        "planned_customer_score": planned_customer_score,
+        "planned_exposure_ratio": planned_exposure_ratio,
     }
 
     result = calculate_stress(data)
@@ -479,9 +684,36 @@ def stress_get(
     market = get_global_market()
     result, adjustment_reasons = apply_stress_global_adjustment(result, market)
     pressure = result.get("global", {}).get("pressure", {})
-    decision = build_stress_decision(float(result.get("stress_score", 0)), pressure, sector)
 
+    deviation_context = aggregate_deviation_context(
+        planned_amount=planned_amount,
+        planned_payment_delay_days=planned_payment_delay_days,
+        planned_customer_score=planned_customer_score,
+        planned_exposure_ratio=planned_exposure_ratio,
+        amount=amount,
+        payment_delay_days=payment_delay_days,
+        customer_score=customer_score,
+        exposure_ratio=exposure_ratio
+    )
+
+    stress_score = float(result.get("stress_score", 0))
+    stress_score = max(
+        0.0,
+        min(100.0, round(stress_score + deviation_context.get("risk_adjustment", 0), 2))
+    )
+
+    scenarios = result.get("scenarios", {})
+    scenarios["base_case"] = max(0.0, min(100.0, round(float(scenarios.get("base_case", 0)) + deviation_context.get("risk_adjustment", 0), 2)))
+    scenarios["mild_shock"] = max(0.0, min(100.0, round(float(scenarios.get("mild_shock", 0)) + deviation_context.get("risk_adjustment", 0), 2)))
+    scenarios["severe_shock"] = max(0.0, min(100.0, round(float(scenarios.get("severe_shock", 0)) + deviation_context.get("risk_adjustment", 0), 2)))
+
+    result["stress_score"] = stress_score
+    result["scenarios"] = scenarios
+    result["deviation"] = deviation_context
+
+    decision = build_stress_decision(stress_score, pressure, sector, deviation_context)
     result["decision"] = decision
+
     result["control"] = {
         "rate_limit_checked": True,
         "client_ip": rl["client_ip"],
@@ -497,6 +729,7 @@ def stress_get(
             "stress_band": result.get("stress_band"),
             "model": result.get("model"),
             "global_adjustments": adjustment_reasons,
+            "deviation_level": deviation_context.get("overall_level"),
             "decision_action": decision.get("action")
         }
     )
@@ -548,6 +781,7 @@ def founder_status():
             "/health",
             "/version",
             "/global/market",
+            "/deviation",
             "/score",
             "/stress",
             "/lens/list",
@@ -564,7 +798,8 @@ def founder_status():
         "lens_layer": "active_skeleton",
         "global_layer": "phase2_fx_started",
         "binding_layer": "phase2_score_stress_lens_connected",
-        "decision_layer": "phase3_score_stress_connected"
+        "decision_layer": "phase3_score_stress_connected",
+        "deviation_layer": "phase4_score_stress_connected"
     }
 
 
@@ -573,6 +808,7 @@ def founder_config():
     return {
         "public_routes": get_public_routes() + [
             "/global/market",
+            "/deviation",
             "/lens/list",
             "/lens/{lens_id}"
         ],
@@ -594,7 +830,8 @@ def founder_healthcheck():
         "lens_layer": "ok",
         "global_layer": "ok_started",
         "binding_layer": "ok_started",
-        "decision_layer": "ok_started"
+        "decision_layer": "ok_started",
+        "deviation_layer": "ok_started"
     }
 
 
