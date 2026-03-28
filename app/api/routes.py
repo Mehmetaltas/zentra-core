@@ -57,6 +57,34 @@ def get_global_market():
     return market
 
 
+def get_global_pressure_context(market: dict):
+    usdtry = float(market.get("usdtry", 30.0))
+    eurusd = float(market.get("eurusd", 1.08))
+
+    level = "stable"
+    reasons = []
+
+    if usdtry >= 40:
+        level = "high"
+        reasons.append("high_usdtry_pressure")
+    elif usdtry >= 35:
+        level = "elevated"
+        reasons.append("elevated_usdtry_pressure")
+    elif usdtry >= 30:
+        level = "moderate"
+        reasons.append("moderate_usdtry_pressure")
+
+    if eurusd <= 1.03:
+        reasons.append("eurusd_compression")
+        if level == "stable":
+            level = "moderate"
+
+    return {
+        "level": level,
+        "reasons": reasons
+    }
+
+
 def apply_global_adjustment(base_score: float, market: dict):
     adjusted = float(base_score)
     reasons = []
@@ -82,6 +110,91 @@ def apply_global_adjustment(base_score: float, market: dict):
     return adjusted, reasons
 
 
+def apply_stress_global_adjustment(result: dict, market: dict):
+    reasons = []
+    pressure = get_global_pressure_context(market)
+    level = pressure["level"]
+
+    base_case = float(result.get("scenarios", {}).get("base_case", result.get("stress_score", 0)))
+    mild_shock = float(result.get("scenarios", {}).get("mild_shock", base_case))
+    severe_shock = float(result.get("scenarios", {}).get("severe_shock", base_case))
+
+    if level == "high":
+        base_case += 8
+        mild_shock += 10
+        severe_shock += 12
+        reasons.append("high_global_pressure")
+    elif level == "elevated":
+        base_case += 5
+        mild_shock += 7
+        severe_shock += 9
+        reasons.append("elevated_global_pressure")
+    elif level == "moderate":
+        base_case += 2
+        mild_shock += 3
+        severe_shock += 4
+        reasons.append("moderate_global_pressure")
+
+    base_case = round(min(100.0, base_case), 2)
+    mild_shock = round(min(100.0, mild_shock), 2)
+    severe_shock = round(min(100.0, severe_shock), 2)
+
+    result["stress_score"] = base_case
+    result["scenarios"] = {
+        "base_case": base_case,
+        "mild_shock": mild_shock,
+        "severe_shock": severe_shock
+    }
+    result["global"] = {
+        "market": market,
+        "pressure": pressure,
+        "adjustment_reasons": reasons
+    }
+
+    return result, reasons
+
+
+def attach_lens_global_context(lens_data: dict, market: dict):
+    pressure = get_global_pressure_context(market)
+
+    lens_id = lens_data.get("id", "")
+    global_focus = []
+
+    if lens_id == "logistics":
+        global_focus = [
+            "fx pressure can amplify shipment and route fragility",
+            "fuel and energy sources should be attached next for full logistics pressure visibility"
+        ]
+    elif lens_id == "trade":
+        global_focus = [
+            "fx pressure can distort trade execution continuity",
+            "cross-border counterparties become more sensitive under macro volatility"
+        ]
+    elif lens_id == "invoice":
+        global_focus = [
+            "macro pressure can worsen collection delay behavior",
+            "receivable quality should be read together with currency stress"
+        ]
+    elif lens_id == "sme":
+        global_focus = [
+            "small enterprise repayment behavior becomes more fragile under macro pressure",
+            "cashflow sensitivity rises when currency pressure expands"
+        ]
+    elif lens_id == "compliance":
+        global_focus = [
+            "macro instability can increase reporting and control pressure",
+            "control visibility should expand as system complexity grows"
+        ]
+
+    lens_data["global_context"] = {
+        "pressure_level": pressure["level"],
+        "pressure_reasons": pressure["reasons"],
+        "global_focus": global_focus
+    }
+
+    return lens_data
+
+
 # ---------------------------
 # CORE ROUTES
 # ---------------------------
@@ -92,7 +205,8 @@ def health():
         "status": "ok",
         "system": "zentra-core",
         "phase": "phase1",
-        "phase2_global_layer": "started"
+        "phase2_global_layer": "started",
+        "phase2_binding_layer": "started"
     }
 
 
@@ -110,17 +224,20 @@ def version():
         "version": "0.1.0",
         "score_model": "zentra_v1_phase1",
         "stress_model": "zentra_stress_v1_phase1",
-        "global_layer": "phase2_fx_started"
+        "global_layer": "phase2_fx_started",
+        "binding_layer": "phase2_score_stress_lens_connected"
     }
 
 
 @router.get("/global/market")
 def global_market():
     market = get_global_market()
+    pressure = get_global_pressure_context(market)
     return {
         "phase": "phase2",
         "layer": "global_data",
-        "market": market
+        "market": market,
+        "pressure": pressure
     }
 
 
@@ -146,6 +263,7 @@ def score_get(
     result = calculate_score(data)
 
     market = get_global_market()
+    pressure = get_global_pressure_context(market)
     base_score = float(result.get("risk_score", 0))
     adjusted_score, adjustment_reasons = apply_global_adjustment(base_score, market)
 
@@ -153,6 +271,7 @@ def score_get(
     result["risk_score"] = adjusted_score
     result["global"] = {
         "market": market,
+        "pressure": pressure,
         "adjustment_reasons": adjustment_reasons
     }
     result["control"] = {
@@ -197,6 +316,10 @@ def stress_get(
     }
 
     result = calculate_stress(data)
+
+    market = get_global_market()
+    result, adjustment_reasons = apply_stress_global_adjustment(result, market)
+
     result["control"] = {
         "rate_limit_checked": True,
         "client_ip": rl["client_ip"],
@@ -210,7 +333,8 @@ def stress_get(
         result_summary={
             "stress_score": result.get("stress_score"),
             "stress_band": result.get("stress_band"),
-            "model": result.get("model")
+            "model": result.get("model"),
+            "global_adjustments": adjustment_reasons
         }
     )
 
@@ -223,16 +347,26 @@ def stress_get(
 
 @router.get("/lens/list")
 def lens_list():
+    market = get_global_market()
+    pressure = get_global_pressure_context(market)
+
     return {
         "phase": "phase1",
         "lens_count": 5,
-        "lenses": get_lens_catalog()
+        "lenses": get_lens_catalog(),
+        "global_context": {
+            "pressure_level": pressure["level"],
+            "pressure_reasons": pressure["reasons"]
+        }
     }
 
 
 @router.get("/lens/{lens_id}")
 def lens_detail(lens_id: str):
-    return get_lens_detail(lens_id)
+    lens_data = get_lens_detail(lens_id)
+    market = get_global_market()
+    lens_data = attach_lens_global_context(lens_data, market)
+    return lens_data
 
 
 # ---------------------------
@@ -265,7 +399,8 @@ def founder_status():
         "stress_model": "zentra_stress_v1_phase1",
         "control_layer": "active",
         "lens_layer": "active_skeleton",
-        "global_layer": "phase2_fx_started"
+        "global_layer": "phase2_fx_started",
+        "binding_layer": "phase2_score_stress_lens_connected"
     }
 
 
@@ -293,7 +428,8 @@ def founder_healthcheck():
         "system": "zentra-core",
         "control_layer": "ok",
         "lens_layer": "ok",
-        "global_layer": "ok_started"
+        "global_layer": "ok_started",
+        "binding_layer": "ok_started"
     }
 
 
