@@ -16,23 +16,51 @@ def get_global_market():
         "notes": ["static fallback"]
     }
 
+def get_macro_pressure(market: dict):
+    usdtry = float(market.get("usdtry", 30.0))
+    eurusd = float(market.get("eurusd", 1.08))
+
+    level = "stable"
+    reasons = []
+
+    if usdtry >= 40:
+        level = "high"
+        reasons.append("high_fx_pressure")
+    elif usdtry >= 35:
+        level = "elevated"
+        reasons.append("elevated_fx_pressure")
+    elif usdtry >= 30:
+        level = "moderate"
+        reasons.append("moderate_fx_pressure")
+
+    if eurusd <= 1.03:
+        reasons.append("eurusd_compression")
+        if level == "stable":
+            level = "moderate"
+
+    return {
+        "level": level,
+        "reasons": reasons
+    }
+
 def apply_macro_overlay(score: float, market: dict):
-    usdtry = market["usdtry"]
+    pressure = get_macro_pressure(market)
+    level = pressure["level"]
 
     adjustment = 0
     reasons = []
 
-    if usdtry >= 40:
+    if level == "high":
         adjustment = 10
         reasons.append("high_fx_pressure")
-    elif usdtry >= 35:
+    elif level == "elevated":
         adjustment = 6
         reasons.append("elevated_fx_pressure")
-    elif usdtry >= 30:
+    elif level == "moderate":
         adjustment = 3
         reasons.append("moderate_fx_pressure")
 
-    return score + adjustment, adjustment, reasons
+    return score + adjustment, adjustment, reasons, pressure
 
 
 # ---------------------------
@@ -58,9 +86,18 @@ def calculate_deviation(p):
         elif abs(r) > 0.05:
             impact = "moderate"
 
+        direction = "neutral"
+        if actual > planned:
+            direction = "up"
+        elif actual < planned:
+            direction = "down"
+
         return {
             "metric": name,
+            "planned": planned,
+            "actual": actual,
             "ratio": round(r, 4),
+            "direction": direction,
             "impact": impact
         }
 
@@ -86,10 +123,13 @@ def calculate_deviation(p):
         adj = 2
         level = "low"
 
+    reasons = [f'{m["metric"]}_{m["direction"]}_{m["impact"]}' for m in metrics if m["impact"] in ["moderate", "high"]]
+
     return {
         "metrics": metrics,
         "level": level,
-        "adjustment": adj
+        "adjustment": adj,
+        "reasons": reasons
     }
 
 
@@ -103,6 +143,283 @@ def band(score):
     if score >= 40:
         return "MID"
     return "LOW"
+
+
+# ---------------------------
+# LENS
+# ---------------------------
+
+def normalize_sector_to_lens(sector: str):
+    s = (sector or "").strip().lower()
+
+    if s in ["invoice", "receivable", "collections"]:
+        return "invoice"
+    if s in ["logistics", "shipment", "transport", "delivery"]:
+        return "logistics"
+    if s in ["trade", "export", "import", "counterparty"]:
+        return "trade"
+    if s in ["compliance", "regtech", "aml", "policy"]:
+        return "compliance"
+    return "sme"
+
+
+def get_lens_profile(lens: str):
+    profiles = {
+        "invoice": {
+            "monitor_threshold": 38,
+            "restrict_threshold": 68,
+            "priority": "collection_discipline"
+        },
+        "logistics": {
+            "monitor_threshold": 40,
+            "restrict_threshold": 70,
+            "priority": "route_continuity"
+        },
+        "trade": {
+            "monitor_threshold": 42,
+            "restrict_threshold": 72,
+            "priority": "counterparty_execution"
+        },
+        "compliance": {
+            "monitor_threshold": 35,
+            "restrict_threshold": 65,
+            "priority": "control_visibility"
+        },
+        "sme": {
+            "monitor_threshold": 40,
+            "restrict_threshold": 70,
+            "priority": "cashflow_resilience"
+        }
+    }
+    return profiles.get(
+        lens,
+        {
+            "monitor_threshold": 40,
+            "restrict_threshold": 70,
+            "priority": "general"
+        }
+    )
+
+
+# ---------------------------
+# DECISION ENGINE
+# ---------------------------
+
+def build_decision(final_score: float, macro_pressure: dict, sector: str, deviation: dict):
+    lens = normalize_sector_to_lens(sector)
+    profile = get_lens_profile(lens)
+
+    monitor_threshold = profile["monitor_threshold"]
+    restrict_threshold = profile["restrict_threshold"]
+
+    macro_level = macro_pressure.get("level", "stable")
+    deviation_level = deviation.get("level", "none")
+    deviation_reasons = deviation.get("reasons", [])
+
+    action = "Proceed"
+    alert = "Stable context"
+    strategy = "Continue with standard operating discipline"
+    rationale = "Risk remains within acceptable baseline range."
+
+    if final_score >= restrict_threshold:
+        action = "Restrict"
+        alert = "High risk context"
+        strategy = "Reduce exposure and tighten approval control"
+        rationale = "Final risk score entered the restrictive zone."
+    elif final_score >= monitor_threshold:
+        action = "Monitor"
+        alert = "Emerging pressure"
+        strategy = "Increase review frequency and tighten decision discipline"
+        rationale = "Final risk score entered the monitoring zone."
+
+    if macro_level == "high":
+        if action == "Proceed":
+            action = "Monitor"
+        elif action == "Monitor":
+            action = "Restrict"
+        alert = alert + " / high macro pressure"
+        strategy = "Re-evaluate exposure under strong macro stress"
+        rationale = rationale + " Macro pressure materially amplifies the operating risk."
+    elif macro_level == "elevated":
+        if action == "Proceed":
+            action = "Monitor"
+        alert = alert + " / elevated macro pressure"
+        rationale = rationale + " Macro pressure adds caution to the baseline profile."
+    elif macro_level == "moderate" and action == "Proceed":
+        alert = "Moderate macro pressure"
+        strategy = "Proceed with caution and keep exposure under observation"
+        rationale = rationale + " Macro conditions require mild caution."
+
+    if deviation_level == "high":
+        if action == "Proceed":
+            action = "Monitor"
+        elif action == "Monitor":
+            action = "Restrict"
+        alert = alert + " / high deviation"
+        strategy = "Investigate deviation drivers and tighten execution controls"
+        rationale = rationale + f" Adverse deviation materially changed the picture: {', '.join(deviation_reasons)}."
+    elif deviation_level == "moderate":
+        if action == "Proceed":
+            action = "Monitor"
+        alert = alert + " / moderate deviation"
+        rationale = rationale + f" Moderate deviation requires review: {', '.join(deviation_reasons)}."
+    elif deviation_level == "low":
+        alert = alert + " / low deviation"
+        rationale = rationale + " Minor deviation is present but remains manageable."
+
+    if lens == "logistics":
+        if action == "Restrict":
+            strategy = "Review route fragility, delay concentration, and cost pass-through"
+        elif action == "Monitor":
+            strategy = "Track route continuity, shipment delays, and concentration risk"
+        alert = alert + " / logistics sensitivity"
+        rationale = rationale + " Logistics operations are sensitive to delay and route disruption."
+
+    elif lens == "invoice":
+        if action == "Restrict":
+            strategy = "Accelerate collections and tighten payment term discipline"
+        elif action == "Monitor":
+            strategy = "Review aging behavior and strengthen collection monitoring"
+        alert = alert + " / invoice sensitivity"
+        rationale = rationale + " Invoice performance is sensitive to collection behavior and receivable quality."
+
+    elif lens == "trade":
+        if action == "Restrict":
+            strategy = "Reduce counterparty exposure and tighten execution controls"
+        elif action == "Monitor":
+            strategy = "Review counterparty concentration and execution continuity"
+        alert = alert + " / trade sensitivity"
+        rationale = rationale + " Trade activity is sensitive to counterparties and cross-border execution."
+
+    elif lens == "compliance":
+        if action == "Restrict":
+            strategy = "Escalate control review and tighten enforcement discipline"
+        elif action == "Monitor":
+            strategy = "Increase compliance review frequency and visibility"
+        alert = alert + " / compliance sensitivity"
+        rationale = rationale + " Compliance risk can intensify quickly under operational or macro stress."
+
+    elif lens == "sme":
+        if action == "Restrict":
+            strategy = "Reduce credit appetite and review cashflow fragility"
+        elif action == "Monitor":
+            strategy = "Monitor resilience, concentration, and repayment behavior"
+        alert = alert + " / sme sensitivity"
+        rationale = rationale + " SME profiles are more exposed to fragility under pressure shifts."
+
+    return {
+        "action": action,
+        "alert": alert,
+        "strategy": strategy,
+        "rationale": rationale,
+        "lens": lens,
+        "profile": profile
+    }
+
+
+def build_stress_decision(final_score: float, macro_pressure: dict, sector: str, deviation: dict):
+    lens = normalize_sector_to_lens(sector)
+    profile = get_lens_profile(lens)
+
+    monitor_threshold = profile["monitor_threshold"]
+    restrict_threshold = profile["restrict_threshold"]
+
+    macro_level = macro_pressure.get("level", "stable")
+    deviation_level = deviation.get("level", "none")
+    deviation_reasons = deviation.get("reasons", [])
+
+    action = "Proceed"
+    alert = "Scenario set stable"
+    strategy = "Stress remains manageable under the current scenario set"
+    rationale = "Stress outputs remain inside acceptable tolerance."
+
+    if final_score >= restrict_threshold:
+        action = "Restrict"
+        alert = "High scenario pressure"
+        strategy = "Prepare containment and reduce scenario-sensitive exposure"
+        rationale = "Stress score entered the restrictive zone."
+    elif final_score >= monitor_threshold:
+        action = "Monitor"
+        alert = "Moderate scenario pressure"
+        strategy = "Increase scenario monitoring and prepare mitigation"
+        rationale = "Stress score entered the monitoring zone."
+
+    if macro_level in ["high", "elevated"]:
+        if action == "Proceed":
+            action = "Monitor"
+        alert = alert + " / macro amplified"
+        rationale = rationale + " Macro conditions amplify scenario fragility."
+
+    if deviation_level == "high":
+        if action == "Proceed":
+            action = "Monitor"
+        alert = alert + " / high deviation"
+        rationale = rationale + f" Deviation suggests faster deterioration: {', '.join(deviation_reasons)}."
+    elif deviation_level == "moderate":
+        alert = alert + " / moderate deviation"
+        rationale = rationale + " Deviation adds caution to the scenario outlook."
+
+    if lens == "logistics":
+        strategy = strategy + " Focus on route continuity and shipment delay pressure."
+    elif lens == "invoice":
+        strategy = strategy + " Focus on collection pressure and term sensitivity."
+    elif lens == "trade":
+        strategy = strategy + " Focus on counterparties and execution continuity."
+    elif lens == "compliance":
+        strategy = strategy + " Focus on control escalation and enforcement readiness."
+    elif lens == "sme":
+        strategy = strategy + " Focus on cashflow fragility and resilience."
+
+    return {
+        "action": action,
+        "alert": alert,
+        "strategy": strategy,
+        "rationale": rationale,
+        "lens": lens,
+        "profile": profile
+    }
+
+
+# ---------------------------
+# BASIC ROUTES
+# ---------------------------
+
+@router.get("/")
+def root():
+    return {"api": "ZENTRA CORE ACTIVE"}
+
+@router.get("/health")
+def health():
+    return {
+        "status": "ok",
+        "system": "zentra-core",
+        "layers": [
+            "base_risk",
+            "macro_overlay",
+            "deviation_overlay",
+            "decision_engine",
+            "lens_intelligence"
+        ]
+    }
+
+@router.get("/version")
+def version():
+    return {
+        "product": "ZENTRA Risk Core",
+        "score_model": "zentra_v2_base_risk",
+        "stress_model": "zentra_v2_base_stress",
+        "decision_engine": "enabled",
+        "lens_layer": "enabled"
+    }
+
+@router.get("/global/market")
+def global_market():
+    market = get_global_market()
+    pressure = get_macro_pressure(market)
+    return {
+        "market": market,
+        "pressure": pressure
+    }
 
 
 # ---------------------------
@@ -124,7 +441,6 @@ def score(
 ):
     rl = check_rate_limit(request)
 
-    # BASE
     base = calculate_score({
         "amount": amount,
         "payment_delay_days": payment_delay_days,
@@ -133,14 +449,12 @@ def score(
         "exposure_ratio": exposure_ratio
     })
 
-    base_score = base["risk_score"]
+    base_score = float(base["risk_score"])
 
-    # MACRO
     market = get_global_market()
-    macro_score, macro_adj, macro_reasons = apply_macro_overlay(base_score, market)
+    macro_score, macro_adj, macro_reasons, macro_pressure = apply_macro_overlay(base_score, market)
 
-    # DEVIATION
-    dev = calculate_deviation({
+    deviation = calculate_deviation({
         "amount": amount,
         "delay": payment_delay_days,
         "customer": customer_score,
@@ -151,21 +465,26 @@ def score(
         "planned_exposure": planned_exposure_ratio,
     })
 
-    final_score = min(100, macro_score + dev["adjustment"])
+    final_score = round(min(100.0, macro_score + deviation["adjustment"]), 2)
+
+    decision = build_decision(final_score, macro_pressure, sector, deviation)
 
     return {
         "base_risk_score": base_score,
         "macro_adjustment": macro_adj,
-        "macro_adjusted_risk_score": macro_score,
-        "deviation_adjustment": dev["adjustment"],
+        "macro_adjusted_risk_score": round(macro_score, 2),
+        "deviation_adjustment": deviation["adjustment"],
         "final_risk_score": final_score,
         "risk_band": band(final_score),
         "drivers": base.get("drivers", []),
-        "deviation": dev,
+        "flags": base.get("flags", []),
+        "deviation": deviation,
         "macro": {
             "market": market,
+            "pressure": macro_pressure,
             "reasons": macro_reasons
         },
+        "decision": decision,
         "control": rl
     }
 
@@ -197,12 +516,12 @@ def stress(
         "exposure_ratio": exposure_ratio
     })
 
-    base_score = base["stress_score"]
+    base_score = float(base["stress_score"])
 
     market = get_global_market()
-    macro_score, macro_adj, macro_reasons = apply_macro_overlay(base_score, market)
+    macro_score, macro_adj, macro_reasons, macro_pressure = apply_macro_overlay(base_score, market)
 
-    dev = calculate_deviation({
+    deviation = calculate_deviation({
         "amount": amount,
         "delay": payment_delay_days,
         "customer": customer_score,
@@ -213,21 +532,34 @@ def stress(
         "planned_exposure": planned_exposure_ratio,
     })
 
-    final_score = min(100, macro_score + dev["adjustment"])
+    final_score = round(min(100.0, macro_score + deviation["adjustment"]), 2)
+
+    scenarios = base.get("scenarios", {})
+    base_case = round(min(100.0, float(scenarios.get("base_case", base_score)) + macro_adj + deviation["adjustment"]), 2)
+    mild_shock = round(min(100.0, float(scenarios.get("mild_shock", base_case)) + macro_adj + deviation["adjustment"]), 2)
+    severe_shock = round(min(100.0, float(scenarios.get("severe_shock", base_case)) + macro_adj + deviation["adjustment"]), 2)
+
+    decision = build_stress_decision(final_score, macro_pressure, sector, deviation)
 
     return {
         "base_stress_score": base_score,
         "macro_adjustment": macro_adj,
-        "macro_adjusted_stress_score": macro_score,
-        "deviation_adjustment": dev["adjustment"],
+        "macro_adjusted_stress_score": round(macro_score, 2),
+        "deviation_adjustment": deviation["adjustment"],
         "final_stress_score": final_score,
         "stress_band": band(final_score),
-        "scenarios": base.get("scenarios", {}),
+        "scenarios": {
+            "base_case": base_case,
+            "mild_shock": mild_shock,
+            "severe_shock": severe_shock
+        },
         "drivers": base.get("drivers", []),
-        "deviation": dev,
+        "deviation": deviation,
         "macro": {
             "market": market,
+            "pressure": macro_pressure,
             "reasons": macro_reasons
         },
+        "decision": decision,
         "control": rl
     }
