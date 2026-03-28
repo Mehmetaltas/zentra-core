@@ -13,7 +13,7 @@ router = APIRouter()
 
 
 # ---------------------------
-# GLOBAL DATA LAYER (Phase 2 Start)
+# GLOBAL DATA LAYER (Phase 2)
 # ---------------------------
 
 def get_global_market():
@@ -196,6 +196,160 @@ def attach_lens_global_context(lens_data: dict, market: dict):
 
 
 # ---------------------------
+# PHASE 3 DECISION LAYER
+# ---------------------------
+
+def normalize_sector_to_lens(sector: str):
+    s = (sector or "").strip().lower()
+
+    if s in ["invoice", "receivable", "collections"]:
+        return "invoice"
+    if s in ["logistics", "shipment", "transport", "delivery"]:
+        return "logistics"
+    if s in ["trade", "export", "import", "counterparty"]:
+        return "trade"
+    if s in ["compliance", "regtech", "aml", "policy"]:
+        return "compliance"
+    return "sme"
+
+
+def build_decision(risk_score: float, pressure: dict, sector: str):
+    lens = normalize_sector_to_lens(sector)
+    level = pressure.get("level", "stable")
+
+    action = "Proceed"
+    strategy = "Continue normal operations"
+    alert = "Stable context"
+    rationale = "Risk and macro pressure remain inside acceptable range"
+
+    if risk_score >= 70:
+        action = "Restrict"
+        strategy = "Reduce exposure and tighten controls"
+        alert = "High risk context"
+        rationale = "Risk score entered restrictive zone and requires stronger intervention"
+    elif risk_score >= 40:
+        action = "Monitor"
+        strategy = "Increase review frequency and tighten approval discipline"
+        alert = "Emerging pressure"
+        rationale = "Risk score entered monitoring zone and should be watched more closely"
+
+    if level == "high":
+        if action == "Proceed":
+            action = "Monitor"
+        elif action == "Monitor":
+            action = "Restrict"
+
+        strategy = "Reduce exposure immediately and review macro-sensitive transactions"
+        alert = "High macro pressure"
+        rationale = "Global pressure amplified the base risk condition"
+    elif level == "elevated":
+        if action == "Proceed":
+            action = "Monitor"
+        strategy = "Tighten exposure discipline under elevated macro pressure"
+        alert = "Elevated macro pressure"
+        rationale = "Macro pressure increased the caution level of the base risk condition"
+    elif level == "moderate" and action == "Proceed":
+        strategy = "Proceed with caution and keep exposure under review"
+        alert = "Moderate macro pressure"
+        rationale = "Base risk remains manageable but macro context adds caution"
+
+    if lens == "invoice":
+        if action == "Restrict":
+            strategy = "Accelerate collection workflow and shorten payment terms"
+        elif action == "Monitor":
+            strategy = "Review invoice aging and tighten payment terms"
+        alert = alert + " / invoice sensitivity"
+        rationale = rationale + " Invoice behavior is sensitive to delay and receivable quality."
+
+    elif lens == "logistics":
+        if action == "Restrict":
+            strategy = "Review route fragility, shipment dependence, and cost pass-through"
+        elif action == "Monitor":
+            strategy = "Track route cost pressure and shipment delay concentration"
+        alert = alert + " / logistics sensitivity"
+        rationale = rationale + " Logistics flows become more fragile under macro and cost pressure."
+
+    elif lens == "trade":
+        if action == "Restrict":
+            strategy = "Reduce counterparty exposure and tighten trade continuity controls"
+        elif action == "Monitor":
+            strategy = "Review counterparty reliability and execution concentration"
+        alert = alert + " / trade sensitivity"
+        rationale = rationale + " Trade execution depends on counterparties and cross-border conditions."
+
+    elif lens == "compliance":
+        if action == "Restrict":
+            strategy = "Escalate control review and tighten policy enforcement"
+        elif action == "Monitor":
+            strategy = "Increase compliance review frequency and control visibility"
+        alert = alert + " / compliance sensitivity"
+        rationale = rationale + " Compliance pressure rises as system and market stress increase."
+
+    elif lens == "sme":
+        if action == "Restrict":
+            strategy = "Reduce credit exposure and review cashflow fragility"
+        elif action == "Monitor":
+            strategy = "Monitor repayment behavior and dependency concentration"
+        alert = alert + " / sme sensitivity"
+        rationale = rationale + " Small enterprise resilience is more exposed to pressure shifts."
+
+    return {
+        "action": action,
+        "strategy": strategy,
+        "alert": alert,
+        "rationale": rationale,
+        "lens": lens
+    }
+
+
+def build_stress_decision(stress_score: float, pressure: dict, sector: str):
+    lens = normalize_sector_to_lens(sector)
+    level = pressure.get("level", "stable")
+
+    action = "Proceed"
+    strategy = "Stress remains manageable under current scenario set"
+    alert = "Scenario set stable"
+    rationale = "Scenario outputs remain inside acceptable operating tolerance"
+
+    if stress_score >= 70:
+        action = "Restrict"
+        strategy = "Prepare containment plan and reduce scenario-sensitive exposure"
+        alert = "High scenario pressure"
+        rationale = "Stress scenario output entered restrictive zone"
+    elif stress_score >= 40:
+        action = "Monitor"
+        strategy = "Increase scenario monitoring and prepare mitigation steps"
+        alert = "Moderate scenario pressure"
+        rationale = "Stress scenario output entered monitoring zone"
+
+    if level in ["high", "elevated"]:
+        if action == "Proceed":
+            action = "Monitor"
+        strategy = "Re-evaluate scenario tolerance under macro pressure"
+        alert = alert + " / macro amplified"
+        rationale = rationale + " Global pressure amplifies scenario fragility."
+
+    if lens == "logistics":
+        strategy = strategy + " Focus on route cost and shipment continuity."
+    elif lens == "invoice":
+        strategy = strategy + " Focus on collection pressure and term sensitivity."
+    elif lens == "trade":
+        strategy = strategy + " Focus on counterparty and execution continuity."
+    elif lens == "compliance":
+        strategy = strategy + " Focus on policy escalation and control discipline."
+    elif lens == "sme":
+        strategy = strategy + " Focus on cashflow fragility and partner dependence."
+
+    return {
+        "action": action,
+        "strategy": strategy,
+        "alert": alert,
+        "rationale": rationale,
+        "lens": lens
+    }
+
+
+# ---------------------------
 # CORE ROUTES
 # ---------------------------
 
@@ -206,7 +360,8 @@ def health():
         "system": "zentra-core",
         "phase": "phase1",
         "phase2_global_layer": "started",
-        "phase2_binding_layer": "started"
+        "phase2_binding_layer": "started",
+        "phase3_decision_binding": "started"
     }
 
 
@@ -225,7 +380,8 @@ def version():
         "score_model": "zentra_v1_phase1",
         "stress_model": "zentra_stress_v1_phase1",
         "global_layer": "phase2_fx_started",
-        "binding_layer": "phase2_score_stress_lens_connected"
+        "binding_layer": "phase2_score_stress_lens_connected",
+        "decision_layer": "phase3_started"
     }
 
 
@@ -266,6 +422,7 @@ def score_get(
     pressure = get_global_pressure_context(market)
     base_score = float(result.get("risk_score", 0))
     adjusted_score, adjustment_reasons = apply_global_adjustment(base_score, market)
+    decision = build_decision(adjusted_score, pressure, sector)
 
     result["base_risk_score"] = base_score
     result["risk_score"] = adjusted_score
@@ -274,6 +431,7 @@ def score_get(
         "pressure": pressure,
         "adjustment_reasons": adjustment_reasons
     }
+    result["decision"] = decision
     result["control"] = {
         "rate_limit_checked": True,
         "client_ip": rl["client_ip"],
@@ -289,7 +447,8 @@ def score_get(
             "risk_score": result.get("risk_score"),
             "risk_band": result.get("risk_band"),
             "model": result.get("model"),
-            "global_adjustments": adjustment_reasons
+            "global_adjustments": adjustment_reasons,
+            "decision_action": decision.get("action")
         }
     )
 
@@ -319,7 +478,10 @@ def stress_get(
 
     market = get_global_market()
     result, adjustment_reasons = apply_stress_global_adjustment(result, market)
+    pressure = result.get("global", {}).get("pressure", {})
+    decision = build_stress_decision(float(result.get("stress_score", 0)), pressure, sector)
 
+    result["decision"] = decision
     result["control"] = {
         "rate_limit_checked": True,
         "client_ip": rl["client_ip"],
@@ -334,7 +496,8 @@ def stress_get(
             "stress_score": result.get("stress_score"),
             "stress_band": result.get("stress_band"),
             "model": result.get("model"),
-            "global_adjustments": adjustment_reasons
+            "global_adjustments": adjustment_reasons,
+            "decision_action": decision.get("action")
         }
     )
 
@@ -400,7 +563,8 @@ def founder_status():
         "control_layer": "active",
         "lens_layer": "active_skeleton",
         "global_layer": "phase2_fx_started",
-        "binding_layer": "phase2_score_stress_lens_connected"
+        "binding_layer": "phase2_score_stress_lens_connected",
+        "decision_layer": "phase3_score_stress_connected"
     }
 
 
@@ -429,7 +593,8 @@ def founder_healthcheck():
         "control_layer": "ok",
         "lens_layer": "ok",
         "global_layer": "ok_started",
-        "binding_layer": "ok_started"
+        "binding_layer": "ok_started",
+        "decision_layer": "ok_started"
     }
 
 
