@@ -1,6 +1,118 @@
-# SADELEŞTİRİLMİŞ ANA AKIŞ — SADECE SCORE/ STRESS KISMI GÖSTERİLİYOR
+from fastapi import APIRouter, Request
+from app.services.scoring import calculate_score
+from app.services.stress import calculate_stress
+from app.core.rate_limit import check_rate_limit
+import math
 
-def calculate_risk_band(score: float):
+router = APIRouter()
+
+# ---------------------------
+# SAFE GLOBAL (CRASH YOK)
+# ---------------------------
+
+def get_global_market():
+    return {
+        "usdtry": 30.0,
+        "eurusd": 1.08,
+        "live_sources": {"fx": False},
+        "notes": ["static fallback mode"]
+    }
+
+def apply_global_adjustment(score: float, market: dict):
+    usdtry = market["usdtry"]
+
+    adjustment = 0
+    reasons = []
+
+    if usdtry >= 40:
+        adjustment = 10
+        reasons.append("high_usdtry")
+    elif usdtry >= 35:
+        adjustment = 6
+        reasons.append("elevated_usdtry")
+    elif usdtry >= 30:
+        adjustment = 3
+        reasons.append("moderate_usdtry")
+
+    return score + adjustment, adjustment, reasons
+
+
+# ---------------------------
+# DEVIATION
+# ---------------------------
+
+def safe_ratio(actual, planned):
+    if planned in [None, 0]:
+        return None
+    return (actual - planned) / planned
+
+def deviation_block(planned, actual, name):
+    if planned is None:
+        return None
+
+    ratio = safe_ratio(actual, planned)
+    if ratio is None:
+        return None
+
+    impact = "low"
+    if abs(ratio) > 0.15:
+        impact = "high"
+    elif abs(ratio) > 0.05:
+        impact = "moderate"
+
+    return {
+        "metric": name,
+        "planned": planned,
+        "actual": actual,
+        "ratio": round(ratio, 4),
+        "impact": impact
+    }
+
+def calculate_deviation_context(p):
+    metrics = []
+
+    m1 = deviation_block(p["planned_amount"], p["amount"], "amount")
+    m2 = deviation_block(p["planned_payment_delay_days"], p["payment_delay_days"], "delay")
+    m3 = deviation_block(p["planned_customer_score"], p["customer_score"], "customer")
+    m4 = deviation_block(p["planned_exposure_ratio"], p["exposure_ratio"], "exposure")
+
+    for m in [m1, m2, m3, m4]:
+        if m:
+            metrics.append(m)
+
+    level = "none"
+    adj = 0
+
+    if any(m["impact"] == "high" for m in metrics):
+        level = "high"
+        adj = 10
+    elif any(m["impact"] == "moderate" for m in metrics):
+        level = "moderate"
+        adj = 5
+    elif metrics:
+        level = "low"
+        adj = 2
+
+    # STD sadece bilgi (skora etki yok)
+    ratios = [abs(m["ratio"]) for m in metrics if m.get("ratio") is not None]
+    std = round(math.sqrt(sum(x*x for x in ratios)/len(ratios)), 4) if ratios else 0
+
+    return {
+        "metrics": metrics,
+        "level": level,
+        "risk_adjustment": adj,
+        "dispersion": {
+            "std": std,
+            "note": "informational_only"
+        }
+    }
+
+
+# ---------------------------
+# BAND
+# ---------------------------
+
+def band(score):
     if score >= 70:
         return "HIGH"
     if score >= 40:
@@ -8,8 +120,12 @@ def calculate_risk_band(score: float):
     return "LOW"
 
 
+# ---------------------------
+# SCORE
+# ---------------------------
+
 @router.get("/score")
-def score_get(
+def score(
     request: Request,
     amount: float = 0,
     payment_delay_days: int = 0,
@@ -23,77 +139,44 @@ def score_get(
 ):
     rl = check_rate_limit(request)
 
-    data = {
+    base = calculate_score({
         "amount": amount,
         "payment_delay_days": payment_delay_days,
         "sector": sector,
         "customer_score": customer_score,
         "exposure_ratio": exposure_ratio,
-    }
+    })
 
-    # ---------------------------
-    # 1. RAW SCORE (SAPMASIZ)
-    # ---------------------------
-    base_result = calculate_score(data)
-    raw_score = float(base_result.get("risk_score", 0))
+    raw = float(base.get("risk_score", 0))
 
-    # ---------------------------
-    # 2. GLOBAL
-    # ---------------------------
     market = get_global_market()
-    global_score, global_reasons = apply_global_adjustment(raw_score, market)
+    g_score, g_adj, g_reasons = apply_global_adjustment(raw, market)
 
-    # ---------------------------
-    # 3. DEVIATION
-    # ---------------------------
-    deviation_context = aggregate_deviation_context(
-        planned_amount,
-        planned_payment_delay_days,
-        planned_customer_score,
-        planned_exposure_ratio,
-        amount,
-        payment_delay_days,
-        customer_score,
-        exposure_ratio
-    )
+    dev = calculate_deviation_context({
+        "amount": amount,
+        "payment_delay_days": payment_delay_days,
+        "customer_score": customer_score,
+        "exposure_ratio": exposure_ratio,
+        "planned_amount": planned_amount,
+        "planned_payment_delay_days": planned_payment_delay_days,
+        "planned_customer_score": planned_customer_score,
+        "planned_exposure_ratio": planned_exposure_ratio,
+    })
 
-    deviation_adj = deviation_context.get("risk_adjustment", 0)
-    deviation_score = round(global_score + deviation_adj, 2)
+    d_adj = dev["risk_adjustment"]
+    final = round(min(100, g_score + d_adj), 2)
 
-    # ---------------------------
-    # 4. FINAL (LENS + STD MINOR)
-    # ---------------------------
-    std_severity = deviation_context.get("dispersion", {}).get("std_severity", "stable")
-
-    lens_adj = 0
-    if std_severity == "volatile":
-        lens_adj = 2
-    elif std_severity == "elevated":
-        lens_adj = 1
-
-    final_score = round(min(100, deviation_score + lens_adj), 2)
-
-    # ---------------------------
-    # BAND
-    # ---------------------------
-    risk_band = calculate_risk_band(final_score)
-
-    # ---------------------------
-    # RESPONSE
-    # ---------------------------
     return {
-        "raw_risk_score": raw_score,
-        "global_adjustment": round(global_score - raw_score, 2),
-        "global_adjusted_risk_score": global_score,
-        "deviation_adjustment": deviation_adj,
-        "deviation_adjusted_risk_score": deviation_score,
-        "final_adjustment": lens_adj,
-        "final_risk_score": final_score,
-        "risk_band": risk_band,
-        "deviation": deviation_context,
+        "raw_risk_score": raw,
+        "global_adjustment": g_adj,
+        "global_adjusted_risk_score": g_score,
+        "deviation_adjustment": d_adj,
+        "final_risk_score": final,
+        "risk_band": band(final),
+        "deviation": dev,
         "global": {
             "market": market,
-            "adjustment_reasons": global_reasons
+            "reasons": g_reasons
         },
         "control": rl
     }
@@ -103,16 +186,8 @@ def score_get(
 # STRESS
 # ---------------------------
 
-def calculate_stress_band(score: float):
-    if score >= 70:
-        return "HIGH"
-    if score >= 40:
-        return "MID"
-    return "LOW"
-
-
 @router.get("/stress")
-def stress_get(
+def stress(
     request: Request,
     amount: float = 0,
     payment_delay_days: int = 0,
@@ -126,53 +201,40 @@ def stress_get(
 ):
     rl = check_rate_limit(request)
 
-    data = {
+    base = calculate_stress({
         "amount": amount,
         "payment_delay_days": payment_delay_days,
         "sector": sector,
         "customer_score": customer_score,
         "exposure_ratio": exposure_ratio,
-    }
+    })
 
-    # RAW
-    base_result = calculate_stress(data)
-    raw_score = float(base_result.get("stress_score", 0))
+    raw = float(base.get("stress_score", 0))
 
-    # GLOBAL
     market = get_global_market()
-    result, _ = apply_stress_global_adjustment(base_result, market)
-    global_score = float(result.get("stress_score", raw_score))
+    g_score, g_adj, _ = apply_global_adjustment(raw, market)
 
-    # DEVIATION
-    deviation_context = aggregate_deviation_context(
-        planned_amount,
-        planned_payment_delay_days,
-        planned_customer_score,
-        planned_exposure_ratio,
-        amount,
-        payment_delay_days,
-        customer_score,
-        exposure_ratio
-    )
+    dev = calculate_deviation_context({
+        "amount": amount,
+        "payment_delay_days": payment_delay_days,
+        "customer_score": customer_score,
+        "exposure_ratio": exposure_ratio,
+        "planned_amount": planned_amount,
+        "planned_payment_delay_days": planned_payment_delay_days,
+        "planned_customer_score": planned_customer_score,
+        "planned_exposure_ratio": planned_exposure_ratio,
+    })
 
-    deviation_adj = deviation_context.get("risk_adjustment", 0)
-    deviation_score = round(global_score + deviation_adj, 2)
-
-    # FINAL (çok hafif)
-    final_score = round(min(100, deviation_score + 1), 2)
-
-    stress_band = calculate_stress_band(final_score)
+    d_adj = dev["risk_adjustment"]
+    final = round(min(100, g_score + d_adj), 2)
 
     return {
-        "raw_stress_score": raw_score,
-        "global_adjustment": round(global_score - raw_score, 2),
-        "global_adjusted_stress_score": global_score,
-        "deviation_adjustment": deviation_adj,
-        "deviation_adjusted_stress_score": deviation_score,
-        "final_adjustment": 1,
-        "final_stress_score": final_score,
-        "stress_band": stress_band,
-        "deviation": deviation_context,
-        "global": result.get("global", {}),
+        "raw_stress_score": raw,
+        "global_adjustment": g_adj,
+        "global_adjusted_stress_score": g_score,
+        "deviation_adjustment": d_adj,
+        "final_stress_score": final,
+        "stress_band": band(final),
+        "deviation": dev,
         "control": rl
     }
