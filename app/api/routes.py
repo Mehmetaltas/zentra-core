@@ -302,6 +302,28 @@ def aggregate_deviation_context(
 
 
 # ---------------------------
+# BANDS
+# ---------------------------
+
+def calculate_risk_band(score: float):
+    s = float(score)
+    if s >= 70:
+        return "HIGH"
+    if s >= 40:
+        return "MID"
+    return "LOW"
+
+
+def calculate_stress_band(score: float):
+    s = float(score)
+    if s >= 70:
+        return "HIGH"
+    if s >= 40:
+        return "MID"
+    return "LOW"
+
+
+# ---------------------------
 # PHASE 3 DECISION LAYER
 # ---------------------------
 
@@ -618,9 +640,11 @@ def score_get(
     )
 
     decision = build_decision(adjusted_score, pressure, sector, deviation_context)
+    risk_band = calculate_risk_band(adjusted_score)
 
     result["base_risk_score"] = base_score
     result["risk_score"] = adjusted_score
+    result["risk_band"] = risk_band
     result["global"] = {
         "market": market,
         "pressure": pressure,
@@ -708,6 +732,7 @@ def stress_get(
     scenarios["severe_shock"] = max(0.0, min(100.0, round(float(scenarios.get("severe_shock", 0)) + deviation_context.get("risk_adjustment", 0), 2)))
 
     result["stress_score"] = stress_score
+    result["stress_band"] = calculate_stress_band(stress_score)
     result["scenarios"] = scenarios
     result["deviation"] = deviation_context
 
