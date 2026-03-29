@@ -3,16 +3,7 @@ from app.services.scoring import calculate_score
 from app.services.stress import calculate_stress
 from app.core.rate_limit import check_rate_limit
 
-router = APIRouter()
-
-# ---------------------------
-# GLOBAL (SAFE)
-# ---------------------------
-
-def get_global_market():
-    return {
-        "usdtry": 30.0,
-        "eurusd": 1.08,
+rout        "eurusd": 1.08,
         "notes": ["static fallback"]
     }
 
@@ -413,13 +404,34 @@ def version():
     }
 
 @router.get("/global/market")
-def global_market():
-    market = get_global_market()
+def global_market():    market = get_global_market()
     pressure = get_macro_pressure(market)
     return {
         "market": market,
         "pressure": pressure
-    }
+# ---------------------------
+# SCORE ROUTE
+# ---------------------------
+
+@router.get("/score")
+def score(
+    request: Request,
+    amount: float = 0,
+    payment_delay_days: float = 0,
+    sector: str = "",
+    customer_score: float = 50,
+    exposure_ratio: float = 0.3,
+    planned_amount: float = None,
+    planned_payment_delay_days: float = None,
+    planned_customer_score: float = None,
+    planned_exposure_ratio: float = None,
+):
+    try:
+        # === BASE MODEL ===
+        base_risk_score = (
+            (payment_delay_days * 2)
+            + ((100 - customer_score) * 0.3)
+            + (exposure_ratio *
 
 
 # ---------------------------
@@ -483,7 +495,14 @@ def score(
             "market": market,
             "pressure": macro_pressure,
             "reasons": macro_reasons
-        },
+        }exit
+clear
+cd ~/zentra-core
+nano app/api/routes.py
+cd ~/zentra-core
+nano app/api/routes.py
++0
++
         "decision": decision,
         "control": rl
     }
@@ -563,3 +582,403 @@ def stress(
         "decision": decision,
         "control": rl
     }
+@router.get("/score")
+def score(
+    amount: float,
+    payment_delay_days: float,
+    sector: str,
+    customer_score: float,
+    exposure_ratio: float,
+    planned_amount: float = None,
+    planned_payment_delay_days: float = None,
+    planned_customer_score: float = None,
+    planned_exposure_ratio: float = None
+):
+    try:
+
+        # === BASE MODEL ===
+        base_risk_score = (
+            (payment_delay_days * 2)
+            + ((100 - customer_score) * 0.3)
+            + (exposure_ratio * 100 * 0.4)
+        )
+
+        # === MACRO ===
+        macro_adjustment = 3
+        macro_adjusted_risk_score = base_risk_score + macro_adjustment
+
+        # === DEVIATION ===
+        deviation_adjustment = 0
+        deviation_reasons = []
+
+        if planned_amount and amount > planned_amount:
+            deviation_adjustment += 3
+            deviation_reasons.append("amount_up")
+
+        if planned_payment_delay_days and payment_delay_days > planned_payment_delay_days:
+            deviation_adjustment += 4
+            deviation_reasons.append("delay_up")
+
+        if planned_customer_score and customer_score < planned_customer_score:
+            deviation_adjustment += 2
+            deviation_reasons.append("customer_down")
+
+        if planned_exposure_ratio and exposure_ratio > planned_exposure_ratio:
+            deviation_adjustment += 3
+            deviation_reasons.append("exposure_up")
+
+        final_risk_score = macro_adjusted_risk_score + deviation_adjustment
+
+        # === BAND ===
+        if final_risk_score < 40:
+            risk_band = "LOW"
+            action = "Proceed"
+        elif final_risk_score < 70:
+            risk_band = "MID"
+            action = "Monitor"
+        else:
+            risk_band = "HIGH"
+            action = "Restrict"
+
+        # === DECISION SAFE ===
+        decision = {
+            "action": action,
+            "alert": "Risk evaluation completed",
+            "strategy": "Review exposure and repayment behaviour",
+            "rationale": "Score generated from behavioral + macro + deviation layers",
+            "lens": sector,
+            "profile": {
+                "monitor_threshold": 40,
+                "restrict_threshold": 70
+            },
+            "problem": "Risk exposure increasing",
+            "solution": "Adjust exposure and monitor behavior",
+            "benefit": "Risk stabilization",
+            "monetary_impact": "Loss probability reduction",
+            "evidence": {
+                "confidence": 0.80,
+                "source_mode": "model",
+                "source_name": "zentra_core"
+            }
+        }
+
+        # === AI SAFE ===
+        ai = {
+            "summary": f"Risk is {action} under {risk_band} band",
+            "recommendation": "Follow decision strategy",
+            "confidence_note": "Model based",
+            "benefit_note": "Risk control improves",
+            "money_note": "Loss reduction",
+            "reasoning_scope": "score+macro+deviation"
+        }
+
+        # === OUTPUT ===
+        return {
+            "base_risk_score": base_risk_score,
+            "macro_adjustment": macro_adjustment,
+            "macro_adjusted_risk_score": macro_adjusted_risk_score,
+            "deviation_adjustment": deviation_adjustment,
+            "final_risk_score": final_risk_score,
+            "risk_band": risk_band,
+            "drivers": [],
+            "flags": deviation_reasons,
+            "deviation": {
+                "metrics": [],
+                "level": "basic",
+                "adjustment": deviation_adjustment,
+                "reasons": deviation_reasons
+            },
+            "macro": {
+                "market": {
+                    "usdtry": 30,
+                    "eurusd": 1.08,
+                    "source": {
+                        "source_name": "fallback",
+                        "is_live": False
+                    }
+                },
+                "pressure": {
+                    "level": "moderate"
+                }
+            },
+            "decision": decision,
+            "evidence": {
+                "source_type": "model",
+                "decision_confidence": 0.80
+            },
+            "ai": ai
+        }
+
+    except Exception as e:
+        return {"error": str(e)}
+@router.get("/score")
+def score(
+    amount: float,
+    payment_delay_days: float,
+    sector: str,
+    customer_score: float,
+    exposure_ratio: float,
+    planned_amount: float = None,
+    planned_payment_delay_days: float = None,
+    planned_customer_score: float = None,
+    planned_exposure_ratio: float = None
+):
+    try:
+
+        # === BASE MODEL ===
+        base_risk_score = (
+            (payment_delay_days * 2)
+            + ((100 - customer_score) * 0.3)
+            + (exposure_ratio * 100 * 0.4)
+        )
+
+        # === MACRO ===
+        macro_adjustment = 3
+        macro_adjusted_risk_score = base_risk_score + macro_adjustment
+
+        # === DEVIATION ===
+        deviation_adjustment = 0
+        deviation_reasons = []
+
+        if planned_amount and amount > planned_amount:
+            deviation_adjustment += 3
+            deviation_reasons.append("amount_up")
+
+        if planned_payment_delay_days and payment_delay_days > planned_payment_delay_days:
+            deviation_adjustment += 4
+            deviation_reasons.append("delay_up")
+
+        if planned_customer_score and customer_score < planned_customer_score:
+            deviation_adjustment += 2
+            deviation_reasons.append("customer_down")
+
+        if planned_exposure_ratio and exposure_ratio > planned_exposure_ratio:
+            deviation_adjustment += 3
+            deviation_reasons.append("exposure_up")
+
+        final_risk_score = macro_adjusted_risk_score + deviation_adjustment
+
+        # === BAND ===
+        if final_risk_score < 40:
+            risk_band = "LOW"
+            action = "Proceed"
+        elif final_risk_score < 70:
+            risk_band = "MID"
+            action = "Monitor"
+        else:
+            risk_band = "HIGH"
+            action = "Restrict"
+
+        # === DECISION SAFE ===
+        decision = {
+            "action": action,
+            "alert": "Risk evaluation completed",
+            "strategy": "Review exposure and repayment behaviour",
+            "rationale": "Score generated from behavioral + macro + deviation layers",
+            "lens": sector,
+            "profile": {
+                "monitor_threshold": 40,
+                "restrict_threshold": 70
+            },
+            "problem": "Risk exposure increasing",
+            "solution": "Adjust exposure and monitor behavior",
+            "benefit": "Risk stabilization",
+            "monetary_impact": "Loss probability reduction",
+            "evidence": {
+                "confidence": 0.80,
+                "source_mode": "model",
+                "source_name": "zentra_core"
+            }
+        }
+
+        # === AI SAFE ===
+        ai = {
+            "summary": f"Risk is {action} under {risk_band} band",
+            "recommendation": "Follow decision strategy",
+            "confidence_note": "Model based",
+            "benefit_note": "Risk control improves",
+            "money_note": "Loss reduction",
+            "reasoning_scope": "score+macro+deviation"
+        }
+
+        # === OUTPUT ===
+        return {
+            "base_risk_score": base_risk_score,
+            "macro_adjustment": macro_adjustment,
+            "macro_adjusted_risk_score": macro_adjusted_risk_score,
+            "deviation_adjustment": deviation_adjustment,
+            "final_risk_score": final_risk_score,
+            "risk_band": risk_band,
+            "drivers": [],
+            "flags": deviation_reasons,
+            "deviation": {
+                "metrics": [],
+                "level": "basic",
+                "adjustment": deviation_adjustment,
+                "reasons": deviation_reasons
+            },
+            "macro": {
+                "market": {
+                    "usdtry": 30,
+                    "eurusd": 1.08,
+                    "source": {
+                        "source_name": "fallback",
+                        "is_live": False
+                    }
+                },
+                "pressure": {
+                    "level": "moderate"
+                }
+            },
+            "decision": decision,
+            "evidence": {
+                "source_type": "model",
+                "decision_confidence": 0.80
+            },
+            "ai": ai
+        }
+
+    except Exception as e:
+        return {"error": str(e)}nano app/api/routes.py
+@router.get("/score")
+@router.get("/score")
+def score(
+    amount: float,
+    payment_delay_days: float,
+    sector: str,
+    customer_score: float,
+    exposure_ratio: float,
+    planned_amount: float = None,
+    planned_payment_delay_days: float = None,
+    planned_customer_score: float = None,
+    planned_exposure_ratio: float = None
+):
+    try:
+
+        # === BASE MODEL ===
+        base_risk_score = (
+            (payment_delay_days * 2)
+            + ((100 - customer_score) * 0.3)
+            + (exposure_ratio * 100 * 0.4)
+        )
+
+        # === MACRO ===
+        macro_adjustment = 3
+        macro_adjusted_risk_score = base_risk_score + macro_adjustment
+
+        # === DEVIATION ===
+        deviation_adjustment = 0
+        deviation_reasons = []
+
+        if planned_amount and amount > planned_amount:
+            deviation_adjustment += 3
+            deviation_reasons.append("amount_up")
+
+        if planned_payment_delay_days and payment_delay_days > planned_payment_delay_days:
+            deviation_adjustment += 4
+            deviation_reasons.append("delay_up")
+
+        if planned_customer_score and customer_score < planned_customer_score:
+            deviation_adjustment += 2
+            deviation_reasons.append("customer_down")
+
+        if planned_exposure_ratio and exposure_ratio > planned_exposure_ratio:
+            deviation_adjustment += 3
+            deviation_reasons.append("exposure_up")
+
+        final_risk_score = macro_adjusted_risk_score + deviation_adjustment
+
+        # === BAND ===
+        if final_risk_score < 40:
+            risk_band = "LOW"
+            action = "Proceed"
+        elif final_risk_score < 70:
+            risk_band = "MID"
+            action = "Monitor"
+        else:
+            risk_band = "HIGH"
+            action = "Restrict"
+
+        # === DECISION SAFE ===
+        decision = {
+            "action": action,
+            "alert": "Risk evaluation completed",
+            "strategy": "Review exposure and repayment behaviour",
+            "rationale": "Score generated from behavioral + macro + deviation layers",
+            "lens": sector,
+            "profile": {
+                "monitor_threshold": 40,
+                "restrict_threshold": 70
+            },
+            "problem": "Risk exposure increasing",
+            "solution": "Adjust exposure and monitor behavior",
+            "benefit": "Risk stabilization",
+            "monetary_impact": "Loss probability reduction",
+            "evidence": {
+                "confidence": 0.80,
+                "source_mode": "model",
+                "source_name": "zentra_core"
+            }
+        }
+
+        # === AI SAFE ===
+        ai = {
+            "summary": f"Risk is {action} under {risk_band} band",
+            "recommendation": "Follow decision strategy",
+            "confidence_note": "Model based",
+            "benefit_note": "Risk control improves",
+            "money_note": "Loss reduction",
+            "reasoning_scope": "score+macro+deviation"
+        }
+
+        # === OUTPUT ===
+        return {
+            "base_risk_score": base_risk_score,
+            "macro_adjustment": macro_adjustment,
+            "macro_adjusted_risk_score": macro_adjusted_risk_score,
+            "deviation_adjustment": deviation_adjustment,
+            "final_risk_score": final_risk_score,
+            "risk_band": risk_band,
+            "drivers": [],
+            "flags": deviation_reasons,
+            "deviation": {
+                "metrics": [],
+                "level": "basic",
+                "adjustment": deviation_adjustment,
+                "reasons": deviation_reasons
+            },
+            "macro": {
+                "market": {
+                    "usdtry": 30,
+                    "eurusd": 1.08,
+                    "source": {
+                        "source_name": "fallback",
+                        "is_live": False
+                    }
+                },
+                "pressure": {
+                    "level": "moderate"
+                }
+            },
+            "decision": decision,
+            "evidence": {
+                "source_type": "model",
+                "decision_confidence": 0.80
+            },
+            "ai": ai
+        }
+
+    except Exception as e:
+        return {"error": str(e)}
+cd ~/zentra-core
+nano app/api/routes.py
++
+pkg update
+pkg install python
+pkg install git
+pkg install clang
+pkg install make
+pkg install python-dev
+pkg install libffi-dev
+pkg install libssl-dev
++
