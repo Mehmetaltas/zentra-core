@@ -1,4 +1,7 @@
+from app.services.trade_deep_verification import evaluate_trade_deep
 from fastapi import APIRouter, Request
+from app.services.lens import get_lens_catalog, get_lens_detail
+from app.services.trade_deep_verification import evaluate_trade_deep
 from app.services.scoring import calculate_score
 from app.services.stress import calculate_stress
 from app.core.rate_limit import check_rate_limit
@@ -981,4 +984,11 @@ pkg install make
 pkg install python-dev
 pkg install libffi-dev
 pkg install libssl-dev
++
+@router.post("/trade/full-evaluate")
+def trade_full_evaluate(payload: dict):
+    try:
+        return evaluate_trade_deep(payload)
+    except Exception as e:
+        return {"error": str(e)}
 +
