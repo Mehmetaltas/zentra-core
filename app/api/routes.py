@@ -341,6 +341,48 @@ def normalize_sector_to_lens(sector: str):
     return "sme"
 
 
+def build_confidence(score: float, pressure: dict, deviation_context: dict = None):
+    base = 0.85
+
+    if score >= 70:
+        base -= 0.25
+    elif score >= 40:
+        base -= 0.15
+    else:
+        base -= 0.05
+
+    level = pressure.get("level", "stable")
+    if level == "high":
+        base -= 0.25
+    elif level == "elevated":
+        base -= 0.15
+    elif level == "moderate":
+        base -= 0.08
+
+    if deviation_context:
+        deviation_level = deviation_context.get("overall_level", "none")
+        if deviation_level == "high":
+            base -= 0.20
+        elif deviation_level == "moderate":
+            base -= 0.10
+        elif deviation_level == "low":
+            base -= 0.05
+
+    confidence_score = max(0.05, min(0.95, round(base, 2)))
+
+    if confidence_score >= 0.75:
+        confidence_label = "high"
+    elif confidence_score >= 0.50:
+        confidence_label = "medium"
+    else:
+        confidence_label = "low"
+
+    return {
+        "score": confidence_score,
+        "label": confidence_label
+    }
+
+
 def build_decision(risk_score: float, pressure: dict, sector: str, deviation_context: dict = None):
     lens = normalize_sector_to_lens(sector)
     level = pressure.get("level", "stable")
@@ -442,12 +484,15 @@ def build_decision(risk_score: float, pressure: dict, sector: str, deviation_con
         alert = alert + " / sme sensitivity"
         rationale = rationale + " Small enterprise resilience is more exposed to pressure shifts."
 
+    confidence = build_confidence(risk_score, pressure, deviation_context)
+
     return {
         "action": action,
         "strategy": strategy,
         "alert": alert,
         "rationale": rationale,
-        "lens": lens
+        "lens": lens,
+        "confidence": confidence
     }
 
 
@@ -500,12 +545,15 @@ def build_stress_decision(stress_score: float, pressure: dict, sector: str, devi
     elif lens == "sme":
         strategy = strategy + " Focus on cashflow fragility and partner dependence."
 
+    confidence = build_confidence(stress_score, pressure, deviation_context)
+
     return {
         "action": action,
         "strategy": strategy,
         "alert": alert,
         "rationale": rationale,
-        "lens": lens
+        "lens": lens,
+        "confidence": confidence
     }
 
 
