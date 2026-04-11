@@ -556,6 +556,122 @@ def build_stress_decision(stress_score: float, pressure: dict, sector: str, devi
         "confidence": confidence
     }
 
+def build_agent_core(
+    risk_score: float = 0.0,
+    stress_score: float = 0.0,
+    pressure: dict = None,
+    sector: str = "",
+    deviation_context: dict = None
+):
+    pressure = pressure or {}
+    deviation_context = deviation_context or {}
+
+    level = pressure.get("level", "stable")
+    deviation_level = deviation_context.get("overall_level", "none")
+
+    active_agents = []
+    missions = []
+
+    def add_agent(name: str):
+        if name not in active_agents:
+            active_agents.append(name)
+
+    def add_mission(mission_id: str, owner: str, mission_type: str, priority: str, reason: str):
+        missions.append({
+            "mission_id": mission_id,
+            "owner": owner,
+            "type": mission_type,
+            "priority": priority,
+            "reason": reason
+        })
+
+    if risk_score >= 70:
+        add_agent("Risk Agent")
+        add_mission(
+            "risk_restriction_review",
+            "Risk Agent",
+            "ACTION",
+            "critical",
+            "Risk entered restrictive zone"
+        )
+    elif risk_score >= 40:
+        add_agent("Risk Agent")
+        add_mission(
+            "risk_escalation_monitor",
+            "Risk Agent",
+            "ACTION",
+            "high",
+            "Risk entered monitoring zone"
+        )
+
+    if stress_score >= 70:
+        add_agent("Stress Agent")
+        add_mission(
+            "stress_containment_watch",
+            "Stress Agent",
+            "ACTION",
+            "critical",
+            "Stress entered restrictive zone"
+        )
+    elif stress_score >= 40:
+        add_agent("Stress Agent")
+        add_mission(
+            "stress_scenario_monitor",
+            "Stress Agent",
+            "ACTION",
+            "high",
+            "Stress entered monitoring zone"
+        )
+
+    if level in ["high", "elevated"]:
+        add_agent("Telescope Agent")
+        add_mission(
+            "macro_pressure_watch",
+            "Telescope Agent",
+            "REVIEW",
+            "critical" if level == "high" else "high",
+            f"Macro pressure is {level}"
+        )
+
+    if deviation_level == "high":
+        add_agent("Deviation Agent")
+        add_mission(
+            "deviation_break_review",
+            "Deviation Agent",
+            "REVIEW",
+            "critical",
+            "Deviation materially changed the operating picture"
+        )
+    elif deviation_level == "moderate":
+        add_agent("Deviation Agent")
+        add_mission(
+            "deviation_watch",
+            "Deviation Agent",
+            "REVIEW",
+            "medium",
+            "Deviation requires caution review"
+        )
+
+    if sector in ["trade", "logistics", "invoice"] and risk_score < 70 and stress_score < 70:
+        add_agent("Trade Agent")
+        add_mission(
+            "trade_selectivity_review",
+            "Trade Agent",
+            "GUIDANCE",
+            "medium",
+            "Trade-sensitive sector should remain selective under current conditions"
+        )
+
+    add_agent("Learning Agent")
+
+    return {
+        "active_agents": active_agents,
+        "mission_count": len(missions),
+        "missions": missions,
+        "learning_status": "tracking_only",
+        "operator_binding": "not_started"
+    }
+
 
 # ---------------------------
 # CORE ROUTES
@@ -688,6 +804,13 @@ def score_get(
     )
 
     decision = build_decision(adjusted_score, pressure, sector, deviation_context)
+    agent_core = build_agent_core(
+        risk_score=adjusted_score,
+        stress_score=float(result.get("stress_score", 0)),
+        pressure=pressure,
+        sector=sector,
+        deviation_context=deviation_context
+    )
     risk_band = calculate_risk_band(adjusted_score)
 
     result["base_risk_score"] = base_score
@@ -700,6 +823,7 @@ def score_get(
     }
     result["deviation"] = deviation_context
     result["decision"] = decision
+    result["agent_core"] = agent_core
     result["control"] = {
         "rate_limit_checked": True,
         "client_ip": rl["client_ip"],
@@ -785,7 +909,15 @@ def stress_get(
     result["deviation"] = deviation_context
 
     decision = build_stress_decision(stress_score, pressure, sector, deviation_context)
+    agent_core = build_agent_core(
+        risk_score=float(result.get("risk_score", 0)),
+        stress_score=stress_score,
+        pressure=pressure,
+        sector=sector,
+        deviation_context=deviation_context
+    )
     result["decision"] = decision
+    result["agent_core"] = agent_core
 
     result["control"] = {
         "rate_limit_checked": True,
