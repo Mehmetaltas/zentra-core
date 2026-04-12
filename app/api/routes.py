@@ -763,6 +763,35 @@ def build_operator_binding(decision: dict, agent_core: dict, sector: str = ""):
 
 
 
+def build_learning_loop(predicted: float, actual: float, context: str = "risk"):
+    predicted = float(predicted or 0)
+    actual = float(actual or 0)
+    delta = round(actual - predicted, 2)
+    abs_delta = round(abs(delta), 2)
+
+    if abs_delta >= 15:
+        outcome_status = "fail"
+        learning_action = "recalibrate_thresholds"
+    elif abs_delta >= 7:
+        outcome_status = "partial"
+        learning_action = "watch_and_adjust"
+    else:
+        outcome_status = "success"
+        learning_action = "retain_current_logic"
+
+    return {
+        "context": context,
+        "predicted": round(predicted, 2),
+        "actual": round(actual, 2),
+        "delta": delta,
+        "abs_delta": abs_delta,
+        "outcome_status": outcome_status,
+        "learning_action": learning_action
+    }
+
+
+
+
 # ---------------------------
 # CORE ROUTES
 # ---------------------------
@@ -917,6 +946,12 @@ def score_get(
     operator_binding = build_operator_binding(decision, agent_core, sector)
     result["operator_binding"] = operator_binding
     result["decision"]["operator_action"] = operator_binding.get("operator_action")
+    learning_loop = build_learning_loop(
+        predicted=adjusted_score,
+        actual=base_score,
+        context="risk"
+    )
+    result["learning_loop"] = learning_loop
     result["control"] = {
         "rate_limit_checked": True,
         "client_ip": rl["client_ip"],
@@ -1014,6 +1049,12 @@ def stress_get(
     operator_binding = build_operator_binding(decision, agent_core, sector)
     result["operator_binding"] = operator_binding
     result["decision"]["operator_action"] = operator_binding.get("operator_action")
+    learning_loop = build_learning_loop(
+        predicted=stress_score,
+        actual=float(result.get("scenarios", {}).get("base_case", stress_score)),
+        context="stress"
+    )
+    result["learning_loop"] = learning_loop
 
     result["control"] = {
         "rate_limit_checked": True,
