@@ -856,6 +856,49 @@ def build_audit_trail(
     }
 
 
+
+
+def build_governance_layer(decision: dict, operator_binding: dict, learning_loop: dict, audit: dict):
+    base_action = decision.get("action", "Proceed")
+    operator_action = operator_binding.get("operator_action", "TUT")
+    confidence = decision.get("confidence", {}).get("label", "LOW")
+    learning_status = learning_loop.get("outcome_status", "unknown")
+    reasons = audit.get("summary", {}).get("why", [])
+
+    governance_mode = "NORMAL"
+
+    if operator_action in ["RISK AZALT"]:
+        governance_mode = "DEFENSIVE"
+    elif operator_action in ["BEKLE"]:
+        governance_mode = "CAUTIOUS"
+    elif operator_action in ["SEÇİCİ AL"]:
+        governance_mode = "SELECTIVE"
+
+    advisory = "Standart izleme ve kontrollü ilerleme."
+
+    if governance_mode == "DEFENSIVE":
+        advisory = "Risk azaltma öncelikli hareket et. Yeni yük alma."
+    elif governance_mode == "CAUTIOUS":
+        advisory = "Teyit gelmeden agresif aksiyon alma."
+    elif governance_mode == "SELECTIVE":
+        advisory = "Sadece güçlü sinyalleri değerlendir."
+
+    escalation = "none"
+
+    if confidence == "LOW" or learning_status == "diverging":
+        escalation = "review_required"
+    elif operator_action == "RISK AZALT":
+        escalation = "risk_committee_attention"
+
+    return {
+        "governance_mode": governance_mode,
+        "advisory": advisory,
+        "escalation": escalation,
+        "confidence": confidence,
+        "learning_status": learning_status,
+        "top_reason": reasons[0] if reasons else "-"
+    }
+
 def build_registry_entry(
     snapshot: dict,
     audit: dict,
@@ -1055,6 +1098,15 @@ def score_get(
     result["snapshot"] = snapshot
     result["audit"] = audit
     result["registry"] = registry_entry
+
+    governance = build_governance_layer(
+        decision=decision,
+        operator_binding=operator_binding,
+        learning_loop=learning_loop,
+        audit=audit
+    )
+    result["governance"] = governance
+
     result["control"] = {
         "rate_limit_checked": True,
         "client_ip": rl["client_ip"],
