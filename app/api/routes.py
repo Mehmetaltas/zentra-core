@@ -791,6 +791,86 @@ def build_learning_loop(predicted: float, actual: float, context: str = "risk"):
 
 
 
+def build_state_snapshot(
+    result: dict,
+    agent_core: dict,
+    operator_binding: dict,
+    learning_loop: dict
+):
+    global_block = result.get("global", {}) or {}
+    pressure = global_block.get("pressure", {}) or {}
+
+    return {
+        "timestamp": datetime.utcnow().isoformat() + "Z",
+        "state": {
+            "risk_score": result.get("risk_score"),
+            "stress_score": result.get("stress_score"),
+            "risk_band": result.get("risk_band"),
+            "stress_band": result.get("stress_band"),
+            "macro_pressure": pressure.get("level"),
+        },
+        "decision": result.get("decision", {}),
+        "agent_core": {
+            "active_agents": agent_core.get("active_agents", []),
+            "mission_count": agent_core.get("mission_count", 0),
+            "missions": agent_core.get("missions", [])
+        },
+        "operator_binding": operator_binding,
+        "learning_loop": learning_loop
+    }
+
+
+def build_audit_trail(
+    result: dict,
+    decision: dict,
+    agent_core: dict,
+    operator_binding: dict,
+    learning_loop: dict
+):
+    decision = decision or {}
+    operator_binding = operator_binding or {}
+    learning_loop = learning_loop or {}
+    agent_core = agent_core or {}
+
+    return {
+        "decision_trace": {
+            "action": decision.get("action"),
+            "operator_action": operator_binding.get("operator_action"),
+            "confidence": (decision.get("confidence") or {}).get("label"),
+            "lens": decision.get("lens")
+        },
+        "agent_trace": {
+            "active_agents": agent_core.get("active_agents", []),
+            "mission_count": agent_core.get("mission_count", 0)
+        },
+        "learning_trace": {
+            "context": learning_loop.get("context"),
+            "delta": learning_loop.get("delta"),
+            "outcome_status": learning_loop.get("outcome_status"),
+            "learning_action": learning_loop.get("learning_action")
+        },
+        "summary": {
+            "why": (operator_binding.get("reasons") or [])[:3],
+            "mission_effect": operator_binding.get("mission_effect", "base_decision_only")
+        }
+    }
+
+
+def build_registry_entry(
+    snapshot: dict,
+    audit: dict,
+    endpoint: str
+):
+    return {
+        "entry_type": "decision_cycle",
+        "endpoint": endpoint,
+        "snapshot": snapshot,
+        "audit": audit
+    }
+
+
+
+
 
 # ---------------------------
 # CORE ROUTES
@@ -952,6 +1032,29 @@ def score_get(
         context="risk"
     )
     result["learning_loop"] = learning_loop
+
+    snapshot = build_state_snapshot(
+        result=result,
+        agent_core=agent_core,
+        operator_binding=operator_binding,
+        learning_loop=learning_loop
+    )
+    audit = build_audit_trail(
+        result=result,
+        decision=decision,
+        agent_core=agent_core,
+        operator_binding=operator_binding,
+        learning_loop=learning_loop
+    )
+    registry_entry = build_registry_entry(
+        snapshot=snapshot,
+        audit=audit,
+        endpoint="/score"
+    )
+
+    result["snapshot"] = snapshot
+    result["audit"] = audit
+    result["registry"] = registry_entry
     result["control"] = {
         "rate_limit_checked": True,
         "client_ip": rl["client_ip"],
@@ -1055,6 +1158,29 @@ def stress_get(
         context="stress"
     )
     result["learning_loop"] = learning_loop
+
+    snapshot = build_state_snapshot(
+        result=result,
+        agent_core=agent_core,
+        operator_binding=operator_binding,
+        learning_loop=learning_loop
+    )
+    audit = build_audit_trail(
+        result=result,
+        decision=decision,
+        agent_core=agent_core,
+        operator_binding=operator_binding,
+        learning_loop=learning_loop
+    )
+    registry_entry = build_registry_entry(
+        snapshot=snapshot,
+        audit=audit,
+        endpoint="/stress"
+    )
+
+    result["snapshot"] = snapshot
+    result["audit"] = audit
+    result["registry"] = registry_entry
 
     result["control"] = {
         "rate_limit_checked": True,
