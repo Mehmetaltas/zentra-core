@@ -673,6 +673,96 @@ def build_agent_core(
     }
 
 
+def build_operator_binding(decision: dict, agent_core: dict, sector: str = ""):
+    decision = decision or {}
+    agent_core = agent_core or {}
+
+    base_action = decision.get("action", "Proceed")
+    missions = agent_core.get("missions", [])
+    active_agents = agent_core.get("active_agents", [])
+
+    severity = "normal"
+    bias = "neutral"
+    reasons = []
+
+    def escalate_severity(current: str, new: str) -> str:
+        order = {"normal": 0, "medium": 1, "high": 2, "critical": 3}
+        return new if order.get(new, 0) > order.get(current, 0) else current
+
+    operator_action = "TUT"
+
+    if base_action == "Restrict":
+        operator_action = "RISK AZALT"
+        severity = "high"
+        bias = "defensive"
+    elif base_action == "Monitor":
+        operator_action = "BEKLE"
+        severity = "medium"
+        bias = "cautious"
+    elif sector in ["trade", "logistics", "invoice"]:
+        operator_action = "SEÇİCİ AL"
+        bias = "selective"
+    else:
+        operator_action = "TUT"
+
+    for mission in missions:
+        mission_id = mission.get("mission_id", "")
+        priority = mission.get("priority", "medium")
+        reason = mission.get("reason", "")
+
+        if priority == "critical":
+            severity = escalate_severity(severity, "critical")
+        elif priority == "high":
+            severity = escalate_severity(severity, "high")
+        elif priority == "medium":
+            severity = escalate_severity(severity, "medium")
+
+        if mission_id in ["risk_restriction_review", "stress_containment_watch"]:
+            operator_action = "RISK AZALT"
+            bias = "defensive"
+            reasons.append(f"Mission {mission_id} forced defensive posture")
+        elif mission_id == "macro_pressure_watch":
+            if operator_action == "SEÇİCİ AL":
+                operator_action = "BEKLE"
+            elif operator_action == "TUT":
+                operator_action = "BEKLE"
+            bias = "defensive"
+            reasons.append(f"Mission {mission_id} increased macro caution")
+        elif mission_id == "deviation_break_review":
+            if operator_action == "SEÇİCİ AL":
+                operator_action = "AZALT"
+            elif operator_action == "TUT":
+                operator_action = "AZALT"
+            elif operator_action == "BEKLE":
+                operator_action = "AZALT"
+            bias = "defensive"
+            reasons.append(f"Mission {mission_id} reacted to adverse deviation")
+        elif mission_id == "deviation_watch":
+            if operator_action == "SEÇİCİ AL":
+                operator_action = "BEKLE"
+            reasons.append(f"Mission {mission_id} added caution review")
+        elif mission_id == "trade_selectivity_review" and operator_action in ["TUT", "SEÇİCİ AL"]:
+            operator_action = "SEÇİCİ AL"
+            bias = "selective"
+            reasons.append(f"Mission {mission_id} preserved selective participation")
+
+        if reason and len(reasons) < 5 and f"Mission {mission_id}" not in " ".join(reasons):
+            reasons.append(f"Mission {mission_id}: {reason}")
+
+    mission_effect = "mission_adjusted" if reasons else "base_decision_only"
+
+    return {
+        "base_action": base_action,
+        "operator_action": operator_action,
+        "bias": bias,
+        "severity": severity,
+        "mission_effect": mission_effect,
+        "reasons": reasons[:5],
+        "active_agents": active_agents
+    }
+
+
+
 # ---------------------------
 # CORE ROUTES
 # ---------------------------
@@ -824,6 +914,9 @@ def score_get(
     result["deviation"] = deviation_context
     result["decision"] = decision
     result["agent_core"] = agent_core
+    operator_binding = build_operator_binding(decision, agent_core, sector)
+    result["operator_binding"] = operator_binding
+    result["decision"]["operator_action"] = operator_binding.get("operator_action")
     result["control"] = {
         "rate_limit_checked": True,
         "client_ip": rl["client_ip"],
@@ -918,6 +1011,9 @@ def stress_get(
     )
     result["decision"] = decision
     result["agent_core"] = agent_core
+    operator_binding = build_operator_binding(decision, agent_core, sector)
+    result["operator_binding"] = operator_binding
+    result["decision"]["operator_action"] = operator_binding.get("operator_action")
 
     result["control"] = {
         "rate_limit_checked": True,
