@@ -9,198 +9,866 @@
 <script src="./app/components/app-router.js"></script>
 
 <style>
+*{box-sizing:border-box}
 body{
   margin:0;
   font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
   background:#0b0f1a;
   color:#e5e7eb;
 }
+button,input,select,textarea{font:inherit}
+.shell{
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+}
 .topbar{
   display:flex;
   justify-content:space-between;
-  padding:16px 20px;
+  align-items:center;
+  gap:16px;
+  padding:18px 20px;
   border-bottom:1px solid #1f2937;
   background:#0f172a;
+  position:sticky;
+  top:0;
+  z-index:20;
+  flex-wrap:wrap;
 }
-.brand-title{font-weight:700;font-size:14px}
+.brand{
+  display:flex;
+  flex-direction:column;
+  gap:4px;
+}
+.brand-title{
+  font-size:15px;
+  font-weight:700;
+  letter-spacing:.6px;
+}
+.brand-sub{
+  font-size:12px;
+  opacity:.68;
+}
+.topbar-right{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  flex-wrap:wrap;
+}
 .status-pill{
-  padding:6px 12px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-width:90px;
+  padding:7px 12px;
   border-radius:999px;
   font-size:12px;
-  border:1px solid #334155;
+  border:1px solid #243041;
+  background:#111827;
+  color:#cbd5e1;
 }
-.nav{
+.lang-group{
+  display:flex;
+  gap:6px;
+  flex-wrap:wrap;
+}
+.lang-btn,
+.nav-btn,
+.run-btn,
+.ghost-btn{
+  border:1px solid #334155;
+  background:#111827;
+  color:#e5e7eb;
+  border-radius:10px;
+  padding:10px 14px;
+  font-size:13px;
+  cursor:pointer;
+}
+.lang-btn.active,
+.nav-btn.active{
+  background:#2563eb;
+  border-color:#2563eb;
+  color:#fff;
+}
+.main-nav{
   display:flex;
   gap:10px;
-  padding:12px 20px;
+  padding:14px 20px;
   border-bottom:1px solid #1f2937;
+  background:#0b1220;
+  flex-wrap:wrap;
 }
-button{
-  cursor:pointer;
-  border-radius:8px;
-  border:1px solid #334155;
-  padding:10px 12px;
+.page{
+  width:100%;
+  max-width:1240px;
+  margin:0 auto;
+  padding:20px;
+}
+.hero{
+  display:grid;
+  grid-template-columns:1.25fr .75fr;
+  gap:20px;
+  margin-bottom:20px;
+}
+.panel{
   background:#111827;
-  color:white;
+  border:1px solid #1f2937;
+  border-radius:16px;
+  padding:18px;
 }
-.primary{background:#2563eb;border:none}
-.page{padding:20px;max-width:1200px;margin:auto}
-.grid{display:grid;gap:20px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+.panel-title{
+  font-size:14px;
+  opacity:.72;
+  margin-bottom:14px;
+}
+.form-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+  gap:12px;
+}
+.field{
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+}
+.label{
+  font-size:12px;
+  opacity:.75;
+}
+.input,.select{
+  width:100%;
+  background:#0b1220;
+  color:#e5e7eb;
+  border:1px solid #334155;
+  border-radius:10px;
+  padding:12px;
+  font-size:14px;
+  outline:none;
+}
+.input:focus,.select:focus{
+  border-color:#2563eb;
+}
+.actions{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-top:14px;
+}
+.run-btn{
+  background:#2563eb;
+  border-color:#2563eb;
+  color:#fff;
+}
+.helper{
+  margin-top:10px;
+  font-size:12px;
+  opacity:.68;
+  line-height:1.5;
+}
+.message{
+  margin-top:12px;
+  font-size:13px;
+  opacity:.92;
+}
+.summary-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+  gap:12px;
+}
+.summary-item{
+  background:#0b1220;
+  border:1px solid #263244;
+  border-radius:12px;
+  padding:12px;
+}
+.summary-label{
+  font-size:12px;
+  opacity:.65;
+}
+.summary-value{
+  margin-top:6px;
+  font-size:16px;
+  font-weight:700;
+  word-break:break-word;
+}
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  gap:20px;
+}
 .card{
   background:#111827;
-  padding:16px;
-  border-radius:12px;
   border:1px solid #1f2937;
+  border-radius:14px;
+  padding:16px;
 }
-.title{opacity:.6;font-size:13px}
-.value{font-size:28px;font-weight:700;margin-top:6px}
-.badge{margin-top:8px;font-size:12px;padding:4px 8px;border-radius:6px}
-.low{background:#064e3b;color:#34d399}
-.mid{background:#78350f;color:#fbbf24}
-.high{background:#7f1d1d;color:#f87171}
+.card-title{
+  font-size:13px;
+  opacity:.68;
+}
+.card-value{
+  font-size:30px;
+  font-weight:700;
+  margin-top:8px;
+  word-break:break-word;
+}
+.card-text{
+  margin-top:10px;
+  font-size:13px;
+  line-height:1.55;
+  opacity:.88;
+  white-space:pre-wrap;
+}
+.badge{
+  display:inline-block;
+  padding:4px 8px;
+  border-radius:8px;
+  font-size:12px;
+  margin-top:10px;
+}
+.low{background:#064e3b;color:#34d399;}
+.mid{background:#78350f;color:#fbbf24;}
+.high{background:#7f1d1d;color:#f87171;}
+.footer{
+  padding:20px;
+  text-align:center;
+  opacity:.5;
+  font-size:12px;
+}
+@media (max-width:900px){
+  .hero{grid-template-columns:1fr;}
+}
 </style>
 </head>
 
 <body>
+<div class="shell">
+  <div class="topbar">
+    <div class="brand">
+      <div class="brand-title">ZENTRA MATRIX ECOSYSTEM</div>
+      <div class="brand-sub" id="brandSub"></div>
+    </div>
 
-<div class="topbar">
-  <div class="brand-title">ZENTRA MATRIX ECOSYSTEM</div>
-  <div id="status" class="status-pill">IDLE</div>
-</div>
+    <div class="topbar-right">
+      <div id="statusPill" class="status-pill">IDLE</div>
 
-<div class="nav">
-  <button onclick="setLang('tr')">TR</button>
-  <button onclick="setLang('en')">EN</button>
-  <button onclick="setLang('ar')">AR</button>
-</div>
+      <div class="lang-group">
+        <button class="lang-btn" id="lang-tr" onclick="setLang('tr')">TR</button>
+        <button class="lang-btn" id="lang-en" onclick="setLang('en')">EN</button>
+        <button class="lang-btn" id="lang-ar" onclick="setLang('ar')">AR</button>
+      </div>
+    </div>
+  </div>
 
-<div class="page">
+  <div class="main-nav">
+    <button class="nav-btn" id="nav-cockpit" onclick="goRoute('cockpit')"></button>
+    <button class="nav-btn" id="nav-report" onclick="goRoute('report')"></button>
+    <button class="nav-btn" id="nav-modules" onclick="goRoute('modules')"></button>
+  </div>
 
-  <button class="primary" onclick="run()">RUN ANALYSIS</button>
+  <div id="app-root"></div>
 
-  <div class="grid" id="grid"></div>
-
+  <div class="footer" id="footerText"></div>
 </div>
 
 <script>
-let lang="tr";
+const API_URL = "/api/v1/credit-stress";
 
-const API="/api/v1/credit-stress";
+const FALLBACK_OUTPUT = {
+  risk_score: 62,
+  stress_score: 44,
+  decision: "monitor",
+  macro_pressure: "moderate",
+  trade_signal: 64,
+  deviation_level: "low",
+  regime: "trend",
+  dominant_lens: "trade",
+  strategy: "Proceed with controlled caution and keep exposure monitored.",
+  rationale: "Fallback mode is active. Live endpoint did not return a usable response.",
+  raw: { mode: "fallback", source: "index-root-entry" }
+};
 
-function t(v){
-  const map={
-    tr:{
-      risk:"Risk",
-      stress:"Stres",
-      decision:"Karar",
-      stable:"Stabil",
-      moderate:"Orta",
-      high:"Yüksek",
-      monitor:"İzle",
-      approve:"Onayla",
-      reject:"Reddet"
-    },
-    en:{
-      risk:"Risk",
-      stress:"Stress",
-      decision:"Decision"
-    },
-    ar:{
-      risk:"المخاطر",
-      stress:"الضغط",
-      decision:"القرار"
-    }
-  };
-  return map[lang][v]||v;
+const COPY = {
+  tr: {
+    brandSub: "Final Clean System • Root Entry Aktif",
+    cockpit: "Cockpit",
+    report: "Rapor",
+    modules: "Modüller",
+    liveInput: "Canlı Risk Girişi",
+    amount: "Tutar",
+    delay: "Gecikme Günü",
+    score: "Müşteri Skoru",
+    exposure: "Exposure Ratio",
+    sector: "Sektör",
+    country: "Ülke",
+    run: "Analiz Çalıştır",
+    fallback: "Fallback Göster",
+    helper: "Canlı endpoint yanıt verirse sonuçlar ekrana basılır. Başarısız olursa güvenli fallback görünümü korunur.",
+    ready: "Hazır.",
+    sending: "Canlı analiz gönderiliyor...",
+    liveReceived: "Canlı yanıt alındı.",
+    fallbackLoaded: "Fallback görünümü yüklendi.",
+    fallbackFail: "Canlı istek başarısız. Fallback aktif.",
+    risk: "Risk",
+    stress: "Stres",
+    decision: "Karar",
+    macro: "Makro",
+    trade: "Trade Signal",
+    deviation: "Sapma",
+    regime: "Rejim",
+    dominantLens: "Baskın Lens",
+    strategy: "Strateji",
+    rationale: "Gerekçe",
+    raw: "Ham Yanıt",
+    stateRoute: "Aktif Route",
+    stateLang: "Aktif Dil",
+    stateConnection: "Bağlantı",
+    stateUpdated: "Son Güncelleme",
+    reportTitle: "Rapor Sayfası",
+    reportText: "Bu blok report engine için ayrıldı. Sonraki doğru adım: state içindeki output alanından rapor yüzeyi üretmek.",
+    modulesTitle: "Modüller Sayfası",
+    modulesText: "Bu blok modül marketplace / lens cockpit / workspace genişlemesi için ayrıldı.",
+    approve: "Onayla",
+    monitor: "İzle",
+    reject: "Reddet",
+    stable: "Stabil",
+    moderate: "Orta",
+    high: "Yüksek",
+    low: "Düşük",
+    trend: "Trend",
+    fragile: "Kırılgan",
+    tradeLens: "Ticaret",
+    invoice: "Fatura",
+    logistics: "Lojistik",
+    compliance: "Uyum",
+    sme: "KOBİ",
+    footer: "ZENTRA Matrix Ecosystem • Final Clean System • Root Entry"
+  },
+  en: {
+    brandSub: "Final Clean System • Root Entry Active",
+    cockpit: "Cockpit",
+    report: "Report",
+    modules: "Modules",
+    liveInput: "Live Risk Input",
+    amount: "Amount",
+    delay: "Delay Days",
+    score: "Customer Score",
+    exposure: "Exposure Ratio",
+    sector: "Sector",
+    country: "Country",
+    run: "Run Analysis",
+    fallback: "Show Fallback",
+    helper: "If the live endpoint responds, results are rendered. If it fails, the safe fallback view remains active.",
+    ready: "Ready.",
+    sending: "Sending live analysis...",
+    liveReceived: "Live response received.",
+    fallbackLoaded: "Fallback view loaded.",
+    fallbackFail: "Live request failed. Fallback active.",
+    risk: "Risk",
+    stress: "Stress",
+    decision: "Decision",
+    macro: "Macro",
+    trade: "Trade Signal",
+    deviation: "Deviation",
+    regime: "Regime",
+    dominantLens: "Dominant Lens",
+    strategy: "Strategy",
+    rationale: "Rationale",
+    raw: "Raw Response",
+    stateRoute: "Active Route",
+    stateLang: "Active Language",
+    stateConnection: "Connection",
+    stateUpdated: "Last Update",
+    reportTitle: "Report Page",
+    reportText: "This block is reserved for the report engine. Next correct step: generate a report surface from state output.",
+    modulesTitle: "Modules Page",
+    modulesText: "This block is reserved for module marketplace / lens cockpit / workspace expansion.",
+    approve: "Approve",
+    monitor: "Monitor",
+    reject: "Reject",
+    stable: "Stable",
+    moderate: "Moderate",
+    high: "High",
+    low: "Low",
+    trend: "Trend",
+    fragile: "Fragile",
+    tradeLens: "Trade",
+    invoice: "Invoice",
+    logistics: "Logistics",
+    compliance: "Compliance",
+    sme: "SME",
+    footer: "ZENTRA Matrix Ecosystem • Final Clean System • Root Entry"
+  },
+  ar: {
+    brandSub: "النظام النظيف النهائي • جذر الدخول نشط",
+    cockpit: "القيادة",
+    report: "التقرير",
+    modules: "الوحدات",
+    liveInput: "إدخال المخاطر المباشر",
+    amount: "المبلغ",
+    delay: "أيام التأخير",
+    score: "درجة العميل",
+    exposure: "نسبة التعرّض",
+    sector: "القطاع",
+    country: "الدولة",
+    run: "تشغيل التحليل",
+    fallback: "عرض الوضع الاحتياطي",
+    helper: "إذا استجاب الطرف المباشر فسيتم عرض النتائج. وإذا فشل فسيبقى العرض الاحتياطي الآمن فعالاً.",
+    ready: "جاهز.",
+    sending: "يتم إرسال التحليل المباشر...",
+    liveReceived: "تم استلام الاستجابة المباشرة.",
+    fallbackLoaded: "تم تحميل العرض الاحتياطي.",
+    fallbackFail: "فشل الطلب المباشر. تم تفعيل الوضع الاحتياطي.",
+    risk: "المخاطر",
+    stress: "الضغط",
+    decision: "القرار",
+    macro: "الماكرو",
+    trade: "إشارة التجارة",
+    deviation: "الانحراف",
+    regime: "النظام",
+    dominantLens: "العدسة المهيمنة",
+    strategy: "الاستراتيجية",
+    rationale: "المبرر",
+    raw: "الاستجابة الخام",
+    stateRoute: "المسار النشط",
+    stateLang: "اللغة النشطة",
+    stateConnection: "الاتصال",
+    stateUpdated: "آخر تحديث",
+    reportTitle: "صفحة التقرير",
+    reportText: "هذه المساحة مخصصة لمحرك التقارير. الخطوة التالية الصحيحة: إنشاء واجهة تقرير من مخرجات الحالة.",
+    modulesTitle: "صفحة الوحدات",
+    modulesText: "هذه المساحة مخصصة لتوسعة سوق الوحدات / عدسات القيادة / مساحة العمل.",
+    approve: "موافقة",
+    monitor: "مراقبة",
+    reject: "رفض",
+    stable: "مستقر",
+    moderate: "متوسط",
+    high: "مرتفع",
+    low: "منخفض",
+    trend: "اتجاه",
+    fragile: "هش",
+    tradeLens: "التجارة",
+    invoice: "الفاتورة",
+    logistics: "اللوجستيات",
+    compliance: "الامتثال",
+    sme: "المشاريع الصغيرة",
+    footer: "ZENTRA Matrix Ecosystem • Final Clean System • Root Entry"
+  }
+};
+
+let currentLang = "tr";
+let currentMessageKey = "ready";
+let currentData = { ...FALLBACK_OUTPUT };
+
+function text(key){
+  return (COPY[currentLang] && COPY[currentLang][key]) || COPY.tr[key] || key;
 }
 
-function norm(v){
-  const m={
-    monitor:"İzle",
-    approve:"Onayla",
-    reject:"Reddet",
-    stable:"Stabil",
-    moderate:"Orta",
-    high:"Yüksek",
-    low:"Düşük"
-  };
-  return m[v]||v;
+function normalizeValue(value){
+  const v = String(value ?? "--").toLowerCase();
+  return COPY[currentLang][v] || value || "--";
 }
 
-function band(v){
-  if(v>=70) return ["HIGH","high"];
-  if(v>=40) return ["MID","mid"];
+function normalizeLens(value){
+  const v = String(value ?? "").toLowerCase();
+  if(v === "trade") return COPY[currentLang].tradeLens;
+  if(v === "invoice") return COPY[currentLang].invoice;
+  if(v === "logistics") return COPY[currentLang].logistics;
+  if(v === "compliance") return COPY[currentLang].compliance;
+  if(v === "sme") return COPY[currentLang].sme;
+  return value || "--";
+}
+
+function badgeBand(v){
+  const n = Number(v || 0);
+  if(n >= 70) return ["HIGH","high"];
+  if(n >= 40) return ["MID","mid"];
   return ["LOW","low"];
 }
 
-function render(d){
-  const g=document.getElementById("grid");
+function updateStaticShell(){
+  document.documentElement.lang = currentLang;
+  document.getElementById("brandSub").innerText = text("brandSub");
+  document.getElementById("nav-cockpit").innerText = text("cockpit");
+  document.getElementById("nav-report").innerText = text("report");
+  document.getElementById("nav-modules").innerText = text("modules");
+  document.getElementById("footerText").innerText = text("footer");
 
-  let [rb,rc]=band(d.risk_score);
-  let [sb,sc]=band(d.stress_score);
+  ["tr","en","ar"].forEach(code => {
+    document.getElementById("lang-" + code).classList.toggle("active", currentLang === code);
+  });
 
-  g.innerHTML=`
-    <div class="card">
-      <div class="title">${t("risk")}</div>
-      <div class="value">${d.risk_score}</div>
-      <div class="badge ${rc}">${rb}</div>
-    </div>
+  const activeRoute = window.ZENTRA ? ZENTRA.get().route.current : "cockpit";
+  document.getElementById("nav-cockpit").classList.toggle("active", activeRoute === "cockpit");
+  document.getElementById("nav-report").classList.toggle("active", activeRoute === "report");
+  document.getElementById("nav-modules").classList.toggle("active", activeRoute === "modules");
 
-    <div class="card">
-      <div class="title">${t("stress")}</div>
-      <div class="value">${d.stress_score}</div>
-      <div class="badge ${sc}">${sb}</div>
-    </div>
+  if(window.ZENTRA){
+    document.getElementById("statusPill").innerText = String(ZENTRA.get().connection.status || "idle").toUpperCase();
+  }
+}
 
-    <div class="card">
-      <div class="title">${t("decision")}</div>
-      <div class="value">${norm(d.decision)}</div>
-    </div>
+function setStatus(value){
+  if(window.ZENTRA){
+    ZENTRA.setConnection(value);
+  }
+  document.getElementById("statusPill").innerText = String(value || "idle").toUpperCase();
+}
 
-    <div class="card">
-      <div class="title">Macro</div>
-      <div class="value">${norm(d.macro_pressure)}</div>
+function setMessageByKey(key, extra){
+  currentMessageKey = key;
+  const el = document.getElementById("messageBox");
+  if(el){
+    el.innerText = extra ? (text(key) + " " + extra) : text(key);
+  }
+}
+
+function goRoute(route){
+  if(window.ZENTRA_ROUTER){
+    window.ZENTRA_ROUTER.navigate(route);
+  }else{
+    window.location.hash = route;
+  }
+}
+
+function setLang(lang){
+  currentLang = lang;
+  if(window.ZENTRA){
+    ZENTRA.setLang(lang);
+  }
+  renderCurrentRoute();
+}
+
+function buildUiInputFromDom(){
+  return {
+    amount: Number(document.getElementById("amount").value || 0),
+    payment_delay_days: Number(document.getElementById("paymentDelayDays").value || 0),
+    customer_score: Number(document.getElementById("customerScore").value || 0),
+    exposure_ratio: Number(String(document.getElementById("exposureRatio").value || 0).replace(",", ".")),
+    sector: document.getElementById("sector").value || "trade",
+    country: document.getElementById("country").value || "TR"
+  };
+}
+
+function buildApiPayload(ui){
+  return {
+    principal: Number(ui.amount || 0),
+    interest_rate: 24,
+    term_months: 12,
+    monthly_income: 90000,
+    sector: ui.sector || "trade",
+    sector_risk_level: 0.5,
+    payment_delay_days: Number(ui.payment_delay_days || 0),
+    customer_score: Number(ui.customer_score || 50),
+    exposure_ratio: Number(ui.exposure_ratio || 0)
+  };
+}
+
+function renderCockpitPage(){
+  const state = window.ZENTRA ? ZENTRA.get() : {
+    route: { current: "cockpit" },
+    lang: { active: currentLang },
+    connection: { status: "idle" },
+    ui: { last_update: null }
+  };
+
+  const [rb, rc] = badgeBand(currentData.risk_score);
+  const [sb, sc] = badgeBand(currentData.stress_score);
+
+  return `
+    <div class="page">
+      <div class="hero">
+        <div class="panel">
+          <div class="panel-title">${text("liveInput")}</div>
+
+          <div class="form-grid">
+            <div class="field">
+              <label class="label" for="amount">${text("amount")}</label>
+              <input class="input" id="amount" type="number" value="${state.input?.amount ?? 150000}">
+            </div>
+
+            <div class="field">
+              <label class="label" for="paymentDelayDays">${text("delay")}</label>
+              <input class="input" id="paymentDelayDays" type="number" value="${state.input?.payment_delay_days ?? 7}">
+            </div>
+
+            <div class="field">
+              <label class="label" for="customerScore">${text("score")}</label>
+              <input class="input" id="customerScore" type="number" value="${state.input?.customer_score ?? 72}">
+            </div>
+
+            <div class="field">
+              <label class="label" for="exposureRatio">${text("exposure")}</label>
+              <input class="input" id="exposureRatio" type="text" value="${state.input?.exposure_ratio ?? 0.38}">
+            </div>
+
+            <div class="field">
+              <label class="label" for="sector">${text("sector")}</label>
+              <select class="select" id="sector">
+                ${["trade","invoice","logistics","compliance","sme"].map(opt => `
+                  <option value="${opt}" ${String(state.input?.sector || "trade") === opt ? "selected" : ""}>${opt}</option>
+                `).join("")}
+              </select>
+            </div>
+
+            <div class="field">
+              <label class="label" for="country">${text("country")}</label>
+              <input class="input" id="country" type="text" value="${state.input?.country ?? "TR"}">
+            </div>
+          </div>
+
+          <div class="actions">
+            <button class="run-btn" onclick="runRisk()">${text("run")}</button>
+            <button class="ghost-btn" onclick="loadFallback()">${text("fallback")}</button>
+          </div>
+
+          <div class="helper">${text("helper")}</div>
+          <div class="message" id="messageBox">${text(currentMessageKey)}</div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-title">System State</div>
+
+          <div class="summary-grid">
+            <div class="summary-item">
+              <div class="summary-label">${text("stateRoute")}</div>
+              <div class="summary-value">${state.route.current || "--"}</div>
+            </div>
+            <div class="summary-item">
+              <div class="summary-label">${text("stateLang")}</div>
+              <div class="summary-value">${state.lang.active || "--"}</div>
+            </div>
+            <div class="summary-item">
+              <div class="summary-label">${text("stateConnection")}</div>
+              <div class="summary-value">${state.connection.status || "--"}</div>
+            </div>
+            <div class="summary-item">
+              <div class="summary-label">${text("stateUpdated")}</div>
+              <div class="summary-value">${state.ui.last_update ? new Date(state.ui.last_update).toLocaleString() : "--"}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid">
+        <div class="card">
+          <div class="card-title">${text("risk")}</div>
+          <div class="card-value">${currentData.risk_score ?? "--"}</div>
+          <div class="badge ${rc}">${rb}</div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">${text("stress")}</div>
+          <div class="card-value">${currentData.stress_score ?? "--"}</div>
+          <div class="badge ${sc}">${sb}</div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">${text("decision")}</div>
+          <div class="card-value">${normalizeValue(currentData.decision)}</div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">${text("macro")}</div>
+          <div class="card-value">${normalizeValue(currentData.macro_pressure)}</div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">${text("trade")}</div>
+          <div class="card-value">${currentData.trade_signal ?? "--"}</div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">${text("deviation")}</div>
+          <div class="card-value">${normalizeValue(currentData.deviation_level)}</div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">${text("regime")}</div>
+          <div class="card-value">${normalizeValue(currentData.regime)}</div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">${text("dominantLens")}</div>
+          <div class="card-value">${normalizeLens(currentData.dominant_lens)}</div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">${text("strategy")}</div>
+          <div class="card-text">${currentData.strategy ?? "--"}</div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">${text("rationale")}</div>
+          <div class="card-text">${currentData.rationale ?? "--"}</div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">${text("raw")}</div>
+          <div class="card-text">${JSON.stringify(currentData.raw || currentData, null, 2)}</div>
+        </div>
+      </div>
     </div>
   `;
 }
 
-async function run(){
-  document.getElementById("status").innerText="LOADING";
+function renderReportPage(){
+  return `
+    <div class="page">
+      <div class="panel">
+        <div class="panel-title">${text("reportTitle")}</div>
+        <div class="card-text">${text("reportText")}</div>
+      </div>
+    </div>
+  `;
+}
+
+function renderModulesPage(){
+  return `
+    <div class="page">
+      <div class="panel">
+        <div class="panel-title">${text("modulesTitle")}</div>
+        <div class="card-text">${text("modulesText")}</div>
+      </div>
+    </div>
+  `;
+}
+
+function renderCurrentRoute(){
+  updateStaticShell();
+
+  const root = document.getElementById("app-root");
+  const route = window.ZENTRA ? ZENTRA.get().route.current : "cockpit";
+
+  if(route === "report"){
+    root.innerHTML = renderReportPage();
+  } else if(route === "modules"){
+    root.innerHTML = renderModulesPage();
+  } else {
+    root.innerHTML = renderCockpitPage();
+  }
+
+  setMessageByKey(currentMessageKey);
+}
+
+function loadFallback(){
+  currentData = { ...FALLBACK_OUTPUT };
+  if(window.ZENTRA){
+    ZENTRA.setOutput({
+      risk: currentData.risk_score,
+      stress: currentData.stress_score,
+      decision: currentData.decision,
+      macro: currentData.macro_pressure,
+      trade: currentData.trade_signal,
+      deviation: currentData.deviation_level,
+      regime: currentData.regime,
+      dominant_lens: currentData.dominant_lens,
+      strategy: currentData.strategy,
+      rationale: currentData.rationale,
+      raw: currentData.raw
+    });
+  }
+  setStatus("fallback");
+  currentMessageKey = "fallbackLoaded";
+  renderCurrentRoute();
+}
+
+async function runRisk(){
+  const uiInput = buildUiInputFromDom();
+  const apiPayload = buildApiPayload(uiInput);
+
+  if(window.ZENTRA){
+    ZENTRA.setInput(uiInput);
+    ZENTRA.setLoading(true);
+    ZENTRA.clearError();
+  }
+
+  setStatus("loading");
+  currentMessageKey = "sending";
+  renderCurrentRoute();
 
   try{
-    const res=await fetch(API,{
-      method:"POST",
-      headers:{
-        "Content-Type":"application/json",
-        "x-api-key":"zentra-demo-key"
+    const res = await fetch(API_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "x-api-key": "zentra-demo-key"
       },
-      body:JSON.stringify({
-        principal:150000,
-        interest_rate:24,
-        term_months:12,
-        monthly_income:90000,
-        sector:"trade",
-        sector_risk_level:0.5,
-        payment_delay_days:7,
-        customer_score:72,
-        exposure_ratio:0.38
-      })
+      body: JSON.stringify(apiPayload)
     });
 
-    const data=await res.json();
+    const json = await res.json();
 
-    render(data);
-    document.getElementById("status").innerText="LIVE";
+    if(!res.ok){
+      throw new Error("HTTP " + res.status);
+    }
 
-  }catch(e){
-    document.getElementById("status").innerText="ERROR";
+    currentData = {
+      ...json,
+      raw: json
+    };
+
+    if(window.ZENTRA){
+      ZENTRA.setOutput({
+        risk: json.risk_score,
+        stress: json.stress_score,
+        decision: json.decision,
+        macro: json.macro_pressure,
+        trade: json.trade_signal,
+        deviation: json.deviation_level,
+        regime: json.regime,
+        dominant_lens: json.dominant_lens,
+        strategy: json.strategy,
+        rationale: json.rationale,
+        raw: json
+      });
+      ZENTRA.setLoading(false);
+    }
+
+    setStatus("live");
+    currentMessageKey = "liveReceived";
+    renderCurrentRoute();
+  }catch(err){
+    if(window.ZENTRA){
+      ZENTRA.setError(String(err.message || err));
+      ZENTRA.setLoading(false);
+    }
+    loadFallback();
+    currentMessageKey = "fallbackFail";
+    renderCurrentRoute();
   }
 }
 
-function setLang(l){
-  lang=l;
-}
-</script>
+(function bootstrap(){
+  if(window.ZENTRA){
+    if(!ZENTRA.get().input.amount){
+      ZENTRA.setInput({
+        amount: 150000,
+        payment_delay_days: 7,
+        customer_score: 72,
+        exposure_ratio: 0.38,
+        sector: "trade",
+        country: "TR"
+      });
+    }
 
+    const originalSetRoute = ZENTRA.setRoute.bind(ZENTRA);
+    ZENTRA.setRoute = function(route){
+      originalSetRoute(route);
+      renderCurrentRoute();
+    };
+  }
+
+  if(window.ZENTRA_ROUTER){
+    window.ZENTRA_ROUTER.init();
+  } else if(window.ZENTRA) {
+    const hash = window.location.hash.replace("#","") || "cockpit";
+    ZENTRA.setRoute(hash);
+  }
+
+  setStatus("fallback");
+  renderCurrentRoute();
+})();
+</script>
 </body>
 </html>
