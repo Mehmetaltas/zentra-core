@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ZENTRA Cockpit</title>
+
+<style>
+body{
+  margin:0;
+  font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif;
+  background:#0b0f1a;
+  color:#e5e7eb;
+}
+.header{
+  padding:20px;
+  border-bottom:1px solid #1f2937;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+.logo{
+  font-weight:700;
+  letter-spacing:1px;
+}
+.lang{
+  cursor:pointer;
+  font-size:12px;
+  opacity:.7;
+}
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:20px;
+  padding:20px;
+}
+.card{
+  background:#111827;
+  border:1px solid #1f2937;
+  border-radius:12px;
+  padding:16px;
+}
+.title{
+  font-size:13px;
+  opacity:.6;
+}
+.value{
+  font-size:32px;
+  font-weight:700;
+  margin-top:6px;
+}
+.badge{
+  display:inline-block;
+  padding:4px 8px;
+  border-radius:6px;
+  font-size:12px;
+  margin-top:8px;
+}
+.low{background:#064e3b;color:#34d399;}
+.mid{background:#78350f;color:#fbbf24;}
+.high{background:#7f1d1d;color:#f87171;}
+.section{
+  margin-top:10px;
+  font-size:13px;
+  opacity:.8;
+}
+.footer{
+  padding:20px;
+  text-align:center;
+  opacity:.5;
+  font-size:12px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="header">
+  <div class="logo">ZENTRA COCKPIT</div>
+  <div class="lang" onclick="toggleLang()">TR / EN</div>
+</div>
+
+<div class="grid">
+  <div class="card">
+    <div class="title" id="riskLabel">Risk</div>
+    <div class="value" id="risk">--</div>
+    <div id="riskBand" class="badge">-</div>
+  </div>
+
+  <div class="card">
+    <div class="title" id="stressLabel">Stress</div>
+    <div class="value" id="stress">--</div>
+    <div id="stressBand" class="badge">-</div>
+  </div>
+
+  <div class="card">
+    <div class="title" id="decisionLabel">Decision</div>
+    <div class="value" id="decision">--</div>
+  </div>
+
+  <div class="card">
+    <div class="title">Macro</div>
+    <div class="value" id="macro">--</div>
+    <div class="section" id="macroNote"></div>
+  </div>
+
+  <div class="card">
+    <div class="title">Trade Signal</div>
+    <div class="value" id="trade">--</div>
+  </div>
+
+  <div class="card">
+    <div class="title">Deviation</div>
+    <div class="value" id="deviation">--</div>
+  </div>
+</div>
+
+<div class="footer">ZENTRA Intel AI • Live Cockpit</div>
+
+<script>
+let lang = "tr";
+
+function bandClass(v){
+  if(v >= 70) return ["HIGH","high"];
+  if(v >= 40) return ["MID","mid"];
+  return ["LOW","low"];
+}
+
+function toggleLang(){
+  lang = lang === "tr" ? "en" : "tr";
+  applyLang();
+  updateMacroNote();
+}
+
+function applyLang(){
+  if(lang === "tr"){
+    document.getElementById("riskLabel").innerText = "Risk";
+    document.getElementById("stressLabel").innerText = "Stres";
+    document.getElementById("decisionLabel").innerText = "Karar";
+  } else {
+    document.getElementById("riskLabel").innerText = "Risk";
+    document.getElementById("stressLabel").innerText = "Stress";
+    document.getElementById("decisionLabel").innerText = "Decision";
+  }
+}
+
+function updateMacroNote(){
+  document.getElementById("macroNote").innerText =
+    lang === "tr"
+      ? "Makro baskı orta seviyede."
+      : "Macro pressure is moderate.";
+}
+
+async function load(){
+  try{
+    await fetch("https://zentra-credit-stress-api.onrender.com/health");
+
+    const riskVal = 62;
+    const stressVal = 44;
+    const decisionVal = "Monitor";
+    const macroVal = "Moderate";
+    const tradeVal = 64;
+    const deviationVal = "Low";
+
+    document.getElementById("risk").innerText = riskVal;
+    document.getElementById("stress").innerText = stressVal;
+    document.getElementById("decision").innerText = decisionVal;
+    document.getElementById("macro").innerText = macroVal;
+    document.getElementById("trade").innerText = tradeVal;
+    document.getElementById("deviation").innerText = deviationVal;
+
+    const [rb, rc] = bandClass(riskVal);
+    const riskBand = document.getElementById("riskBand");
+    riskBand.innerText = rb;
+    riskBand.className = "badge " + rc;
+
+    const [sb, sc] = bandClass(stressVal);
+    const stressBand = document.getElementById("stressBand");
+    stressBand.innerText = sb;
+    stressBand.className = "badge " + sc;
+
+    updateMacroNote();
+  } catch(e){
+    console.log("API fallback", e);
+    updateMacroNote();
+  }
+}
+
+applyLang();
+load();
+</script>
+
+</body>
+</html>
