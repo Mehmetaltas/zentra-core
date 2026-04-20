@@ -11,7 +11,6 @@ function getCountryConfig(country) {
       label: "Turkey",
       base: "USD",
       quotes: ["TRY", "EUR"],
-      localMetricKey: "usd_try",
       fallbackMetric: 38,
       fallbackEurUsd: 1.08
     },
@@ -20,7 +19,6 @@ function getCountryConfig(country) {
       label: "Euro Area",
       base: "EUR",
       quotes: ["USD"],
-      localMetricKey: "eur_usd",
       fallbackMetric: 1.08,
       fallbackEurUsd: 1.08
     },
@@ -29,7 +27,6 @@ function getCountryConfig(country) {
       label: "United Kingdom",
       base: "GBP",
       quotes: ["USD"],
-      localMetricKey: "gbp_usd",
       fallbackMetric: 1.26,
       fallbackEurUsd: 1.08
     },
@@ -38,7 +35,6 @@ function getCountryConfig(country) {
       label: "United Arab Emirates",
       base: "USD",
       quotes: ["AED", "EUR"],
-      localMetricKey: "usd_aed",
       fallbackMetric: 3.6725,
       fallbackEurUsd: 1.08
     },
@@ -47,7 +43,6 @@ function getCountryConfig(country) {
       label: "Saudi Arabia",
       base: "USD",
       quotes: ["SAR", "EUR"],
-      localMetricKey: "usd_sar",
       fallbackMetric: 3.75,
       fallbackEurUsd: 1.08
     },
@@ -56,7 +51,6 @@ function getCountryConfig(country) {
       label: "United States",
       base: "USD",
       quotes: ["EUR"],
-      localMetricKey: "eur_usd",
       fallbackMetric: 1.08,
       fallbackEurUsd: 1.08
     }
@@ -67,6 +61,26 @@ function getCountryConfig(country) {
 
 function buildRatesUrl(config) {
   return `https://api.frankfurter.dev/v2/rates?base=${config.base}&quotes=${config.quotes.join(",")}`;
+}
+
+function toRatesMap(payload) {
+  const map = {};
+  const list = Array.isArray(payload) ? payload : [];
+
+  for (const item of list) {
+    if (item && item.quote) {
+      map[String(item.quote).toUpperCase()] = Number(item.rate ?? 0);
+    }
+  }
+
+  return map;
+}
+
+function deriveDate(payload) {
+  if (Array.isArray(payload) && payload.length > 0) {
+    return payload[0].date || null;
+  }
+  return null;
 }
 
 function deriveMetrics(config, rates) {
@@ -198,7 +212,7 @@ function buildFxAdjustment(country, metrics) {
 }
 
 function buildSuccessResponse(config, payload) {
-  const rates = payload && payload.rates ? payload.rates : {};
+  const rates = toRatesMap(payload);
   const metrics = deriveMetrics(config, rates);
   const macroPressure = buildMacroPressure(config.country, metrics);
   const fxAdjustment = buildFxAdjustment(config.country, metrics);
@@ -210,8 +224,8 @@ function buildSuccessResponse(config, payload) {
     context: {
       country: config.country,
       country_label: config.label,
-      base: payload.base ?? config.base,
-      date: payload.date ?? null,
+      base: config.base,
+      date: deriveDate(payload),
       quotes: config.quotes
     },
     market: {
