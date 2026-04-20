@@ -65,12 +65,12 @@ def score_logic(data: Input):
         "rationale": "Calculated via clean ZENTRA stress model."
     }
 
+@app.get("/health")
+def health():
+    return {"ok": True, "service": "zentra-credit-stress-api"}
+
 @app.post("/v1/credit-stress")
 def credit_stress(input: Input, x_api_key: str = Header(None)):
     if x_api_key != API_KEY:
         raise HTTPException(status_code=401, detail="Invalid API key")
     return score_logic(input)
-
-@app.get("/health")
-def health():
-    return {"ok": True}
