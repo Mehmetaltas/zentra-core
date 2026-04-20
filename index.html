@@ -72,10 +72,11 @@ button,input,select,textarea{font:inherit}
 .status-loading{background:rgba(244,193,82,.12);color:#ffd67d;border-color:rgba(244,193,82,.35)}
 .status-fallback{background:rgba(255,107,107,.10);color:#ffb2b2;border-color:rgba(255,107,107,.28)}
 .status-idle{background:rgba(255,255,255,.04);color:#d6e0ef}
-.lang-group,.nav-group,.country-chips{
+.lang-group,.nav-group,.country-chips,.report-actions{
   display:flex;
   gap:8px;
   flex-wrap:wrap;
+  align-items:center;
 }
 .lang-btn,.nav-btn,.chip-btn,.run-btn,.ghost-btn{
   border:1px solid var(--line-soft);
@@ -371,7 +372,10 @@ const COPY = {
     reportCore: "Temel Metrikler",
     reportMarket: "Piyasa Bağlamı",
     reportStrategy: "Strateji",
-    reportRationale: "Gerekçe"
+    reportRationale: "Gerekçe",
+    reportEmail: "Mail Adresi",
+    sendReport: "Rapor Gönder",
+    sendHint: "Mail uygulaması hazır içerikle açılır."
   },
   en: {
     brandSub: "Final Clean System • Live Market Connected",
@@ -448,7 +452,10 @@ const COPY = {
     reportCore: "Core Metrics",
     reportMarket: "Market Context",
     reportStrategy: "Strategy",
-    reportRationale: "Rationale"
+    reportRationale: "Rationale",
+    reportEmail: "Email Address",
+    sendReport: "Send Report",
+    sendHint: "Opens the mail app with ready content."
   },
   ar: {
     brandSub: "النظام النظيف النهائي • متصل بالسوق الحي",
@@ -525,7 +532,10 @@ const COPY = {
     reportCore: "المقاييس الأساسية",
     reportMarket: "سياق السوق",
     reportStrategy: "الاستراتيجية",
-    reportRationale: "المبرر"
+    reportRationale: "المبرر",
+    reportEmail: "البريد الإلكتروني",
+    sendReport: "إرسال التقرير",
+    sendHint: "يفتح تطبيق البريد مع محتوى جاهز."
   }
 };
 
@@ -533,6 +543,7 @@ let currentLang = "tr";
 let currentMessageKey = "ready";
 let currentData = { ...FALLBACK_OUTPUT };
 let selectedCountry = "TR";
+let reportEmail = "";
 
 function text(key){
   return (COPY[currentLang] && COPY[currentLang][key]) || COPY.tr[key] || key;
@@ -698,6 +709,10 @@ function setCountry(code){
   renderCurrentRoute();
 }
 
+function setReportEmail(value){
+  reportEmail = String(value || "").trim();
+}
+
 function buildUiInputFromDom(){
   return {
     amount: Number(document.getElementById("amount").value || 0),
@@ -771,6 +786,23 @@ ${text("gbpUsd")}: ${metricValue(market.gbp_usd)}
 ${normalizeRationale(d.rationale)}
 
 ZENTRA Intel AI`;
+}
+
+function sendReportByEmail(){
+  const to = reportEmail || "";
+  const subject = encodeURIComponent(`ZENTRA Report - ${currentData.country || selectedCountry || "TR"}`);
+  const body = encodeURIComponent(buildReport());
+
+  if(!to){
+    alert(currentLang === "tr"
+      ? "Önce mail adresi gir."
+      : currentLang === "ar"
+        ? "أدخل البريد الإلكتروني أولاً."
+        : "Enter an email address first.");
+    return;
+  }
+
+  window.location.href = `mailto:${encodeURIComponent(to)}?subject=${subject}&body=${body}`;
 }
 
 function renderCockpitPage(){
@@ -968,6 +1000,26 @@ function renderReportPage(){
     <div class="page">
       <div class="panel">
         <div class="panel-title">${text("reportTitle")}</div>
+
+        <div class="form-grid" style="margin-bottom:14px;">
+          <div class="field">
+            <label class="label" for="reportEmail">${text("reportEmail")}</label>
+            <input
+              class="input"
+              id="reportEmail"
+              type="email"
+              value="${reportEmail}"
+              placeholder="name@example.com"
+              oninput="setReportEmail(this.value)"
+            >
+          </div>
+        </div>
+
+        <div class="report-actions" style="margin-bottom:12px;">
+          <button class="run-btn" onclick="sendReportByEmail()">${text("sendReport")}</button>
+          <div class="helper" style="margin-top:0;">${text("sendHint")}</div>
+        </div>
+
         <div class="report-box">${buildReport()}</div>
       </div>
     </div>
