@@ -1,77 +1,50 @@
-/*
-ZENTRA ROUTER CORE
-Final Clean System
-*/
-
 (function(){
+  function normalizeRoute(route){
+    const value = String(route || "cockpit").replace(/^#/, "").trim().toLowerCase();
 
-  const ROUTES = {
-    cockpit: renderCockpit,
-    report: renderReport,
-    modules: renderModules
-  };
-
-  function init(){
-    window.addEventListener("hashchange", handleRoute);
-    handleRoute();
+    if (value === "report") return "report";
+    if (value === "modules") return "modules";
+    return "cockpit";
   }
 
-  function handleRoute(){
-    const hash = window.location.hash.replace("#","") || "cockpit";
+  function getCurrentHashRoute(){
+    return normalizeRoute(window.location.hash || "cockpit");
+  }
 
-    if(!ROUTES[hash]){
-      navigate("cockpit");
-      return;
+  function applyRoute(route, syncHash){
+    const nextRoute = normalizeRoute(route);
+
+    if (window.ZENTRA && typeof window.ZENTRA.setRoute === "function") {
+      window.ZENTRA.setRoute(nextRoute);
     }
 
-    ZENTRA.setRoute(hash);
-    ROUTES[hash]();
+    if (syncHash) {
+      const targetHash = "#" + nextRoute;
+      if (window.location.hash !== targetHash) {
+        history.replaceState(null, "", targetHash);
+      }
+    }
+
+    return nextRoute;
   }
 
-  function navigate(route){
-    window.location.hash = route;
-  }
+  const router = {
+    init: function(){
+      applyRoute(getCurrentHashRoute(), false);
 
-  // =========================
-  // RENDERERS
-  // =========================
+      window.addEventListener("hashchange", function(){
+        applyRoute(getCurrentHashRoute(), false);
+      });
+    },
 
-  function renderCockpit(){
-    mount("COCKPIT");
-  }
+    navigate: function(route){
+      applyRoute(route, true);
+    },
 
-  function renderReport(){
-    mount("REPORT PAGE (coming)");
-  }
-
-  function renderModules(){
-    mount("MODULES PAGE (coming)");
-  }
-
-  // =========================
-  // MOUNT SYSTEM
-  // =========================
-
-  function mount(content){
-    const root = document.getElementById("app-root");
-    if(!root) return;
-
-    root.innerHTML = `
-      <div style="padding:20px;font-family:sans-serif;">
-        <h2>${content}</h2>
-      </div>
-    `;
-
-    ZENTRA.trace("ROUTE_RENDER", content);
-  }
-
-  // =========================
-  // GLOBAL EXPORT
-  // =========================
-
-  window.ZENTRA_ROUTER = {
-    init,
-    navigate
+    current: function(){
+      return getCurrentHashRoute();
+    }
   };
 
+  window.ZENTRA_ROUTER = router;
 })();
