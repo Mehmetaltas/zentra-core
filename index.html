@@ -479,6 +479,40 @@ function normalizeLens(value){
   return value || "--";
 }
 
+function normalizeStrategy(value){
+  if(!value) return "--";
+  const raw = String(value).toLowerCase();
+
+  if(currentLang === "tr"){
+    if(raw.includes("controlled caution")) return "Kontrollü ilerle, maruziyeti izlemeye devam et.";
+    if(raw.includes("reduce exposure")) return "Maruziyeti azalt ve riski düşür.";
+  }
+
+  if(currentLang === "ar"){
+    if(raw.includes("controlled caution")) return "تحرك بحذر مع الاستمرار في مراقبة التعرض.";
+    if(raw.includes("reduce exposure")) return "قم بتقليل التعرض وخفض المخاطر.";
+  }
+
+  return value;
+}
+
+function normalizeRationale(value){
+  if(!value) return "--";
+  const raw = String(value).toLowerCase();
+
+  if(currentLang === "tr"){
+    if(raw.includes("calculated via clean zentra stress model")) return "Temiz ZENTRA stres modeli ile hesaplandı.";
+    if(raw.includes("fallback mode is active")) return "Fallback modu aktif. Canlı veri alınamadı.";
+  }
+
+  if(currentLang === "ar"){
+    if(raw.includes("calculated via clean zentra stress model")) return "تم الحساب باستخدام نموذج الضغط النظيف من ZENTRA.";
+    if(raw.includes("fallback mode is active")) return "وضع الاحتياطي نشط. لم يتم استلام بيانات مباشرة.";
+  }
+
+  return value;
+}
+
 function badgeBand(v){
   const n = Number(v || 0);
   if(n >= 70) return ["HIGH","high"];
@@ -569,7 +603,8 @@ function renderCockpitPage(){
     route: { current: "cockpit" },
     lang: { active: currentLang },
     connection: { status: "idle" },
-    ui: { last_update: null }
+    ui: { last_update: null },
+    input: {}
   };
 
   const [rb, rc] = badgeBand(currentData.risk_score);
@@ -695,12 +730,12 @@ function renderCockpitPage(){
 
         <div class="card">
           <div class="card-title">${text("strategy")}</div>
-          <div class="card-text">${currentData.strategy ?? "--"}</div>
+          <div class="card-text">${normalizeStrategy(currentData.strategy)}</div>
         </div>
 
         <div class="card">
           <div class="card-title">${text("rationale")}</div>
-          <div class="card-text">${currentData.rationale ?? "--"}</div>
+          <div class="card-text">${normalizeRationale(currentData.rationale)}</div>
         </div>
 
         <div class="card">
