@@ -127,6 +127,10 @@ button,input,select,textarea{font:inherit}
   max-height:320px;overflow:auto;background:#07101c;border:1px solid var(--line);
   border-radius:16px;padding:12px;
 }
+.report-box{
+  background:#07101c;border:1px solid var(--line);border-radius:18px;padding:16px;
+  white-space:pre-wrap;line-height:1.7;color:#dbe6f5;
+}
 .footer{padding:24px 18px 34px;text-align:center;color:var(--muted);font-size:12px}
 @media (max-width:1080px){.hero{grid-template-columns:1fr}}
 @media (max-width:760px){
@@ -237,8 +241,7 @@ const COPY = {
     stateLang: "Aktif Dil",
     stateConnection: "Bağlantı",
     stateUpdated: "Son Güncelleme",
-    reportTitle: "Rapor Sayfası",
-    reportText: "Bu blok report engine için ayrıldı. Sonraki doğru adım: cockpit çıktısını rapor formatına çevirmek.",
+    reportTitle: "ZENTRA Raporu",
     modulesTitle: "Modüller Sayfası",
     modulesText: "Bu blok modül marketplace / lens cockpit / workspace genişlemesi için ayrıldı.",
     approve: "Onayla",
@@ -272,7 +275,13 @@ const COPY = {
     gbpUsd: "GBP/USD",
     rawLocalized: "Yerelleştirilmiş Yanıt",
     operatorSummary: "Operatör Özeti",
-    currentCountry: "Aktif Ülke"
+    currentCountry: "Aktif Ülke",
+    reportDate: "Rapor Tarihi",
+    reportSummary: "Yönetici Özeti",
+    reportCore: "Temel Metrikler",
+    reportMarket: "Piyasa Bağlamı",
+    reportStrategy: "Strateji",
+    reportRationale: "Gerekçe"
   },
   en: {
     brandSub: "Final Clean System • Live Market Connected",
@@ -309,8 +318,7 @@ const COPY = {
     stateLang: "Active Language",
     stateConnection: "Connection",
     stateUpdated: "Last Update",
-    reportTitle: "Report Page",
-    reportText: "This block is reserved for the report engine. Next correct step: transform cockpit output into report format.",
+    reportTitle: "ZENTRA Report",
     modulesTitle: "Modules Page",
     modulesText: "This block is reserved for module marketplace / lens cockpit / workspace expansion.",
     approve: "Approve",
@@ -344,7 +352,13 @@ const COPY = {
     gbpUsd: "GBP/USD",
     rawLocalized: "Localized Response",
     operatorSummary: "Operator Summary",
-    currentCountry: "Active Country"
+    currentCountry: "Active Country",
+    reportDate: "Report Date",
+    reportSummary: "Executive Summary",
+    reportCore: "Core Metrics",
+    reportMarket: "Market Context",
+    reportStrategy: "Strategy",
+    reportRationale: "Rationale"
   },
   ar: {
     brandSub: "النظام النظيف النهائي • متصل بالسوق الحي",
@@ -381,8 +395,7 @@ const COPY = {
     stateLang: "اللغة النشطة",
     stateConnection: "الاتصال",
     stateUpdated: "آخر تحديث",
-    reportTitle: "صفحة التقرير",
-    reportText: "هذه المساحة مخصصة لمحرك التقارير. الخطوة التالية الصحيحة: تحويل مخرجات القيادة إلى تقرير منظم.",
+    reportTitle: "تقرير ZENTRA",
     modulesTitle: "صفحة الوحدات",
     modulesText: "هذه المساحة مخصصة لتوسعة سوق الوحدات / عدسات القيادة / مساحة العمل.",
     approve: "موافقة",
@@ -416,7 +429,13 @@ const COPY = {
     gbpUsd: "GBP/USD",
     rawLocalized: "الاستجابة المترجمة",
     operatorSummary: "ملخص التشغيل",
-    currentCountry: "الدولة النشطة"
+    currentCountry: "الدولة النشطة",
+    reportDate: "تاريخ التقرير",
+    reportSummary: "الملخص التنفيذي",
+    reportCore: "المقاييس الأساسية",
+    reportMarket: "سياق السوق",
+    reportStrategy: "الاستراتيجية",
+    reportRationale: "المبرر"
   }
 };
 
@@ -445,17 +464,27 @@ function normalizeLens(value){
 }
 
 function normalizeStrategy(value){
-  if(!value) return "--";
-  const raw = String(value).toLowerCase();
-  if(currentLang === "tr"){
-    if(raw.includes("controlled caution")) return "Kontrollü ilerle, maruziyeti izlemeye devam et.";
-    if(raw.includes("reduce exposure")) return "Maruziyeti azalt ve riski düşür.";
+  const decision = String(currentData.decision || "").toLowerCase();
+
+  if(decision === "reject"){
+    if(currentLang === "tr") return "Pozisyona girme. Riski düşür, işlemi reddet.";
+    if(currentLang === "ar") return "لا تدخل في الصفقة. قم بتقليل المخاطر ورفض العملية.";
+    return "Do not proceed. Reduce exposure and reject the transaction.";
   }
-  if(currentLang === "ar"){
-    if(raw.includes("controlled caution")) return "تحرك بحذر مع الاستمرار في مراقبة التعرض.";
-    if(raw.includes("reduce exposure")) return "قم بتقليل التعرض وخفض المخاطر.";
+
+  if(decision === "monitor"){
+    if(currentLang === "tr") return "Kontrollü ilerle, maruziyeti yakından izlemeye devam et.";
+    if(currentLang === "ar") return "تحرك بحذر واستمر في مراقبة التعرض عن كثب.";
+    return "Proceed with caution and closely monitor exposure.";
   }
-  return value;
+
+  if(decision === "approve"){
+    if(currentLang === "tr") return "İşleme devam et. Risk kabul edilebilir seviyede.";
+    if(currentLang === "ar") return "استمر في العملية. المخاطر ضمن الحدود المقبولة.";
+    return "Proceed. Risk is within acceptable range.";
+  }
+
+  return value || "--";
 }
 
 function normalizeRationale(value){
@@ -606,6 +635,49 @@ function renderCountryChips(){
   return ["TR","EU","UK","AE","SA","US"].map(code => `
     <button class="chip-btn ${selectedCountry === code ? "active" : ""}" onclick="setCountry('${code}')">${code}</button>
   `).join("");
+}
+
+function buildReport(){
+  const d = currentData;
+  const ctx = d.market_context || {};
+  const info = ctx.context || {};
+  const market = ctx.market || {};
+  const macro = ctx.macro || {};
+  const adj = d.adjustments || {};
+
+  return `${text("reportTitle")}
+
+${text("reportDate")}: ${new Date().toLocaleString()}
+
+--- ${text("reportSummary")} ---
+${text("countryLabel")}: ${d.country || "--"}
+${text("decision")}: ${normalizeValue(d.decision)}
+${text("regime")}: ${normalizeValue(d.regime)}
+${text("strategy")}: ${normalizeStrategy(d.strategy)}
+
+--- ${text("reportCore")} ---
+${text("risk")}: ${d.risk_score ?? "--"}
+${text("stress")}: ${d.stress_score ?? "--"}
+${text("trade")}: ${d.trade_signal ?? "--"}
+${text("deviation")}: ${normalizeValue(d.deviation_level)}
+${text("dominantLens")}: ${normalizeLens(d.dominant_lens)}
+
+--- ${text("reportMarket")} ---
+${text("countryName")}: ${info.country_label || "--"}
+${text("contextDate")}: ${info.date || "--"}
+${text("macro")}: ${normalizeValue(macro.pressure || d.macro_pressure)}
+${text("fxAdjustment")}: ${metricValue(adj.fx_adjustment)}
+${text("macroPenalty")}: ${metricValue(adj.macro_penalty)}
+${text("usdTry")}: ${metricValue(market.usd_try)}
+${text("eurUsd")}: ${metricValue(market.eur_usd)}
+${text("usdAed")}: ${metricValue(market.usd_aed)}
+${text("usdSar")}: ${metricValue(market.usd_sar)}
+${text("gbpUsd")}: ${metricValue(market.gbp_usd)}
+
+--- ${text("reportRationale")} ---
+${normalizeRationale(d.rationale)}
+
+ZENTRA Intel AI`;
 }
 
 function renderCockpitPage(){
@@ -804,7 +876,7 @@ function renderReportPage(){
     <div class="page">
       <div class="panel">
         <div class="panel-title">${text("reportTitle")}</div>
-        <div class="card-text">${text("reportText")}</div>
+        <div class="report-box">${buildReport()}</div>
       </div>
     </div>
   `;
