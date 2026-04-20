@@ -18,15 +18,30 @@ body{
   display:flex;
   justify-content:space-between;
   align-items:center;
+  gap:12px;
 }
 .logo{
   font-weight:700;
   letter-spacing:1px;
 }
+.header-right{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
 .lang{
   cursor:pointer;
   font-size:12px;
-  opacity:.7;
+  opacity:.8;
+}
+.status{
+  display:inline-block;
+  padding:5px 10px;
+  border-radius:999px;
+  font-size:12px;
+  border:1px solid #243041;
+  background:#0f172a;
+  color:#cbd5e1;
 }
 .grid{
   display:grid;
@@ -42,7 +57,7 @@ body{
 }
 .title{
   font-size:13px;
-  opacity:.6;
+  opacity:.65;
 }
 .value{
   font-size:32px;
@@ -62,7 +77,8 @@ body{
 .section{
   margin-top:10px;
   font-size:13px;
-  opacity:.8;
+  opacity:.85;
+  line-height:1.5;
 }
 .footer{
   padding:20px;
@@ -77,7 +93,10 @@ body{
 
 <div class="header">
   <div class="logo">ZENTRA COCKPIT</div>
-  <div class="lang" onclick="toggleLang()">TR / EN</div>
+  <div class="header-right">
+    <div id="statusPill" class="status">FALLBACK</div>
+    <div class="lang" onclick="toggleLang()">TR / EN</div>
+  </div>
 </div>
 
 <div class="grid">
@@ -88,29 +107,29 @@ body{
   </div>
 
   <div class="card">
-    <div class="title" id="stressLabel">Stress</div>
+    <div class="title" id="stressLabel">Stres</div>
     <div class="value" id="stress">--</div>
     <div id="stressBand" class="badge">-</div>
   </div>
 
   <div class="card">
-    <div class="title" id="decisionLabel">Decision</div>
+    <div class="title" id="decisionLabel">Karar</div>
     <div class="value" id="decision">--</div>
   </div>
 
   <div class="card">
-    <div class="title">Macro</div>
+    <div class="title" id="macroLabel">Macro</div>
     <div class="value" id="macro">--</div>
     <div class="section" id="macroNote"></div>
   </div>
 
   <div class="card">
-    <div class="title">Trade Signal</div>
+    <div class="title" id="tradeLabel">Trade Signal</div>
     <div class="value" id="trade">--</div>
   </div>
 
   <div class="card">
-    <div class="title">Deviation</div>
+    <div class="title" id="deviationLabel">Deviation</div>
     <div class="value" id="deviation">--</div>
   </div>
 </div>
@@ -120,16 +139,96 @@ body{
 <script>
 let lang = "tr";
 
+const fallbackData = {
+  risk: 62,
+  stress: 44,
+  decision: "Monitor",
+  macro: "Moderate",
+  trade: 64,
+  deviation: "Low"
+};
+
 function bandClass(v){
-  if(v >= 70) return ["HIGH","high"];
-  if(v >= 40) return ["MID","mid"];
-  return ["LOW","low"];
+  if(v >= 70) return ["HIGH", "high"];
+  if(v >= 40) return ["MID", "mid"];
+  return ["LOW", "low"];
 }
 
-function toggleLang(){
-  lang = lang === "tr" ? "en" : "tr";
-  applyLang();
-  updateMacroNote();
+function normalizeDecisionText(value){
+  if(lang === "tr"){
+    if(value === "Monitor") return "İzle";
+    if(value === "Approve") return "Onayla";
+    if(value === "Reject") return "Reddet";
+  }
+  return value;
+}
+
+function normalizeMacroText(value){
+  if(lang === "tr"){
+    if(value === "Moderate") return "Orta";
+    if(value === "Elevated") return "Yüksek";
+    if(value === "Stable") return "Stabil";
+    if(value === "High") return "Yüksek";
+  }
+  return value;
+}
+
+function normalizeDeviationText(value){
+  if(lang === "tr"){
+    if(value === "Low") return "Düşük";
+    if(value === "Moderate") return "Orta";
+    if(value === "High") return "Yüksek";
+  }
+  return value;
+}
+
+function setStatus(isLive){
+  const pill = document.getElementById("statusPill");
+  pill.innerText = isLive ? "LIVE" : "FALLBACK";
+}
+
+function renderData(data){
+  document.getElementById("risk").innerText = data.risk;
+  document.getElementById("stress").innerText = data.stress;
+  document.getElementById("decision").innerText = normalizeDecisionText(data.decision);
+  document.getElementById("macro").innerText = normalizeMacroText(data.macro);
+  document.getElementById("trade").innerText = data.trade;
+  document.getElementById("deviation").innerText = normalizeDeviationText(data.deviation);
+
+  const [rb, rc] = bandClass(Number(data.risk));
+  const riskBand = document.getElementById("riskBand");
+  riskBand.innerText = rb;
+  riskBand.className = "badge " + rc;
+
+  const [sb, sc] = bandClass(Number(data.stress));
+  const stressBand = document.getElementById("stressBand");
+  stressBand.innerText = sb;
+  stressBand.className = "badge " + sc;
+
+  updateMacroNote(data.macro);
+}
+
+function updateMacroNote(macroValue){
+  const note = document.getElementById("macroNote");
+  const normalized = String(macroValue || "").toLowerCase();
+
+  if(lang === "tr"){
+    if(normalized.includes("moderate") || normalized.includes("orta")){
+      note.innerText = "Makro baskı orta seviyede.";
+    } else if(normalized.includes("high") || normalized.includes("elevated") || normalized.includes("yüksek")){
+      note.innerText = "Makro baskı yükselmiş görünüyor.";
+    } else {
+      note.innerText = "Makro görünüm stabil seyrediyor.";
+    }
+  } else {
+    if(normalized.includes("moderate")){
+      note.innerText = "Macro pressure is moderate.";
+    } else if(normalized.includes("high") || normalized.includes("elevated")){
+      note.innerText = "Macro pressure appears elevated.";
+    } else {
+      note.innerText = "Macro outlook remains stable.";
+    }
+  }
 }
 
 function applyLang(){
@@ -137,52 +236,56 @@ function applyLang(){
     document.getElementById("riskLabel").innerText = "Risk";
     document.getElementById("stressLabel").innerText = "Stres";
     document.getElementById("decisionLabel").innerText = "Karar";
+    document.getElementById("macroLabel").innerText = "Macro";
+    document.getElementById("tradeLabel").innerText = "Trade Signal";
+    document.getElementById("deviationLabel").innerText = "Deviation";
   } else {
     document.getElementById("riskLabel").innerText = "Risk";
     document.getElementById("stressLabel").innerText = "Stress";
     document.getElementById("decisionLabel").innerText = "Decision";
+    document.getElementById("macroLabel").innerText = "Macro";
+    document.getElementById("tradeLabel").innerText = "Trade Signal";
+    document.getElementById("deviationLabel").innerText = "Deviation";
   }
 }
 
-function updateMacroNote(){
-  document.getElementById("macroNote").innerText =
-    lang === "tr"
-      ? "Makro baskı orta seviyede."
-      : "Macro pressure is moderate.";
+function toggleLang(){
+  lang = lang === "tr" ? "en" : "tr";
+  applyLang();
+
+  const currentData = {
+    risk: document.getElementById("risk").innerText || fallbackData.risk,
+    stress: document.getElementById("stress").innerText || fallbackData.stress,
+    decision: fallbackData.decision,
+    macro: fallbackData.macro,
+    trade: document.getElementById("trade").innerText || fallbackData.trade,
+    deviation: fallbackData.deviation
+  };
+
+  renderData(currentData);
 }
 
 async function load(){
+  renderData(fallbackData);
+  setStatus(false);
+
   try{
-    await fetch("https://zentra-credit-stress-api.onrender.com/health");
+    const res = await fetch("https://zentra-credit-stress-api.onrender.com/health", {
+      method: "GET"
+    });
 
-    const riskVal = 62;
-    const stressVal = 44;
-    const decisionVal = "Monitor";
-    const macroVal = "Moderate";
-    const tradeVal = 64;
-    const deviationVal = "Low";
+    if(!res.ok){
+      throw new Error("HTTP " + res.status);
+    }
 
-    document.getElementById("risk").innerText = riskVal;
-    document.getElementById("stress").innerText = stressVal;
-    document.getElementById("decision").innerText = decisionVal;
-    document.getElementById("macro").innerText = macroVal;
-    document.getElementById("trade").innerText = tradeVal;
-    document.getElementById("deviation").innerText = deviationVal;
+    await res.json();
 
-    const [rb, rc] = bandClass(riskVal);
-    const riskBand = document.getElementById("riskBand");
-    riskBand.innerText = rb;
-    riskBand.className = "badge " + rc;
-
-    const [sb, sc] = bandClass(stressVal);
-    const stressBand = document.getElementById("stressBand");
-    stressBand.innerText = sb;
-    stressBand.className = "badge " + sc;
-
-    updateMacroNote();
-  } catch(e){
-    console.log("API fallback", e);
-    updateMacroNote();
+    setStatus(true);
+    renderData(fallbackData);
+  }catch(err){
+    console.log("API fallback active:", err);
+    setStatus(false);
+    renderData(fallbackData);
   }
 }
 
