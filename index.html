@@ -337,6 +337,9 @@ const COPY = {
     low: "Düşük",
     trend: "Trend",
     fragile: "Kırılgan",
+    highBand: "Yüksek",
+    midBand: "Orta",
+    lowBand: "Düşük",
     tradeLens: "Ticaret",
     invoice: "Fatura",
     logistics: "Lojistik",
@@ -392,6 +395,9 @@ const COPY = {
     low: "Low",
     trend: "Trend",
     fragile: "Fragile",
+    highBand: "High",
+    midBand: "Mid",
+    lowBand: "Low",
     tradeLens: "Trade",
     invoice: "Invoice",
     logistics: "Logistics",
@@ -447,6 +453,9 @@ const COPY = {
     low: "منخفض",
     trend: "اتجاه",
     fragile: "هش",
+    highBand: "مرتفع",
+    midBand: "متوسط",
+    lowBand: "منخفض",
     tradeLens: "التجارة",
     invoice: "الفاتورة",
     logistics: "اللوجستيات",
@@ -515,9 +524,24 @@ function normalizeRationale(value){
 
 function badgeBand(v){
   const n = Number(v || 0);
-  if(n >= 70) return ["HIGH","high"];
-  if(n >= 40) return ["MID","mid"];
-  return ["LOW","low"];
+  if(n >= 70) return ["HIGH","high", text("highBand")];
+  if(n >= 40) return ["MID","mid", text("midBand")];
+  return ["LOW","low", text("lowBand")];
+}
+
+function buildLocalizedRaw(data){
+  return {
+    risk: data.risk_score ?? "--",
+    stress: data.stress_score ?? "--",
+    decision: normalizeValue(data.decision),
+    macro: normalizeValue(data.macro_pressure),
+    trade: data.trade_signal ?? "--",
+    deviation: normalizeValue(data.deviation_level),
+    regime: normalizeValue(data.regime),
+    dominant_lens: normalizeLens(data.dominant_lens),
+    strategy: normalizeStrategy(data.strategy),
+    rationale: normalizeRationale(data.rationale)
+  };
 }
 
 function updateStaticShell(){
@@ -607,8 +631,8 @@ function renderCockpitPage(){
     input: {}
   };
 
-  const [rb, rc] = badgeBand(currentData.risk_score);
-  const [sb, sc] = badgeBand(currentData.stress_score);
+  const [rb, rc, rbLabel] = badgeBand(currentData.risk_score);
+  const [sb, sc, sbLabel] = badgeBand(currentData.stress_score);
 
   return `
     <div class="page">
@@ -689,13 +713,13 @@ function renderCockpitPage(){
         <div class="card">
           <div class="card-title">${text("risk")}</div>
           <div class="card-value">${currentData.risk_score ?? "--"}</div>
-          <div class="badge ${rc}">${rb}</div>
+          <div class="badge ${rc}">${rbLabel}</div>
         </div>
 
         <div class="card">
           <div class="card-title">${text("stress")}</div>
           <div class="card-value">${currentData.stress_score ?? "--"}</div>
-          <div class="badge ${sc}">${sb}</div>
+          <div class="badge ${sc}">${sbLabel}</div>
         </div>
 
         <div class="card">
@@ -740,7 +764,7 @@ function renderCockpitPage(){
 
         <div class="card">
           <div class="card-title">${text("raw")}</div>
-          <div class="card-text">${JSON.stringify(currentData.raw || currentData, null, 2)}</div>
+          <div class="card-text">${JSON.stringify(buildLocalizedRaw(currentData), null, 2)}</div>
         </div>
       </div>
     </div>
