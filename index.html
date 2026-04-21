@@ -1,1184 +1,152 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ZENTRA Matrix Ecosystem</title>
-
-<script src="./app/components/app-state.js"></script>
-<script src="./app/components/app-router.js"></script>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>ZENTRA MATRIX</title>
 
 <style>
-*{box-sizing:border-box}
-:root{
-  --bg:#07111f;
-  --panel:#0d1b2e;
-  --panel-2:#0a1626;
-  --line:#1d314d;
-  --line-soft:#233b5e;
-  --text:#e7edf7;
-  --muted:#93a6c4;
-  --blue:#2f6df6;
-  --green:#23c483;
-  --green-soft:#0f3a2b;
-  --yellow:#f4c152;
-  --yellow-soft:#473313;
-  --red:#ff6b6b;
-  --red-soft:#4b2020;
-  --shadow:0 12px 40px rgba(0,0,0,.28);
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #0b1a2b;
+  color: white;
 }
-body{
-  margin:0;
-  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
-  background:
-    radial-gradient(circle at top right, rgba(47,109,246,.16), transparent 28%),
-    radial-gradient(circle at top left, rgba(35,196,131,.08), transparent 22%),
-    var(--bg);
-  color:var(--text);
+
+.container {
+  padding: 20px;
+  max-width: 600px;
+  margin: auto;
 }
-button,input,select,textarea{font:inherit}
-.shell{min-height:100vh;display:flex;flex-direction:column}
-.topbar{
-  position:sticky;
-  top:0;
-  z-index:50;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:14px;
-  padding:18px 18px 14px;
-  border-bottom:1px solid rgba(255,255,255,.05);
-  background:rgba(7,17,31,.88);
-  backdrop-filter:blur(16px);
-  flex-wrap:wrap;
+
+h1 {
+  font-size: 20px;
+  margin-bottom: 20px;
 }
-.brand{display:flex;flex-direction:column;gap:5px}
-.brand-title{font-size:15px;font-weight:800;letter-spacing:.7px}
-.brand-sub{font-size:12px;color:var(--muted)}
-.topbar-right{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
-.status-pill{
-  min-width:96px;
-  padding:8px 14px;
-  border-radius:999px;
-  border:1px solid var(--line-soft);
-  background:var(--panel);
-  text-align:center;
-  font-size:12px;
-  font-weight:700;
-  letter-spacing:.3px;
-  box-shadow:var(--shadow);
+
+input {
+  width: 100%;
+  padding: 14px;
+  border-radius: 10px;
+  border: none;
+  margin-bottom: 15px;
+  font-size: 16px;
+  box-sizing: border-box;
 }
-.status-live{background:rgba(35,196,131,.12);color:#8ce5bd;border-color:rgba(35,196,131,.35)}
-.status-loading{background:rgba(244,193,82,.12);color:#ffd67d;border-color:rgba(244,193,82,.35)}
-.status-fallback{background:rgba(255,107,107,.10);color:#ffb2b2;border-color:rgba(255,107,107,.28)}
-.status-idle{background:rgba(255,255,255,.04);color:#d6e0ef}
-.lang-group,.nav-group,.country-chips,.report-actions{
-  display:flex;
-  gap:8px;
-  flex-wrap:wrap;
-  align-items:center;
+
+button {
+  width: 100%;
+  padding: 14px;
+  border: none;
+  border-radius: 10px;
+  background: #2d6cff;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
 }
-.lang-btn,.nav-btn,.chip-btn,.run-btn,.ghost-btn{
-  border:1px solid var(--line-soft);
-  background:var(--panel);
-  color:var(--text);
-  border-radius:12px;
-  padding:10px 14px;
-  font-size:13px;
-  cursor:pointer;
-  transition:.18s ease;
+
+button:disabled {
+  opacity: 0.5;
 }
-.lang-btn:hover,.nav-btn:hover,.chip-btn:hover,.run-btn:hover,.ghost-btn:hover{
-  transform:translateY(-1px);
-  border-color:#3a5d93;
+
+.status {
+  margin-top: 15px;
+  font-size: 14px;
 }
-.lang-btn.active,.nav-btn.active,.chip-btn.active{
-  background:linear-gradient(180deg, #2f6df6 0%, #2457c6 100%);
-  border-color:#2f6df6;
-  color:#fff;
+
+.success {
+  color: #4caf50;
 }
-.run-btn{
-  background:linear-gradient(180deg, #2f6df6 0%, #2457c6 100%);
-  border-color:#2f6df6;
-  color:#fff;
-  font-weight:700;
+
+.error {
+  color: #ff4d4d;
 }
-.ghost-btn{background:var(--panel-2)}
-.main-nav{padding:0 18px 16px}
-.page{width:100%;max-width:1320px;margin:0 auto;padding:18px}
-.hero{
-  display:grid;
-  grid-template-columns:1.2fr .8fr;
-  gap:20px;
-  margin-bottom:20px;
-}
-.panel{
-  background:linear-gradient(180deg, rgba(13,27,46,.96), rgba(9,20,35,.96));
-  border:1px solid var(--line);
-  border-radius:22px;
-  padding:18px;
-  box-shadow:var(--shadow);
-}
-.panel-title{font-size:14px;color:var(--muted);margin-bottom:14px}
-.hero-top{
-  display:grid;
-  grid-template-columns:repeat(4,minmax(0,1fr));
-  gap:14px;
-  margin-bottom:18px;
-}
-.hero-stat{
-  background:rgba(255,255,255,.03);
-  border:1px solid rgba(255,255,255,.05);
-  border-radius:18px;
-  padding:14px;
-}
-.hero-label{font-size:12px;color:var(--muted)}
-.hero-value{margin-top:8px;font-size:24px;font-weight:800;letter-spacing:.2px}
-.hero-mini{margin-top:6px;font-size:12px;color:var(--muted)}
-.form-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(190px,1fr));
-  gap:12px;
-}
-.field{display:flex;flex-direction:column;gap:7px}
-.label{font-size:12px;color:var(--muted)}
-.input{
-  width:100%;
-  background:#091321;
-  color:var(--text);
-  border:1px solid var(--line-soft);
-  border-radius:14px;
-  padding:13px 14px;
-  outline:none;
-}
-.input:focus{border-color:#467af8}
-.country-wrap{margin-top:14px}
-.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
-.helper{margin-top:12px;font-size:12px;color:var(--muted);line-height:1.5}
-.message{margin-top:12px;font-size:13px}
-.summary-grid{
-  display:grid;
-  grid-template-columns:repeat(2,minmax(0,1fr));
-  gap:12px;
-}
-.summary-item{
-  background:#091321;
-  border:1px solid var(--line);
-  border-radius:16px;
-  padding:12px;
-}
-.summary-label{font-size:12px;color:var(--muted)}
-.summary-value{margin-top:7px;font-size:16px;font-weight:700;word-break:break-word}
-.grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-  gap:18px;
-}
-.card{
-  background:linear-gradient(180deg, rgba(13,27,46,.96), rgba(9,20,35,.96));
-  border:1px solid var(--line);
-  border-radius:20px;
-  padding:16px;
-  box-shadow:var(--shadow);
-}
-.card-title{font-size:13px;color:var(--muted)}
-.card-value{margin-top:9px;font-size:30px;font-weight:800;letter-spacing:.2px;word-break:break-word}
-.card-text{margin-top:10px;font-size:13px;line-height:1.6;white-space:pre-wrap;color:#dbe6f5}
-.badge{
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  min-width:70px;
-  margin-top:10px;
-  padding:5px 10px;
-  border-radius:999px;
-  font-size:12px;
-  font-weight:700;
-}
-.low{background:var(--green-soft);color:#87e0b8;border:1px solid rgba(35,196,131,.28)}
-.mid{background:var(--yellow-soft);color:#ffd97f;border:1px solid rgba(244,193,82,.28)}
-.high{background:var(--red-soft);color:#ffb6b6;border:1px solid rgba(255,107,107,.28)}
-.raw-box{
-  max-height:320px;
-  overflow:auto;
-  background:#07101c;
-  border:1px solid var(--line);
-  border-radius:16px;
-  padding:12px;
-}
-.report-box{
-  background:#07101c;
-  border:1px solid var(--line);
-  border-radius:18px;
-  padding:16px;
-  white-space:pre-wrap;
-  line-height:1.7;
-  color:#dbe6f5;
-}
-.footer{
-  padding:24px 18px 34px;
-  text-align:center;
-  color:var(--muted);
-  font-size:12px;
-}
-@media (max-width:1080px){
-  .hero{grid-template-columns:1fr}
-}
-@media (max-width:760px){
-  .hero-top{grid-template-columns:repeat(2,minmax(0,1fr))}
-  .summary-grid{grid-template-columns:1fr}
-  .card-value{font-size:26px}
+
+.report-box {
+  margin-top: 20px;
+  background: #0f2a44;
+  padding: 15px;
+  border-radius: 10px;
+  white-space: pre-line;
 }
 </style>
 </head>
 
 <body>
-<div class="shell">
-  <div class="topbar">
-    <div class="brand">
-      <div class="brand-title">ZENTRA MATRIX ECOSYSTEM</div>
-      <div class="brand-sub" id="brandSub"></div>
-    </div>
 
-    <div class="topbar-right">
-      <div id="statusPill" class="status-pill status-idle">IDLE</div>
-      <div class="lang-group">
-        <button class="lang-btn" id="lang-tr" onclick="setLang('tr')">TR</button>
-        <button class="lang-btn" id="lang-en" onclick="setLang('en')">EN</button>
-        <button class="lang-btn" id="lang-ar" onclick="setLang('ar')">AR</button>
-      </div>
-    </div>
-  </div>
+<div class="container">
+  <h1>ZENTRA Raporu</h1>
 
-  <div class="main-nav">
-    <div class="nav-group">
-      <button class="nav-btn" id="nav-cockpit" onclick="goRoute('cockpit')"></button>
-      <button class="nav-btn" id="nav-report" onclick="goRoute('report')"></button>
-      <button class="nav-btn" id="nav-modules" onclick="goRoute('modules')"></button>
-    </div>
-  </div>
+  <input id="email" placeholder="Mail adresi gir" />
+  <button id="sendBtn">Rapor Gönder</button>
 
-  <div id="app-root"></div>
-
-  <div class="footer" id="footerText"></div>
+  <div id="status" class="status"></div>
+  <div id="report" class="report-box"></div>
 </div>
 
 <script>
-const API_URL = "/api/v1/credit-stress";
+const sendBtn = document.getElementById("sendBtn");
+const statusBox = document.getElementById("status");
+const reportBox = document.getElementById("report");
 
-const FALLBACK_OUTPUT = {
-  risk_score: 62,
-  stress_score: 44,
-  decision: "monitor",
-  macro_pressure: "moderate",
-  trade_signal: 64,
-  deviation_level: "low",
-  regime: "trend",
-  dominant_lens: "trade",
-  strategy: "Proceed with controlled caution and keep exposure monitored.",
-  rationale: "Fallback mode is active. Live endpoint did not return a usable response.",
-  country: "TR",
-  market_context: {
-    ok: false,
-    source: "fallback",
-    context: { country: "TR", country_label: "Turkey", date: null },
-    market: { eur_usd: null, usd_try: null, usd_aed: null, usd_sar: null, gbp_usd: null },
-    macro: { pressure: "moderate", fx_adjustment: 0 }
-  },
-  adjustments: {
-    fx_adjustment: 0,
-    macro_penalty: 0,
-    delay_penalty: 0,
-    customer_penalty: 0,
-    exposure_penalty: 0,
-    sector_penalty: 0
-  },
-  raw: { mode: "fallback", source: "index-root-entry" }
-};
+function generateReport() {
+  const now = new Date().toLocaleString("tr-TR");
+  return `ZENTRA Raporu
 
-const COPY = {
-  tr: {
-    brandSub: "Final Clean System • Live Market Connected",
-    cockpit: "Cockpit",
-    report: "Rapor",
-    modules: "Modüller",
-    liveInput: "Canlı Risk Girişi",
-    amount: "Tutar",
-    delay: "Gecikme Günü",
-    score: "Müşteri Skoru",
-    exposure: "Exposure Ratio",
-    sector: "Sektör",
-    country: "Ülke",
-    run: "Analiz Çalıştır",
-    fallback: "Fallback Göster",
-    helper: "Canlı endpoint yanıt verirse sonuçlar ekrana basılır. Başarısız olursa güvenli fallback görünümü korunur.",
-    ready: "Hazır.",
-    sending: "Canlı analiz gönderiliyor...",
-    liveReceived: "Canlı yanıt alındı.",
-    fallbackLoaded: "Fallback görünümü yüklendi.",
-    fallbackFail: "Canlı istek başarısız. Fallback aktif.",
-    risk: "Risk",
-    stress: "Stres",
-    decision: "Karar",
-    macro: "Makro",
-    trade: "Trade Signal",
-    deviation: "Sapma",
-    regime: "Rejim",
-    dominantLens: "Baskın Lens",
-    strategy: "Strateji",
-    rationale: "Gerekçe",
-    raw: "Ham Yanıt",
-    stateRoute: "Aktif Route",
-    stateLang: "Aktif Dil",
-    stateConnection: "Bağlantı",
-    stateUpdated: "Son Güncelleme",
-    reportTitle: "ZENTRA Raporu",
-    modulesTitle: "Modüller Sayfası",
-    modulesText: "Bu blok modül marketplace / lens cockpit / workspace genişlemesi için ayrıldı.",
-    approve: "Onayla",
-    monitor: "İzle",
-    reject: "Reddet",
-    stable: "Stabil",
-    moderate: "Orta",
-    high: "Yüksek",
-    low: "Düşük",
-    trend: "Trend",
-    fragile: "Kırılgan",
-    highBand: "Yüksek",
-    midBand: "Orta",
-    lowBand: "Düşük",
-    tradeLens: "Ticaret",
-    invoice: "Fatura",
-    logistics: "Lojistik",
-    compliance: "Uyum",
-    sme: "KOBİ",
-    footer: "ZENTRA Matrix Ecosystem • Final Clean System • Root Entry",
-    marketContext: "Piyasa Bağlamı",
-    countryLabel: "Ülke Kodu",
-    countryName: "Ülke Adı",
-    contextDate: "Piyasa Tarihi",
-    fxAdjustment: "FX Ayarlaması",
-    macroPenalty: "Makro Cezası",
-    usdTry: "USD/TRY",
-    eurUsd: "EUR/USD",
-    usdAed: "USD/AED",
-    usdSar: "USD/SAR",
-    gbpUsd: "GBP/USD",
-    rawLocalized: "Yerelleştirilmiş Yanıt",
-    operatorSummary: "Operatör Özeti",
-    currentCountry: "Aktif Ülke",
-    reportDate: "Rapor Tarihi",
-    reportSummary: "Yönetici Özeti",
-    reportCore: "Temel Metrikler",
-    reportMarket: "Piyasa Bağlamı",
-    reportStrategy: "Strateji",
-    reportRationale: "Gerekçe",
-    reportEmail: "Mail Adresi",
-    sendReport: "Rapor Gönder",
-    sendHint: "Mail uygulaması hazır içerikle açılır."
-  },
-  en: {
-    brandSub: "Final Clean System • Live Market Connected",
-    cockpit: "Cockpit",
-    report: "Report",
-    modules: "Modules",
-    liveInput: "Live Risk Input",
-    amount: "Amount",
-    delay: "Delay Days",
-    score: "Customer Score",
-    exposure: "Exposure Ratio",
-    sector: "Sector",
-    country: "Country",
-    run: "Run Analysis",
-    fallback: "Show Fallback",
-    helper: "If the live endpoint responds, results are rendered. If it fails, the safe fallback view remains active.",
-    ready: "Ready.",
-    sending: "Sending live analysis...",
-    liveReceived: "Live response received.",
-    fallbackLoaded: "Fallback view loaded.",
-    fallbackFail: "Live request failed. Fallback active.",
-    risk: "Risk",
-    stress: "Stress",
-    decision: "Decision",
-    macro: "Macro",
-    trade: "Trade Signal",
-    deviation: "Deviation",
-    regime: "Regime",
-    dominantLens: "Dominant Lens",
-    strategy: "Strategy",
-    rationale: "Rationale",
-    raw: "Raw Response",
-    stateRoute: "Active Route",
-    stateLang: "Active Language",
-    stateConnection: "Connection",
-    stateUpdated: "Last Update",
-    reportTitle: "ZENTRA Report",
-    modulesTitle: "Modules Page",
-    modulesText: "This block is reserved for module marketplace / lens cockpit / workspace expansion.",
-    approve: "Approve",
-    monitor: "Monitor",
-    reject: "Reject",
-    stable: "Stable",
-    moderate: "Moderate",
-    high: "High",
-    low: "Low",
-    trend: "Trend",
-    fragile: "Fragile",
-    highBand: "High",
-    midBand: "Mid",
-    lowBand: "Low",
-    tradeLens: "Trade",
-    invoice: "Invoice",
-    logistics: "Logistics",
-    compliance: "Compliance",
-    sme: "SME",
-    footer: "ZENTRA Matrix Ecosystem • Final Clean System • Root Entry",
-    marketContext: "Market Context",
-    countryLabel: "Country Code",
-    countryName: "Country Name",
-    contextDate: "Market Date",
-    fxAdjustment: "FX Adjustment",
-    macroPenalty: "Macro Penalty",
-    usdTry: "USD/TRY",
-    eurUsd: "EUR/USD",
-    usdAed: "USD/AED",
-    usdSar: "USD/SAR",
-    gbpUsd: "GBP/USD",
-    rawLocalized: "Localized Response",
-    operatorSummary: "Operator Summary",
-    currentCountry: "Active Country",
-    reportDate: "Report Date",
-    reportSummary: "Executive Summary",
-    reportCore: "Core Metrics",
-    reportMarket: "Market Context",
-    reportStrategy: "Strategy",
-    reportRationale: "Rationale",
-    reportEmail: "Email Address",
-    sendReport: "Send Report",
-    sendHint: "Opens the mail app with ready content."
-  },
-  ar: {
-    brandSub: "النظام النظيف النهائي • متصل بالسوق الحي",
-    cockpit: "القيادة",
-    report: "التقرير",
-    modules: "الوحدات",
-    liveInput: "إدخال المخاطر المباشر",
-    amount: "المبلغ",
-    delay: "أيام التأخير",
-    score: "درجة العميل",
-    exposure: "نسبة التعرّض",
-    sector: "القطاع",
-    country: "الدولة",
-    run: "تشغيل التحليل",
-    fallback: "عرض الوضع الاحتياطي",
-    helper: "إذا استجاب الطرف المباشر فسيتم عرض النتائج. وإذا فشل فسيبقى العرض الاحتياطي الآمن فعالاً.",
-    ready: "جاهز.",
-    sending: "يتم إرسال التحليل المباشر...",
-    liveReceived: "تم استلام الاستجابة المباشرة.",
-    fallbackLoaded: "تم تحميل العرض الاحتياطي.",
-    fallbackFail: "فشل الطلب المباشر. تم تفعيل الوضع الاحتياطي.",
-    risk: "المخاطر",
-    stress: "الضغط",
-    decision: "القرار",
-    macro: "الماكرو",
-    trade: "إشارة التجارة",
-    deviation: "الانحراف",
-    regime: "النظام",
-    dominantLens: "العدسة المهيمنة",
-    strategy: "الاستراتيجية",
-    rationale: "المبرر",
-    raw: "الاستجابة الخام",
-    stateRoute: "المسار النشط",
-    stateLang: "اللغة النشطة",
-    stateConnection: "الاتصال",
-    stateUpdated: "آخر تحديث",
-    reportTitle: "تقرير ZENTRA",
-    modulesTitle: "صفحة الوحدات",
-    modulesText: "هذه المساحة مخصصة لتوسعة سوق الوحدات / عدسات القيادة / مساحة العمل.",
-    approve: "موافقة",
-    monitor: "مراقبة",
-    reject: "رفض",
-    stable: "مستقر",
-    moderate: "متوسط",
-    high: "مرتفع",
-    low: "منخفض",
-    trend: "اتجاه",
-    fragile: "هش",
-    highBand: "مرتفع",
-    midBand: "متوسط",
-    lowBand: "منخفض",
-    tradeLens: "التجارة",
-    invoice: "الفاتورة",
-    logistics: "اللوجستيات",
-    compliance: "الامتثال",
-    sme: "المشاريع الصغيرة",
-    footer: "ZENTRA Matrix Ecosystem • Final Clean System • Root Entry",
-    marketContext: "سياق السوق",
-    countryLabel: "رمز الدولة",
-    countryName: "اسم الدولة",
-    contextDate: "تاريخ السوق",
-    fxAdjustment: "تعديل FX",
-    macroPenalty: "عقوبة الماكرو",
-    usdTry: "USD/TRY",
-    eurUsd: "EUR/USD",
-    usdAed: "USD/AED",
-    usdSar: "USD/SAR",
-    gbpUsd: "GBP/USD",
-    rawLocalized: "الاستجابة المترجمة",
-    operatorSummary: "ملخص التشغيل",
-    currentCountry: "الدولة النشطة",
-    reportDate: "تاريخ التقرير",
-    reportSummary: "الملخص التنفيذي",
-    reportCore: "المقاييس الأساسية",
-    reportMarket: "سياق السوق",
-    reportStrategy: "الاستراتيجية",
-    reportRationale: "المبرر",
-    reportEmail: "البريد الإلكتروني",
-    sendReport: "إرسال التقرير",
-    sendHint: "يفتح تطبيق البريد مع محتوى جاهز."
-  }
-};
+Rapor Tarihi: ${now}
 
-let currentLang = "tr";
-let currentMessageKey = "ready";
-let currentData = { ...FALLBACK_OUTPUT };
-let selectedCountry = "TR";
-let reportEmail = "";
-
-function text(key){
-  return (COPY[currentLang] && COPY[currentLang][key]) || COPY.tr[key] || key;
+--- Yönetici Özeti ---
+Ülke Kodu: TR
+Karar: Reddet
+Rejim: Kırılgan
+Strateji: Pozisyona girme. Riski düşür, işlemi reddet.`;
 }
 
-function normalizeValue(value){
-  const v = String(value ?? "--").toLowerCase();
-  return COPY[currentLang][v] || value || "--";
-}
+sendBtn.onclick = async () => {
+  const email = document.getElementById("email").value.trim();
 
-function normalizeLens(value){
-  const v = String(value ?? "").toLowerCase();
-  if(v === "trade") return COPY[currentLang].tradeLens;
-  if(v === "invoice") return COPY[currentLang].invoice;
-  if(v === "logistics") return COPY[currentLang].logistics;
-  if(v === "compliance") return COPY[currentLang].compliance;
-  if(v === "sme") return COPY[currentLang].sme;
-  return value || "--";
-}
-
-function normalizeStrategy(value){
-  const decision = String(currentData.decision || "").toLowerCase();
-
-  if(decision === "reject"){
-    if(currentLang === "tr") return "Pozisyona girme. Riski düşür, işlemi reddet.";
-    if(currentLang === "ar") return "لا تدخل في الصفقة. قم بتقليل المخاطر ورفض العملية.";
-    return "Do not proceed. Reduce exposure and reject the transaction.";
-  }
-
-  if(decision === "monitor"){
-    if(currentLang === "tr") return "Kontrollü ilerle, maruziyeti yakından izlemeye devam et.";
-    if(currentLang === "ar") return "تحرك بحذر واستمر في مراقبة التعرض عن كثب.";
-    return "Proceed with caution and closely monitor exposure.";
-  }
-
-  if(decision === "approve"){
-    if(currentLang === "tr") return "İşleme devam et. Risk kabul edilebilir seviyede.";
-    if(currentLang === "ar") return "استمر في العملية. المخاطر ضمن الحدود المقبولة.";
-    return "Proceed. Risk is within acceptable range.";
-  }
-
-  return value || "--";
-}
-
-function normalizeRationale(value){
-  if(!value) return "--";
-  const raw = String(value).toLowerCase();
-
-  if(currentLang === "tr"){
-    if(raw.includes("calculated via clean zentra stress model with live market context")) return "Canlı piyasa bağlamı ile temiz ZENTRA stres modeli kullanılarak hesaplandı.";
-    if(raw.includes("calculated via clean zentra stress model")) return "Temiz ZENTRA stres modeli ile hesaplandı.";
-    if(raw.includes("fallback mode is active")) return "Fallback modu aktif. Canlı veri alınamadı.";
-  }
-
-  if(currentLang === "ar"){
-    if(raw.includes("calculated via clean zentra stress model with live market context")) return "تم الحساب باستخدام نموذج الضغط النظيف من ZENTRA مع سياق السوق الحي.";
-    if(raw.includes("calculated via clean zentra stress model")) return "تم الحساب باستخدام نموذج الضغط النظيف من ZENTRA.";
-    if(raw.includes("fallback mode is active")) return "وضع الاحتياطي نشط. لم يتم استلام بيانات مباشرة.";
-  }
-
-  return value;
-}
-
-function badgeBand(v){
-  const n = Number(v || 0);
-  if(n >= 70) return ["HIGH","high", text("highBand")];
-  if(n >= 40) return ["MID","mid", text("midBand")];
-  return ["LOW","low", text("lowBand")];
-}
-
-function buildLocalizedRaw(data){
-  return {
-    risk: data.risk_score ?? "--",
-    stress: data.stress_score ?? "--",
-    decision: normalizeValue(data.decision),
-    macro: normalizeValue(data.macro_pressure),
-    trade: data.trade_signal ?? "--",
-    deviation: normalizeValue(data.deviation_level),
-    regime: normalizeValue(data.regime),
-    dominant_lens: normalizeLens(data.dominant_lens),
-    strategy: normalizeStrategy(data.strategy),
-    rationale: normalizeRationale(data.rationale),
-    country: data.country ?? "--"
-  };
-}
-
-function metricValue(v){
-  if(v === null || v === undefined) return "--";
-  return v;
-}
-
-function setStatusClass(value){
-  const pill = document.getElementById("statusPill");
-  pill.classList.remove("status-live","status-loading","status-fallback","status-idle");
-  if(value === "live") pill.classList.add("status-live");
-  else if(value === "loading") pill.classList.add("status-loading");
-  else if(value === "fallback") pill.classList.add("status-fallback");
-  else pill.classList.add("status-idle");
-}
-
-function updateStaticShell(){
-  document.documentElement.lang = currentLang;
-  document.getElementById("brandSub").innerText = text("brandSub");
-  document.getElementById("nav-cockpit").innerText = text("cockpit");
-  document.getElementById("nav-report").innerText = text("report");
-  document.getElementById("nav-modules").innerText = text("modules");
-  document.getElementById("footerText").innerText = text("footer");
-
-  ["tr","en","ar"].forEach(code => {
-    document.getElementById("lang-" + code).classList.toggle("active", currentLang === code);
-  });
-
-  const activeRoute = window.ZENTRA ? ZENTRA.get().route.current : "cockpit";
-  document.getElementById("nav-cockpit").classList.toggle("active", activeRoute === "cockpit");
-  document.getElementById("nav-report").classList.toggle("active", activeRoute === "report");
-  document.getElementById("nav-modules").classList.toggle("active", activeRoute === "modules");
-
-  if(window.ZENTRA){
-    const connection = String(ZENTRA.get().connection.status || "idle");
-    document.getElementById("statusPill").innerText = connection.toUpperCase();
-    setStatusClass(connection);
-  }
-}
-
-function setStatus(value){
-  if(window.ZENTRA){
-    ZENTRA.setConnection(value);
-  }
-  document.getElementById("statusPill").innerText = String(value || "idle").toUpperCase();
-  setStatusClass(String(value || "idle"));
-}
-
-function setMessageByKey(key, extra){
-  currentMessageKey = key;
-  const el = document.getElementById("messageBox");
-  if(el){
-    el.innerText = extra ? (text(key) + " " + extra) : text(key);
-  }
-}
-
-function goRoute(route){
-  if(window.ZENTRA_ROUTER){
-    window.ZENTRA_ROUTER.navigate(route);
-  } else {
-    window.location.hash = route;
-  }
-}
-
-function setLang(lang){
-  currentLang = lang;
-  if(window.ZENTRA){
-    ZENTRA.setLang(lang);
-  }
-  renderCurrentRoute();
-}
-
-function setCountry(code){
-  selectedCountry = code;
-  if(window.ZENTRA){
-    const prev = ZENTRA.get().input || {};
-    ZENTRA.setInput({ ...prev, country: code });
-  }
-  renderCurrentRoute();
-}
-
-function setReportEmail(value){
-  reportEmail = String(value || "").trim();
-}
-
-function buildUiInputFromDom(){
-  return {
-    amount: Number(document.getElementById("amount").value || 0),
-    payment_delay_days: Number(document.getElementById("paymentDelayDays").value || 0),
-    customer_score: Number(document.getElementById("customerScore").value || 0),
-    exposure_ratio: Number(String(document.getElementById("exposureRatio").value || 0).replace(",", ".")),
-    sector: document.getElementById("sector").value || "trade",
-    country: selectedCountry || "TR"
-  };
-}
-
-function buildApiPayload(ui){
-  return {
-    principal: Number(ui.amount || 0),
-    interest_rate: 24,
-    term_months: 12,
-    monthly_income: 90000,
-    sector: ui.sector || "trade",
-    sector_risk_level: 0.5,
-    payment_delay_days: Number(ui.payment_delay_days || 0),
-    customer_score: Number(ui.customer_score || 50),
-    exposure_ratio: Number(ui.exposure_ratio || 0),
-    country: String(ui.country || "TR").toUpperCase()
-  };
-}
-
-function renderCountryChips(){
-  return ["TR","EU","UK","AE","SA","US"].map(code => `
-    <button class="chip-btn ${selectedCountry === code ? "active" : ""}" onclick="setCountry('${code}')">${code}</button>
-  `).join("");
-}
-
-function buildReport(){
-  const d = currentData;
-  const ctx = d.market_context || {};
-  const info = ctx.context || {};
-  const market = ctx.market || {};
-  const macro = ctx.macro || {};
-  const adj = d.adjustments || {};
-
-  return `${text("reportTitle")}
-
-${text("reportDate")}: ${new Date().toLocaleString()}
-
---- ${text("reportSummary")} ---
-${text("countryLabel")}: ${d.country || "--"}
-${text("decision")}: ${normalizeValue(d.decision)}
-${text("regime")}: ${normalizeValue(d.regime)}
-${text("strategy")}: ${normalizeStrategy(d.strategy)}
-
---- ${text("reportCore")} ---
-${text("risk")}: ${d.risk_score ?? "--"}
-${text("stress")}: ${d.stress_score ?? "--"}
-${text("trade")}: ${d.trade_signal ?? "--"}
-${text("deviation")}: ${normalizeValue(d.deviation_level)}
-${text("dominantLens")}: ${normalizeLens(d.dominant_lens)}
-
---- ${text("reportMarket")} ---
-${text("countryName")}: ${info.country_label || "--"}
-${text("contextDate")}: ${info.date || "--"}
-${text("macro")}: ${normalizeValue(macro.pressure || d.macro_pressure)}
-${text("fxAdjustment")}: ${metricValue(adj.fx_adjustment)}
-${text("macroPenalty")}: ${metricValue(adj.macro_penalty)}
-${text("usdTry")}: ${metricValue(market.usd_try)}
-${text("eurUsd")}: ${metricValue(market.eur_usd)}
-${text("usdAed")}: ${metricValue(market.usd_aed)}
-${text("usdSar")}: ${metricValue(market.usd_sar)}
-${text("gbpUsd")}: ${metricValue(market.gbp_usd)}
-
---- ${text("reportRationale")} ---
-${normalizeRationale(d.rationale)}
-
-ZENTRA Intel AI`;
-}
-
-function sendReportByEmail(){
-  const to = reportEmail || "";
-  const subject = encodeURIComponent(`ZENTRA Report - ${currentData.country || selectedCountry || "TR"}`);
-  const body = encodeURIComponent(buildReport());
-
-  if(!to){
-    alert(currentLang === "tr"
-      ? "Önce mail adresi gir."
-      : currentLang === "ar"
-        ? "أدخل البريد الإلكتروني أولاً."
-        : "Enter an email address first.");
+  if (!email) {
+    statusBox.textContent = "Mail adresi gir";
+    statusBox.className = "status error";
     return;
   }
 
-  window.location.href = `mailto:${encodeURIComponent(to)}?subject=${subject}&body=${body}`;
-}
+  const report = generateReport();
+  reportBox.textContent = report;
 
-function renderCockpitPage(){
-  const state = window.ZENTRA ? ZENTRA.get() : {
-    route:{current:"cockpit"},
-    lang:{active:currentLang},
-    connection:{status:"idle"},
-    ui:{last_update:null},
-    input:{}
-  };
+  sendBtn.disabled = true;
+  statusBox.textContent = "Gönderiliyor...";
+  statusBox.className = "status";
 
-  const [rb, rc, rbLabel] = badgeBand(currentData.risk_score);
-  const [sb, sc, sbLabel] = badgeBand(currentData.stress_score);
-  const ctx = currentData.market_context || {};
-  const ctxInfo = ctx.context || {};
-  const market = ctx.market || {};
-  const macro = ctx.macro || {};
-  const adj = currentData.adjustments || {};
-
-  return `
-    <div class="page">
-      <div class="hero-top">
-        <div class="hero-stat">
-          <div class="hero-label">${text("risk")}</div>
-          <div class="hero-value">${currentData.risk_score ?? "--"}</div>
-          <div class="hero-mini">${rbLabel}</div>
-        </div>
-        <div class="hero-stat">
-          <div class="hero-label">${text("stress")}</div>
-          <div class="hero-value">${currentData.stress_score ?? "--"}</div>
-          <div class="hero-mini">${sbLabel}</div>
-        </div>
-        <div class="hero-stat">
-          <div class="hero-label">${text("macro")}</div>
-          <div class="hero-value">${normalizeValue(currentData.macro_pressure)}</div>
-          <div class="hero-mini">${text("currentCountry")}: ${currentData.country || selectedCountry}</div>
-        </div>
-        <div class="hero-stat">
-          <div class="hero-label">${text("trade")}</div>
-          <div class="hero-value">${currentData.trade_signal ?? "--"}</div>
-          <div class="hero-mini">${normalizeValue(currentData.regime)}</div>
-        </div>
-      </div>
-
-      <div class="hero">
-        <div class="panel">
-          <div class="panel-title">${text("liveInput")}</div>
-
-          <div class="form-grid">
-            <div class="field">
-              <label class="label" for="amount">${text("amount")}</label>
-              <input class="input" id="amount" type="number" value="${state.input?.amount ?? 150000}">
-            </div>
-
-            <div class="field">
-              <label class="label" for="paymentDelayDays">${text("delay")}</label>
-              <input class="input" id="paymentDelayDays" type="number" value="${state.input?.payment_delay_days ?? 7}">
-            </div>
-
-            <div class="field">
-              <label class="label" for="customerScore">${text("score")}</label>
-              <input class="input" id="customerScore" type="number" value="${state.input?.customer_score ?? 72}">
-            </div>
-
-            <div class="field">
-              <label class="label" for="exposureRatio">${text("exposure")}</label>
-              <input class="input" id="exposureRatio" type="text" value="${state.input?.exposure_ratio ?? 0.38}">
-            </div>
-
-            <div class="field">
-              <label class="label" for="sector">${text("sector")}</label>
-              <select class="input" id="sector">
-                ${["trade","invoice","logistics","compliance","sme"].map(opt => `
-                  <option value="${opt}" ${String(state.input?.sector || "trade") === opt ? "selected" : ""}>${opt}</option>
-                `).join("")}
-              </select>
-            </div>
-          </div>
-
-          <div class="country-wrap">
-            <div class="label">${text("country")}</div>
-            <div class="country-chips">${renderCountryChips()}</div>
-          </div>
-
-          <div class="actions">
-            <button class="run-btn" onclick="runRisk()">${text("run")}</button>
-            <button class="ghost-btn" onclick="loadFallback()">${text("fallback")}</button>
-          </div>
-
-          <div class="helper">${text("helper")}</div>
-          <div class="message" id="messageBox">${text(currentMessageKey)}</div>
-        </div>
-
-        <div class="panel">
-          <div class="panel-title">${text("operatorSummary")}</div>
-          <div class="summary-grid">
-            <div class="summary-item">
-              <div class="summary-label">${text("stateRoute")}</div>
-              <div class="summary-value">${state.route.current || "--"}</div>
-            </div>
-            <div class="summary-item">
-              <div class="summary-label">${text("stateLang")}</div>
-              <div class="summary-value">${state.lang.active || "--"}</div>
-            </div>
-            <div class="summary-item">
-              <div class="summary-label">${text("stateConnection")}</div>
-              <div class="summary-value">${state.connection.status || "--"}</div>
-            </div>
-            <div class="summary-item">
-              <div class="summary-label">${text("stateUpdated")}</div>
-              <div class="summary-value">${state.ui.last_update ? new Date(state.ui.last_update).toLocaleString() : "--"}</div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="grid">
-        <div class="card">
-          <div class="card-title">${text("risk")}</div>
-          <div class="card-value">${currentData.risk_score ?? "--"}</div>
-          <div class="badge ${rc}">${rbLabel}</div>
-        </div>
-
-        <div class="card">
-          <div class="card-title">${text("stress")}</div>
-          <div class="card-value">${currentData.stress_score ?? "--"}</div>
-          <div class="badge ${sc}">${sbLabel}</div>
-        </div>
-
-        <div class="card">
-          <div class="card-title">${text("decision")}</div>
-          <div class="card-value">${normalizeValue(currentData.decision)}</div>
-        </div>
-
-        <div class="card">
-          <div class="card-title">${text("macro")}</div>
-          <div class="card-value">${normalizeValue(currentData.macro_pressure)}</div>
-        </div>
-
-        <div class="card">
-          <div class="card-title">${text("deviation")}</div>
-          <div class="card-value">${normalizeValue(currentData.deviation_level)}</div>
-        </div>
-
-        <div class="card">
-          <div class="card-title">${text("regime")}</div>
-          <div class="card-value">${normalizeValue(currentData.regime)}</div>
-        </div>
-
-        <div class="card">
-          <div class="card-title">${text("dominantLens")}</div>
-          <div class="card-value">${normalizeLens(currentData.dominant_lens)}</div>
-        </div>
-
-        <div class="card">
-          <div class="card-title">${text("strategy")}</div>
-          <div class="card-text">${normalizeStrategy(currentData.strategy)}</div>
-        </div>
-
-        <div class="card">
-          <div class="card-title">${text("rationale")}</div>
-          <div class="card-text">${normalizeRationale(currentData.rationale)}</div>
-        </div>
-
-        <div class="card">
-          <div class="card-title">${text("marketContext")}</div>
-          <div class="card-text">${text("countryLabel")}: ${currentData.country || ctxInfo.country || "--"}
-${text("countryName")}: ${ctxInfo.country_label || "--"}
-${text("contextDate")}: ${ctxInfo.date || "--"}
-${text("macro")}: ${normalizeValue(macro.pressure || currentData.macro_pressure)}
-${text("fxAdjustment")}: ${metricValue(adj.fx_adjustment)}
-${text("macroPenalty")}: ${metricValue(adj.macro_penalty)}</div>
-        </div>
-
-        <div class="card">
-          <div class="card-title">FX Snapshot</div>
-          <div class="card-text">${text("usdTry")}: ${metricValue(market.usd_try)}
-${text("eurUsd")}: ${metricValue(market.eur_usd)}
-${text("usdAed")}: ${metricValue(market.usd_aed)}
-${text("usdSar")}: ${metricValue(market.usd_sar)}
-${text("gbpUsd")}: ${metricValue(market.gbp_usd)}</div>
-        </div>
-
-        <div class="card">
-          <div class="card-title">${text("rawLocalized")}</div>
-          <div class="raw-box">${JSON.stringify(buildLocalizedRaw(currentData), null, 2)}</div>
-        </div>
-      </div>
-    </div>
-  `;
-}
-
-function renderReportPage(){
-  return `
-    <div class="page">
-      <div class="panel">
-        <div class="panel-title">${text("reportTitle")}</div>
-
-        <div class="form-grid" style="margin-bottom:14px;">
-          <div class="field">
-            <label class="label" for="reportEmail">${text("reportEmail")}</label>
-            <input
-              class="input"
-              id="reportEmail"
-              type="email"
-              value="${reportEmail}"
-              placeholder="name@example.com"
-              oninput="setReportEmail(this.value)"
-            >
-          </div>
-        </div>
-
-        <div class="report-actions" style="margin-bottom:12px;">
-          <button class="run-btn" onclick="sendReportByEmail()">${text("sendReport")}</button>
-          <div class="helper" style="margin-top:0;">${text("sendHint")}</div>
-        </div>
-
-        <div class="report-box">${buildReport()}</div>
-      </div>
-    </div>
-  `;
-}
-
-function renderModulesPage(){
-  return `
-    <div class="page">
-      <div class="panel">
-        <div class="panel-title">${text("modulesTitle")}</div>
-        <div class="card-text">${text("modulesText")}</div>
-      </div>
-    </div>
-  `;
-}
-
-function renderCurrentRoute(){
-  updateStaticShell();
-  const root = document.getElementById("app-root");
-  const route = window.ZENTRA ? ZENTRA.get().route.current : "cockpit";
-
-  if(route === "report"){
-    root.innerHTML = renderReportPage();
-  } else if(route === "modules"){
-    root.innerHTML = renderModulesPage();
-  } else {
-    root.innerHTML = renderCockpitPage();
-  }
-
-  setMessageByKey(currentMessageKey);
-}
-
-function loadFallback(){
-  currentData = { ...FALLBACK_OUTPUT, country: selectedCountry };
-  if(window.ZENTRA){
-    ZENTRA.setOutput({
-      risk: currentData.risk_score,
-      stress: currentData.stress_score,
-      decision: currentData.decision,
-      macro: currentData.macro_pressure,
-      trade: currentData.trade_signal,
-      deviation: currentData.deviation_level,
-      regime: currentData.regime,
-      dominant_lens: currentData.dominant_lens,
-      strategy: currentData.strategy,
-      rationale: currentData.rationale,
-      raw: currentData.raw
-    });
-  }
-  setStatus("fallback");
-  currentMessageKey = "fallbackLoaded";
-  renderCurrentRoute();
-}
-
-async function runRisk(){
-  const uiInput = buildUiInputFromDom();
-  const apiPayload = buildApiPayload(uiInput);
-
-  if(window.ZENTRA){
-    ZENTRA.setInput(uiInput);
-    ZENTRA.setLoading(true);
-    ZENTRA.clearError();
-  }
-
-  setStatus("loading");
-  currentMessageKey = "sending";
-  renderCurrentRoute();
-
-  try{
-    const res = await fetch(API_URL, {
+  try {
+    const res = await fetch("https://zentra-core.vercel.app/api/v1/send-report", {
       method: "POST",
       headers: {
-        "Content-Type": "application/json",
-        "x-api-key": "zentra-demo-key"
+        "Content-Type": "application/json"
       },
-      body: JSON.stringify(apiPayload)
+      body: JSON.stringify({
+        to: email,
+        subject: "ZENTRA LIVE",
+        text: report
+      })
     });
 
-    const json = await res.json();
-    if(!res.ok){
-      throw new Error("HTTP " + res.status);
-    }
+    const data = await res.json();
 
-    currentData = { ...json, raw: json };
-    selectedCountry = String(json.country || selectedCountry || "TR").toUpperCase();
-
-    if(window.ZENTRA){
-      ZENTRA.setOutput({
-        risk: json.risk_score,
-        stress: json.stress_score,
-        decision: json.decision,
-        macro: json.macro_pressure,
-        trade: json.trade_signal,
-        deviation: json.deviation_level,
-        regime: json.regime,
-        dominant_lens: json.dominant_lens,
-        strategy: json.strategy,
-        rationale: json.rationale,
-        raw: json
-      });
-      ZENTRA.setLoading(false);
-    }
-
-    setStatus("live");
-    currentMessageKey = "liveReceived";
-    renderCurrentRoute();
-  }catch(err){
-    if(window.ZENTRA){
-      ZENTRA.setError(String(err.message || err));
-      ZENTRA.setLoading(false);
-    }
-    loadFallback();
-    currentMessageKey = "fallbackFail";
-    renderCurrentRoute();
-  }
-}
-
-(function bootstrap(){
-  if(window.ZENTRA){
-    if(!ZENTRA.get().input.amount){
-      ZENTRA.setInput({
-        amount: 150000,
-        payment_delay_days: 7,
-        customer_score: 72,
-        exposure_ratio: 0.38,
-        sector: "trade",
-        country: "TR"
-      });
-      selectedCountry = "TR";
+    if (data.ok) {
+      statusBox.textContent = "Mail gönderildi ✔";
+      statusBox.className = "status success";
     } else {
-      selectedCountry = String(ZENTRA.get().input.country || "TR").toUpperCase();
+      throw new Error(data.detail || "Gönderim başarısız");
     }
-
-    const originalSetRoute = ZENTRA.setRoute.bind(ZENTRA);
-    ZENTRA.setRoute = function(route){
-      originalSetRoute(route);
-      renderCurrentRoute();
-    };
+  } catch (e) {
+    statusBox.textContent = "Gönderim hatası";
+    statusBox.className = "status error";
   }
 
-  if(window.ZENTRA_ROUTER){
-    window.ZENTRA_ROUTER.init();
-  } else if(window.ZENTRA) {
-    const hash = window.location.hash.replace("#","") || "cockpit";
-    ZENTRA.setRoute(hash);
-  }
-
-  setStatus("loading");
-  currentMessageKey = "sending";
-  renderCurrentRoute();
-
-  Promise.resolve()
-    .then(() => runRisk())
-    .catch(e => {
-      console.log("auto-live failed", e);
-      loadFallback();
-    });
-})();
+  sendBtn.disabled = false;
+};
 </script>
+
 </body>
 </html>
