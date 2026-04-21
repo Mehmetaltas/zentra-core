@@ -10,7 +10,68 @@ function json(res, status, body) {
   res.status(status).json(body);
 }
 
-function buildHTML(link) {
+async function getKnowledge() {
+  const result = await pool.query(`
+    select * from knowledge_base
+    where active = true
+    order by category asc, name asc
+  `);
+  return result.rows;
+}
+
+function runEngine(input, knowledge) {
+  let score = 0;
+  const reasons = [];
+
+  for (const k of knowledge) {
+    if (k.name === "payment_stress") {
+      if ((Number(input.debt) || 0) > (Number(input.income) || 1)) {
+        score += 30;
+        reasons.push("Borç geliri aşıyor");
+      }
+    }
+
+    if (k.name === "debt_pressure") {
+      if ((Number(input.debt) || 0) > 50000) {
+        score += 20;
+        reasons.push("Yüksek borç baskısı");
+      }
+    }
+
+    if (k.name === "fx_pressure") {
+      if ((Number(input.fx) || 0) > 30) {
+        score += 10;
+        reasons.push("Kur baskısı yüksek");
+      }
+    }
+
+    if (k.name === "country_risk") {
+      if (String(input.country || "").trim().toLowerCase() === "high-risk") {
+        score += 25;
+        reasons.push("Yüksek ülke riski");
+      }
+    }
+
+    if (k.name === "shipment_delay") {
+      if ((Number(input.delay_days) || 0) > 7) {
+        score += 15;
+        reasons.push("Shipment gecikmesi");
+      }
+    }
+  }
+
+  let decision = "Onay";
+  if (score > 60) decision = "Reddet";
+  else if (score > 30) decision = "İncele";
+
+  return {
+    score,
+    decision,
+    reasons
+  };
+}
+
+function buildHTML(link, result) {
   return `
   <html>
     <body style="margin:0;padding:24px;background:#081321;font-family:Arial,Helvetica,sans-serif;color:#eaf1fb;">
@@ -20,21 +81,20 @@ function buildHTML(link) {
             ZENTRA Matrix Ecosystem
           </div>
           <div style="margin-top:10px;font-size:28px;font-weight:800;color:#ffffff;">
-            ZENTRA Raporu
-          </div>
-          <div style="margin-top:8px;font-size:14px;color:#9db2d0;">
-            Güvenli görüntüleme bağlantısı
+            ZENTRA AI Report
           </div>
         </div>
         <div style="padding:24px;">
-          <p style="font-size:15px;line-height:1.7;color:#dce7f7;">
-            Raporunuz hazır. Güvenli görüntüleme için aşağıdaki butonu kullanın.
-          </p>
-          <a href="${link}" style="display:inline-block;padding:12px 20px;background:#2d6cff;color:#fff;border-radius:10px;text-decoration:none;font-weight:700;">
-            Raporu Aç
-          </a>
-          <p style="margin-top:16px;font-size:13px;line-height:1.6;color:#9db2d0;">
-            Bu bağlantı tek kullanımlıktır ve sınırlı süre geçerlidir.
+          <p><b>Karar:</b> ${result.decision}</p>
+          <p><b>Skor:</b> ${result.score}</p>
+          <p><b>Gerekçeler:</b></p>
+          <ul>
+            ${result.reasons.map((r) => `<li>${r}</li>`).join("")}
+          </ul>
+          <p style="margin-top:20px;">
+            <a href="${link}" style="display:inline-block;padding:12px 20px;background:#2d6cff;color:#fff;border-radius:10px;text-decoration:none;font-weight:700;">
+              Raporu Aç
+            </a>
           </p>
         </div>
       </div>
@@ -44,56 +104,50 @@ function buildHTML(link) {
 }
 
 export default async function handler(req, res) {
-  if (req.method !== "POST") {
-    return json(res, 405, { ok: false, detail: "Method Not Allowed" });
-  }
-
   try {
-    const body = typeof req.body === "string" ? JSON.parse(req.body || "{}") : (req.body || {});
-    const to = String(body.to || "").trim();
-    const subject = String(body.subject || "ZENTRA Report").trim();
-    const text = String(body.text || "").trim();
-
-    if (!to || !text) {
-      return json(res, 400, { ok: false, detail: "Missing to or text" });
+    if (req.method !== "POST") {
+      return json(res, 405, { ok: false, detail: "Method Not Allowed" });
     }
 
-    const apiKey = process.env.RESEND_API_KEY;
-    const from = process.env.REPORT_FROM_EMAIL;
-    const databaseUrl = process.env.DATABASE_URL;
+    const body = typeof req.body === "string"
+      ? JSON.parse(req.body || "{}")
+      : (req.body || {});
 
-    if (!apiKey || !from || !databaseUrl) {
-      return json(res, 500, {
-        ok: false,
-        detail: "Missing RESEND_API_KEY, REPORT_FROM_EMAIL, or DATABASE_URL"
-      });
+    if (!body.to) {
+      return json(res, 400, { ok: false, detail: "Missing recipient email" });
     }
+
+    const knowledge = await getKnowledge();
+    const result = runEngine(body, knowledge);
 
     const token = crypto.randomBytes(24).toString("hex");
-    const expiresAt = new Date(Date.now() + 10 * 60 * 1000);
 
     await pool.query(
       `
       insert into report_links (token, email, subject, report_text, expires_at)
-      values ($1, $2, $3, $4, $5)
+      values ($1, $2, $3, $4, now() + interval '10 minutes')
       `,
-      [token, to, subject, text, expiresAt]
+      [
+        token,
+        String(body.to || "").trim(),
+        "ZENTRA AI Report",
+        JSON.stringify(result)
+      ]
     );
 
     const link = `https://zentra-core.vercel.app/api/v1/report/view?token=${token}`;
-    const html = buildHTML(link);
 
     const response = await fetch("https://api.resend.com/emails", {
       method: "POST",
       headers: {
-        "Authorization": `Bearer ${apiKey}`,
+        "Authorization": `Bearer ${process.env.RESEND_API_KEY}`,
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        from,
-        to: [to],
-        subject,
-        html,
+        from: process.env.REPORT_FROM_EMAIL,
+        to: [String(body.to).trim()],
+        subject: "ZENTRA AI Report",
+        html: buildHTML(link, result),
         text: `Rapor bağlantınız hazır: ${link}`
       })
     });
@@ -110,15 +164,12 @@ export default async function handler(req, res) {
 
     return json(res, 200, {
       ok: true,
-      message: "Report sent successfully",
-      provider: "resend",
-      id: data.id || null,
+      result,
       link
     });
   } catch (e) {
     return json(res, 500, {
       ok: false,
-      detail: "Send report failed",
       error: String(e && e.message ? e.message : e)
     });
   }
