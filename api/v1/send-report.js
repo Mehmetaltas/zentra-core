@@ -10,53 +10,59 @@ function json(res, status, body) {
   res.status(status).json(body);
 }
 
-async function getKnowledge() {
-  const result = await pool.query(`
-    select * from knowledge_base
-    where active = true
-    order by category asc, name asc
+// 🔥 RULE ÇEK
+async function getRules() {
+  const r = await pool.query(`
+    select * from rule_registry where active = true
   `);
-  return result.rows;
+  return r.rows;
 }
 
-function runEngine(input, knowledge) {
+// 🔥 OPERATOR
+function evaluate(operator, value, threshold) {
+  if (value === undefined || value === null) return false;
+
+  const v = Number(value);
+  const t = Number(threshold);
+
+  switch (operator) {
+    case ">": return v > t;
+    case "<": return v < t;
+    case ">=": return v >= t;
+    case "<=": return v <= t;
+    case "==": return v == t;
+    default: return false;
+  }
+}
+
+// 🔥 ENGINE
+function runEngine(input, rules) {
   let score = 0;
   const reasons = [];
+  const triggered = [];
 
-  for (const k of knowledge) {
-    if (k.name === "payment_stress") {
-      if ((Number(input.debt) || 0) > (Number(input.income) || 1)) {
-        score += 30;
-        reasons.push("Borç geliri aşıyor");
-      }
+  for (const rule of rules) {
+    let value;
+
+    // özel field mapping
+    if (rule.field === "debt_to_income") {
+      const income = Number(input.income) || 1;
+      const debt = Number(input.debt) || 0;
+      value = debt / income;
+    } else {
+      value = input[rule.field];
     }
 
-    if (k.name === "debt_pressure") {
-      if ((Number(input.debt) || 0) > 50000) {
-        score += 20;
-        reasons.push("Yüksek borç baskısı");
-      }
-    }
-
-    if (k.name === "fx_pressure") {
-      if ((Number(input.fx) || 0) > 30) {
-        score += 10;
-        reasons.push("Kur baskısı yüksek");
-      }
-    }
-
-    if (k.name === "country_risk") {
-      if (String(input.country || "").trim().toLowerCase() === "high-risk") {
-        score += 25;
-        reasons.push("Yüksek ülke riski");
-      }
-    }
-
-    if (k.name === "shipment_delay") {
-      if ((Number(input.delay_days) || 0) > 7) {
-        score += 15;
-        reasons.push("Shipment gecikmesi");
-      }
+    if (evaluate(rule.operator, value, rule.threshold)) {
+      score += Number(rule.score) || 0;
+      reasons.push(rule.description);
+      triggered.push({
+        name: rule.name,
+        field: rule.field,
+        value,
+        threshold: rule.threshold,
+        score: rule.score
+      });
     }
   }
 
@@ -64,40 +70,25 @@ function runEngine(input, knowledge) {
   if (score > 60) decision = "Reddet";
   else if (score > 30) decision = "İncele";
 
-  return {
-    score,
-    decision,
-    reasons
-  };
+  return { score, decision, reasons, triggered };
 }
 
 function buildHTML(link, result) {
   return `
   <html>
-    <body style="margin:0;padding:24px;background:#081321;font-family:Arial,Helvetica,sans-serif;color:#eaf1fb;">
-      <div style="max-width:680px;margin:0 auto;background:#0d1f3b;border:1px solid #1d3557;border-radius:18px;overflow:hidden;">
-        <div style="padding:24px;border-bottom:1px solid #18304d;">
-          <div style="font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:#7ea6ff;font-weight:700;">
-            ZENTRA Matrix Ecosystem
-          </div>
-          <div style="margin-top:10px;font-size:28px;font-weight:800;color:#ffffff;">
-            ZENTRA AI Report
-          </div>
-        </div>
-        <div style="padding:24px;">
-          <p><b>Karar:</b> ${result.decision}</p>
-          <p><b>Skor:</b> ${result.score}</p>
-          <p><b>Gerekçeler:</b></p>
-          <ul>
-            ${result.reasons.map((r) => `<li>${r}</li>`).join("")}
-          </ul>
-          <p style="margin-top:20px;">
-            <a href="${link}" style="display:inline-block;padding:12px 20px;background:#2d6cff;color:#fff;border-radius:10px;text-decoration:none;font-weight:700;">
-              Raporu Aç
-            </a>
-          </p>
-        </div>
-      </div>
+    <body style="font-family:Arial;background:#081321;color:white;padding:24px">
+      <h2>ZENTRA AI Report</h2>
+      <p><b>Karar:</b> ${result.decision}</p>
+      <p><b>Skor:</b> ${result.score}</p>
+      <p><b>Gerekçeler:</b></p>
+      <ul>
+        ${result.reasons.map(r => `<li>${r}</li>`).join("")}
+      </ul>
+      <p><b>Tetiklenen Kurallar:</b></p>
+      <ul>
+        ${result.triggered.map(t => `<li>${t.name} (${t.value})</li>`).join("")}
+      </ul>
+      <a href="${link}">Raporu Aç</a>
     </body>
   </html>
   `;
@@ -106,38 +97,32 @@ function buildHTML(link, result) {
 export default async function handler(req, res) {
   try {
     if (req.method !== "POST") {
-      return json(res, 405, { ok: false, detail: "Method Not Allowed" });
+      return json(res, 405, { ok: false });
     }
 
     const body = typeof req.body === "string"
-      ? JSON.parse(req.body || "{}")
-      : (req.body || {});
+      ? JSON.parse(req.body)
+      : req.body;
 
-    if (!body.to) {
-      return json(res, 400, { ok: false, detail: "Missing recipient email" });
-    }
+    const rules = await getRules();
 
-    const knowledge = await getKnowledge();
-    const result = runEngine(body, knowledge);
+    const result = runEngine(body, rules);
 
     const token = crypto.randomBytes(24).toString("hex");
 
-    await pool.query(
-      `
+    await pool.query(`
       insert into report_links (token, email, subject, report_text, expires_at)
-      values ($1, $2, $3, $4, now() + interval '10 minutes')
-      `,
-      [
-        token,
-        String(body.to || "").trim(),
-        "ZENTRA AI Report",
-        JSON.stringify(result)
-      ]
-    );
+      values ($1,$2,$3,$4, now() + interval '10 minutes')
+    `, [
+      token,
+      body.to,
+      "ZENTRA AI Report",
+      JSON.stringify(result)
+    ]);
 
     const link = `https://zentra-core.vercel.app/api/v1/report/view?token=${token}`;
 
-    const response = await fetch("https://api.resend.com/emails", {
+    await fetch("https://api.resend.com/emails", {
       method: "POST",
       headers: {
         "Authorization": `Bearer ${process.env.RESEND_API_KEY}`,
@@ -145,32 +130,22 @@ export default async function handler(req, res) {
       },
       body: JSON.stringify({
         from: process.env.REPORT_FROM_EMAIL,
-        to: [String(body.to).trim()],
+        to: [body.to],
         subject: "ZENTRA AI Report",
-        html: buildHTML(link, result),
-        text: `Rapor bağlantınız hazır: ${link}`
+        html: buildHTML(link, result)
       })
     });
-
-    const data = await response.json();
-
-    if (!response.ok) {
-      return json(res, response.status, {
-        ok: false,
-        detail: "Resend request failed",
-        resend: data
-      });
-    }
 
     return json(res, 200, {
       ok: true,
       result,
       link
     });
+
   } catch (e) {
     return json(res, 500, {
       ok: false,
-      error: String(e && e.message ? e.message : e)
+      error: String(e.message)
     });
   }
 }
