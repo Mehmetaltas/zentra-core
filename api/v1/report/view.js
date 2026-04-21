@@ -148,10 +148,11 @@ export default async function handler(req, res) {
                 <div class="trigger-chip">${escapeHtml(titleCaseRisk(item.category || "other"))}</div>
               </div>
               <div class="trigger-meta">
-                Alan: ${escapeHtml(item.field || "-")}<br>
-                Değer: ${escapeHtml(item.value)}<br>
-                Eşik: ${escapeHtml(item.threshold)}<br>
-                Etki Puanı: ${escapeHtml(item.score)}${item.priority ? `<br>Öncelik: ${escapeHtml(item.priority)}` : ""}
+                <div><b>Alan:</b> ${escapeHtml(item.field || "-")}</div>
+                <div><b>Değer:</b> ${escapeHtml(item.value)}</div>
+                <div><b>Eşik:</b> ${escapeHtml(item.threshold)}</div>
+                <div><b>Etki:</b> ${escapeHtml(item.score)}</div>
+                ${item.priority ? `<div><b>Öncelik:</b> ${escapeHtml(item.priority)}</div>` : ""}
               </div>
             </div>
           `;
@@ -242,7 +243,7 @@ export default async function handler(req, res) {
       margin-top: 14px;
       color: #9eb5d6;
       font-size: 13px;
-      line-height: 1.7;
+      line-height: 1.8;
       word-break: break-word;
       overflow-wrap: anywhere;
     }
@@ -288,6 +289,10 @@ export default async function handler(req, res) {
       color: #dce7f7;
       font-size: 14px;
       line-height: 1.5;
+    }
+
+    .decision-risk b {
+      color: #ffffff;
     }
 
     .score-badge {
@@ -444,6 +449,10 @@ export default async function handler(req, res) {
       overflow-wrap: anywhere;
     }
 
+    .trigger-meta div {
+      margin-bottom: 6px;
+    }
+
     .raw-box {
       background: #0b1a33;
       border: 1px solid #1c3253;
@@ -513,7 +522,7 @@ export default async function handler(req, res) {
         <h1 class="title">ZENTRA AI Report</h1>
         <div class="subtitle">Controlled intelligence delivery • Tek kullanımlık güvenli görüntüleme</div>
         <div class="meta">
-          Alıcı: ${escapeHtml(report.email || "-")}<br>
+          Alıcı: ${escapeHtml(report.email || "-")}<br><br>
           Oluşturulma: ${escapeHtml(report.created_at || "-")}
         </div>
       </div>
