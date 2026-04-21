@@ -9,7 +9,7 @@ function json(res, status, body) {
   res.status(status).json(body);
 }
 
-// 🔥 TABLE CREATE
+// 🔥 TABLE + MIGRATION
 async function ensureTable() {
   await pool.query(`
     create table if not exists rule_registry (
@@ -20,9 +20,15 @@ async function ensureTable() {
       threshold numeric,
       score numeric,
       description text,
+      category text,
+      priority text,
       active boolean default true
     )
   `);
+
+  // 🔥 kolon ekleme (varsa geçer)
+  await pool.query(`alter table rule_registry add column if not exists category text`);
+  await pool.query(`alter table rule_registry add column if not exists priority text`);
 }
 
 // 🔥 AUTO SEED
@@ -31,11 +37,12 @@ async function seedIfEmpty() {
   if (Number(r.rows[0].count) > 0) return;
 
   await pool.query(`
-    insert into rule_registry (name, field, operator, threshold, score, description)
+    insert into rule_registry 
+    (name, field, operator, threshold, score, description, category, priority)
     values
-    ('payment_stress','debt_to_income','>',1,30,'Borç geliri aşıyor'),
-    ('high_debt','debt','>',50000,20,'Yüksek borç'),
-    ('fx_pressure','fx','>',30,10,'Kur baskısı')
+    ('payment_stress','debt_to_income','>',1,30,'Borç geliri aşıyor','risk','high'),
+    ('high_debt','debt','>',50000,20,'Yüksek borç','risk','high'),
+    ('fx_pressure','fx','>',30,10,'Kur baskısı','market','medium')
   `);
 }
 
@@ -56,14 +63,16 @@ export default async function handler(req, res) {
 
       const r = await pool.query(`
         insert into rule_registry
-        (name, field, operator, threshold, score, description)
-        values ($1,$2,$3,$4,$5,$6)
+        (name, field, operator, threshold, score, description, category, priority)
+        values ($1,$2,$3,$4,$5,$6,$7,$8)
         on conflict (name) do update set
           field = excluded.field,
           operator = excluded.operator,
           threshold = excluded.threshold,
           score = excluded.score,
-          description = excluded.description
+          description = excluded.description,
+          category = excluded.category,
+          priority = excluded.priority
         returning *
       `, [
         body.name,
@@ -71,7 +80,9 @@ export default async function handler(req, res) {
         body.operator,
         body.threshold,
         body.score,
-        body.description
+        body.description,
+        body.category,
+        body.priority
       ]);
 
       return json(res, 200, { ok: true, item: r.rows[0] });
