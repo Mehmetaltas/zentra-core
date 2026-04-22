@@ -319,3 +319,216 @@ This is not a demo checkpoint.
 
 This is a real product-core checkpoint in the new ZENTRA line.
 
+
+---
+
+# ZENTRA MASTER BOOK UPDATE
+## Date: 2026-04-22
+## Sync Block: Core Closure Alignment + Investor Runtime + Book 3 Recovery
+
+## 1. Strategic Lock
+- ZENTRA is not demo-first.
+- ZENTRA is not pilot-first.
+- ZENTRA is built as a full launch-ready system.
+- The core is accepted as completed and locked.
+- Current work is full-system completion, hardening and implementation on top of the locked core.
+
+## 2. Three-Book Discipline
+- Book 1: main/simple book
+- Book 2: technical master book
+- Book 3: living technical book with dated trace
+- Book 3 had lagged behind and was restored through ZENTRA_LIVE_LOG.md
+- From now on: no major closure without book trace + runtime trace
+
+## 3. System Structure
+Top umbrella:
+- ZENTRA Holding / ZENTRA Matrix Ecosystem
+
+Distinct product/business families:
+- ZENTRA Intel AI
+- ZENTRA General AI
+- ZENTRA Academia AI
+
+Principle:
+- separate where needed
+- consolidate where required
+- no uncontrolled system mixing
+
+## 4. Finance & Accounting Reading
+Accepted structure:
+- real accounting-program discipline preserved
+- Netsis-style accounting reference preserved
+- daily cash / open record / delayed processing logic preserved
+- holding-level consolidated visibility
+- unit-level separation
+- shared vs direct distinction
+- plasiyer/sales support treated as support logic, not product ownership
+
+Current operational simplification:
+- each transaction goes to one primary unit
+- forced allocation is avoided
+- clarity is preferred over fake precision
+
+## 5. Governance / Audit / Evidence
+Accepted as required system hardening:
+- audit trace
+- evidence-linked logic
+- edit/change trace
+- no critical silent modification
+- governance is a core system rule, not cosmetic layer
+
+## 6. Cockpit / Workspace / UX
+Accepted structure:
+- core remains closed
+- cockpit is controlled visible surface
+- user sees outputs, not raw core internals
+- onboarding / empty state / loading / error / next-step logic accepted
+- TR / EN / AR remain mandatory
+
+## 7. Data Flow / Integration
+Accepted flow:
+- source -> intake -> processing -> storage -> output -> cockpit
+- internal/manual + external/system-fed data together
+- semi-automatic interpretation
+- open record discipline preserved
+
+## 8. AI Workforce / Agent System
+Accepted:
+- orchestrator logic
+- event -> task -> output flow
+- finance, risk/intel, governance, publishing and support agents
+- task-based operating structure
+
+## 9. Agent Cards
+The following cards were defined as active operational map:
+- System Orchestrator Agent
+- Finance Agent
+- Sales / Plasiyer Agent
+- Content / Publishing Agent
+- Response Agent
+- Risk / Intel Agent
+- Governance / Audit Agent
+- Market Watch Agent
+- Copyright / IP Agent
+- Product Agent
+- Pricing Agent
+- UX / Workspace Agent
+- Portfolio / Cross-Lens Agent
+
+## 10. Response Rules
+Locked language/behavior principles:
+- TR / EN / AR mandatory
+- internal / professional / public / investor mode distinction
+- no hype
+- no fake certainty
+- no uncontrolled claims
+- short / medium / deep answer structure
+
+## 11. Product + Pricing Framework
+Accepted product architecture:
+- Intel AI = enterprise / institutional
+- General AI = broader subscription/use layer
+- Academia AI = research / knowledge / education layer
+
+Accepted pricing reading:
+- Intel = custom / enterprise / license logic
+- General = subscription logic
+- Academia = report / package / education logic
+
+## 12. Publishing System
+Accepted as controlled distribution layer:
+- LinkedIn / Instagram / X structure
+- content production flow
+- review / publish / response logic
+- system voice, not random posting
+
+## 13. IP / Copyright / Market Watch
+Accepted:
+- content protection
+- source tracking
+- market watch
+- brand protection
+- ZENTRA publishes and monitors/protects
+
+## 14. Cross-Lens / Portfolio (Step 32)
+Accepted as upper intelligence layer:
+- multiple lenses together
+- merged portfolio output
+- conflict handling across lenses
+- unified decision output
+
+## 15. Moat Framework
+Moat is a mandatory planning heading.
+
+Accepted moat components:
+- system moat
+- execution moat
+- trust moat
+- control moat
+- security moat
+- distribution moat
+
+Principle:
+- moat is not a single feature
+- moat comes from integrated system architecture and discipline
+
+## 16. Cloud / Cyber / Security / Safeguard
+Recognized as required hardening block.
+This area must remain attached to main-system closure and cannot be forgotten.
+
+Accepted reading:
+- cloud discipline
+- cyber/security control
+- access boundaries
+- misuse/abuse prevention
+- safeguard posture
+
+## 17. Investor Runtime Implementation
+Actual implementation completed in repo/runtime:
+
+Completed:
+- investor/index.html created
+- premium investor v2 page written
+- multi-language structure included
+- premium dashboard-feel UI included
+- moat / products / proof / architecture sections included
+- investor.html created at root
+- route corrected to /investor.html
+- main index investor entry button added
+- contact field corrected to contact@zentrarisk.com
+- wording fixes applied for live-status interpretation
+
+Confirmed live investor route:
+- /investor.html
+
+## 18. Mail Plan (Planned, not fully activated)
+Planned structure:
+- contact@zentrarisk.com
+- invest@zentrarisk.com
+- partners@zentrarisk.com
+
+Trigger phrase:
+- "mail aç"
+
+## 19. Book Alignment Status
+This update aligns:
+- main book
+- living technical book
+- recent runtime implementation
+
+Current position:
+- core locked
+- major main-book system blocks closed
+- investor runtime surface implemented
+- Book 3 restored through ZENTRA_LIVE_LOG.md
+
+## 20. Rule Going Forward
+From this point:
+- no major closure without master-book trace
+- no major runtime work without live-log trace
+- no drift between discussion, book and implementation
+
+## Snapshot
+- MASTER-BOOK-SYNC-2026-04-22
+- Status: ACTIVE
+
