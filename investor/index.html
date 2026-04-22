@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ZENTRA</title>
+
+<style>
+body {
+    margin:0;
+    font-family:Arial, sans-serif;
+    background:#0b0b0b;
+    color:#fff;
+}
+
+.container {
+    max-width:1100px;
+    margin:auto;
+    padding:40px 20px;
+}
+
+h1,h2 { color:#00e0ff; }
+
+.section { margin-bottom:60px; }
+
+.grid {
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:20px;
+}
+
+.card {
+    background:#111;
+    border:1px solid #222;
+    padding:20px;
+    border-radius:10px;
+}
+
+.badge {
+    padding:5px 8px;
+    border-radius:5px;
+    font-size:12px;
+}
+
+.green { background:#00ff88; color:#000; }
+.red { background:#ff4444; }
+
+button {
+    padding:8px 12px;
+    cursor:pointer;
+    margin-top:10px;
+}
+
+input {
+    width:100%;
+    padding:8px;
+    margin:5px 0;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>ZENTRA</h1>
+<p>Economic Intelligence & Operating System</p>
+
+<div class="section">
+<h2>System Status</h2>
+<div id="status" class="badge red">Checking...</div>
+</div>
+
+<div class="section">
+<h2>Core Flow</h2>
+<p>Data → Analysis → Decision → Action → Monitoring</p>
+</div>
+
+<div class="section">
+<h2>Multi-Lens System</h2>
+<div class="grid">
+<div class="card">Risk</div>
+<div class="card">Financial</div>
+<div class="card">Trade</div>
+<div class="card">Compliance</div>
+<div class="card">Opportunity</div>
+</div>
+</div>
+
+<div class="section">
+<h2>Live Check</h2>
+<div class="card">
+<input id="income" placeholder="Income">
+<input id="debt" placeholder="Debt">
+<button onclick="run()">Run</button>
+<p id="out"></p>
+</div>
+</div>
+
+<div class="section">
+<h2>Moat</h2>
+<p>Integrated system combining decision engine, AI workforce, financial control, governance and distribution.</p>
+</div>
+
+<div class="section">
+<h2>Status</h2>
+<p>System completed. Launch-ready.</p>
+</div>
+
+</div>
+
+<script>
+// API health
+fetch("https://zentra-credit-stress-api.onrender.com/health")
+.then(r=>r.json())
+.then(()=>{
+document.getElementById("status").className="badge green";
+document.getElementById("status").innerText="LIVE";
+})
+.catch(()=>{
+document.getElementById("status").innerText="DOWN";
+});
+
+// test
+function run(){
+let i = document.getElementById("income").value;
+let d = document.getElementById("debt").value;
+
+fetch("https://zentra-credit-stress-api.onrender.com/v1/credit-stress",{
+method:"POST",
+headers:{ "Content-Type":"application/json" },
+body: JSON.stringify({ income:Number(i), debt:Number(d) })
+})
+.then(r=>r.json())
+.then(data=>{
+document.getElementById("out").innerText =
+"Stress Score: " + data.stress_score;
+})
+.catch(()=>{
+document.getElementById("out").innerText="Error";
+});
+}
+</script>
+
+</body>
+</html>
++
