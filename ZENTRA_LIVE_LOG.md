@@ -527,3 +527,23 @@ Validation:
 Status:
 ACTIVE / VERIFIED
 
+
+---
+
+## [2026-04-23] ZDB-002 SOURCE INTAKE + TRUST ENGINE
+
+Block:
+- Source Intake + Trust Engine initialized
+
+Status:
+- ACTIVE
+
+Result:
+- Signals now receive trust scores based on source reliability, recency, repeatability, verifiability, and manipulation risk.
+
+Runtime file:
+- zentra_decision_backbone_v1.py
+
+Next:
+- ZDB-003 Reality Classification
+
