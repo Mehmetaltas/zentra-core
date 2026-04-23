@@ -44,6 +44,37 @@ function evaluate(operator, value, threshold) {
   }
 }
 
+function buildExplain(input, decision) {
+  const income = Number(input.income) || 0;
+  const debt = Number(input.debt) || 0;
+  const dti = income > 0 ? Math.round(debt / income) : 0;
+
+  const explain = [];
+
+  if (dti > 10) {
+    explain.push(`Borç/gelir oranı kritik seviyede (${dti}x)`);
+    explain.push("Bu seviyede ödeme sürdürülebilirliği yok");
+  }
+
+  if (debt > 1000000) {
+    explain.push("Toplam borç kritik eşik üzerinde");
+  }
+
+  if (decision === "Reddet") {
+    explain.push("Sistem yüksek güvenle reddetti");
+  }
+
+  if (decision === "İncele") {
+    explain.push("Sistem ek inceleme öneriyor");
+  }
+
+  if (decision === "Onay") {
+    explain.push("Risk kabul edilebilir seviyede");
+  }
+
+  return explain;
+}
+
 function runEngine(input, rules) {
   let score = 0;
   const reasons = [];
@@ -104,26 +135,20 @@ function runEngine(input, rules) {
     decision = "İncele";
   }
 
-  // HARD DECISION LAYER
-  try {
-    const income = Number(input.income) || 0;
-    const debt = Number(input.debt) || 0;
-    const debtToIncome = income > 0 ? debt / income : 0;
+  // HARD DECISION
+  const income = Number(input.income) || 0;
+  const debt = Number(input.debt) || 0;
+  const dti = income > 0 ? debt / income : 0;
 
-    if (debtToIncome > 10) {
-      decision = "Reddet";
-      if (!reasons.includes("Borç/gelir oranı aşırı yüksek")) {
-        reasons.push("Borç/gelir oranı aşırı yüksek");
-      }
-    }
+  if (dti > 10) {
+    decision = "Reddet";
+  }
 
-    if (debt > 1000000) {
-      decision = "Reddet";
-      if (!reasons.includes("Toplam borç kritik eşik üzerinde")) {
-        reasons.push("Toplam borç kritik eşik üzerinde");
-      }
-    }
-  } catch (e) {}
+  if (debt > 1000000) {
+    decision = "Reddet";
+  }
+
+  const explain = buildExplain(input, decision);
 
   return {
     score,
@@ -131,7 +156,8 @@ function runEngine(input, rules) {
     reasons,
     triggered,
     dominantCategory,
-    categoryScore
+    categoryScore,
+    explain
   };
 }
 
@@ -143,10 +169,10 @@ function buildHTML(link, result) {
     <body style="margin:0;padding:24px;background:#081321;font-family:Arial,Helvetica,sans-serif;color:#eaf1fb;">
       <div style="max-width:680px;margin:0 auto;background:#0d1f3b;border:1px solid #1d3557;border-radius:18px;overflow:hidden;">
         <div style="padding:24px;border-bottom:1px solid #18304d;">
-          <div style="font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:#7ea6ff;font-weight:700;">
+          <div style="font-size:13px;color:#7ea6ff;font-weight:700;">
             ZENTRA Matrix Ecosystem
           </div>
-          <div style="margin-top:10px;font-size:28px;font-weight:800;color:#ffffff;">
+          <div style="margin-top:10px;font-size:28px;font-weight:800;">
             ZENTRA AI Report
           </div>
         </div>
@@ -154,20 +180,19 @@ function buildHTML(link, result) {
         <div style="padding:24px;">
           <p><b>Karar:</b> ${result.decision}</p>
           <p><b>Skor:</b> ${result.score}</p>
-          <p><b>Baskın Risk Türü:</b> ${dominant}</p>
 
-          <p><b>Gerekçeler:</b></p>
+          <p><b>Açıklama:</b></p>
           <ul>
-            ${result.reasons.length ? result.reasons.map((r) => `<li>${r}</li>`).join("") : "<li>Ek gerekçe bulunmuyor.</li>"}
+            ${result.explain.map((e) => `<li>${e}</li>`).join("")}
           </ul>
 
           <p><b>Tetiklenen Kurallar:</b></p>
           <ul>
-            ${result.triggered.length ? result.triggered.map((t) => `<li>${t.name} (${t.field}: ${t.value})</li>`).join("") : "<li>Tetiklenen kural bulunmuyor.</li>"}
+            ${result.triggered.map((t) => `<li>${t.name}</li>`).join("")}
           </ul>
 
           <p style="margin-top:20px;">
-            <a href="${link}" style="display:inline-block;padding:12px 20px;background:#2d6cff;color:#fff;border-radius:10px;text-decoration:none;font-weight:700;">
+            <a href="${link}" style="background:#2d6cff;padding:10px 16px;color:#fff;border-radius:8px;text-decoration:none;">
               Raporu Aç
             </a>
           </p>
@@ -180,23 +205,9 @@ function buildHTML(link, result) {
 
 export default async function handler(req, res) {
   try {
-    if (req.method !== "POST") {
-      return json(res, 405, {
-        ok: false,
-        detail: "Method Not Allowed"
-      });
-    }
-
     const body = typeof req.body === "string"
       ? JSON.parse(req.body || "{}")
       : (req.body || {});
-
-    if (!body.to) {
-      return json(res, 400, {
-        ok: false,
-        detail: "Missing recipient email"
-      });
-    }
 
     const rules = await getRules();
     const result = runEngine(body, rules);
@@ -204,21 +215,14 @@ export default async function handler(req, res) {
     const token = crypto.randomBytes(24).toString("hex");
 
     await pool.query(
-      `
-      insert into report_links (token, email, subject, report_text, expires_at)
-      values ($1, $2, $3, $4, now() + interval '10 minutes')
-      `,
-      [
-        token,
-        String(body.to).trim(),
-        "ZENTRA AI Report",
-        JSON.stringify(result)
-      ]
+      `insert into report_links (token, email, subject, report_text, expires_at)
+       values ($1, $2, $3, $4, now() + interval '10 minutes')`,
+      [token, body.to, "ZENTRA AI Report", JSON.stringify(result)]
     );
 
     const link = `https://zentra-core.vercel.app/api/v1/report/view?token=${token}`;
 
-    const response = await fetch("https://api.resend.com/emails", {
+    await fetch("https://api.resend.com/emails", {
       method: "POST",
       headers: {
         "Authorization": `Bearer ${process.env.RESEND_API_KEY}`,
@@ -226,32 +230,15 @@ export default async function handler(req, res) {
       },
       body: JSON.stringify({
         from: process.env.REPORT_FROM_EMAIL,
-        to: [String(body.to).trim()],
+        to: [body.to],
         subject: "ZENTRA AI Report",
-        html: buildHTML(link, result),
-        text: `Rapor bağlantınız hazır: ${link}`
+        html: buildHTML(link, result)
       })
     });
 
-    const data = await response.json();
+    return json(res, 200, { ok: true, result, link });
 
-    if (!response.ok) {
-      return json(res, response.status, {
-        ok: false,
-        detail: "Resend request failed",
-        resend: data
-      });
-    }
-
-    return json(res, 200, {
-      ok: true,
-      result,
-      link
-    });
   } catch (e) {
-    return json(res, 500, {
-      ok: false,
-      error: String(e && e.message ? e.message : e)
-    });
+    return json(res, 500, { ok: false, error: String(e.message) });
   }
 }
