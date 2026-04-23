@@ -406,3 +406,27 @@ ZENTRA-LIVE-LOG-RECOVERY-2026-04-22
 Status:
 ACTIVE
 
+
+---
+
+## [2026-04-22] DOCUMENT INTELLIGENCE + REPORT INTEGRATION CLOSED
+
+Closed technical block:
+- document_rules table remained active
+- document intelligence was integrated directly into send-report.js
+- report_type-based required document reading is active
+- provided_documents comparison is active
+- missing document detection is active
+- document score is active
+- document intelligence is now included in final report payload and report link flow
+
+Validation result:
+- report_type: credit
+- provided: income_proof, bank_statement
+- missing: debt_report
+- document score: 62
+- result flow returned ok: true
+
+Status:
+ACTIVE
+

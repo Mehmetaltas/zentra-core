@@ -532,3 +532,25 @@ From this point:
 - MASTER-BOOK-SYNC-2026-04-22
 - Status: ACTIVE
 
+
+---
+
+## Document Intelligence Closure
+Date: 2026-04-22
+
+The document intelligence block has been closed by integrating document requirement reading and missing-document scoring directly into the report flow.
+
+Closed outcome:
+- document rules remain DB-driven
+- send-report now reads required documents by report_type
+- provided documents are matched against required documents
+- missing documents and document score are calculated
+- document intelligence is included in final report payload
+
+Validation:
+- credit report type tested successfully
+- income_proof + bank_statement present
+- debt_report missing
+- document score returned as 62
+- flow returned ok: true
+
