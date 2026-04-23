@@ -430,3 +430,32 @@ Validation result:
 Status:
 ACTIVE
 
+
+---
+
+## [2026-04-23] SEND-REPORT STABILITY RESTORE (CRITICAL LOCK)
+
+Situation:
+- Document Intelligence integration caused instability in email delivery flow
+- Mail was previously working correctly
+- After integration, delivery consistency was questioned
+
+Action:
+- send-report.js restored to known working commit (87422c0 lineage)
+- document intelligence integration rolled back
+- mail delivery re-tested and confirmed working
+
+Result:
+- report generation: OK
+- secure link generation: OK
+- resend email delivery: OK
+- system returned to stable state
+
+Critical Rule Locked:
+- working delivery flows must not be broken by new feature integration
+- new intelligence layers must be added with minimal intrusion
+- system evolution must follow existing structure and style
+
+Status:
+LOCKED / STABLE BASELINE
+

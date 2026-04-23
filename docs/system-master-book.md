@@ -554,3 +554,21 @@ Validation:
 - document score returned as 62
 - flow returned ok: true
 
+
+---
+
+## Send-Report Stability Restoration
+Date: 2026-04-23
+
+A regression was identified in the send-report flow after introducing document intelligence logic.
+
+Resolution:
+- system reverted to previously verified working version
+- email delivery chain restored and validated
+- document intelligence integration postponed for controlled reintegration
+
+Key principle:
+System stability takes precedence over feature expansion.
+
+This block is now locked as baseline before further feature extension.
+
