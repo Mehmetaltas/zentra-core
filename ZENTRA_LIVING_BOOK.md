@@ -133,3 +133,41 @@ Runtime file:
 ZDB-003
 Reality Classification
 
+
+---
+
+## ZDB-003
+Date: 2026-04-23
+
+### Block
+Reality Classification
+
+### Purpose
+Signals are now classified into:
+- REAL_POWER
+- SUPPORT
+- ILLUSION
+
+### Logic
+REAL_POWER:
+- direct indicators of real repayment capacity
+
+SUPPORT:
+- supportive but not decisive indicators
+
+ILLUSION:
+- signals that may create misleading strength visibility
+
+### Result
+ZENTRA can now separate:
+- real power
+- supportive strength
+- misleading appearance
+
+### Runtime file
+- zentra_decision_backbone_v1.py
+
+### Next
+ZDB-004
+Contradiction Resolver
+
