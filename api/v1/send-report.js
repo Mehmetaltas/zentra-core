@@ -20,6 +20,22 @@ async function getRules() {
   return r.rows;
 }
 
+async function getDocumentRules(reportType) {
+  if (!reportType) return [];
+
+  const r = await pool.query(
+    `
+    select *
+    from document_rules
+    where lower(report_type) = lower($1)
+    order by id asc
+    `,
+    [String(reportType).trim()]
+  );
+
+  return r.rows;
+}
+
 function evaluate(operator, value, threshold) {
   if (value === undefined || value === null) return false;
 
@@ -114,8 +130,89 @@ function runEngine(input, rules) {
   };
 }
 
+function runDocumentIntelligence(reportType, providedDocuments, rules) {
+  if (!reportType || !Array.isArray(rules) || rules.length === 0) {
+    return null;
+  }
+
+  const provided = Array.isArray(providedDocuments)
+    ? providedDocuments.map((d) => String(d).toLowerCase())
+    : [];
+
+  let totalWeight = 0;
+  let obtainedWeight = 0;
+
+  const missing = [];
+  const present = [];
+
+  for (const rule of rules) {
+    const documentName = String(rule.document_name || "").trim();
+    const weight = Number(rule.weight || 0);
+    const required = rule.required === true || String(rule.required) === "true";
+
+    totalWeight += weight;
+
+    if (provided.includes(documentName.toLowerCase())) {
+      obtainedWeight += weight;
+      present.push(documentName);
+    } else {
+      missing.push({
+        name: documentName,
+        weight,
+        required,
+        notes: rule.notes || null
+      });
+    }
+  }
+
+  const score = totalWeight > 0
+    ? Math.round((obtainedWeight / totalWeight) * 100)
+    : 100;
+
+  return {
+    report_type: reportType,
+    score,
+    present,
+    missing,
+    total_required: rules.length,
+    provided_count: present.length
+  };
+}
+
+function buildDocumentBlock(documentIntelligence) {
+  if (!documentIntelligence) return "";
+
+  return `
+    <div style="margin-top:24px;padding-top:18px;border-top:1px solid #18304d;">
+      <p><b>Belge Uyum Skoru:</b> ${documentIntelligence.score}</p>
+      <p><b>Rapor Türü:</b> ${documentIntelligence.report_type}</p>
+      <p><b>Mevcut Belgeler:</b></p>
+      <ul>
+        ${
+          documentIntelligence.present.length > 0
+            ? documentIntelligence.present.map((d) => `<li>${d}</li>`).join("")
+            : "<li>Belge bilgisi girilmedi</li>"
+        }
+      </ul>
+
+      <p><b>Eksik Belgeler:</b></p>
+      <ul>
+        ${
+          documentIntelligence.missing.length > 0
+            ? documentIntelligence.missing.map((m) => {
+                const note = m.notes ? ` — ${m.notes}` : "";
+                return `<li>${m.name} (weight: ${m.weight}, required: ${m.required})${note}</li>`;
+              }).join("")
+            : "<li>Eksik belge yok</li>"
+        }
+      </ul>
+    </div>
+  `;
+}
+
 function buildHTML(link, result) {
   const dominant = result.dominantCategory || "other";
+  const documentBlock = buildDocumentBlock(result.document_intelligence);
 
   return `
   <html>
@@ -144,6 +241,8 @@ function buildHTML(link, result) {
           <ul>
             ${result.triggered.map((t) => `<li>${t.name} (${t.field}: ${t.value})</li>`).join("")}
           </ul>
+
+          ${documentBlock}
 
           <p style="margin-top:20px;">
             <a href="${link}" style="display:inline-block;padding:12px 20px;background:#2d6cff;color:#fff;border-radius:10px;text-decoration:none;font-weight:700;">
@@ -180,6 +279,21 @@ export default async function handler(req, res) {
     const rules = await getRules();
     const result = runEngine(body, rules);
 
+    let documentIntelligence = null;
+    if (body.report_type) {
+      const documentRules = await getDocumentRules(body.report_type);
+      documentIntelligence = runDocumentIntelligence(
+        body.report_type,
+        body.provided_documents,
+        documentRules
+      );
+    }
+
+    const finalResult = {
+      ...result,
+      document_intelligence: documentIntelligence
+    };
+
     const token = crypto.randomBytes(24).toString("hex");
 
     await pool.query(
@@ -191,7 +305,7 @@ export default async function handler(req, res) {
         token,
         String(body.to).trim(),
         "ZENTRA AI Report",
-        JSON.stringify(result)
+        JSON.stringify(finalResult)
       ]
     );
 
@@ -207,7 +321,7 @@ export default async function handler(req, res) {
         from: process.env.REPORT_FROM_EMAIL,
         to: [String(body.to).trim()],
         subject: "ZENTRA AI Report",
-        html: buildHTML(link, result),
+        html: buildHTML(link, finalResult),
         text: `Rapor bağlantınız hazır: ${link}`
       })
     });
@@ -224,7 +338,7 @@ export default async function handler(req, res) {
 
     return json(res, 200, {
       ok: true,
-      result,
+      result: finalResult,
       link
     });
   } catch (e) {
