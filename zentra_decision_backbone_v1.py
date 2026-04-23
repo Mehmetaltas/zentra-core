@@ -1,5 +1,5 @@
 # ZENTRA Decision Backbone v1
-# Block: ZDB-002
+# Block: ZDB-003
 # Date: 2026-04-23
 # Path: /data/data/com.termux/files/home/ZENTRA_MASTER/zentra-final/zentra_decision_backbone_v1.py
 
@@ -11,6 +11,40 @@ SOURCE_RELIABILITY = {
     "bureau": 0.85,
     "declared": 0.40,
     "external": 0.60,
+    "registry": 0.75,
+}
+
+REAL_POWER_SIGNALS = {
+    "income",
+    "verified_income",
+    "net_cashflow",
+    "regular_payment_history",
+    "loan_payment_discipline",
+    "credit_card_payment_discipline",
+    "utility_payment_discipline",
+    "tax_payment_discipline",
+    "sgk_consistent_income",
+}
+
+SUPPORT_SIGNALS = {
+    "vehicle_asset",
+    "property_asset",
+    "guarantor",
+    "collateral",
+    "business_history",
+    "registered_assets",
+    "bureau_score",
+}
+
+ILLUSION_SIGNALS = {
+    "declared_income",
+    "shared_property",
+    "illiquid_asset",
+    "cyclical_check_flow",
+    "temporary_cash_spike",
+    "rotating_debt_payment",
+    "nominal_asset_value",
+    "unverified_income",
 }
 
 def get_recency_score(date_str: str) -> float:
@@ -64,15 +98,48 @@ def calculate_trust(signal: dict) -> float:
     )
     return round(max(0.0, min(trust_score, 1.0)), 3)
 
+def classify_signal(signal: dict) -> str:
+    name = str(signal.get("name", "")).strip()
+
+    if name in REAL_POWER_SIGNALS:
+        return "REAL_POWER"
+    if name in SUPPORT_SIGNALS:
+        return "SUPPORT"
+    if name in ILLUSION_SIGNALS:
+        return "ILLUSION"
+
+    trust_score = signal.get("trust_score", 0.0)
+    manipulation = signal.get("manipulation_risk", "medium")
+    verifiability = signal.get("verifiability", "medium")
+
+    if trust_score >= 0.75 and manipulation == "low" and verifiability in ("high", "medium"):
+        return "REAL_POWER"
+
+    if manipulation == "high" or verifiability == "low":
+        return "ILLUSION"
+
+    return "SUPPORT"
+
 def process_signals(signals: list[dict]) -> list[dict]:
     processed = []
+
     for s in signals:
-        processed.append({
+        trust = calculate_trust(s)
+
+        enriched = {
             "name": s.get("name"),
             "value": s.get("value"),
             "source": s.get("source"),
-            "trust_score": calculate_trust(s),
-        })
+            "timestamp": s.get("timestamp"),
+            "repeatability": s.get("repeatability", "medium"),
+            "verifiability": s.get("verifiability", "medium"),
+            "manipulation_risk": s.get("manipulation_risk", "medium"),
+            "trust_score": trust,
+        }
+
+        enriched["classification"] = classify_signal(enriched)
+        processed.append(enriched)
+
     return processed
 
 if __name__ == "__main__":
@@ -94,6 +161,15 @@ if __name__ == "__main__":
             "repeatability": "low",
             "verifiability": "low",
             "manipulation_risk": "high",
+        },
+        {
+            "name": "vehicle_asset",
+            "value": 900000,
+            "source": "registry",
+            "timestamp": "2026-03-15",
+            "repeatability": "medium",
+            "verifiability": "high",
+            "manipulation_risk": "medium",
         },
     ]
 
