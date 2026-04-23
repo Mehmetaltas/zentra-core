@@ -502,3 +502,28 @@ Validated:
 Status:
 ACTIVE / VERIFIED
 
+
+---
+
+## [2026-04-23] CONFIDENCE LAYER CLOSED
+
+Closed block:
+- confidence layer added to send-report decision flow
+- confidence now evaluates certainty level on top of score + hard decision + explanation density
+- result payload now includes:
+  - decision
+  - explain
+  - confidence
+  - triggered rules
+
+Validation:
+- income: 20000
+- debt: 3000000
+- decision: Reddet
+- confidence: High (80)
+- explain layer returned clean narrative
+- secure report link returned successfully
+
+Status:
+ACTIVE / VERIFIED
+

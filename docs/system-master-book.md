@@ -609,3 +609,31 @@ Validated outcome:
 - explain layer returned clean rejection narrative for extreme debt scenario
 - raw rule reasons remained preserved for system trace
 
+
+---
+
+## Confidence Layer
+Date: 2026-04-23
+
+The decision system now includes a confidence layer.
+
+Purpose:
+- show how certain the system is about its own outcome
+- strengthen explainability and trust
+- separate raw score from certainty reading
+
+Current output structure:
+- decision
+- explain
+- confidence
+- triggered rules
+
+Validated case:
+- income 20000
+- debt 3000000
+- decision: Reddet
+- confidence: High (80)
+
+Principle:
+ZENTRA should not only decide; it should also indicate how strongly it stands behind that decision.
+
