@@ -104,25 +104,26 @@ function runEngine(input, rules) {
     decision = "İncele";
   }
 
-  
-    // =========================
-    // HARD DECISION LAYER
-    // =========================
-    try {
-      const income = Number(input.income) || 0;
-      const debt = Number(input.debt) || 0;
-      const dti = income > 0 ? (debt / income) : 0;
+  // HARD DECISION LAYER
+  try {
+    const income = Number(input.income) || 0;
+    const debt = Number(input.debt) || 0;
+    const debtToIncome = income > 0 ? debt / income : 0;
 
-      if (dti > 10) {
-        decision = "Reddet";
+    if (debtToIncome > 10) {
+      decision = "Reddet";
+      if (!reasons.includes("Borç/gelir oranı aşırı yüksek")) {
+        reasons.push("Borç/gelir oranı aşırı yüksek");
       }
+    }
 
-      if (debt > 1000000) {
-        decision = "Reddet";
+    if (debt > 1000000) {
+      decision = "Reddet";
+      if (!reasons.includes("Toplam borç kritik eşik üzerinde")) {
+        reasons.push("Toplam borç kritik eşik üzerinde");
       }
-
-    } catch (e) {}
-    
+    }
+  } catch (e) {}
 
   return {
     score,
@@ -157,12 +158,12 @@ function buildHTML(link, result) {
 
           <p><b>Gerekçeler:</b></p>
           <ul>
-            ${result.reasons.map((r) => `<li>${r}</li>`).join("")}
+            ${result.reasons.length ? result.reasons.map((r) => `<li>${r}</li>`).join("") : "<li>Ek gerekçe bulunmuyor.</li>"}
           </ul>
 
           <p><b>Tetiklenen Kurallar:</b></p>
           <ul>
-            ${result.triggered.map((t) => `<li>${t.name} (${t.field}: ${t.value})</li>`).join("")}
+            ${result.triggered.length ? result.triggered.map((t) => `<li>${t.name} (${t.field}: ${t.value})</li>`).join("") : "<li>Tetiklenen kural bulunmuyor.</li>"}
           </ul>
 
           <p style="margin-top:20px;">
