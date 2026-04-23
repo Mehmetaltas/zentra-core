@@ -1118,42 +1118,64 @@ async function runZentraTest() {
     }
 
     const decision = data.result.decision;
+    const confidence = data.result.confidence || { level: "Medium", score: 50 };
+    const explain = Array.isArray(data.result.explain) ? data.result.explain.slice(0, 3) : [];
+
     let color = "#2d6cff";
     let bg = "#081321";
+    let glow = "rgba(45,108,255,.25)";
 
     if (decision === "Reddet") {
       color = "#ff4d4d";
       bg = "#1a0d0d";
+      glow = "rgba(255,77,77,.20)";
     } else if (decision === "İncele") {
       color = "#ffc107";
       bg = "#1a160d";
+      glow = "rgba(255,193,7,.18)";
     } else {
       color = "#00c853";
       bg = "#0d1a13";
+      glow = "rgba(0,200,83,.20)";
     }
 
+    const explainHtml = explain.length
+      ? explain.map(item => `<li style="margin-bottom:6px;">${item}</li>`).join("")
+      : "<li>Ek açıklama bulunmuyor</li>";
+
     resultBox.innerHTML = `
-      <div style="background:${bg};padding:20px;border-radius:14px;border:1px solid #1d3557;">
+      <div style="background:${bg};padding:22px;border-radius:16px;border:1px solid #1d3557;box-shadow:0 0 0 1px ${glow} inset, 0 10px 30px ${glow};">
 
-        <div style="font-size:22px;font-weight:800;color:${color};margin-bottom:10px;">
-          ${decision}
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:14px;">
+          <div style="font-size:24px;font-weight:800;color:${color};">
+            ${decision}
+          </div>
+          <div style="padding:8px 12px;border-radius:999px;background:#081321;border:1px solid #1d3557;color:#fff;font-size:13px;font-weight:700;">
+            Confidence: ${confidence.level} (${confidence.score}%)
+          </div>
         </div>
 
-        <div style="font-size:14px;color:#8ea3c7;margin-bottom:10px;">
-          Risk Skoru
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;">
+          <div style="background:#081321;padding:14px;border-radius:12px;border:1px solid #1d3557;">
+            <div style="font-size:12px;color:#8ea3c7;margin-bottom:6px;">Risk Skoru</div>
+            <div style="font-size:28px;font-weight:800;color:#fff;">${data.result.score}</div>
+          </div>
+          <div style="background:#081321;padding:14px;border-radius:12px;border:1px solid #1d3557;">
+            <div style="font-size:12px;color:#8ea3c7;margin-bottom:6px;">Canlı Sistem</div>
+            <div style="font-size:18px;font-weight:700;color:${color};">Active Analysis</div>
+          </div>
         </div>
 
-        <div style="font-size:26px;font-weight:700;color:#fff;">
-          ${data.result.score}
+        <div style="background:#081321;padding:14px;border-radius:12px;border:1px solid #1d3557;">
+          <div style="font-size:12px;color:#8ea3c7;margin-bottom:10px;">Açıklama Özeti</div>
+          <ul style="margin:0;padding-left:18px;color:#fff;line-height:1.5;">
+            ${explainHtml}
+          </ul>
         </div>
 
-        <div style="margin-top:15px;font-size:13px;color:#7ea6ff;">
-          Canlı sistem çıktısı
-        </div>
-
-        <div style="margin-top:20px;">
+        <div style="margin-top:18px;display:flex;gap:10px;flex-wrap:wrap;">
           <a href="${data.link}" target="_blank"
-            style="display:inline-block;padding:10px 18px;background:${color};color:#000;border-radius:8px;font-weight:700;text-decoration:none;">
+            style="display:inline-block;padding:11px 18px;background:${color};color:#000;border-radius:10px;font-weight:800;text-decoration:none;">
             Detaylı Rapor
           </a>
         </div>
