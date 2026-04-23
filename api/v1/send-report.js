@@ -75,6 +75,29 @@ function buildExplain(input, decision) {
   return explain;
 }
 
+function buildConfidence(score, decision, explain) {
+  let confidence = 50;
+
+  if (score > 60) confidence += 20;
+  if (score < 20) confidence += 10;
+
+  if (decision === "Reddet") confidence += 20;
+  if (decision === "Onay") confidence += 10;
+
+  if (explain.length >= 3) confidence += 10;
+
+  if (confidence > 95) confidence = 95;
+
+  let level = "Medium";
+  if (confidence >= 80) level = "High";
+  if (confidence < 60) level = "Low";
+
+  return {
+    score: confidence,
+    level
+  };
+}
+
 function runEngine(input, rules) {
   let score = 0;
   const reasons = [];
@@ -95,10 +118,8 @@ function runEngine(input, rules) {
     if (evaluate(rule.operator, value, rule.threshold)) {
       const ruleScore = Number(rule.score) || 0;
       const cat = rule.category || "other";
-      const priority = rule.priority || null;
 
       score += ruleScore;
-      reasons.push(rule.description);
 
       triggered.push({
         name: rule.name,
@@ -106,8 +127,7 @@ function runEngine(input, rules) {
         value,
         threshold: rule.threshold,
         score: rule.score,
-        category: cat,
-        priority
+        category: cat
       });
 
       if (!categoryScore[cat]) {
@@ -118,85 +138,48 @@ function runEngine(input, rules) {
     }
   }
 
-  let dominantCategory = null;
-  let maxCategoryScore = 0;
-
-  for (const cat in categoryScore) {
-    if (categoryScore[cat] > maxCategoryScore) {
-      maxCategoryScore = categoryScore[cat];
-      dominantCategory = cat;
-    }
-  }
-
   let decision = "Onay";
-  if (score > 60) {
-    decision = "Reddet";
-  } else if (score > 30) {
-    decision = "İncele";
-  }
+  if (score > 60) decision = "Reddet";
+  else if (score > 30) decision = "İncele";
 
-  // HARD DECISION
   const income = Number(input.income) || 0;
   const debt = Number(input.debt) || 0;
   const dti = income > 0 ? debt / income : 0;
 
-  if (dti > 10) {
-    decision = "Reddet";
-  }
-
-  if (debt > 1000000) {
-    decision = "Reddet";
-  }
+  if (dti > 10) decision = "Reddet";
+  if (debt > 1000000) decision = "Reddet";
 
   const explain = buildExplain(input, decision);
+  const confidence = buildConfidence(score, decision, explain);
 
   return {
     score,
     decision,
-    reasons,
-    triggered,
-    dominantCategory,
-    categoryScore,
-    explain
+    explain,
+    confidence,
+    triggered
   };
 }
 
 function buildHTML(link, result) {
-  const dominant = result.dominantCategory || "other";
-
   return `
   <html>
-    <body style="margin:0;padding:24px;background:#081321;font-family:Arial,Helvetica,sans-serif;color:#eaf1fb;">
-      <div style="max-width:680px;margin:0 auto;background:#0d1f3b;border:1px solid #1d3557;border-radius:18px;overflow:hidden;">
-        <div style="padding:24px;border-bottom:1px solid #18304d;">
-          <div style="font-size:13px;color:#7ea6ff;font-weight:700;">
-            ZENTRA Matrix Ecosystem
-          </div>
-          <div style="margin-top:10px;font-size:28px;font-weight:800;">
-            ZENTRA AI Report
-          </div>
-        </div>
+    <body style="margin:0;padding:24px;background:#081321;font-family:Arial;color:#eaf1fb;">
+      <div style="max-width:680px;margin:0 auto;background:#0d1f3b;border-radius:18px;padding:24px;">
 
-        <div style="padding:24px;">
-          <p><b>Karar:</b> ${result.decision}</p>
-          <p><b>Skor:</b> ${result.score}</p>
+        <h2>ZENTRA AI Report</h2>
 
-          <p><b>Açıklama:</b></p>
-          <ul>
-            ${result.explain.map((e) => `<li>${e}</li>`).join("")}
-          </ul>
+        <p><b>Karar:</b> ${result.decision}</p>
+        <p><b>Skor:</b> ${result.score}</p>
+        <p><b>Confidence:</b> ${result.confidence.level} (${result.confidence.score}%)</p>
 
-          <p><b>Tetiklenen Kurallar:</b></p>
-          <ul>
-            ${result.triggered.map((t) => `<li>${t.name}</li>`).join("")}
-          </ul>
+        <p><b>Açıklama:</b></p>
+        <ul>
+          ${result.explain.map(e => `<li>${e}</li>`).join("")}
+        </ul>
 
-          <p style="margin-top:20px;">
-            <a href="${link}" style="background:#2d6cff;padding:10px 16px;color:#fff;border-radius:8px;text-decoration:none;">
-              Raporu Aç
-            </a>
-          </p>
-        </div>
+        <a href="${link}">Raporu Aç</a>
+
       </div>
     </body>
   </html>
