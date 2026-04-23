@@ -592,3 +592,20 @@ This was validated successfully:
 Principle:
 Scoring may remain continuous, but extreme exposure must be able to force a hard negative decision.
 
+
+---
+
+## Explain Layer Cleanup
+Date: 2026-04-23
+
+The decision system now separates:
+- internal raw rule reasons
+- external narrative explanation
+
+Principle:
+Internal trace may remain technical, but outward-facing system language must be cleaner and more trustable.
+
+Validated outcome:
+- explain layer returned clean rejection narrative for extreme debt scenario
+- raw rule reasons remained preserved for system trace
+

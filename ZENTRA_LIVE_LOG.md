@@ -482,3 +482,23 @@ Validation:
 Status:
 ACTIVE / VERIFIED
 
+
+---
+
+## [2026-04-23] EXPLAIN LAYER CLEANUP CLOSED
+
+Closed block:
+- API keeps raw rule reasons for internal trace
+- external-facing explanation layer is now available through result.explain
+- decision output now supports cleaner narrative explanation
+- system moved from raw rule dump toward explainable decision format
+
+Validated:
+- decision: Reddet
+- score: 50
+- explain layer returned clean narrative output
+- raw reasons remain available for internal logic
+
+Status:
+ACTIVE / VERIFIED
+
