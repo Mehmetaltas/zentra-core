@@ -104,6 +104,26 @@ function runEngine(input, rules) {
     decision = "İncele";
   }
 
+  
+    // =========================
+    // HARD DECISION LAYER
+    // =========================
+    try {
+      const income = Number(input.income) || 0;
+      const debt = Number(input.debt) || 0;
+      const dti = income > 0 ? (debt / income) : 0;
+
+      if (dti > 10) {
+        decision = "Reddet";
+      }
+
+      if (debt > 1000000) {
+        decision = "Reddet";
+      }
+
+    } catch (e) {}
+    
+
   return {
     score,
     decision,
