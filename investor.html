@@ -1046,5 +1046,94 @@
       });
   </script>
 
+
+<!-- ========================= -->
+<!-- ZENTRA LIVE ACTION CTA -->
+<!-- ========================= -->
+<section style="padding:60px 20px;background:#06101f;border-top:1px solid #13233a;">
+  <div style="max-width:720px;margin:0 auto;text-align:center;">
+
+    <h2 style="font-size:28px;color:#fff;margin-bottom:10px;">
+      Canlı Sistem Testi
+    </h2>
+
+    <p style="color:#8ea3c7;margin-bottom:30px;">
+      ZENTRA'nın gerçek karar motorunu anında deneyin.
+    </p>
+
+    <div style="background:#0d1f3b;padding:24px;border-radius:16px;border:1px solid #1d3557;">
+
+      <input id="income" type="number" placeholder="Aylık Gelir"
+        style="width:100%;padding:12px;margin-bottom:10px;border-radius:8px;border:none;background:#081321;color:#fff;" />
+
+      <input id="debt" type="number" placeholder="Toplam Borç"
+        style="width:100%;padding:12px;margin-bottom:20px;border-radius:8px;border:none;background:#081321;color:#fff;" />
+
+      <button onclick="runZentraTest()"
+        style="width:100%;padding:14px;background:#2d6cff;color:#fff;border:none;border-radius:10px;font-weight:700;cursor:pointer;">
+        Testi Başlat
+      </button>
+
+      <div id="loading" style="display:none;margin-top:15px;color:#7ea6ff;">
+        Hesaplanıyor...
+      </div>
+
+      <div id="result" style="margin-top:20px;text-align:left;"></div>
+
+    </div>
+  </div>
+</section>
+
+<script>
+async function runZentraTest() {
+  const income = document.getElementById("income").value;
+  const debt = document.getElementById("debt").value;
+
+  const resultBox = document.getElementById("result");
+  const loading = document.getElementById("loading");
+
+  resultBox.innerHTML = "";
+  loading.style.display = "block";
+
+  try {
+    const res = await fetch("https://zentra-core.vercel.app/api/v1/send-report", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        to: "contact@zentrarisk.com",
+        income: Number(income),
+        debt: Number(debt)
+      })
+    });
+
+    const data = await res.json();
+
+    loading.style.display = "none";
+
+    if (!data.ok) {
+      resultBox.innerHTML = "<p style='color:red;'>Hata oluştu</p>";
+      return;
+    }
+
+    resultBox.innerHTML = `
+      <div style="background:#081321;padding:16px;border-radius:12px;border:1px solid #1d3557;">
+        <p><b>Karar:</b> ${data.result.decision}</p>
+        <p><b>Skor:</b> ${data.result.score}</p>
+        <p style="margin-top:10px;">
+          <a href="${data.link}" target="_blank" style="color:#2d6cff;font-weight:700;">
+            Detaylı Raporu Aç
+          </a>
+        </p>
+      </div>
+    `;
+  } catch (err) {
+    loading.style.display = "none";
+    resultBox.innerHTML = "<p style='color:red;'>Bağlantı hatası</p>";
+  }
+}
+</script>
+
 </body>
 </html>
