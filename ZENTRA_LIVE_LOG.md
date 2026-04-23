@@ -459,3 +459,26 @@ Critical Rule Locked:
 Status:
 LOCKED / STABLE BASELINE
 
+
+---
+
+## [2026-04-23] HARD DECISION LAYER CLOSED
+
+Closed block:
+- hard decision override added to send-report.js
+- existing scoring engine preserved
+- decision layer hardened without breaking mail/report flow
+
+Hard rules now active:
+- if debt_to_income > 10 => decision = Reddet
+- if debt > 1000000 => decision = Reddet
+
+Validation:
+- income: 20000
+- debt: 3000000
+- previous outcome: İncele
+- current outcome: Reddet
+
+Status:
+ACTIVE / VERIFIED
+

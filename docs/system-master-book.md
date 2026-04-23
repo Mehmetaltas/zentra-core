@@ -572,3 +572,23 @@ System stability takes precedence over feature expansion.
 
 This block is now locked as baseline before further feature extension.
 
+
+---
+
+## Hard Decision Layer
+Date: 2026-04-23
+
+The report decision layer was hardened by adding forced rejection overrides for extreme debt scenarios.
+
+Active hard conditions:
+- debt_to_income > 10 => Reddet
+- debt > 1000000 => Reddet
+
+This was validated successfully:
+- income 20000
+- debt 3000000
+- decision changed from İncele to Reddet
+
+Principle:
+Scoring may remain continuous, but extreme exposure must be able to force a hard negative decision.
+
