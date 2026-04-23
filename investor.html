@@ -1086,6 +1086,86 @@
 
 <script>
 async function runZentraTest() {
+
+  const income = document.getElementById("income").value;
+  const debt = document.getElementById("debt").value;
+
+  const resultBox = document.getElementById("result");
+  const loading = document.getElementById("loading");
+
+  resultBox.innerHTML = "";
+  loading.style.display = "block";
+
+  try {
+    const res = await fetch("https://zentra-core.vercel.app/api/v1/send-report", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        to: "contact@zentrarisk.com",
+        income: Number(income),
+        debt: Number(debt)
+      })
+    });
+
+    const data = await res.json();
+    loading.style.display = "none";
+
+    if (!data.ok) {
+      resultBox.innerHTML = "<p style='color:red;'>Hata oluştu</p>";
+      return;
+    }
+
+    const decision = data.result.decision;
+    let color = "#2d6cff";
+    let bg = "#081321";
+
+    if (decision === "Reddet") {
+      color = "#ff4d4d";
+      bg = "#1a0d0d";
+    } else if (decision === "İncele") {
+      color = "#ffc107";
+      bg = "#1a160d";
+    } else {
+      color = "#00c853";
+      bg = "#0d1a13";
+    }
+
+    resultBox.innerHTML = `
+      <div style="background:${bg};padding:20px;border-radius:14px;border:1px solid #1d3557;">
+
+        <div style="font-size:22px;font-weight:800;color:${color};margin-bottom:10px;">
+          ${decision}
+        </div>
+
+        <div style="font-size:14px;color:#8ea3c7;margin-bottom:10px;">
+          Risk Skoru
+        </div>
+
+        <div style="font-size:26px;font-weight:700;color:#fff;">
+          ${data.result.score}
+        </div>
+
+        <div style="margin-top:15px;font-size:13px;color:#7ea6ff;">
+          Canlı sistem çıktısı
+        </div>
+
+        <div style="margin-top:20px;">
+          <a href="${data.link}" target="_blank"
+            style="display:inline-block;padding:10px 18px;background:${color};color:#000;border-radius:8px;font-weight:700;text-decoration:none;">
+            Detaylı Rapor
+          </a>
+        </div>
+
+      </div>
+    `;
+
+  } catch (err) {
+    loading.style.display = "none";
+    resultBox.innerHTML = "<p style='color:red;'>Bağlantı hatası</p>";
+  }
+}
   const income = document.getElementById("income").value;
   const debt = document.getElementById("debt").value;
 
