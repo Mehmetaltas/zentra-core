@@ -152,12 +152,29 @@ function runEngine(input, rules) {
   const explain = buildExplain(input, decision);
   const confidence = buildConfidence(score, decision, explain);
 
+  const dominantCategory = Object.entries(categoryScore)
+    .sort((a, b) => Number(b[1]) - Number(a[1]))[0]?.[0] || "risk";
+
+  const reasons = explain.length
+    ? explain
+    : triggered.map((r) => `${r.name} kuralı tetiklendi`);
+
+  const derived = {
+    debt_to_income: dti,
+    debt_band: debt > 1000000 ? "critical" : debt > 250000 ? "high" : debt > 50000 ? "medium" : "low",
+    dti_band: dti > 10 ? "critical" : dti > 3 ? "high" : dti > 1 ? "medium" : "low"
+  };
+
   return {
     score,
     decision,
+    reasons,
     explain,
     confidence,
-    triggered
+    triggered,
+    dominantCategory,
+    categoryScore,
+    derived
   };
 }
 
@@ -226,59 +243,4 @@ export default async function handler(req, res) {
   }
 }
 
-// ===== ZENTRA SAFE ENRICHMENT (NON-BREAKING) =====
-try {
-  const body = req && req.body ? req.body : {};
-  const income = Number(body.income || 0);
-  const debt = Number(body.debt || 0);
-
-  // derived metrics
-  const debtToIncome = income > 0 ? (debt / income) : null;
-  const bands = {
-    dti_band:
-      debtToIncome == null ? "unknown" :
-      debtToIncome < 1 ? "low" :
-      debtToIncome < 3 ? "mid" : "high",
-    debt_band:
-      debt < 50000 ? "low" :
-      debt < 250000 ? "mid" : "high"
-  };
-
-  // enrich result (kararı bozmadan)
-  if (typeof result !== "undefined" && result) {
-    const baseExplain = Array.isArray(result.explain) ? result.explain : [];
-    const extraExplain = [];
-    if (debtToIncome != null) {
-      extraExplain.push(`DTI: ${debtToIncome.toFixed(2)}x (${bands.dti_band})`);
-    }
-    extraExplain.push(`Debt band: ${bands.debt_band}`);
-
-    result = {
-      ...result,
-      derived: {
-        debt_to_income: debtToIncome,
-        bands
-      },
-      explain: baseExplain.concat(extraExplain)
-    };
-  }
-
-  // light audit log (ephemeral)
-  try {
-    const fs = require('fs');
-    const rec = {
-      ts: new Date().toISOString(),
-      endpoint: "send-report",
-      input: { income, debt },
-      output: result ? {
-        decision: result.decision,
-        score: result.score,
-        confidence: result.confidence
-      } : null
-    };
-    fs.appendFileSync('/tmp/zentra_audit.log', JSON.stringify(rec) + "\n");
-  } catch (e) {}
-
-} catch (e) {}
-// ===== END SAFE ENRICHMENT =====
 
