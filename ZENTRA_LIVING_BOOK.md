@@ -251,3 +251,29 @@ ZENTRA now produces:
 ### Next
 ZDB-007 Loss Mapping + Proof Metrics
 
+
+---
+
+## ZDB-007
+Date: 2026-04-24
+
+### Block
+Loss Mapping + Proof Metrics
+
+### Purpose
+Measure real-world impact of decision differences.
+
+### Metrics
+- Decision delta
+- Loss estimation
+- Risk mismatch
+
+### Result
+ZENTRA now quantifies:
+- wrong approvals
+- missed opportunities
+- risk exposure
+
+### Next
+ZDB-008 Real Scenario Testing
+
