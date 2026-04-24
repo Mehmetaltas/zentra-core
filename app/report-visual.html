@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ZENTRA Visual Proof Layer</title>
+<style>
+body{font-family:Arial;background:#0b0f1a;color:#fff;margin:0;padding:20px}
+.card{background:#121a2f;padding:20px;border-radius:12px;margin-bottom:15px}
+.bar{height:10px;background:#333;border-radius:10px;overflow:hidden;margin:8px 0 14px}
+.fill{height:10px;background:linear-gradient(90deg,#00c6ff,#ff4d4d);width:0%;transition:width 1s ease}
+.indicator{display:flex;justify-content:space-between;margin:8px 0}
+.badge{padding:5px 10px;border-radius:6px;font-weight:bold}
+.green{background:#1f8f4e}.yellow{background:#d9a300}.red{background:#b30000}
+.trace{margin-top:10px;font-size:13px;opacity:.9}
+pre{white-space:pre-wrap;background:#0b1222;padding:12px;border-radius:10px;color:#dce7ff}
+</style>
+</head>
+<body>
+
+<h2>ZENTRA — Visual Proof Layer</h2>
+
+<div class="card">
+  <h3>Decision</h3>
+  <div id="decisionBox"></div>
+</div>
+
+<div class="card">
+  <h3>Indicators</h3>
+  <div class="indicator">Risk <span id="riskBadge"></span></div>
+  <div class="indicator">Payment Stress <span id="paymentBadge"></span></div>
+  <div class="indicator">Limit Pressure <span id="limitBadge"></span></div>
+  <div class="indicator">Policy <span id="policyBadge"></span></div>
+</div>
+
+<div class="card">
+  <h3>Metrics</h3>
+  <div>DTI</div>
+  <div class="bar"><div id="dtiBar" class="fill"></div></div>
+
+  <div>Payment Load</div>
+  <div class="bar"><div id="paymentBar" class="fill"></div></div>
+
+  <div>Limit Ratio</div>
+  <div class="bar"><div id="limitBar" class="fill"></div></div>
+</div>
+
+<div class="card">
+  <h3>Decision Flow</h3>
+  <div id="flow"></div>
+</div>
+
+<div class="card">
+  <h3>Raw Proof</h3>
+  <pre id="raw"></pre>
+</div>
+
+<script>
+const data = {
+  score: 50,
+  decision: "Reddet",
+  explain: [
+    "Limit oranı yüksek (5.0x)",
+    "Policy uygulandı: income_multiple_limit_policy",
+    "Reddedildi"
+  ],
+  derived: {
+    debt_to_income: 1,
+    payment_load: 0.1,
+    limit_ratio: 5
+  },
+  policy: {
+    mode: "ON",
+    policyHits: [
+      {
+        name: "income_multiple_limit_policy",
+        rule: "limit_ratio > 4",
+        value: 5,
+        action: "Reddet"
+      }
+    ]
+  }
+};
+
+function setBar(id,value,max){
+  document.getElementById(id).style.width = Math.min((value/max)*100,100) + "%";
+}
+
+function badge(id,text,color){
+  document.getElementById(id).innerHTML = `<span class="badge ${color}">${text}</span>`;
+}
+
+function run(){
+  document.getElementById("decisionBox").innerHTML =
+    `<b>Karar:</b> ${data.decision}<br><b>Skor:</b> ${data.score}<br><br>` +
+    data.explain.map(x => "• " + x).join("<br>");
+
+  setBar("dtiBar",data.derived.debt_to_income,10);
+  setBar("paymentBar",data.derived.payment_load,1);
+  setBar("limitBar",data.derived.limit_ratio,5);
+
+  badge("riskBadge",data.decision,data.decision==="Reddet"?"red":"green");
+  badge("paymentBadge",data.derived.payment_load>0.5?"HIGH":"OK",data.derived.payment_load>0.5?"red":"green");
+  badge("limitBadge",data.derived.limit_ratio>4?"HIGH":"OK",data.derived.limit_ratio>4?"red":"green");
+  badge("policyBadge",data.policy.mode,data.policy.mode==="ON"?"yellow":"green");
+
+  const steps = [
+    "Input alındı",
+    "Derived metrikler hesaplandı",
+    "Rules çalıştı",
+    "Policy kontrol edildi",
+    "Decision üretildi",
+    "Trace + Proof kaydı oluşturuldu"
+  ];
+
+  let i=0;
+  const flow=document.getElementById("flow");
+  const interval=setInterval(()=>{
+    if(i>=steps.length){clearInterval(interval);return;}
+    const div=document.createElement("div");
+    div.className="trace";
+    div.innerText="✔ " + steps[i];
+    flow.appendChild(div);
+    i++;
+  },350);
+
+  document.getElementById("raw").innerText = JSON.stringify(data,null,2);
+}
+
+run();
+</script>
+
+</body>
+</html>
