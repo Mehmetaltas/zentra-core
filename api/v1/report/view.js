@@ -108,9 +108,9 @@ export default async function handler(req, res) {
 
     const decision = String(data.decision || "Bilinmiyor");
     const score = data.score ?? "-";
-    const reasons = Array.isArray(data.reasons) ? data.reasons : (Array.isArray(data.explain) ? data.explain : []);
+    const reasons = Array.isArray(data.reasons) ? data.reasons : [];
     const triggered = Array.isArray(data.triggered) ? data.triggered : [];
-    const dominantCategory = titleCaseRisk(data.dominantCategory || (data.triggered?.[0]?.category) || "risk");
+    const dominantCategory = titleCaseRisk(data.dominantCategory || "other");
     const categoryScore = data.categoryScore && typeof data.categoryScore === "object"
       ? data.categoryScore
       : {};
