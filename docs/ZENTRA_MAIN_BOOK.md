@@ -175,3 +175,81 @@ Complete market parity + surpass via proof, simulation and traceability.
 No system change.
 Only depth and completeness.
 
+
+---
+
+# ZDB-15 CHECKPOINT — STABLE STATE
+
+## Tarih
+2026-04-24
+
+## Durum
+STABLE
+
+## Sistem
+- tek engine
+- tek endpoint (send-report)
+- tek pipeline
+
+## Özellikler
+- decision ✔
+- explain ✔
+- derived metrics (DTI, payment load, limit ratio) ✔
+- trace ✔
+- proof library (DB kayıt) ✔
+- report link ✔
+
+## Simulation
+- ayrı endpoint yok
+- batch
+
+cd /data/data/com.termux/files/home/ZENTRA_MASTER/zentra-final || exit 1
+
+# yanlış/yarım kalan kısmı temizle (son satırları sil)
+sed -i '$d' docs/ZENTRA_MAIN_BOOK.md
+sed -i '$d' docs/ZENTRA_MAIN_BOOK.md
+sed -i '$d' docs/ZENTRA_MAIN_BOOK.md
+
+# doğru ve tam blok ekle
+cat >> docs/ZENTRA_MAIN_BOOK.md <<'EOF'
+
+---
+
+# ZDB-15 CHECKPOINT — FINAL LOCK
+
+## Tarih
+2026-04-24
+
+## Durum
+LOCKED
+
+## Sistem
+- tek engine
+- tek endpoint (send-report)
+- tek pipeline
+
+## Özellikler
+- decision ✔
+- explain ✔
+- derived metrics ✔
+- trace ✔
+- proof library (DB kayıt) ✔
+- report link ✔
+
+## Simulation
+- ayrı endpoint yok
+- batch execution
+- same pipeline reuse
+- edge / stress test destekli
+
+## İlke
+ZENTRA genişlemez, derinleşir.
+
+## Sonuç
+ZENTRA:
+- karar verir
+- nasıl verdiğini gösterir
+- DB’ye kaydeder
+- tekrar üretilebilir
+- paylaşılabilir
+
