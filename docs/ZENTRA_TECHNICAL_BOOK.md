@@ -101,3 +101,47 @@ full trace logging
 - proof is generated after decision
 - audit must be traceable
 
+
+---
+
+# ZENTRA MATRIX ECOSYSTEM — POST ZDB-15 TECH IMPLEMENTATION (LOCK)
+
+## Status
+LOCKED
+
+## Rule
+All additions must run on existing Vercel + Neon system.
+
+---
+
+## Modules
+
+### competitor_matrix
+- static + versioned dataset
+- JSON-based mapping
+
+### proof_library
+- database-backed (Neon)
+- stores cases and comparisons
+
+### simulation_bank
+- scenario generator
+- reusable test inputs
+
+### decision_trace
+- structured trace object
+- attach to every decision
+
+### licensing_pack
+- formatted outputs
+- institution-ready JSON + HTML
+
+---
+
+## Principle
+
+- no new engine
+- no parallel system
+- no core separation
+- everything extends current pipeline
+

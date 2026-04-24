@@ -110,3 +110,68 @@ ZENTRA core:
 
 ZDB-13 + ZDB-14 + ZDB-15 + MOAT
 
+
+---
+
+# ZENTRA MATRIX ECOSYSTEM — POST ZDB-15 ROADMAP (FINAL LOCK)
+
+## Date
+2026-04-24
+
+## Status
+LOCKED
+
+## Scope
+Applies after ZDB-15 completion.
+No new architecture. No new cores. Same system.
+
+---
+
+## OBJECTIVE
+Complete market parity + surpass via proof, simulation and traceability.
+
+---
+
+## BLOCKS
+
+### 1) Competitor Matrix
+- product mapping
+- feature comparison
+- pricing/pack logic (high level)
+- gap vs ZENTRA
+
+---
+
+### 2) Proof Library
+- case records
+- existing vs ZENTRA decisions
+- risk / loss difference
+- audit-ready outputs
+
+---
+
+### 3) Simulation Bank
+- DTI scenarios
+- payment load scenarios
+- limit ratio scenarios
+- stress / edge cases
+
+---
+
+### 4) Decision Trace Graph
+- rule → signal → explain → outcome
+- full traceability
+
+---
+
+### 5) Licensing Pack
+- ZDB-13 / 14 / 15 packaging
+- institution-ready outputs
+- regulatory-compatible language
+
+---
+
+## RULE
+No system change.
+Only depth and completeness.
+

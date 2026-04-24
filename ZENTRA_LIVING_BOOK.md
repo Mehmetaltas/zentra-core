@@ -493,3 +493,28 @@ ZENTRA is defined as:
 
 decision + explain + proof + trace
 
+
+---
+
+## ZDB-015 EXTENSION
+Date: 2026-04-24
+
+### Block
+Post ZDB-15 Completion Path
+
+### Decision
+After ZDB-15, system enters completion phase:
+
+- competitor matrix
+- proof library
+- simulation bank
+- decision trace
+- licensing pack
+
+### Rule
+No architecture change.
+Depth only.
+
+### Result
+ZENTRA moves from working system to full institutional product.
+
