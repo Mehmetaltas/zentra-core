@@ -355,3 +355,35 @@ ZENTRA converts decisions into controlled, actionable outcomes.
 ### Next
 ZDB-012 Proof Report Export (API/JSON for integration)
 
+
+---
+
+## ZDB-010
+Date: 2026-04-24
+
+### Block
+System Hardening
+
+### Purpose
+Move ZENTRA Decision Backbone from test script behavior into stable proof output behavior.
+
+### Added
+- input normalization
+- stable decision schema
+- stable risk schema
+- proof-ready JSON output
+- confidence calculation
+- loss comparison
+- decision delta
+- explain list
+
+### Result
+ZENTRA now produces structured proof output instead of loose test prints.
+
+### Runtime file
+- zentra_decision_backbone_v1.py
+
+### Next
+ZDB-011
+Proof Report Export
+
