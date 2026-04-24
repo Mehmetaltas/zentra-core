@@ -82,3 +82,93 @@ karar verir
 - grafik üretilecek
 - demo hazırlanacak
 
+
+---
+
+# YAPI KREDİ — ZENTRA ANALİZİ
+
+## Dönem
+2025
+
+## Resmi Veriler
+- NPL: 3.2%
+- Cost of Risk: 162 bps
+
+---
+
+## ZENTRA OKUMA
+
+### Risk Yorumu
+- NPL orta seviyede
+- Cost of Risk yükselmiş
+→ risk maliyeti baskısı var
+
+---
+
+## ZENTRA DERIVED MODEL (örnek portföy)
+
+varsayım:
+- income: 20.000
+- debt: 60.000
+- monthly_payment: 8.000
+- total_limit: 80.000
+
+çıktı:
+- debt_to_income: 3.0x
+- payment_load: 40%
+- limit_ratio: 4.0x
+
+---
+
+## ZENTRA ANALİZ
+
+- limit_ratio = yüksek sınır
+- payment_load = stres sınırına yakın
+- risk = orta → yukarı eğilim
+
+---
+
+## ZENTRA POLICY
+
+- limit_ratio 4x → kritik eşik
+- payment_load 40% → izleme gerekli
+
+karar:
+→ İNCELE
+
+---
+
+## ZENTRA İNDİKATÖR
+
+- Risk Indicator: MEDIUM
+- Payment Stress: MEDIUM
+- Limit Pressure: HIGH
+- Reality Gap: GROWING
+- Proof Strength: MEDIUM
+
+---
+
+## ZENTRA FARKI
+
+Banka:
+- risk görür
+- karar verir
+
+ZENTRA:
+- risk + neden ✔
+- decision trace ✔
+- policy enforcement ✔
+- proof kayıt ✔
+- simulation yapılabilir ✔
+
+---
+
+## SONUÇ
+
+ZENTRA:
+- aynı veriden daha erken sinyal üretir
+- riskin nedenini açıklar
+- kararın kanıtını oluşturur
+
+---
+
