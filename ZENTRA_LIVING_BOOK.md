@@ -387,3 +387,29 @@ ZENTRA now produces structured proof output instead of loose test prints.
 ZDB-011
 Proof Report Export
 
+
+---
+
+## ZDB-012
+Date: 2026-04-24
+
+### Block
+Proof Report Export
+
+### Purpose
+Standardize output for API and integration.
+
+### Output
+Structured JSON report including:
+- decision
+- actions
+- explain
+- confidence
+- proof metrics
+
+### Result
+ZENTRA outputs are now integration-ready.
+
+### Next
+ZDB-013 API Layer
+
