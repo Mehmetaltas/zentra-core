@@ -108,10 +108,24 @@ export default async function handler(req, res) {
 
     const decision = String(data.decision || "Bilinmiyor");
     const score = data.score ?? "-";
-    const reasons = Array.isArray(data.reasons) ? data.reasons : [];
+    const reasons = Array.isArray(data.reasons)
+  ? data.reasons
+  : (Array.isArray(data.explain) ? data.explain : []);
     const triggered = Array.isArray(data.triggered) ? data.triggered : [];
-    const dominantCategory = titleCaseRisk(data.dominantCategory || "other");
-    const categoryScore = data.categoryScore && typeof data.categoryScore === "object"
+    const dominantCategory = titleCaseRisk(
+  data.dominantCategory ||
+  (data.triggered && data.triggered[0] && data.triggered[0].category) ||
+  "risk"
+);
+    const categoryScore = (data.categoryScore && typeof data.categoryScore === "object")
+  ? data.categoryScore
+  : (data.triggered
+      ? data.triggered.reduce((acc, t) => {
+          const k = t.category || "risk";
+          acc[k] = (acc[k] || 0) + Number(t.score || 0);
+          return acc;
+        }, {})
+      : {})
       ? data.categoryScore
       : {};
     const rawText = data.raw_text ? String(data.raw_text) : "";
