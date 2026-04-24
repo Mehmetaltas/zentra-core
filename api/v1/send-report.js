@@ -80,7 +80,13 @@ if (monthlyPayment) {
   explain.push(`Aylık ödeme yükü: ${(paymentLoad*100).toFixed(0)}%`);
 }
 
+
+if (totalLimit) {
+  explain.push(`Toplam limit oranı: ${limitRatio.toFixed(1)}x`);
+}
+
 return explain;
+
 
 }
 
@@ -154,7 +160,12 @@ function runEngine(input, rules) {
   const income = Number(input.income) || 0;
   const debt = Number(input.debt) || 0;
   
+
 const dti = income > 0 ? debt / income : 0;
+
+const totalLimit = Number(input.total_limit || 0);
+const limitRatio = income > 0 ? totalLimit / income : 0;
+
 
 const monthlyPayment = Number(input.monthly_payment || 0);
 const paymentLoad = income > 0 ? monthlyPayment / income : 0;
@@ -167,7 +178,13 @@ if (paymentLoad > 0.5) {
   decision = "İncele";
 }
 
+
+if (limitRatio > 3) {
+  decision = "İncele";
+}
+
 if (dti > 10) decision = "Reddet";
+
 
   if (debt > 1000000) decision = "Reddet";
 
