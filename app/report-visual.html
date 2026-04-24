@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ZENTRA Visual Proof Layer</title>
+<title>ZENTRA Visual Proof</title>
 <style>
 body{font-family:Arial;background:#0b0f1a;color:#fff;margin:0;padding:20px}
 .card{background:#121a2f;padding:20px;border-radius:12px;margin-bottom:15px}
@@ -14,11 +14,22 @@ body{font-family:Arial;background:#0b0f1a;color:#fff;margin:0;padding:20px}
 .green{background:#1f8f4e}.yellow{background:#d9a300}.red{background:#b30000}
 .trace{margin-top:10px;font-size:13px;opacity:.9}
 pre{white-space:pre-wrap;background:#0b1222;padding:12px;border-radius:10px;color:#dce7ff}
+input,button{padding:10px;border-radius:8px;border:none;margin:5px}
+button{background:#00c6ff;color:#000;font-weight:bold}
 </style>
 </head>
 <body>
 
-<h2>ZENTRA — Visual Proof Layer</h2>
+<h2>ZENTRA — Live Visual Proof</h2>
+
+<div class="card">
+  <h3>Test Input</h3>
+  <input id="income" placeholder="income" value="20000">
+  <input id="debt" placeholder="debt" value="60000">
+  <input id="payment" placeholder="monthly_payment" value="8000">
+  <input id="limit" placeholder="total_limit" value="80000">
+  <button onclick="run()">Run</button>
+</div>
 
 <div class="card">
   <h3>Decision</h3>
@@ -28,106 +39,90 @@ pre{white-space:pre-wrap;background:#0b1222;padding:12px;border-radius:10px;colo
 <div class="card">
   <h3>Indicators</h3>
   <div class="indicator">Risk <span id="riskBadge"></span></div>
-  <div class="indicator">Payment Stress <span id="paymentBadge"></span></div>
-  <div class="indicator">Limit Pressure <span id="limitBadge"></span></div>
+  <div class="indicator">Payment <span id="paymentBadge"></span></div>
+  <div class="indicator">Limit <span id="limitBadge"></span></div>
   <div class="indicator">Policy <span id="policyBadge"></span></div>
 </div>
 
 <div class="card">
   <h3>Metrics</h3>
-  <div>DTI</div>
-  <div class="bar"><div id="dtiBar" class="fill"></div></div>
-
-  <div>Payment Load</div>
-  <div class="bar"><div id="paymentBar" class="fill"></div></div>
-
-  <div>Limit Ratio</div>
-  <div class="bar"><div id="limitBar" class="fill"></div></div>
+  <div>DTI</div><div class="bar"><div id="dtiBar" class="fill"></div></div>
+  <div>Payment</div><div class="bar"><div id="paymentBar" class="fill"></div></div>
+  <div>Limit</div><div class="bar"><div id="limitBar" class="fill"></div></div>
 </div>
 
 <div class="card">
-  <h3>Decision Flow</h3>
+  <h3>Flow</h3>
   <div id="flow"></div>
 </div>
 
 <div class="card">
-  <h3>Raw Proof</h3>
+  <h3>Raw</h3>
   <pre id="raw"></pre>
 </div>
 
 <script>
-const data = {
-  score: 50,
-  decision: "Reddet",
-  explain: [
-    "Limit oranı yüksek (5.0x)",
-    "Policy uygulandı: income_multiple_limit_policy",
-    "Reddedildi"
-  ],
-  derived: {
-    debt_to_income: 1,
-    payment_load: 0.1,
-    limit_ratio: 5
-  },
-  policy: {
-    mode: "ON",
-    policyHits: [
-      {
-        name: "income_multiple_limit_policy",
-        rule: "limit_ratio > 4",
-        value: 5,
-        action: "Reddet"
-      }
-    ]
-  }
-};
-
 function setBar(id,value,max){
-  document.getElementById(id).style.width = Math.min((value/max)*100,100) + "%";
+  document.getElementById(id).style.width = Math.min((value/max)*100,100)+"%";
 }
-
 function badge(id,text,color){
-  document.getElementById(id).innerHTML = `<span class="badge ${color}">${text}</span>`;
+  document.getElementById(id).innerHTML=`<span class="badge ${color}">${text}</span>`;
 }
 
-function run(){
-  document.getElementById("decisionBox").innerHTML =
-    `<b>Karar:</b> ${data.decision}<br><b>Skor:</b> ${data.score}<br><br>` +
-    data.explain.map(x => "• " + x).join("<br>");
+async function run(){
 
-  setBar("dtiBar",data.derived.debt_to_income,10);
-  setBar("paymentBar",data.derived.payment_load,1);
-  setBar("limitBar",data.derived.limit_ratio,5);
+  const body = {
+    product_context:"intel",
+    income:Number(income.value),
+    debt:Number(debt.value),
+    monthly_payment:Number(payment.value),
+    total_limit:Number(limit.value)
+  };
 
-  badge("riskBadge",data.decision,data.decision==="Reddet"?"red":"green");
-  badge("paymentBadge",data.derived.payment_load>0.5?"HIGH":"OK",data.derived.payment_load>0.5?"red":"green");
-  badge("limitBadge",data.derived.limit_ratio>4?"HIGH":"OK",data.derived.limit_ratio>4?"red":"green");
-  badge("policyBadge",data.policy.mode,data.policy.mode==="ON"?"yellow":"green");
+  const res = await fetch("/api/v1/send-report",{
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body:JSON.stringify(body)
+  });
 
-  const steps = [
-    "Input alındı",
-    "Derived metrikler hesaplandı",
-    "Rules çalıştı",
-    "Policy kontrol edildi",
-    "Decision üretildi",
-    "Trace + Proof kaydı oluşturuldu"
+  const data = await res.json();
+  const r = data.result;
+
+  decisionBox.innerHTML =
+    `<b>${r.decision}</b><br><br>` +
+    r.explain.map(x=>"• "+x).join("<br>");
+
+  setBar("dtiBar",r.derived.debt_to_income,10);
+  setBar("paymentBar",r.derived.payment_load,1);
+  setBar("limitBar",r.derived.limit_ratio,5);
+
+  badge("riskBadge",r.decision,r.decision==="Reddet"?"red":"green");
+  badge("paymentBadge",r.derived.payment_load>0.5?"HIGH":"OK",r.derived.payment_load>0.5?"red":"green");
+  badge("limitBadge",r.derived.limit_ratio>4?"HIGH":"OK",r.derived.limit_ratio>4?"red":"green");
+  badge("policyBadge",r.policy.mode,"yellow");
+
+  flow.innerHTML="";
+  const steps=[
+    "Input",
+    "Derived",
+    "Rules",
+    "Policy",
+    "Decision",
+    "Trace"
   ];
 
   let i=0;
-  const flow=document.getElementById("flow");
-  const interval=setInterval(()=>{
-    if(i>=steps.length){clearInterval(interval);return;}
-    const div=document.createElement("div");
-    div.className="trace";
-    div.innerText="✔ " + steps[i];
-    flow.appendChild(div);
+  const int=setInterval(()=>{
+    if(i>=steps.length){clearInterval(int);return;}
+    const d=document.createElement("div");
+    d.className="trace";
+    d.innerText="✔ "+steps[i];
+    flow.appendChild(d);
     i++;
-  },350);
+  },300);
 
-  document.getElementById("raw").innerText = JSON.stringify(data,null,2);
+  raw.innerText = JSON.stringify(data,null,2);
 }
-
-run();
 </script>
 
 </body>
