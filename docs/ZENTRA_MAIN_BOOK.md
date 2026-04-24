@@ -216,3 +216,35 @@ ZENTRA:
 - DB’ye kaydeder
 - tekrar üretilebilir
 - paylaşılabilir
+
+---
+
+# POLICY LAYER — CONTEXTUAL ENFORCEMENT LOCK
+
+## Tarih
+2026-04-24
+
+## Durum
+LOCKED
+
+## Karar
+Policy Layer sistemin tamamına kör uygulanmaz.
+
+ZENTRA aynı core engine ile çalışır; ancak policy ürün, sektör ve kullanım bağlamına göre aktive edilir.
+
+## Aktivasyon
+- ZENTRA Intel AI / Economic / Banking: ON
+- RiskLens: ON
+- Financial Trade: ON
+- Trade: CONDITIONAL
+- Economic: CONDITIONAL
+- ZENTRA General AI: OFF
+- ZENTRA Academia AI: EXPERIMENTAL
+
+## İlk Policy Set
+- payment_load > 0.5 → Reddet
+- limit_ratio > 4 → Reddet
+
+## İlke
+ZENTRA limitleri sadece yorumlamaz; doğru ekonomik bağlamda policy seviyesinde uygular.
+

@@ -27,7 +27,8 @@ async function ensureProofTable() {
 
 async function getRules() {
   const r = await pool.query(`
-    select * from rule_registry
+    select *
+    from rule_registry
     where active = true
     order by id asc
   `);
@@ -35,11 +36,8 @@ async function getRules() {
 }
 
 function evaluate(operator, value, threshold) {
-  if (value === undefined || value === null) return false;
-
   const v = Number(value);
   const t = Number(threshold);
-
   if (Number.isNaN(v) || Number.isNaN(t)) return false;
 
   switch (operator) {
@@ -52,7 +50,66 @@ function evaluate(operator, value, threshold) {
   }
 }
 
-function buildExplain(input, decision, derived) {
+function getPolicyMode(input) {
+  const context = String(input.product_context || input.context || "intel").toLowerCase();
+
+  if (context.includes("general")) return "OFF";
+  if (context.includes("academia")) return "EXPERIMENTAL";
+  if (context.includes("intel")) return "ON";
+  if (context.includes("risklens")) return "ON";
+  if (context.includes("financial_trade")) return "ON";
+  if (context.includes("trade")) return "CONDITIONAL";
+  if (context.includes("economic")) return "CONDITIONAL";
+
+  return "ON";
+}
+
+function buildDerived(input) {
+  const income = Number(input.income || 0);
+  const debt = Number(input.debt || 0);
+  const monthlyPayment = Number(input.monthly_payment || 0);
+  const totalLimit = Number(input.total_limit || 0);
+
+  return {
+    debt_to_income: income > 0 ? debt / income : 0,
+    payment_load: income > 0 ? monthlyPayment / income : 0,
+    limit_ratio: income > 0 ? totalLimit / income : 0
+  };
+}
+
+function applyPolicy(input, decision, derived) {
+  const mode = getPolicyMode(input);
+  const policyHits = [];
+  let finalDecision = decision;
+
+  if (mode === "OFF") {
+    return { decision: finalDecision, mode, policyHits };
+  }
+
+  if (derived.payment_load > 0.5) {
+    policyHits.push({
+      name: "payment_load_policy",
+      rule: "payment_load > 0.5",
+      value: derived.payment_load,
+      action: "Reddet"
+    });
+    finalDecision = "Reddet";
+  }
+
+  if (derived.limit_ratio > 4) {
+    policyHits.push({
+      name: "income_multiple_limit_policy",
+      rule: "limit_ratio > 4",
+      value: derived.limit_ratio,
+      action: "Reddet"
+    });
+    finalDecision = "Reddet";
+  }
+
+  return { decision: finalDecision, mode, policyHits };
+}
+
+function buildExplain(decision, derived, policyResult) {
   const explain = [];
 
   if (derived.debt_to_income > 10) {
@@ -60,11 +117,15 @@ function buildExplain(input, decision, derived) {
   }
 
   if (derived.payment_load > 0.5) {
-    explain.push(`Ödeme yükü yüksek (${(derived.payment_load*100).toFixed(0)}%)`);
+    explain.push(`Ödeme yükü yüksek (${(derived.payment_load * 100).toFixed(0)}%)`);
   }
 
   if (derived.limit_ratio > 3) {
     explain.push(`Limit oranı yüksek (${derived.limit_ratio.toFixed(1)}x)`);
+  }
+
+  if (policyResult.policyHits.length) {
+    explain.push(`Policy uygulandı: ${policyResult.policyHits.map(p => p.name).join(", ")}`);
   }
 
   if (decision === "Reddet") explain.push("Reddedildi");
@@ -78,20 +139,10 @@ function runEngine(input, rules) {
   let score = 0;
   const triggered = [];
   const categoryScore = {};
-
-  const income = Number(input.income || 0);
-  const debt = Number(input.debt || 0);
-  const monthlyPayment = Number(input.monthly_payment || 0);
-  const totalLimit = Number(input.total_limit || 0);
-
-  const derived = {
-    debt_to_income: income > 0 ? debt / income : 0,
-    payment_load: income > 0 ? monthlyPayment / income : 0,
-    limit_ratio: income > 0 ? totalLimit / income : 0
-  };
+  const derived = buildDerived(input);
 
   for (const rule of rules) {
-    let value = rule.field === "debt_to_income"
+    const value = rule.field === "debt_to_income"
       ? derived.debt_to_income
       : input[rule.field];
 
@@ -121,12 +172,16 @@ function runEngine(input, rules) {
   if (derived.debt_to_income > 10) decision = "Reddet";
   if (derived.payment_load > 0.5) decision = "Reddet";
 
-  const explain = buildExplain(input, decision, derived);
+  const policy = applyPolicy(input, decision, derived);
+  decision = policy.decision;
+
+  const explain = buildExplain(decision, derived, policy);
 
   const trace = {
     input,
     derived,
     triggered,
+    policy,
     score,
     decision,
     explain
@@ -136,8 +191,13 @@ function runEngine(input, rules) {
     score,
     decision,
     explain,
+    reasons: explain,
     triggered,
     derived,
+    policy,
+    categoryScore,
+    dominantCategory:
+      Object.entries(categoryScore).sort((a, b) => Number(b[1]) - Number(a[1]))[0]?.[0] || "risk",
     trace
   };
 }
@@ -153,10 +213,6 @@ export default async function handler(req, res) {
     const rules = await getRules();
     const result = runEngine(body, rules);
 
-    const token = crypto.randomBytes(24).toString("hex");
-    const link = `https://zentra-core.vercel.app/api/v1/report/view?token=${token}`;
-
-    // 🔥 PROOF LIBRARY INSERT
     await pool.query(
       `insert into proof_library (input, derived, triggered, decision, explain, trace)
        values ($1, $2, $3, $4, $5, $6)`,
@@ -170,15 +226,16 @@ export default async function handler(req, res) {
       ]
     );
 
+    const token = crypto.randomBytes(24).toString("hex");
+    const link = `https://zentra-core.vercel.app/api/v1/report/view?token=${token}`;
 
     await pool.query(
       `insert into report_links (token, email, subject, report_text, expires_at)
        values ($1, $2, $3, $4, now() + interval '10 minutes')`,
-      [token, body.to, "ZENTRA AI Report", JSON.stringify(result)]
+      [token, body.to || null, "ZENTRA AI Report", JSON.stringify(result)]
     );
 
     return json(res, 200, { ok: true, result, link });
-
   } catch (e) {
     return json(res, 500, { ok: false, error: String(e.message) });
   }

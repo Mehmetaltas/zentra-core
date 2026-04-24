@@ -183,3 +183,32 @@ ZENTRA:
 - DB’ye kaydeder
 - tekrar üretilebilir
 - paylaşılabilir
+
+---
+
+# POLICY LAYER — TECH LOCK
+
+## Status
+LOCKED
+
+## Engine Rule
+Core engine remains single.
+
+Policy is a contextual layer inside the same send-report pipeline.
+
+## Policy Modes
+- ON
+- OFF
+- CONDITIONAL
+- EXPERIMENTAL
+
+## Active Rules
+- payment_load > 0.5 => Reddet
+- limit_ratio > 4 => Reddet
+
+## Output
+Policy result is included in:
+- result.policy
+- trace.policy
+- proof_library trace
+

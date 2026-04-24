@@ -556,3 +556,30 @@ ZENTRA:
 - DB’ye kaydeder
 - tekrar üretilebilir
 - paylaşılabilir
+
+---
+
+## POLICY LAYER CHECKPOINT
+Date: 2026-04-24
+
+### Decision
+Contextual policy layer added into the existing single engine.
+
+### Scope
+No new engine.
+No new endpoint.
+No new architecture.
+
+### Active Policy
+- payment_load > 0.5 → Reddet
+- limit_ratio > 4 → Reddet
+
+### Activation
+- Intel / RiskLens / Financial Trade: ON
+- Trade / Economic: CONDITIONAL
+- General AI: OFF
+- Academia AI: EXPERIMENTAL
+
+### Result
+ZENTRA now understands limits and can enforce them in the correct economic context.
+
