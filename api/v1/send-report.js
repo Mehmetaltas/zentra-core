@@ -72,7 +72,13 @@ function buildExplain(input, decision) {
     explain.push("Risk kabul edilebilir seviyede");
   }
 
-  return explain;
+  
+if (monthlyPayment) {
+  explain.push(`Aylık ödeme yükü: ${(paymentLoad*100).toFixed(0)}%`);
+}
+
+return explain;
+
 }
 
 function buildConfidence(score, decision, explain) {
@@ -144,9 +150,22 @@ function runEngine(input, rules) {
 
   const income = Number(input.income) || 0;
   const debt = Number(input.debt) || 0;
-  const dti = income > 0 ? debt / income : 0;
+  
+const dti = income > 0 ? debt / income : 0;
 
-  if (dti > 10) decision = "Reddet";
+const monthlyPayment = Number(input.monthly_payment || 0);
+const paymentLoad = income > 0 ? monthlyPayment / income : 0;
+
+
+  
+if (paymentLoad > 0.5) {
+  decision = "Reddet";
+} else if (paymentLoad > 0.3) {
+  decision = "İncele";
+}
+
+if (dti > 10) decision = "Reddet";
+
   if (debt > 1000000) decision = "Reddet";
 
   const explain = buildExplain(input, decision);
