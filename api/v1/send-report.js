@@ -29,88 +29,43 @@ function evaluate(operator, value, threshold) {
   if (Number.isNaN(v) || Number.isNaN(t)) return false;
 
   switch (operator) {
-    case ">":
-      return v > t;
-    case "<":
-      return v < t;
-    case ">=":
-      return v >= t;
-    case "<=":
-      return v <= t;
-    case "==":
-      return v == t;
-    default:
-      return false;
+    case ">": return v > t;
+    case "<": return v < t;
+    case ">=": return v >= t;
+    case "<=": return v <= t;
+    case "==": return v == t;
+    default: return false;
   }
 }
 
-function buildMetrics(input) {
-  const income = Number(input.income) || 0;
-  const debt = Number(input.debt) || 0;
-  const monthlyPayment = Number(input.monthly_payment || 0);
-  const totalLimit = Number(input.total_limit || 0);
-
-  const dti = income > 0 ? debt / income : 0;
-  const paymentLoad = income > 0 ? monthlyPayment / income : 0;
-  const limitRatio = income > 0 ? totalLimit / income : 0;
-
-  return {
-    income,
-    debt,
-    monthlyPayment,
-    totalLimit,
-    dti,
-    paymentLoad,
-    limitRatio
-  };
-}
-
-function buildExplain(input, decision) {
-  const m = buildMetrics(input);
+function buildExplain(input, decision, derived) {
   const explain = [];
 
-  if (m.dti > 10) {
-    explain.push(`Borç/gelir oranı kritik seviyede (${Math.round(m.dti)}x)`);
-    explain.push("Bu seviyede ödeme sürdürülebilirliği yok");
+  if (derived.debt_to_income > 10) {
+    explain.push(`Borç/gelir oranı kritik (${derived.debt_to_income.toFixed(0)}x)`);
   }
 
-  if (m.debt > 1000000) {
-    explain.push("Toplam borç kritik eşik üzerinde");
+  if (derived.payment_load > 0.5) {
+    explain.push(`Aylık ödeme yükü yüksek (${(derived.payment_load*100).toFixed(0)}%)`);
   }
 
-  if (m.monthlyPayment > 0) {
-    explain.push(`Aylık ödeme yükü: ${(m.paymentLoad * 100).toFixed(0)}%`);
+  if (derived.limit_ratio > 3) {
+    explain.push(`Limit oranı yüksek (${derived.limit_ratio.toFixed(1)}x)`);
   }
 
-  if (m.totalLimit > 0) {
-    explain.push(`Toplam limit oranı: ${m.limitRatio.toFixed(1)}x`);
-  }
-
-  if (decision === "Reddet") {
-    explain.push("Sistem yüksek güvenle reddetti");
-  }
-
-  if (decision === "İncele") {
-    explain.push("Sistem ek inceleme öneriyor");
-  }
-
-  if (decision === "Onay") {
-    explain.push("Risk kabul edilebilir seviyede");
-  }
+  if (decision === "Reddet") explain.push("Sistem reddetti");
+  if (decision === "İncele") explain.push("Ek inceleme gerekli");
+  if (decision === "Onay") explain.push("Risk kabul edilebilir");
 
   return explain;
 }
 
-function buildConfidence(score, decision, explain) {
+function buildConfidence(score, decision) {
   let confidence = 50;
 
   if (score > 60) confidence += 20;
-  if (score < 20) confidence += 10;
-
   if (decision === "Reddet") confidence += 20;
   if (decision === "Onay") confidence += 10;
-
-  if (explain.length >= 3) confidence += 10;
 
   if (confidence > 95) confidence = 95;
 
@@ -125,16 +80,22 @@ function runEngine(input, rules) {
   let score = 0;
   const triggered = [];
   const categoryScore = {};
-  const m = buildMetrics(input);
+
+  const income = Number(input.income || 0);
+  const debt = Number(input.debt || 0);
+  const monthlyPayment = Number(input.monthly_payment || 0);
+  const totalLimit = Number(input.total_limit || 0);
+
+  const derived = {
+    debt_to_income: income > 0 ? debt / income : 0,
+    payment_load: income > 0 ? monthlyPayment / income : 0,
+    limit_ratio: income > 0 ? totalLimit / income : 0
+  };
 
   for (const rule of rules) {
-    let value;
-
-    if (rule.field === "debt_to_income") {
-      value = m.dti;
-    } else {
-      value = input[rule.field];
-    }
+    let value = rule.field === "debt_to_income"
+      ? derived.debt_to_income
+      : input[rule.field];
 
     if (evaluate(rule.operator, value, rule.threshold)) {
       const ruleScore = Number(rule.score) || 0;
@@ -147,7 +108,7 @@ function runEngine(input, rules) {
         field: rule.field,
         value,
         threshold: rule.threshold,
-        score: rule.score,
+        score: ruleScore,
         category: cat
       });
 
@@ -159,56 +120,36 @@ function runEngine(input, rules) {
   if (score > 60) decision = "Reddet";
   else if (score > 30) decision = "İncele";
 
-  if (m.paymentLoad > 0.5) decision = "Reddet";
-  else if (m.paymentLoad > 0.3 && decision === "Onay") decision = "İncele";
+  if (derived.debt_to_income > 10) decision = "Reddet";
+  if (derived.payment_load > 0.5) decision = "Reddet";
 
-  if (m.limitRatio > 3 && decision === "Onay") decision = "İncele";
-
-  if (m.dti > 10) decision = "Reddet";
-  if (m.debt > 1000000) decision = "Reddet";
-
-  const explain = buildExplain(input, decision);
-  const confidence = buildConfidence(score, decision, explain);
+  const explain = buildExplain(input, decision, derived);
+  const confidence = buildConfidence(score, decision);
 
   const dominantCategory =
-    Object.entries(categoryScore).sort((a, b) => Number(b[1]) - Number(a[1]))[0]?.[0] || "risk";
+    Object.entries(categoryScore)
+      .sort((a,b)=>b[1]-a[1])[0]?.[0] || "risk";
+
+  const trace = {
+    input,
+    derived,
+    triggered,
+    score,
+    decision,
+    explain
+  };
 
   return {
     score,
     decision,
     explain,
-    reasons: explain,
     confidence,
     triggered,
     dominantCategory,
     categoryScore,
-    derived: {
-      debt_to_income: m.dti,
-      payment_load: m.paymentLoad,
-      limit_ratio: m.limitRatio,
-      debt_band: m.debt > 1000000 ? "critical" : m.debt > 250000 ? "high" : m.debt > 50000 ? "medium" : "low",
-      dti_band: m.dti > 10 ? "critical" : m.dti > 3 ? "high" : m.dti > 1 ? "medium" : "low",
-      payment_load_band: m.paymentLoad > 0.5 ? "critical" : m.paymentLoad > 0.3 ? "review" : "normal",
-      limit_band: m.limitRatio > 3 ? "high" : m.limitRatio >= 2 ? "watch" : "normal"
-    }
+    derived,
+    trace
   };
-}
-
-function buildHTML(link, result) {
-  return `
-  <html>
-    <body style="margin:0;padding:24px;background:#081321;font-family:Arial;color:#eaf1fb;">
-      <div style="max-width:680px;margin:0 auto;background:#0d1f3b;border-radius:18px;padding:24px;">
-        <h2>ZENTRA AI Report</h2>
-        <p><b>Karar:</b> ${result.decision}</p>
-        <p><b>Skor:</b> ${result.score}</p>
-        <p><b>Confidence:</b> ${result.confidence.level} (${result.confidence.score}%)</p>
-        <p><b>Açıklama:</b></p>
-        <ul>${result.explain.map(e => `<li>${e}</li>`).join("")}</ul>
-        <a href="${link}">Raporu Aç</a>
-      </div>
-    </body>
-  </html>`;
 }
 
 export default async function handler(req, res) {
@@ -228,23 +169,8 @@ export default async function handler(req, res) {
       [token, body.to, "ZENTRA AI Report", JSON.stringify(result)]
     );
 
-    const link = `https://zentra-core.vercel.app/api/v1/report/view?token=${token}`;
+    return json(res, 200, { ok: true, result });
 
-    await fetch("https://api.resend.com/emails", {
-      method: "POST",
-      headers: {
-        "Authorization": `Bearer ${process.env.RESEND_API_KEY}`,
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        from: process.env.REPORT_FROM_EMAIL,
-        to: [body.to],
-        subject: "ZENTRA AI Report",
-        html: buildHTML(link, result)
-      })
-    });
-
-    return json(res, 200, { ok: true, result, link });
   } catch (e) {
     return json(res, 500, { ok: false, error: String(e.message) });
   }
