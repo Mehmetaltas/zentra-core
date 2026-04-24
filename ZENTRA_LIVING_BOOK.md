@@ -171,3 +171,28 @@ ZENTRA can now separate:
 ZDB-004
 Contradiction Resolver
 
+
+---
+
+## ZDB-004
+Date: 2026-04-24
+
+### Block
+Contradiction Resolver
+
+### Purpose
+Resolve conflicts between signals instead of averaging.
+
+### Key Principle
+No averaging under contradiction.
+
+### Example
+- real income vs declared income
+- system chooses higher trust signal
+
+### Result
+ZENTRA now identifies dominant reality.
+
+### Next
+ZDB-005 Final Aggregation
+
