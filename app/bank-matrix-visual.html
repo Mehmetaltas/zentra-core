@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ZENTRA Bank Matrix Visual</title>
+<style>
+body{font-family:Arial;background:#0b0f1a;color:#fff;margin:0;padding:20px}
+.card{background:#121a2f;padding:20px;border-radius:12px;margin-bottom:15px}
+.row{display:flex;justify-content:space-between;margin:8px 0}
+.bar{height:10px;background:#333;border-radius:10px;overflow:hidden;margin:5px 0}
+.fill{height:10px;background:linear-gradient(90deg,#00c6ff,#ff4d4d);transition:width 1s}
+.badge{padding:4px 8px;border-radius:6px}
+.green{background:#1f8f4e}.yellow{background:#d9a300}.red{background:#b30000}
+</style>
+</head>
+<body>
+
+<h2>ZENTRA — Bank Matrix Visual</h2>
+
+<div id="container"></div>
+
+<script>
+const banks = [
+{name:"Yapı Kredi",risk:60,limit:80,payment:50,decision:"İNCELE"},
+{name:"Garanti",risk:40,limit:85,payment:30,decision:"İNCELE"},
+{name:"Akbank",risk:45,limit:90,payment:28,decision:"İNCELE"},
+{name:"İş Bankası",risk:75,limit:95,payment:80,decision:"İNCELE"},
+{name:"QNB",risk:90,limit:100,payment:100,decision:"RED"},
+{name:"Halkbank",risk:100,limit:100,payment:100,decision:"RED"},
+{name:"Vakıfbank",risk:65,limit:90,payment:50,decision:"İNCELE"},
+{name:"TEB",risk:30,limit:60,payment:30,decision:"ONAY"}
+];
+
+function badge(dec){
+if(dec==="RED") return "red";
+if(dec==="İNCELE") return "yellow";
+return "green";
+}
+
+function render(){
+const c=document.getElementById("container");
+
+banks.forEach(b=>{
+const div=document.createElement("div");
+div.className="card";
+
+div.innerHTML = `
+<h3>${b.name} <span class="badge ${badge(b.decision)}">${b.decision}</span></h3>
+
+<div>Risk</div>
+<div class="bar"><div class="fill" style="width:${b.risk}%"></div></div>
+
+<div>Limit Pressure</div>
+<div class="bar"><div class="fill" style="width:${b.limit}%"></div></div>
+
+<div>Payment Stress</div>
+<div class="bar"><div class="fill" style="width:${b.payment}%"></div></div>
+`;
+
+c.appendChild(div);
+});
+}
+
+render();
+</script>
+
+</body>
+</html>
