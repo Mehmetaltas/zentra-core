@@ -175,7 +175,7 @@ export default async function handler(req, res) {
       [token, body.to, "ZENTRA AI Report", JSON.stringify(result)]
     );
 
-    return json(res, 200, { ok: true, result });
+    return json(res, 200, { ok: true, result, link });
 
   } catch (e) {
     return json(res, 500, { ok: false, error: String(e.message) });
