@@ -1,3 +1,4 @@
+# ZENTRA TECHNICAL BOOK
 
 ---
 
@@ -10,41 +11,34 @@
 LOCKED
 
 ## Architecture Rule
-The full ZENTRA Matrix Ecosystem will follow a Vercel + Neon operating pattern.
-
-This decision applies beyond ZDB-013.
-
-It is the infrastructure standard for the full ZENTRA system and future ecosystem expansion.
+Full ZENTRA Matrix Ecosystem uses the Vercel + Neon operating pattern.
 
 ## Layer Separation
 
 ### Vercel Layer
 Used for:
 - deployment
-- public and private web surfaces
+- web surfaces
 - API endpoints
-- investor / cockpit / report interfaces
-- controlled external access
+- cockpit / investor / report interfaces
 
 ### Neon Layer
 Used for:
-- persistent memory
-- decision records
+- memory
+- data records
 - proof records
-- audit traces
+- audit records
 - explain / confidence records
-- scenario and comparison history
-- system logs and future learning memory
 
 ### ZENTRA Core Logic
 Used for:
 - decision intelligence
-- ZDB backbone
 - orchestration
 - simulation
 - lens / telescope logic
-- final aggregation
-- policy and proof logic
+- aggregation
+- policy
+- proof logic
 
 ## Portability Rule
 ZENTRA Core Logic must remain independent.
@@ -53,30 +47,17 @@ If Vercel is replaced, the system can move to another deployment layer.
 
 If Neon is replaced, the system can move to another database layer.
 
-The intelligence layer must not depend on vendor-specific logic.
+## Decision Layer
+Core A and Core B exist inside the same Decision Layer.
 
-## Data Separation Rule
-Core A and Core B must use separated database tables or schemas.
+- Core A: existing operational decision line
+- Core B: ZDB proof decision line
 
-Suggested structure:
+They run side by side for testing.
 
-- core_a_decisions
-- core_a_reports
-- core_b_proof_cases
-- core_b_proof_metrics
-- core_bridge_comparisons
-- audit_events
-- explain_records
+## Critical Rule
+Core B will NOT replace Core A until testing is completed.
 
-## Integration Rule
-Core B cannot overwrite Core A.
-
-Core B can only be merged into Core A after:
-
-- proof quality is verified
-- decision delta is measured
-- loss impact is measured
-- explain is stronger
-- regulatory language is preserved
-- living book record is completed
-
+No merge.
+No production switch.
+No architecture change before proof.
