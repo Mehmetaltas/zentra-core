@@ -332,3 +332,26 @@ System produces consistent and explainable decisions.
 ### Next
 ZDB-010 System Hardening
 
+
+---
+
+## ZDB-011
+Date: 2026-04-24
+
+### Block
+Decision Brake / Release + Risk Split
+
+### Purpose
+Adjust decisions dynamically: apply defensive controls under risk and release under strong real power.
+
+### Modes
+- DEFENSIVE: limit reduce, tenor shorten, collateral increase, monitoring, risk split
+- OFFENSIVE: approve (possibly limited), monitoring
+- NEUTRAL: conditional approve or review
+
+### Result
+ZENTRA converts decisions into controlled, actionable outcomes.
+
+### Next
+ZDB-012 Proof Report Export (API/JSON for integration)
+
