@@ -52,6 +52,9 @@ function buildExplain(input, decision) {
   const monthlyPayment = Number(input.monthly_payment || 0);
   const paymentLoad = income > 0 ? monthlyPayment / income : 0;
 
+  const totalLimit = Number(input.total_limit || 0);
+  const limitRatio = income > 0 ? totalLimit / income : 0;
+
   const explain = [];
 
   if (dti > 10) {
