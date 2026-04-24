@@ -10,10 +10,24 @@ function json(res, status, body) {
   res.status(status).json(body);
 }
 
+async function ensureProofTable() {
+  await pool.query(`
+    create table if not exists proof_library (
+      id serial primary key,
+      created_at timestamptz default now(),
+      input jsonb,
+      derived jsonb,
+      triggered jsonb,
+      decision text,
+      explain jsonb,
+      trace jsonb
+    )
+  `);
+}
+
 async function getRules() {
   const r = await pool.query(`
-    select *
-    from rule_registry
+    select * from rule_registry
     where active = true
     order by id asc
   `);
@@ -42,38 +56,22 @@ function buildExplain(input, decision, derived) {
   const explain = [];
 
   if (derived.debt_to_income > 10) {
-    explain.push(`Borç/gelir oranı kritik (${derived.debt_to_income.toFixed(0)}x)`);
+    explain.push(`DTI kritik (${derived.debt_to_income.toFixed(0)}x)`);
   }
 
   if (derived.payment_load > 0.5) {
-    explain.push(`Aylık ödeme yükü yüksek (${(derived.payment_load*100).toFixed(0)}%)`);
+    explain.push(`Ödeme yükü yüksek (${(derived.payment_load*100).toFixed(0)}%)`);
   }
 
   if (derived.limit_ratio > 3) {
     explain.push(`Limit oranı yüksek (${derived.limit_ratio.toFixed(1)}x)`);
   }
 
-  if (decision === "Reddet") explain.push("Sistem reddetti");
-  if (decision === "İncele") explain.push("Ek inceleme gerekli");
-  if (decision === "Onay") explain.push("Risk kabul edilebilir");
+  if (decision === "Reddet") explain.push("Reddedildi");
+  if (decision === "İncele") explain.push("İnceleme gerekli");
+  if (decision === "Onay") explain.push("Uygun");
 
   return explain;
-}
-
-function buildConfidence(score, decision) {
-  let confidence = 50;
-
-  if (score > 60) confidence += 20;
-  if (decision === "Reddet") confidence += 20;
-  if (decision === "Onay") confidence += 10;
-
-  if (confidence > 95) confidence = 95;
-
-  let level = "Medium";
-  if (confidence >= 80) level = "High";
-  if (confidence < 60) level = "Low";
-
-  return { score: confidence, level };
 }
 
 function runEngine(input, rules) {
@@ -124,11 +122,6 @@ function runEngine(input, rules) {
   if (derived.payment_load > 0.5) decision = "Reddet";
 
   const explain = buildExplain(input, decision, derived);
-  const confidence = buildConfidence(score, decision);
-
-  const dominantCategory =
-    Object.entries(categoryScore)
-      .sort((a,b)=>b[1]-a[1])[0]?.[0] || "risk";
 
   const trace = {
     input,
@@ -143,10 +136,7 @@ function runEngine(input, rules) {
     score,
     decision,
     explain,
-    confidence,
     triggered,
-    dominantCategory,
-    categoryScore,
     derived,
     trace
   };
@@ -154,12 +144,28 @@ function runEngine(input, rules) {
 
 export default async function handler(req, res) {
   try {
+    await ensureProofTable();
+
     const body = typeof req.body === "string"
       ? JSON.parse(req.body || "{}")
       : (req.body || {});
 
     const rules = await getRules();
     const result = runEngine(body, rules);
+
+    // 🔥 PROOF LIBRARY INSERT
+    await pool.query(
+      `insert into proof_library (input, derived, triggered, decision, explain, trace)
+       values ($1, $2, $3, $4, $5, $6)`,
+      [
+        result.trace.input,
+        result.trace.derived,
+        result.trace.triggered,
+        result.decision,
+        result.explain,
+        result.trace
+      ]
+    );
 
     const token = crypto.randomBytes(24).toString("hex");
 
