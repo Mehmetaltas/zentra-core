@@ -51,3 +51,53 @@ Before implementation, check:
 Books and system must stay equal.
 
 No new runtime architecture is allowed before the current Vercel + Neon reality is verified.
+
+---
+
+# ZENTRA MATRIX ECOSYSTEM — CORE PRODUCT & MOAT (TECH LOCK)
+
+## Status
+LOCKED
+
+## Layer Definition
+
+ZDB-13:
+Operational decision engine.
+
+ZDB-14:
+Advanced decision evaluation layer.
+
+ZDB-15:
+Proof and validation layer.
+
+---
+
+## Moat Components
+
+Decision Trace:
+rule → signal → explain → outcome
+
+Proof Base:
+stored validated cases
+
+Simulation Base:
+scenario testing layer
+
+Policy Layer:
+standardized output format
+
+Data Loop:
+continuous improvement
+
+Audit Layer:
+full trace logging
+
+---
+
+## Technical Principle
+
+- layers are connected
+- layers do not overwrite each other
+- proof is generated after decision
+- audit must be traceable
+

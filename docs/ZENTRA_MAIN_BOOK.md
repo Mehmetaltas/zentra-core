@@ -35,3 +35,78 @@ Required verification:
 
 ## Rule
 No new decision layer, bridge, A/B test, merge or production switch will be defined before the current Vercel + Neon reality is verified.
+
+---
+
+# ZENTRA MATRIX ECOSYSTEM — CORE PRODUCT & MOAT (FINAL LOCK)
+
+## Date
+2026-04-24
+
+## Status
+LOCKED
+
+## Scope
+This block defines only:
+- ZENTRA Matrix Ecosystem core structure
+- ZDB product layers
+- Core moat
+
+---
+
+## MAIN STRUCTURE
+
+ZENTRA Matrix Ecosystem is the main system.
+
+Under this system:
+
+- ZDB-13 → Operational Decision Core
+- ZDB-14 → Deep Reality / Contradiction Layer
+- ZDB-15 → Proof / Licensing Layer
+
+---
+
+## ZDB-13
+Operational decision layer.
+
+- decision
+- explain
+- report
+
+---
+
+## ZDB-14
+Deep decision layer.
+
+- contradiction detection
+- misleading signal resolution
+- real capacity evaluation
+
+---
+
+## ZDB-15
+Proof layer.
+
+- decision comparison
+- impact measurement
+- audit-ready output
+
+---
+
+## MOAT
+
+- Decision Trace
+- Proof Base
+- Simulation Base
+- Policy Layer
+- Data Loop
+- Audit Layer
+
+---
+
+## FINAL
+
+ZENTRA core:
+
+ZDB-13 + ZDB-14 + ZDB-15 + MOAT
+
