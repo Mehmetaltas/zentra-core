@@ -437,3 +437,93 @@ ZENTRA:
 
 ---
 
+
+---
+
+# QNB FİNANSBANK — ZENTRA ANALİZİ
+
+## Dönem
+2025
+
+## Resmi Veriler
+- NPL: ~3.5% (yaklaşık)
+- Cost of Risk: orta → yüksek
+- bireysel kredi ağırlıklı yapı
+
+---
+
+## ZENTRA OKUMA
+
+### Risk Yorumu
+- NPL sektöre göre yüksek
+- bireysel kredi yoğunluğu → volatilite riski
+- özellikle:
+→ ödeme gücü hassas segment
+
+---
+
+## ZENTRA DERIVED MODEL (örnek portföy)
+
+varsayım:
+- income: 18.000
+- debt: 70.000
+- monthly_payment: 9.000
+- total_limit: 90.000
+
+çıktı:
+- debt_to_income: 3.9x
+- payment_load: 50%
+- limit_ratio: 5.0x
+
+---
+
+## ZENTRA ANALİZ
+
+- payment_load = kritik (%50)
+- limit_ratio = çok yüksek (5.0x)
+- risk = yüksek
+
+---
+
+## ZENTRA POLICY
+
+- payment_load ≥ 0.5 → RED
+- limit_ratio > 4 → RED
+
+karar:
+→ REDDET
+
+---
+
+## ZENTRA İNDİKATÖR
+
+- Risk Indicator: HIGH
+- Payment Stress: CRITICAL
+- Limit Pressure: VERY HIGH
+- Reality Gap: SEVERE
+- Proof Strength: HIGH
+
+---
+
+## ZENTRA FARKI
+
+Banka:
+- riskli müşteri segmentini görür
+
+ZENTRA:
+- müşteri seviyesinde kırılım yapar ✔
+- hangi riskten reddedildiğini gösterir ✔
+- policy enforcement ile sınırlar ✔
+- proof üretir ✔
+
+---
+
+## SONUÇ
+
+ZENTRA:
+- yüksek riskli segmentleri net ayırır
+- kredi hatasını erken engeller
+- kararın nedenini kanıtlar
+
+---
+
