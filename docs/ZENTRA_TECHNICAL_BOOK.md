@@ -145,3 +145,41 @@ All additions must run on existing Vercel + Neon system.
 - no core separation
 - everything extends current pipeline
 
+
+# ZDB-15 CHECKPOINT — FINAL LOCK
+
+## Tarih
+2026-04-24
+
+## Durum
+LOCKED
+
+## Sistem
+- tek engine
+- tek endpoint (send-report)
+- tek pipeline
+
+## Özellikler
+- decision
+- explain
+- derived metrics (DTI, payment load, limit ratio)
+- trace
+- proof library (DB kayıt)
+- report link
+
+## Simulation
+- ayrı endpoint yok
+- batch execution
+- same pipeline reuse
+- edge / stress test destekli
+
+## İlke
+ZENTRA genişlemez, derinleşir.
+
+## Sonuç
+ZENTRA:
+- karar verir
+- nasıl verdiğini gösterir
+- DB’ye kaydeder
+- tekrar üretilebilir
+- paylaşılabilir
