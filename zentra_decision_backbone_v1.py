@@ -1,52 +1,109 @@
 from datetime import datetime
 
-def loss_analysis(existing_decision, zentra_decision, risk_level):
+# -------------------------
+# TEST SCENARIO
+# -------------------------
+scenario = {
+    "existing_decision": "APPROVE",
+    "risk_level": "HIGH",
+    "signals": [
+        {
+            "name": "income",
+            "value": 20000,
+            "source": "bank_transaction",
+            "timestamp": "2026-04-01",
+            "repeatability": "high",
+            "verifiability": "high",
+            "manipulation_risk": "low"
+        },
+        {
+            "name": "declared_income",
+            "value": 150000,
+            "source": "declared",
+            "timestamp": "2026-04-01",
+            "repeatability": "low",
+            "verifiability": "low",
+            "manipulation_risk": "high"
+        },
+        {
+            "name": "vehicle_asset",
+            "value": 1000000,
+            "source": "registry",
+            "timestamp": "2026-03-01",
+            "repeatability": "medium",
+            "verifiability": "high",
+            "manipulation_risk": "medium"
+        }
+    ]
+}
 
-    loss = 0
-    notes = []
+# -------------------------
+# SIMPLE TRUST
+# -------------------------
+def trust(s):
+    base = 0.5
+    if s["source"] == "bank_transaction": base = 0.9
+    if s["source"] == "declared": base = 0.4
 
-    # yanlış onay
-    if existing_decision == "APPROVE" and risk_level == "HIGH":
-        loss += 100
-        notes.append("Existing system false approval risk")
+    return base
 
-    if zentra_decision == "APPROVE" and risk_level == "HIGH":
-        loss += 50
-        notes.append("ZENTRA approval risk (reduced)")
+# -------------------------
+# CLASSIFICATION
+# -------------------------
+def classify(name):
+    if name == "income": return "REAL_POWER"
+    if name == "declared_income": return "ILLUSION"
+    return "SUPPORT"
 
-    # yanlış red
-    if existing_decision == "REJECT" and risk_level == "LOW":
-        loss += 30
-        notes.append("Existing system missed opportunity")
+# -------------------------
+# ZENTRA DECISION
+# -------------------------
+def zentra_decision(signals):
+    real = 0
+    illusion = 0
 
-    if zentra_decision == "REJECT" and risk_level == "LOW":
-        loss += 10
-        notes.append("ZENTRA conservative miss")
+    for s in signals:
+        t = trust(s)
+        c = classify(s["name"])
 
-    return loss, notes
+        if c == "REAL_POWER":
+            real += t
+        elif c == "ILLUSION":
+            illusion += t
 
-def compare(existing, zentra, risk):
+    if illusion > real:
+        return "REJECT"
+    if real > 0.7:
+        return "APPROVE"
+    return "REVIEW"
 
-    delta = existing != zentra
+# -------------------------
+# LOSS
+# -------------------------
+def loss(existing, zentra, risk):
+    if existing == "APPROVE" and risk == "HIGH":
+        return 100
+    if zentra == "REJECT" and risk == "HIGH":
+        return 0
+    return 20
 
-    loss, notes = loss_analysis(existing, zentra, risk)
+# -------------------------
+# RUN
+# -------------------------
+signals = scenario["signals"]
 
-    return {
-        "delta": delta,
-        "existing": existing,
-        "zentra": zentra,
-        "risk": risk,
-        "loss": loss,
-        "notes": notes
-    }
+zentra = zentra_decision(signals)
+existing = scenario["existing_decision"]
+risk = scenario["risk_level"]
 
-if __name__ == "__main__":
+loss_val = loss(existing, zentra, risk)
 
-    test = compare(
-        existing="APPROVE",
-        zentra="REVIEW",
-        risk="HIGH"
-    )
+print("\nZENTRA REAL TEST\n")
+print("Existing:", existing)
+print("ZENTRA :", zentra)
+print("Risk:", risk)
+print("Loss:", loss_val)
 
-    print("\nZENTRA PROOF METRICS\n")
-    print(test)
+print("\nSignals:")
+for s in signals:
+    print(s)
