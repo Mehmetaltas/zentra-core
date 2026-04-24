@@ -260,3 +260,91 @@ ZENTRA:
 
 ---
 
+
+---
+
+# AKBANK — ZENTRA ANALİZİ
+
+## Dönem
+2025
+
+## Resmi Veriler
+- NPL: ~2.7% (yaklaşık)
+- Cost of Risk: kontrollü
+- güçlü sermaye ve karşılık yapısı
+
+---
+
+## ZENTRA OKUMA
+
+### Risk Yorumu
+- NPL düşük/orta
+- risk yönetimi güçlü
+- ancak:
+→ bireysel kredi tarafında limit baskısı artabilir
+
+---
+
+## ZENTRA DERIVED MODEL (örnek portföy)
+
+varsayım:
+- income: 25.000
+- debt: 50.000
+- monthly_payment: 7.000
+- total_limit: 120.000
+
+çıktı:
+- debt_to_income: 2.0x
+- payment_load: 28%
+- limit_ratio: 4.8x
+
+---
+
+## ZENTRA ANALİZ
+
+- limit_ratio = yüksek (4.8x)
+- payment_load = makul
+- risk = görünürde düşük ama yapısal baskı var
+
+---
+
+## ZENTRA POLICY
+
+- limit_ratio > 4 → policy trigger
+
+karar:
+→ İNCELE (gizli risk)
+
+---
+
+## ZENTRA İNDİKATÖR
+
+- Risk Indicator: LOW → MEDIUM
+- Payment Stress: NORMAL
+- Limit Pressure: HIGH
+- Reality Gap: STRUCTURAL RISK
+- Proof Strength: MEDIUM
+
+---
+
+## ZENTRA FARKI
+
+Banka:
+- risk düşük görür
+
+ZENTRA:
+- limit baskısını yakalar ✔
+- gelecekteki risk eğilimini gösterir ✔
+- policy ile sınırlar ✔
+
+---
+
+## SONUÇ
+
+ZENTRA:
+- erken uyarı sistemi kurar
+- görünmeyen riskleri açığa çıkarır
+- büyüme kaynaklı risk kaçmasını engeller
+
+---
+
