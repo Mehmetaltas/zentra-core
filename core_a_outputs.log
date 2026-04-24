@@ -1,0 +1,41 @@
+
+ZENTRA REPORT OUTPUT
+
+{
+  "case_id": "Illusion Case",
+  "timestamp": "2026-04-24T08:11:54.389774Z",
+  "input": {
+    "name": "Illusion Case",
+    "decision": "RISK_SPLIT",
+    "mode": "DEFENSIVE",
+    "actions": [
+      "LIMIT_REDUCE",
+      "COLLATERAL_INCREASE"
+    ],
+    "confidence": 0.62,
+    "explain": [
+      "Illusion dominates",
+      "Real income suppressed"
+    ],
+    "proof_metrics": {
+      "decision_delta": true,
+      "loss": 100
+    }
+  },
+  "decision": "RISK_SPLIT",
+  "mode": "DEFENSIVE",
+  "actions": [
+    "LIMIT_REDUCE",
+    "COLLATERAL_INCREASE"
+  ],
+  "confidence": 0.62,
+  "explain": [
+    "Illusion dominates",
+    "Real income suppressed"
+  ],
+  "proof_metrics": {
+    "decision_delta": true,
+    "loss": 100
+  },
+  "status": "OK"
+}
