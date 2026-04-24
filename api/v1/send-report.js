@@ -1,5 +1,6 @@
 import crypto from "crypto";
 import { Pool } from "pg";
+import { getLiveContext } from "../../lib/live-data.js";
 
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
@@ -211,7 +212,13 @@ export default async function handler(req, res) {
       : (req.body || {});
 
     const rules = await getRules();
+    const liveContext = await getLiveContext();
     const result = runEngine(body, rules);
+
+    result.live_context = liveContext;
+    if (result.trace) {
+      result.trace.live_context = liveContext;
+    }
 
     await pool.query(
       `insert into proof_library (input, derived, triggered, decision, explain, trace)

@@ -248,3 +248,28 @@ ZENTRA aynı core engine ile çalışır; ancak policy ürün, sektör ve kullan
 ## İlke
 ZENTRA limitleri sadece yorumlamaz; doğru ekonomik bağlamda policy seviyesinde uygular.
 
+
+---
+
+# LIVE DATA LAYER — PARTIAL LIVE LOCK
+
+## Tarih
+2026-04-24
+
+## Durum
+ACTIVE - PARTIAL LIVE
+
+## Bağlanan Veriler
+- TCMB günlük döviz kurları
+- World Bank makro göstergeleri
+
+## Bağlanmayan Veriler
+- BIST gerçek zamanlı piyasa verisi
+
+Sebep:
+BIST resmi gerçek zamanlı veri lisanslıdır.
+
+## İlke
+Canlı veri için yeni sistem kurulmaz.
+
+Veri mevcut send-report pipeline içine context olarak girer ve trace/proof içinde saklanır.

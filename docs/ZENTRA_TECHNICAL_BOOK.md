@@ -212,3 +212,29 @@ Policy result is included in:
 - trace.policy
 - proof_library trace
 
+
+---
+
+# LIVE DATA LAYER — TECH LOCK
+
+## Status
+ACTIVE - PARTIAL LIVE
+
+## File
+lib/live-data.js
+
+## Pipeline
+send-report:
+input → derived → rules → policy → decision → live_context → trace → proof
+
+## Output
+- result.live_context
+- trace.live_context
+- proof_library.trace
+
+## Sources
+- TCMB daily FX XML
+- World Bank API
+
+## Not Connected
+- BIST real-time data requires licensed market data access.
