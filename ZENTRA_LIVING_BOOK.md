@@ -303,3 +303,32 @@ ZENTRA prevents false approval risk.
 ### Next
 ZDB-009 Multi Scenario Proof
 
+
+---
+
+## ZDB-009
+Date: 2026-04-24
+
+### Block
+Multi Scenario Proof
+
+### Purpose
+Validate ZENTRA across multiple customer types.
+
+### Scenarios
+- Illusion case
+- Strong customer
+- Borderline
+
+### Result
+ZENTRA differentiates:
+- false strength
+- real power
+- uncertainty
+
+### Outcome
+System produces consistent and explainable decisions.
+
+### Next
+ZDB-010 System Hardening
+
