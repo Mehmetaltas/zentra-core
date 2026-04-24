@@ -17,13 +17,12 @@ export default async function handler(req, res) {
     const r = await pool.query(
       `select report_text from report_links
        where token = $1
-       and expires_at > now()
        limit 1`,
       [token]
     );
 
     if (!r.rows.length) {
-      res.status(404).send("expired or not found");
+      res.status(404).send("token not found");
       return;
     }
 
