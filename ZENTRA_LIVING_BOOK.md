@@ -222,3 +222,32 @@ ZENTRA produces its first real decision.
 ### Next
 ZDB-006 Explain + Confidence refinement
 
+
+---
+
+## ZDB-006
+Date: 2026-04-24
+
+### Block
+ZENTRA Internal Decision Committee
+
+### Purpose
+Transform decision system into explainable committee structure.
+
+### Structure
+- Trust Engine
+- Classification
+- Contradiction Resolver
+- Aggregation
+- Confidence
+
+### Result
+ZENTRA now produces:
+- decision
+- explanation
+- confidence
+- dominant signal
+
+### Next
+ZDB-007 Loss Mapping + Proof Metrics
+
