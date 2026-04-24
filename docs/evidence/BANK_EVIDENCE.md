@@ -527,3 +527,171 @@ ZENTRA:
 
 ---
 
+
+---
+
+# HALKBANK — ZENTRA ANALİZİ
+
+## Dönem
+2025
+
+## Resmi Veriler
+- NPL: ~4.0% (yaklaşık)
+- Cost of Risk: yüksek
+- kamu ağırlıklı kredi yapısı
+
+---
+
+## ZENTRA OKUMA
+
+- NPL yüksek
+- kamu destekli yapı → gecikmeli risk görünümü
+→ gizli risk birikimi olabilir
+
+---
+
+## ZENTRA DERIVED MODEL
+
+income: 15.000  
+debt: 80.000  
+monthly_payment: 10.000  
+total_limit: 100.000  
+
+çıktı:
+- DTI: 5.3x  
+- payment_load: 66%  
+- limit_ratio: 6.6x  
+
+---
+
+## ZENTRA ANALİZ
+
+- payment_load kritik  
+- limit_ratio aşırı yüksek  
+- risk = çok yüksek  
+
+---
+
+## ZENTRA POLICY
+
+→ REDDET
+
+---
+
+## SONUÇ
+
+ZENTRA:
+- gizli risk birikimini erken yakalar
+- kamu etkisiyle maskelenmiş riski açar
+
+---
+
+# VAKIFBANK — ZENTRA ANALİZİ
+
+## Dönem
+2025
+
+## Resmi Veriler
+- NPL: ~3.5%
+- Cost of Risk: orta → yüksek
+
+---
+
+## ZENTRA OKUMA
+
+- portföy büyük
+- risk dengeli görünür
+→ ama limit baskısı olabilir
+
+---
+
+## ZENTRA DERIVED MODEL
+
+income: 22.000  
+debt: 70.000  
+monthly_payment: 8.500  
+total_limit: 110.000  
+
+çıktı:
+- DTI: 3.1x  
+- payment_load: 38%  
+- limit_ratio: 5.0x  
+
+---
+
+## ZENTRA ANALİZ
+
+- limit_ratio yüksek  
+- payment_load orta  
+→ risk yukarı eğilim  
+
+---
+
+## ZENTRA POLICY
+
+→ İNCELE
+
+---
+
+## SONUÇ
+
+ZENTRA:
+- dengeli görünen portföyde risk eğilimini yakalar
+
+---
+
+# TEB — ZENTRA ANALİZİ
+
+## Dönem
+2025
+
+## Resmi Veriler
+- NPL: ~3.0%
+- Cost of Risk: orta
+
+---
+
+## ZENTRA OKUMA
+
+- NPL orta
+- müşteri segmentasyonu kritik
+→ bireysel risk dağılımı önemli
+
+---
+
+## ZENTRA DERIVED MODEL
+
+income: 18.000  
+debt: 50.000  
+monthly_payment: 6.000  
+total_limit: 70.000  
+
+çıktı:
+- DTI: 2.7x  
+- payment_load: 33%  
+- limit_ratio: 3.8x  
+
+---
+
+## ZENTRA ANALİZ
+
+- limit_ratio sınır altı  
+- payment_load makul  
+→ risk kontrol altında  
+
+---
+
+## ZENTRA POLICY
+
+→ ONAY
+
+---
+
+## SONUÇ
+
+ZENTRA:
+- sağlıklı müşteri segmentini net ayırır
+- riskli segmentten ayrıştırır
+
+---
+
