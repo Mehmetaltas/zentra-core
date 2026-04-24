@@ -15,9 +15,7 @@ export default async function handler(req, res) {
     }
 
     const r = await pool.query(
-      `select report_text from report_links
-       where token = $1
-       limit 1`,
+      `select report_text from report_links where token = $1 limit 1`,
       [token]
     );
 
@@ -35,13 +33,24 @@ export default async function handler(req, res) {
 <html>
 <head>
 <meta charset="UTF-8">
-<title>ZENTRA Report</title>
+<title>ZENTRA Demo</title>
 <script>
 window.ZENTRA_DATA = ${report};
 </script>
+<style>
+body{margin:0;background:#0b0f1a;color:#fff;font-family:Arial}
+.top{padding:15px;background:#121a2f}
+</style>
 </head>
-<body style="margin:0">
-<iframe src="/app/report-visual.html" style="width:100%;height:100vh;border:0"></iframe>
+
+<body>
+
+<div class="top">
+<b>ZENTRA LIVE DEMO</b>
+</div>
+
+<iframe src="/app/report-visual.html" style="width:100%;height:95vh;border:0"></iframe>
+
 </body>
 </html>
     `);
