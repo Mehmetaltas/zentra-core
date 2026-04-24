@@ -44,26 +44,46 @@ function evaluate(operator, value, threshold) {
   }
 }
 
-function buildExplain(input, decision) {
+function buildMetrics(input) {
   const income = Number(input.income) || 0;
   const debt = Number(input.debt) || 0;
-  const dti = income > 0 ? Math.round(debt / income) : 0;
-
   const monthlyPayment = Number(input.monthly_payment || 0);
-  const paymentLoad = income > 0 ? monthlyPayment / income : 0;
-
   const totalLimit = Number(input.total_limit || 0);
+
+  const dti = income > 0 ? debt / income : 0;
+  const paymentLoad = income > 0 ? monthlyPayment / income : 0;
   const limitRatio = income > 0 ? totalLimit / income : 0;
 
+  return {
+    income,
+    debt,
+    monthlyPayment,
+    totalLimit,
+    dti,
+    paymentLoad,
+    limitRatio
+  };
+}
+
+function buildExplain(input, decision) {
+  const m = buildMetrics(input);
   const explain = [];
 
-  if (dti > 10) {
-    explain.push(`Borç/gelir oranı kritik seviyede (${dti}x)`);
+  if (m.dti > 10) {
+    explain.push(`Borç/gelir oranı kritik seviyede (${Math.round(m.dti)}x)`);
     explain.push("Bu seviyede ödeme sürdürülebilirliği yok");
   }
 
-  if (debt > 1000000) {
+  if (m.debt > 1000000) {
     explain.push("Toplam borç kritik eşik üzerinde");
+  }
+
+  if (m.monthlyPayment > 0) {
+    explain.push(`Aylık ödeme yükü: ${(m.paymentLoad * 100).toFixed(0)}%`);
+  }
+
+  if (m.totalLimit > 0) {
+    explain.push(`Toplam limit oranı: ${m.limitRatio.toFixed(1)}x`);
   }
 
   if (decision === "Reddet") {
@@ -78,19 +98,7 @@ function buildExplain(input, decision) {
     explain.push("Risk kabul edilebilir seviyede");
   }
 
-  
-if (monthlyPayment) {
-  explain.push(`Aylık ödeme yükü: ${(paymentLoad*100).toFixed(0)}%`);
-}
-
-
-if (totalLimit) {
-  explain.push(`Toplam limit oranı: ${limitRatio.toFixed(1)}x`);
-}
-
-return explain;
-
-
+  return explain;
 }
 
 function buildConfidence(score, decision, explain) {
@@ -110,32 +118,27 @@ function buildConfidence(score, decision, explain) {
   if (confidence >= 80) level = "High";
   if (confidence < 60) level = "Low";
 
-  return {
-    score: confidence,
-    level
-  };
+  return { score: confidence, level };
 }
 
 function runEngine(input, rules) {
   let score = 0;
-  const reasons = [];
   const triggered = [];
   const categoryScore = {};
+  const m = buildMetrics(input);
 
   for (const rule of rules) {
     let value;
 
     if (rule.field === "debt_to_income") {
-      const income = Number(input.income) || 1;
-      const debt = Number(input.debt) || 0;
-      value = debt / income;
+      value = m.dti;
     } else {
       value = input[rule.field];
     }
 
     if (evaluate(rule.operator, value, rule.threshold)) {
       const ruleScore = Number(rule.score) || 0;
-      const cat = rule.category || "other";
+      const cat = rule.category || "risk";
 
       score += ruleScore;
 
@@ -148,11 +151,7 @@ function runEngine(input, rules) {
         category: cat
       });
 
-      if (!categoryScore[cat]) {
-        categoryScore[cat] = 0;
-      }
-
-      categoryScore[cat] += ruleScore;
+      categoryScore[cat] = (categoryScore[cat] || 0) + ruleScore;
     }
   }
 
@@ -160,46 +159,38 @@ function runEngine(input, rules) {
   if (score > 60) decision = "Reddet";
   else if (score > 30) decision = "İncele";
 
-  const income = Number(input.income) || 0;
-  const debt = Number(input.debt) || 0;
-  
+  if (m.paymentLoad > 0.5) decision = "Reddet";
+  else if (m.paymentLoad > 0.3 && decision === "Onay") decision = "İncele";
 
-const dti = income > 0 ? debt / income : 0;
+  if (m.limitRatio > 3 && decision === "Onay") decision = "İncele";
 
-const totalLimit = Number(input.total_limit || 0);
-const limitRatio = income > 0 ? totalLimit / income : 0;
-
-
-const monthlyPayment = Number(input.monthly_payment || 0);
-const paymentLoad = income > 0 ? monthlyPayment / income : 0;
-
-
-  
-if (paymentLoad > 0.5) {
-  decision = "Reddet";
-} else if (paymentLoad > 0.3) {
-  decision = "İncele";
-}
-
-
-if (limitRatio > 3) {
-  decision = "İncele";
-}
-
-if (dti > 10) decision = "Reddet";
-
-
-  if (debt > 1000000) decision = "Reddet";
+  if (m.dti > 10) decision = "Reddet";
+  if (m.debt > 1000000) decision = "Reddet";
 
   const explain = buildExplain(input, decision);
   const confidence = buildConfidence(score, decision, explain);
+
+  const dominantCategory =
+    Object.entries(categoryScore).sort((a, b) => Number(b[1]) - Number(a[1]))[0]?.[0] || "risk";
 
   return {
     score,
     decision,
     explain,
+    reasons: explain,
     confidence,
-    triggered
+    triggered,
+    dominantCategory,
+    categoryScore,
+    derived: {
+      debt_to_income: m.dti,
+      payment_load: m.paymentLoad,
+      limit_ratio: m.limitRatio,
+      debt_band: m.debt > 1000000 ? "critical" : m.debt > 250000 ? "high" : m.debt > 50000 ? "medium" : "low",
+      dti_band: m.dti > 10 ? "critical" : m.dti > 3 ? "high" : m.dti > 1 ? "medium" : "low",
+      payment_load_band: m.paymentLoad > 0.5 ? "critical" : m.paymentLoad > 0.3 ? "review" : "normal",
+      limit_band: m.limitRatio > 3 ? "high" : m.limitRatio >= 2 ? "watch" : "normal"
+    }
   };
 }
 
@@ -208,24 +199,16 @@ function buildHTML(link, result) {
   <html>
     <body style="margin:0;padding:24px;background:#081321;font-family:Arial;color:#eaf1fb;">
       <div style="max-width:680px;margin:0 auto;background:#0d1f3b;border-radius:18px;padding:24px;">
-
         <h2>ZENTRA AI Report</h2>
-
         <p><b>Karar:</b> ${result.decision}</p>
         <p><b>Skor:</b> ${result.score}</p>
         <p><b>Confidence:</b> ${result.confidence.level} (${result.confidence.score}%)</p>
-
         <p><b>Açıklama:</b></p>
-        <ul>
-          ${result.explain.map(e => `<li>${e}</li>`).join("")}
-        </ul>
-
+        <ul>${result.explain.map(e => `<li>${e}</li>`).join("")}</ul>
         <a href="${link}">Raporu Aç</a>
-
       </div>
     </body>
-  </html>
-  `;
+  </html>`;
 }
 
 export default async function handler(req, res) {
@@ -262,7 +245,6 @@ export default async function handler(req, res) {
     });
 
     return json(res, 200, { ok: true, result, link });
-
   } catch (e) {
     return json(res, 500, { ok: false, error: String(e.message) });
   }
