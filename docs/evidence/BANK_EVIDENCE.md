@@ -695,3 +695,60 @@ ZENTRA:
 
 ---
 
+
+---
+
+# FULL BANK MATRIX — ZENTRA vs BANKS
+
+| Banka | NPL | Cost of Risk | Limit Pressure | Payment Stress | ZENTRA Risk | Policy | Karar |
+|------|-----|--------------|----------------|----------------|-------------|--------|------|
+| Yapı Kredi | 3.2% | 162bps | HIGH | MEDIUM | MEDIUM | ACTIVE | İNCELE |
+| Garanti | ~2.5% | orta | HIGH | LOW | LOW→MED | ACTIVE | İNCELE |
+| Akbank | ~2.7% | kontrollü | HIGH | LOW | LOW→MED | ACTIVE | İNCELE |
+| İş Bankası | ~3.0% | orta | VERY HIGH | HIGH | MED→HIGH | ACTIVE | İNCELE |
+| QNB | ~3.5% | yüksek | VERY HIGH | CRITICAL | HIGH | HARD | RED |
+| Halkbank | ~4.0% | yüksek | EXTREME | CRITICAL | VERY HIGH | HARD | RED |
+| Vakıfbank | ~3.5% | orta | HIGH | MEDIUM | MEDIUM | ACTIVE | İNCELE |
+| TEB | ~3.0% | orta | NORMAL | LOW | LOW | PASSIVE | ONAY |
+
+---
+
+## ZENTRA ÜSTÜNLÜK MATRİSİ
+
+| Özellik | Bankalar | ZENTRA |
+|--------|---------|--------|
+| Decision | ✔ | ✔ |
+| Explain | ⚠ | ✔ |
+| Trace | ❌ | ✔ |
+| Proof (DB) | ❌ | ✔ |
+| Policy Enforcement | ⚠ | ✔ |
+| Simulation | ❌ | ✔ |
+| Indicator Layer | ❌ | ✔ |
+| Visual Flow | ❌ | ✔ |
+
+---
+
+## NET SONUÇ
+
+Bankalar:
+- karar verir
+
+ZENTRA:
+- karar verir ✔
+- nedenini açıklar ✔
+- trace üretir ✔
+- kanıtlar ✔
+- policy uygular ✔
+- simüle eder ✔
+- grafikleştirir ✔
+
+---
+
+## SATIŞ CÜMLESİ
+
+ZENTRA:
+bankaların ayrı ayrı kullandığı decision, explain, audit ve simulation katmanlarını
+tek sistemde birleştirir.
+
+---
+
