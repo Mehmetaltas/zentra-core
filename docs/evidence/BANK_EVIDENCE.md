@@ -172,3 +172,91 @@ ZENTRA:
 
 ---
 
+
+---
+
+# GARANTİ BBVA — ZENTRA ANALİZİ
+
+## Dönem
+2025
+
+## Resmi Veriler
+- NPL: ~2.5% (yaklaşık)
+- Cost of Risk: orta seviyede (rapor bazlı)
+- güçlü karşılık yapısı
+
+---
+
+## ZENTRA OKUMA
+
+### Risk Yorumu
+- NPL düşük/orta
+- risk kontrol altında
+- ancak:
+→ portföy büyüdükçe stres potansiyeli artar
+
+---
+
+## ZENTRA DERIVED MODEL (örnek portföy)
+
+varsayım:
+- income: 20.000
+- debt: 40.000
+- monthly_payment: 6.000
+- total_limit: 90.000
+
+çıktı:
+- debt_to_income: 2.0x
+- payment_load: 30%
+- limit_ratio: 4.5x
+
+---
+
+## ZENTRA ANALİZ
+
+- limit_ratio = yüksek (4.5x)
+- payment_load = kontrol sınırı
+- risk = düşük → ama yapısal risk var
+
+---
+
+## ZENTRA POLICY
+
+- limit_ratio > 4 → policy trigger
+
+karar:
+→ İNCELE / RİSK ARTIYOR
+
+---
+
+## ZENTRA İNDİKATÖR
+
+- Risk Indicator: LOW → MEDIUM
+- Payment Stress: NORMAL
+- Limit Pressure: HIGH
+- Reality Gap: HIDDEN RISK
+- Proof Strength: MEDIUM
+
+---
+
+## ZENTRA FARKI
+
+Banka:
+- düşük risk görür
+
+ZENTRA:
+- gizli limit baskısını yakalar ✔
+- gelecekteki riski işaret eder ✔
+- policy ile sınırlar ✔
+
+---
+
+## SONUÇ
+
+ZENTRA:
+- erken risk sinyali üretir
+- görünmeyen baskıyı görünür yapar
+- büyüme döneminde risk kaçmasını engeller
+
+---
+
