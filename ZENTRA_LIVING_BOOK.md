@@ -196,3 +196,29 @@ ZENTRA now identifies dominant reality.
 ### Next
 ZDB-005 Final Aggregation
 
+
+---
+
+## ZDB-005
+Date: 2026-04-24
+
+### Block
+Final Aggregation
+
+### Purpose
+Combine all signals into a single decision.
+
+### Key Rule
+No averaging under contradiction.
+
+### Decision Types
+- APPROVE
+- REVIEW
+- REJECT
+
+### Result
+ZENTRA produces its first real decision.
+
+### Next
+ZDB-006 Explain + Confidence refinement
+
