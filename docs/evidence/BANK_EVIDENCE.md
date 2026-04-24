@@ -348,3 +348,92 @@ ZENTRA:
 
 ---
 
+
+---
+
+# İŞ BANKASI — ZENTRA ANALİZİ
+
+## Dönem
+2025
+
+## Resmi Veriler
+- NPL: ~3.0% (yaklaşık)
+- Cost of Risk: orta
+- geniş ve çeşitlenmiş portföy
+
+---
+
+## ZENTRA OKUMA
+
+### Risk Yorumu
+- NPL orta
+- portföy büyük → dağılım avantajı
+- ancak:
+→ KOBİ ve ticari segmentte risk yoğunlaşması olabilir
+
+---
+
+## ZENTRA DERIVED MODEL (örnek portföy)
+
+varsayım:
+- income: 30.000
+- debt: 90.000
+- monthly_payment: 12.000
+- total_limit: 150.000
+
+çıktı:
+- debt_to_income: 3.0x
+- payment_load: 40%
+- limit_ratio: 5.0x
+
+---
+
+## ZENTRA ANALİZ
+
+- limit_ratio = çok yüksek (5.0x)
+- payment_load = stres sınırı
+- risk = orta → yüksek eğilim
+
+---
+
+## ZENTRA POLICY
+
+- limit_ratio > 4 → policy trigger
+- payment_load yüksek → risk artışı
+
+karar:
+→ RİSK ARTIYOR / İNCELE
+
+---
+
+## ZENTRA İNDİKATÖR
+
+- Risk Indicator: MEDIUM → HIGH
+- Payment Stress: HIGH
+- Limit Pressure: VERY HIGH
+- Reality Gap: EXPANDING
+- Proof Strength: MEDIUM
+
+---
+
+## ZENTRA FARKI
+
+Banka:
+- portföy seviyesinde risk görür
+
+ZENTRA:
+- mikro seviyede risk dağılımını açar ✔
+- segment bazlı baskıyı yakalar ✔
+- policy ile risk sınırını zorlar ✔
+
+---
+
+## SONUÇ
+
+ZENTRA:
+- portföy büyüklüğü içindeki gizli riskleri yakalar
+- segment bazlı risk yoğunlaşmasını erken tespit eder
+- banka seviyesinde görünmeyen mikro riskleri ortaya çıkarır
+
+---
+
