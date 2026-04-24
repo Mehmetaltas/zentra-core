@@ -9,14 +9,14 @@ SOURCE_RELIABILITY = {
     "registry": 0.75,
 }
 
-REAL_POWER_SIGNALS = {"income", "net_cashflow", "payment_history"}
-SUPPORT_SIGNALS = {"vehicle_asset", "property_asset"}
-ILLUSION_SIGNALS = {"declared_income", "shared_property", "temporary_cash"}
+REAL_POWER = {"income", "net_cashflow", "payment_history"}
+SUPPORT = {"vehicle_asset", "property_asset"}
+ILLUSION = {"declared_income", "shared_property", "temporary_cash"}
 
-def get_recency_score(date_str):
+def recency_score(date_str):
     try:
-        date = datetime.strptime(date_str, "%Y-%m-%d")
-        days = (datetime.now() - date).days
+        d = datetime.strptime(date_str, "%Y-%m-%d")
+        days = (datetime.now() - d).days
         if days < 30: return 1.0
         if days < 90: return 0.8
         if days < 180: return 0.6
@@ -24,86 +24,96 @@ def get_recency_score(date_str):
     except:
         return 0.5
 
-def calculate_trust(signal):
-    source = SOURCE_RELIABILITY.get(signal["source"], 0.5)
-    recency = get_recency_score(signal["timestamp"])
-    repeat = 1.0 if signal.get("repeatability") == "high" else 0.7
-    verify = 1.0 if signal.get("verifiability") == "high" else 0.6
-    manip = 0.1 if signal.get("manipulation_risk") == "low" else 0.5
+def trust(signal):
+    s = SOURCE_RELIABILITY.get(signal["source"], 0.5)
+    r = recency_score(signal["timestamp"])
+    rep = 1.0 if signal.get("repeatability")=="high" else 0.7
+    ver = 1.0 if signal.get("verifiability")=="high" else 0.6
+    m = 0.1 if signal.get("manipulation_risk")=="low" else 0.5
 
-    trust = (source*0.35)+(recency*0.2)+(repeat*0.2)+(verify*0.15)-(manip*0.1)
-    return round(max(0, min(trust,1)),3)
+    return round(max(0, min((s*0.35)+(r*0.2)+(rep*0.2)+(ver*0.15)-(m*0.1),1)),3)
 
 def classify(name):
-    if name in REAL_POWER_SIGNALS: return "REAL_POWER"
-    if name in SUPPORT_SIGNALS: return "SUPPORT"
-    if name in ILLUSION_SIGNALS: return "ILLUSION"
+    if name in REAL_POWER: return "REAL_POWER"
+    if name in SUPPORT: return "SUPPORT"
+    if name in ILLUSION: return "ILLUSION"
     return "SUPPORT"
 
+# 🔥 CONTRADICTION
 def contradiction(signals):
     notes = []
+    severity = 0
+
     inc = next((s for s in signals if s["name"]=="income"), None)
     dec = next((s for s in signals if s["name"]=="declared_income"), None)
 
     if inc and dec:
         if inc["trust"] >= dec["trust"]:
-            notes.append("Real income dominates")
+            notes.append("Real income dominates declared income")
+            severity += 0.2
         else:
-            notes.append("Declared income suspicious")
+            notes.append("Declared income unreliable")
+            severity += 0.4
 
-    return notes
+    return notes, severity
 
 # 🔥 FINAL AGGREGATION
-def aggregate(signals, notes):
-
+def aggregate(signals, severity):
     real = [s for s in signals if s["class"]=="REAL_POWER"]
-    support = [s for s in signals if s["class"]=="SUPPORT"]
     illusion = [s for s in signals if s["class"]=="ILLUSION"]
 
     real_score = sum(s["trust"] for s in real)
     illusion_score = sum(s["trust"] for s in illusion)
 
-    decision = "REVIEW"
-    confidence = 0.5
-    explain = []
-
     if real_score > 0.8 and illusion_score < 0.4:
-        decision = "APPROVE"
-        confidence = 0.8
-        explain.append("Strong real power signals")
+        return "APPROVE"
+    if illusion_score > real_score:
+        return "REJECT"
+    return "REVIEW"
 
-    elif illusion_score > real_score:
-        decision = "REJECT"
-        confidence = 0.7
-        explain.append("Illusion signals dominate")
+# 🔥 CONFIDENCE ENGINE
+def confidence(signals, severity):
+    avg_trust = sum(s["trust"] for s in signals) / len(signals)
+    conflict_penalty = severity
 
-    else:
-        decision = "REVIEW"
-        confidence = 0.6
-        explain.append("Conflicting signals")
+    score = avg_trust - conflict_penalty
+    return round(max(0, min(score,1)),3)
 
-    explain.extend(notes)
+# 🔥 EXPLAIN ENGINE (KOMİTE)
+def explain(signals, decision, notes, conf):
+    explanation = []
 
-    return decision, confidence, explain
+    explanation.append(f"Decision: {decision}")
+    explanation.append(f"Confidence: {conf}")
+
+    dominant = sorted(signals, key=lambda x: x["trust"], reverse=True)[0]
+    explanation.append(f"Dominant signal: {dominant['name']}")
+
+    for n in notes:
+        explanation.append(n)
+
+    return explanation
 
 def process(signals):
 
     enriched = []
 
     for s in signals:
-        trust = calculate_trust(s)
-        cls = classify(s["name"])
+        t = trust(s)
+        c = classify(s["name"])
 
         enriched.append({
             **s,
-            "trust": trust,
-            "class": cls
+            "trust": t,
+            "class": c
         })
 
-    notes = contradiction(enriched)
-    decision, confidence, explain = aggregate(enriched, notes)
+    notes, severity = contradiction(enriched)
+    decision = aggregate(enriched, severity)
+    conf = confidence(enriched, severity)
+    exp = explain(enriched, decision, notes, conf)
 
-    return enriched, decision, confidence, explain
+    return enriched, decision, conf, exp
 
 if __name__ == "__main__":
 
@@ -128,15 +138,16 @@ if __name__ == "__main__":
         }
     ]
 
-    signals, decision, confidence, explain = process(test)
+    s, d, c, e = process(test)
 
-    print("\nZENTRA FINAL OUTPUT\n")
-    print("Decision:", decision)
-    print("Confidence:", confidence)
-    print("Explain:")
-    for e in explain:
-        print("-", e)
+    print("\nZENTRA COMMITTEE OUTPUT\n")
+    print("Decision:", d)
+    print("Confidence:", c)
 
-    print("\nSIGNALS\n")
-    for s in signals:
-        print(s)
+    print("\nExplain:")
+    for x in e:
+        print("-", x)
+
+    print("\nSignals:")
+    for i in s:
+        print(i)
