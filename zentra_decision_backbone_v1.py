@@ -9,22 +9,9 @@ SOURCE_RELIABILITY = {
     "registry": 0.75,
 }
 
-REAL_POWER_SIGNALS = {
-    "income",
-    "net_cashflow",
-    "payment_history",
-}
-
-SUPPORT_SIGNALS = {
-    "vehicle_asset",
-    "property_asset",
-}
-
-ILLUSION_SIGNALS = {
-    "declared_income",
-    "shared_property",
-    "temporary_cash",
-}
+REAL_POWER_SIGNALS = {"income", "net_cashflow", "payment_history"}
+SUPPORT_SIGNALS = {"vehicle_asset", "property_asset"}
+ILLUSION_SIGNALS = {"declared_income", "shared_property", "temporary_cash"}
 
 def get_recency_score(date_str):
     try:
@@ -47,41 +34,57 @@ def calculate_trust(signal):
     trust = (source*0.35)+(recency*0.2)+(repeat*0.2)+(verify*0.15)-(manip*0.1)
     return round(max(0, min(trust,1)),3)
 
-def classify(signal):
-    name = signal["name"]
-
-    if name in REAL_POWER_SIGNALS:
-        return "REAL_POWER"
-    if name in SUPPORT_SIGNALS:
-        return "SUPPORT"
-    if name in ILLUSION_SIGNALS:
-        return "ILLUSION"
-
+def classify(name):
+    if name in REAL_POWER_SIGNALS: return "REAL_POWER"
+    if name in SUPPORT_SIGNALS: return "SUPPORT"
+    if name in ILLUSION_SIGNALS: return "ILLUSION"
     return "SUPPORT"
 
-# 🔥 CONTRADICTION RESOLVER
-def resolve(signals):
+def contradiction(signals):
+    notes = []
+    inc = next((s for s in signals if s["name"]=="income"), None)
+    dec = next((s for s in signals if s["name"]=="declared_income"), None)
 
-    income_real = None
-    income_declared = None
-
-    for s in signals:
-        if s["name"] == "income":
-            income_real = s
-        if s["name"] == "declared_income":
-            income_declared = s
-
-    decision_notes = []
-
-    # ÇELİŞKİ 1: GELİR
-    if income_real and income_declared:
-        if income_real["trust"] > income_declared["trust"]:
-            decision_notes.append("Real income dominates declared income")
+    if inc and dec:
+        if inc["trust"] >= dec["trust"]:
+            notes.append("Real income dominates")
         else:
-            decision_notes.append("Declared income suspicious")
+            notes.append("Declared income suspicious")
 
-    # sonucu basitçe dön
-    return decision_notes
+    return notes
+
+# 🔥 FINAL AGGREGATION
+def aggregate(signals, notes):
+
+    real = [s for s in signals if s["class"]=="REAL_POWER"]
+    support = [s for s in signals if s["class"]=="SUPPORT"]
+    illusion = [s for s in signals if s["class"]=="ILLUSION"]
+
+    real_score = sum(s["trust"] for s in real)
+    illusion_score = sum(s["trust"] for s in illusion)
+
+    decision = "REVIEW"
+    confidence = 0.5
+    explain = []
+
+    if real_score > 0.8 and illusion_score < 0.4:
+        decision = "APPROVE"
+        confidence = 0.8
+        explain.append("Strong real power signals")
+
+    elif illusion_score > real_score:
+        decision = "REJECT"
+        confidence = 0.7
+        explain.append("Illusion signals dominate")
+
+    else:
+        decision = "REVIEW"
+        confidence = 0.6
+        explain.append("Conflicting signals")
+
+    explain.extend(notes)
+
+    return decision, confidence, explain
 
 def process(signals):
 
@@ -89,7 +92,7 @@ def process(signals):
 
     for s in signals:
         trust = calculate_trust(s)
-        cls = classify(s)
+        cls = classify(s["name"])
 
         enriched.append({
             **s,
@@ -97,10 +100,10 @@ def process(signals):
             "class": cls
         })
 
-    notes = resolve(enriched)
+    notes = contradiction(enriched)
+    decision, confidence, explain = aggregate(enriched, notes)
 
-    return enriched, notes
-
+    return enriched, decision, confidence, explain
 
 if __name__ == "__main__":
 
@@ -125,12 +128,15 @@ if __name__ == "__main__":
         }
     ]
 
-    result, notes = process(test)
+    signals, decision, confidence, explain = process(test)
 
-    print("\nZENTRA OUTPUT\n")
-    for r in result:
-        print(r)
+    print("\nZENTRA FINAL OUTPUT\n")
+    print("Decision:", decision)
+    print("Confidence:", confidence)
+    print("Explain:")
+    for e in explain:
+        print("-", e)
 
-    print("\nCONTRADICTION NOTES\n")
-    for n in notes:
-        print("-", n)
+    print("\nSIGNALS\n")
+    for s in signals:
+        print(s)
