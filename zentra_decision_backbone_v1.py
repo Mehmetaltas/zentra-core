@@ -1,175 +1,145 @@
-# ZENTRA Decision Backbone v1
-# Block: ZDB-010
-# Purpose: System Hardening / Stable Proof Output
-
+# ZDB-011 Decision Brake / Release + Risk Split Engine
 from datetime import datetime
 import json
 
-VALID_DECISIONS = {"APPROVE", "REVIEW", "REJECT"}
-VALID_RISK = {"LOW", "MEDIUM", "HIGH"}
+VALID_DECISIONS = {"APPROVE","REVIEW","REJECT"}
 
-def safe_number(value, default=0.0):
-    try:
-        return float(value)
-    except Exception:
-        return default
+def clamp(x, lo=0.0, hi=1.0):
+    return max(lo, min(hi, x))
 
-def normalize_decision(value):
-    value = str(value or "REVIEW").upper()
-    return value if value in VALID_DECISIONS else "REVIEW"
+def normalize_decision(d):
+    d = str(d or "REVIEW").upper()
+    return d if d in VALID_DECISIONS else "REVIEW"
 
-def normalize_risk(value):
-    value = str(value or "MEDIUM").upper()
-    return value if value in VALID_RISK else "MEDIUM"
-
-def zentra_decision(real_power, illusion_power):
-    real_power = safe_number(real_power)
-    illusion_power = safe_number(illusion_power)
-
-    if illusion_power > real_power:
-        return "REJECT"
-
-    if real_power >= 0.75 and illusion_power < 0.40:
-        return "APPROVE"
-
+# --- mevcut basit çekirdek (kısa) ---
+def core_decision(real_power, illusion_power):
+    real_power = float(real_power)
+    illusion_power = float(illusion_power)
+    if illusion_power > real_power: return "REJECT"
+    if real_power >= 0.75 and illusion_power < 0.40: return "APPROVE"
     return "REVIEW"
 
-def confidence(real_power, illusion_power, risk):
-    real_power = safe_number(real_power)
-    illusion_power = safe_number(illusion_power)
-    risk = normalize_risk(risk)
+def core_confidence(real_power, illusion_power, contradiction_severity):
+    base = 0.5 + (real_power-illusion_power)*0.3 - contradiction_severity*0.2
+    return round(clamp(base, 0.0, 0.95), 3)
 
-    base = 0.50
+# --- ZDB-011: Brake / Release + Risk Split ---
+def brake_release_engine(base_decision, real_power, illusion_power, contradiction_severity):
+    """
+    Output:
+      final_decision, mode, actions(list), rationale(list)
+    """
+    base_decision = normalize_decision(base_decision)
+    real_power = float(real_power)
+    illusion_power = float(illusion_power)
+    contradiction_severity = float(contradiction_severity)
 
-    if real_power >= 0.75:
-        base += 0.20
+    actions = []
+    rationale = []
 
-    if illusion_power >= 0.70:
-        base -= 0.15
+    # MODE SEÇİMİ
+    if contradiction_severity >= 0.35 or illusion_power >= 0.70:
+        mode = "DEFENSIVE"   # el freni çekili
+    elif real_power >= 0.80 and illusion_power <= 0.30 and contradiction_severity < 0.20:
+        mode = "OFFENSIVE"   # el freni bırak
+    else:
+        mode = "NEUTRAL"
 
-    if risk == "HIGH":
-        base += 0.10
+    final_decision = base_decision
 
-    return round(max(0.0, min(base, 0.95)), 3)
+    # DEFENSIVE
+    if mode == "DEFENSIVE":
+        rationale.append("High contradiction or illusion pressure.")
+        # aşağı çek
+        if base_decision == "APPROVE":
+            final_decision = "CONDITIONAL_APPROVE"
+        elif base_decision == "REVIEW":
+            final_decision = "REVIEW"
+        elif base_decision == "REJECT":
+            final_decision = "REJECT"
 
-def loss_estimate(existing_decision, zentra_result, risk):
-    existing_decision = normalize_decision(existing_decision)
-    zentra_result = normalize_decision(zentra_result)
-    risk = normalize_risk(risk)
+        # risk azaltıcı aksiyonlar
+        actions += [
+            "LIMIT_REDUCE",
+            "TENOR_SHORTEN",
+            "COLLATERAL_INCREASE",
+            "ENHANCED_MONITORING"
+        ]
 
-    existing_loss = 0
-    zentra_loss = 0
-    notes = []
+        # çok riskliyse parçala
+        if illusion_power > real_power:
+            final_decision = "RISK_SPLIT"
+            actions.append("PARTIAL_APPROVAL")
 
-    if existing_decision == "APPROVE" and risk == "HIGH":
-        existing_loss = 100
-        notes.append("Existing system carries false approval exposure.")
+    # OFFENSIVE
+    elif mode == "OFFENSIVE":
+        rationale.append("Strong real power with low contradiction.")
+        if base_decision == "REVIEW":
+            final_decision = "APPROVE"
+            actions += ["LIMITED_APPROVAL", "MONITORING"]
+        elif base_decision == "REJECT":
+            final_decision = "REVIEW"
+            actions += ["RECHECK_DATA", "SECONDARY_VALIDATION"]
+        else:
+            final_decision = "APPROVE"
+            actions += ["STANDARD_APPROVAL", "MONITORING"]
 
-    if existing_decision == "REJECT" and risk == "LOW":
-        existing_loss = 40
-        notes.append("Existing system may carry missed opportunity exposure.")
+    # NEUTRAL
+    else:
+        rationale.append("Mixed signals; keep controlled stance.")
+        if base_decision == "APPROVE":
+            final_decision = "CONDITIONAL_APPROVE"
+            actions += ["LIMIT_REDUCE", "MONITORING"]
+        elif base_decision == "REVIEW":
+            final_decision = "REVIEW"
+            actions += ["REQUEST_ADDITIONAL_DATA"]
+        else:
+            final_decision = "REJECT"
 
-    if zentra_result == "APPROVE" and risk == "HIGH":
-        zentra_loss = 100
-        notes.append("ZENTRA carries approval exposure on high risk.")
-
-    if zentra_result == "REJECT" and risk == "LOW":
-        zentra_loss = 40
-        notes.append("ZENTRA carries conservative rejection exposure.")
-
-    avoided_loss = existing_loss - zentra_loss
-
-    return {
-        "existing_loss": existing_loss,
-        "zentra_loss": zentra_loss,
-        "avoided_loss": avoided_loss,
-        "notes": notes
-    }
-
-def explain(scenario_name, existing_decision, zentra_result, real_power, illusion_power, risk, conf):
-    explanation = []
-
-    explanation.append(f"Scenario: {scenario_name}")
-    explanation.append(f"Existing decision: {existing_decision}")
-    explanation.append(f"ZENTRA decision: {zentra_result}")
-    explanation.append(f"Risk level: {risk}")
-    explanation.append(f"Real power score: {real_power}")
-    explanation.append(f"Illusion score: {illusion_power}")
-    explanation.append(f"Confidence: {conf}")
-
-    if illusion_power > real_power:
-        explanation.append("Illusion signals dominate real repayment power.")
-
-    if real_power >= 0.75 and illusion_power < 0.40:
-        explanation.append("Real repayment power is strong and misleading visibility is limited.")
-
-    if zentra_result == "REVIEW":
-        explanation.append("Uncertainty remains; case should not be blindly approved or rejected.")
-
-    return explanation
+    return final_decision, mode, actions, rationale
 
 def run_case(case):
-    name = str(case.get("name", "Unnamed Case"))
-    existing = normalize_decision(case.get("existing_decision"))
-    risk = normalize_risk(case.get("risk_level"))
-    real_power = safe_number(case.get("real_power"))
-    illusion_power = safe_number(case.get("illusion_power"))
+    name = case.get("name","case")
+    real_power = float(case.get("real_power",0.0))
+    illusion_power = float(case.get("illusion_power",0.0))
+    contradiction_severity = float(case.get("contradiction_severity",0.0))
 
-    z_result = zentra_decision(real_power, illusion_power)
-    conf = confidence(real_power, illusion_power, risk)
-    loss = loss_estimate(existing, z_result, risk)
-    exp = explain(name, existing, z_result, real_power, illusion_power, risk, conf)
+    base = core_decision(real_power, illusion_power)
+    conf = core_confidence(real_power, illusion_power, contradiction_severity)
+
+    final_decision, mode, actions, rationale = brake_release_engine(
+        base, real_power, illusion_power, contradiction_severity
+    )
 
     return {
         "case": name,
-        "timestamp": datetime.utcnow().isoformat() + "Z",
+        "timestamp": datetime.utcnow().isoformat()+"Z",
         "input": {
-            "existing_decision": existing,
-            "risk_level": risk,
             "real_power": real_power,
-            "illusion_power": illusion_power
+            "illusion_power": illusion_power,
+            "contradiction_severity": contradiction_severity
         },
-        "zentra_output": {
-            "decision": z_result,
-            "confidence": conf,
-            "explain": exp
+        "base_output": {
+            "decision": base,
+            "confidence": conf
         },
-        "proof_metrics": {
-            "decision_delta": existing != z_result,
-            "loss": loss
-        },
-        "status": "PROOF_OUTPUT"
+        "final_output": {
+            "decision": final_decision,
+            "mode": mode,
+            "actions": actions,
+            "rationale": rationale
+        }
     }
 
 if __name__ == "__main__":
     cases = [
-        {
-            "name": "Illusion Strength Case",
-            "existing_decision": "APPROVE",
-            "risk_level": "HIGH",
-            "real_power": 0.40,
-            "illusion_power": 0.90
-        },
-        {
-            "name": "Strong Real Power Case",
-            "existing_decision": "REVIEW",
-            "risk_level": "LOW",
-            "real_power": 0.90,
-            "illusion_power": 0.20
-        },
-        {
-            "name": "Borderline Uncertainty Case",
-            "existing_decision": "APPROVE",
-            "risk_level": "MEDIUM",
-            "real_power": 0.60,
-            "illusion_power": 0.50
-        }
+        # yüksek yanıltıcı güç → freni çek + böl
+        {"name":"Illusion High","real_power":0.4,"illusion_power":0.9,"contradiction_severity":0.5},
+        # güçlü gerçek güç → freni bırak
+        {"name":"Strong Real","real_power":0.9,"illusion_power":0.2,"contradiction_severity":0.1},
+        # karışık → nötr + kontrollü
+        {"name":"Mixed","real_power":0.6,"illusion_power":0.5,"contradiction_severity":0.25},
     ]
 
     outputs = [run_case(c) for c in cases]
-
-    print(json.dumps({
-        "zentra_block": "ZDB-010",
-        "engine": "System Hardening",
-        "outputs": outputs
-    }, ensure_ascii=False, indent=2))
+    print(json.dumps({"zentra_block":"ZDB-011","outputs":outputs}, ensure_ascii=False, indent=2))
