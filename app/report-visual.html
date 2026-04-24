@@ -14,22 +14,11 @@ body{font-family:Arial;background:#0b0f1a;color:#fff;margin:0;padding:20px}
 .green{background:#1f8f4e}.yellow{background:#d9a300}.red{background:#b30000}
 .trace{margin-top:10px;font-size:13px;opacity:.9}
 pre{white-space:pre-wrap;background:#0b1222;padding:12px;border-radius:10px;color:#dce7ff}
-input,button{padding:10px;border-radius:8px;border:none;margin:5px}
-button{background:#00c6ff;color:#000;font-weight:bold}
 </style>
 </head>
 <body>
 
-<h2>ZENTRA — Live Visual Proof</h2>
-
-<div class="card">
-  <h3>Test Input</h3>
-  <input id="income" placeholder="income" value="20000">
-  <input id="debt" placeholder="debt" value="60000">
-  <input id="payment" placeholder="monthly_payment" value="8000">
-  <input id="limit" placeholder="total_limit" value="80000">
-  <button onclick="run()">Run</button>
-</div>
+<h2>ZENTRA — Visual Proof Report</h2>
 
 <div class="card">
   <h3>Decision</h3>
@@ -47,70 +36,79 @@ button{background:#00c6ff;color:#000;font-weight:bold}
 <div class="card">
   <h3>Metrics</h3>
   <div>DTI</div><div class="bar"><div id="dtiBar" class="fill"></div></div>
-  <div>Payment</div><div class="bar"><div id="paymentBar" class="fill"></div></div>
-  <div>Limit</div><div class="bar"><div id="limitBar" class="fill"></div></div>
+  <div>Payment Load</div><div class="bar"><div id="paymentBar" class="fill"></div></div>
+  <div>Limit Ratio</div><div class="bar"><div id="limitBar" class="fill"></div></div>
 </div>
 
 <div class="card">
-  <h3>Flow</h3>
+  <h3>Decision Flow</h3>
   <div id="flow"></div>
 </div>
 
 <div class="card">
-  <h3>Raw</h3>
+  <h3>Raw Proof</h3>
   <pre id="raw"></pre>
 </div>
 
 <script>
-function setBar(id,value,max){
-  document.getElementById(id).style.width = Math.min((value/max)*100,100)+"%";
+function getData(){
+  try{
+    if(window.parent && window.parent.ZENTRA_DATA){
+      return window.parent.ZENTRA_DATA;
+    }
+  }catch(e){}
+  if(window.ZENTRA_DATA){
+    return window.ZENTRA_DATA;
+  }
+  return null;
 }
+
+function setBar(id,value,max){
+  document.getElementById(id).style.width = Math.min((Number(value || 0)/max)*100,100)+"%";
+}
+
 function badge(id,text,color){
   document.getElementById(id).innerHTML=`<span class="badge ${color}">${text}</span>`;
 }
 
-async function run(){
+function render(){
+  const data = getData();
 
-  const body = {
-    product_context:"intel",
-    income:Number(income.value),
-    debt:Number(debt.value),
-    monthly_payment:Number(payment.value),
-    total_limit:Number(limit.value)
-  };
+  if(!data){
+    document.getElementById("decisionBox").innerHTML = "Rapor verisi bulunamadı.";
+    return;
+  }
 
-  const res = await fetch("/api/v1/send-report",{
-    method:"POST",
-    headers:{"Content-Type":"application/json"},
-    body:JSON.stringify(body)
-  });
+  const r = data.result ? data.result : data;
+  const derived = r.derived || {};
+  const policy = r.policy || {};
+  const explain = Array.isArray(r.explain) ? r.explain : [];
 
-  const data = await res.json();
-  const r = data.result;
+  document.getElementById("decisionBox").innerHTML =
+    `<b>Karar:</b> ${r.decision || "-"}<br>` +
+    `<b>Skor:</b> ${r.score ?? "-"}<br><br>` +
+    explain.map(x=>"• "+x).join("<br>");
 
-  decisionBox.innerHTML =
-    `<b>${r.decision}</b><br><br>` +
-    r.explain.map(x=>"• "+x).join("<br>");
+  setBar("dtiBar",derived.debt_to_income || 0,10);
+  setBar("paymentBar",derived.payment_load || 0,1);
+  setBar("limitBar",derived.limit_ratio || 0,5);
 
-  setBar("dtiBar",r.derived.debt_to_income,10);
-  setBar("paymentBar",r.derived.payment_load,1);
-  setBar("limitBar",r.derived.limit_ratio,5);
+  badge("riskBadge",r.decision || "-",r.decision==="Reddet"?"red":(r.decision==="İncele"?"yellow":"green"));
+  badge("paymentBadge",(derived.payment_load || 0)>0.5?"HIGH":"OK",(derived.payment_load || 0)>0.5?"red":"green");
+  badge("limitBadge",(derived.limit_ratio || 0)>4?"HIGH":"OK",(derived.limit_ratio || 0)>4?"red":"green");
+  badge("policyBadge",policy.mode || "OFF",(policy.mode==="ON"?"yellow":"green"));
 
-  badge("riskBadge",r.decision,r.decision==="Reddet"?"red":"green");
-  badge("paymentBadge",r.derived.payment_load>0.5?"HIGH":"OK",r.derived.payment_load>0.5?"red":"green");
-  badge("limitBadge",r.derived.limit_ratio>4?"HIGH":"OK",r.derived.limit_ratio>4?"red":"green");
-  badge("policyBadge",r.policy.mode,"yellow");
-
-  flow.innerHTML="";
   const steps=[
-    "Input",
-    "Derived",
-    "Rules",
-    "Policy",
-    "Decision",
-    "Trace"
+    "Input alındı",
+    "Derived metrikler hesaplandı",
+    "Rules çalıştı",
+    "Policy kontrol edildi",
+    "Decision üretildi",
+    "Trace + Proof kaydı oluşturuldu"
   ];
 
+  const flow=document.getElementById("flow");
+  flow.innerHTML="";
   let i=0;
   const int=setInterval(()=>{
     if(i>=steps.length){clearInterval(int);return;}
@@ -121,8 +119,10 @@ async function run(){
     i++;
   },300);
 
-  raw.innerText = JSON.stringify(data,null,2);
+  document.getElementById("raw").innerText = JSON.stringify(r,null,2);
 }
+
+render();
 </script>
 
 </body>
