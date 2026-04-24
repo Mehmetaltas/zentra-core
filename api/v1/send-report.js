@@ -158,12 +158,12 @@ export default async function handler(req, res) {
       `insert into proof_library (input, derived, triggered, decision, explain, trace)
        values ($1, $2, $3, $4, $5, $6)`,
       [
-        result.trace.input,
-        result.trace.derived,
-        result.trace.triggered,
+        JSON.stringify(result.trace.input || {}),
+        JSON.stringify(result.trace.derived || {}),
+        JSON.stringify(result.trace.triggered || []),
         result.decision,
-        result.explain,
-        result.trace
+        JSON.stringify(result.explain || []),
+        JSON.stringify(result.trace || {})
       ]
     );
 
