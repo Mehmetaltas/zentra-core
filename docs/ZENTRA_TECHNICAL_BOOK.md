@@ -10,20 +10,28 @@
 ## Status
 LOCKED
 
-## Architecture Rule
-Full ZENTRA Matrix Ecosystem uses the Vercel + Neon operating pattern.
+## Technical Rule
+The full ZENTRA Matrix Ecosystem will be aligned to the Vercel + Neon operating pattern only after the current infrastructure state is verified.
 
-## Layer Separation
+## Verification First
+Before implementation, check:
+
+- Vercel deployment status
+- Existing API routes
+- Existing environment variables
+- Existing Neon connection
+- Existing database usage
+- Existing system files depending on Vercel or Neon
+
+## Target Layer Separation
 
 ### Vercel Layer
-Used for:
 - deployment
 - web surfaces
 - API endpoints
 - cockpit / investor / report interfaces
 
 ### Neon Layer
-Used for:
 - memory
 - data records
 - proof records
@@ -31,7 +39,6 @@ Used for:
 - explain / confidence records
 
 ### ZENTRA Core Logic
-Used for:
 - decision intelligence
 - orchestration
 - simulation
@@ -40,24 +47,7 @@ Used for:
 - policy
 - proof logic
 
-## Portability Rule
-ZENTRA Core Logic must remain independent.
-
-If Vercel is replaced, the system can move to another deployment layer.
-
-If Neon is replaced, the system can move to another database layer.
-
-## Decision Layer
-Core A and Core B exist inside the same Decision Layer.
-
-- Core A: existing operational decision line
-- Core B: ZDB proof decision line
-
-They run side by side for testing.
-
 ## Critical Rule
-Core B will NOT replace Core A until testing is completed.
+Books and system must stay equal.
 
-No merge.
-No production switch.
-No architecture change before proof.
+No new runtime architecture is allowed before the current Vercel + Neon reality is verified.

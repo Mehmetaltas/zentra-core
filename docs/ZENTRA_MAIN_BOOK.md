@@ -1,3 +1,4 @@
+# ZENTRA MAIN BOOK
 
 ---
 
@@ -9,50 +10,28 @@
 ## Status
 LOCKED
 
-## Decision
-This is not only a ZDB-013 decision.
+## Final Decision
+Full ZENTRA Matrix Ecosystem will be aligned around the Vercel + Neon operating pattern after current infrastructure verification.
 
-This is the correct infrastructure approach for the full ZENTRA Matrix Ecosystem and all future ZENTRA systems.
+## First Rule
+Before adding new structure, the existing system must be checked.
 
-ZENTRA Matrix Ecosystem will be architected around a unified Vercel + Neon operating pattern:
+Required verification:
+- Is Vercel already active?
+- Is Neon already connected?
+- Which parts of the current ZENTRA system already use them?
+- Which parts are missing?
 
-- Vercel: deployment, interface, web surface and API layer
-- Neon: persistent memory, data, audit, proof and system record layer
-- ZENTRA Core Logic: independent intelligence, decision and orchestration layer
+## Target Pattern
+- Vercel: interface, deployment, web surface and API layer
+- Neon: memory, data, proof, audit and record layer
+- ZENTRA Core Logic: decision, intelligence and orchestration layer
 
-## Principle
-Vercel and Neon support ZENTRA.
+## Sequence
+1. Verify current system state.
+2. Update books with the verified reality.
+3. Align the system with the books.
+4. Only then continue new technical blocks.
 
-They do not define ZENTRA.
-
-ZENTRA Core Logic remains portable and independent from infrastructure providers.
-
-## Scope
-This standard applies to:
-
-- ZENTRA Matrix Ecosystem
-- ZENTRA Intel AI
-- ZENTRA General AI
-- ZENTRA Academia AI
-- Core A Operational System
-- Core B ZDB Decision System
-- Bridge Layer
-- Cockpits
-- Reports
-- Proof systems
-- Future modules
-- Future licensed enterprise packages
-
-## Constraint
-- Core logic must not be locked inside Vercel.
-- System memory must be structured in Neon.
-- Core A and Core B data must not be mixed.
-- Proof data and production data must remain separated until verified.
-- No patch-based merge is allowed.
-- Integration requires proof, audit and living book record.
-
-## Result
-ZENTRA Matrix Ecosystem now has a unified infrastructure standard.
-
-The system may use Vercel and Neon as its operating pattern, while preserving independent core intelligence.
-
+## Rule
+No new decision layer, bridge, A/B test, merge or production switch will be defined before the current Vercel + Neon reality is verified.

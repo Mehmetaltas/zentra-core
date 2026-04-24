@@ -408,32 +408,34 @@ ZENTRA outputs are now integration-ready.
 Date: 2026-04-24
 
 ### Block
-Full ZENTRA Matrix Ecosystem Infrastructure Standard
+ZENTRA Matrix Ecosystem Vercel + Neon Verification Gate
 
-### Final Decision
-Full ZENTRA Matrix Ecosystem uses the Vercel + Neon operating pattern.
+### Decision
+Before any new technical block, ZENTRA Matrix Ecosystem infrastructure must be verified.
 
-- Vercel: interface, deployment, web surface and API layer
-- Neon: memory, data, proof, audit and record layer
-- ZENTRA Core Logic: decision, intelligence and orchestration layer
+### Verification
+Check whether the current system already has:
 
-### Decision Layer Rule
-Core A and Core B are two decision lines inside the same Decision Layer:
+- Vercel deployment
+- Vercel API routes
+- Neon connection
+- Neon environment variables
+- database-backed memory / records
 
-- Core A: existing operational decision line
-- Core B: ZDB proof decision line
+### Target
+After verification, the full ZENTRA Matrix Ecosystem will be aligned around:
 
-They run side by side for testing.
+- Vercel as interface / deployment / API layer
+- Neon as memory / data / audit / proof layer
+- ZENTRA Core Logic as independent intelligence layer
 
-### Critical Rule
-Core B will NOT replace Core A until testing is completed.
+### Rule
+Books first.
+System second.
+Both must match.
 
-No merge.
-No production switch.
-No architecture change before proof.
-
-### Status
-ZDB-013 is locked.
-ZDB-014 is paused.
-
+No A/B decision layer.
+No bridge.
+No ZDB-014.
+No production change before verification.
 
