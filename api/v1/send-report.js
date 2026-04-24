@@ -170,7 +170,6 @@ export default async function handler(req, res) {
       ]
     );
 
-    const token = crypto.randomBytes(24).toString("hex");
 
     await pool.query(
       `insert into report_links (token, email, subject, report_text, expires_at)
