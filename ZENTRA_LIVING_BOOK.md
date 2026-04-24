@@ -277,3 +277,29 @@ ZENTRA now quantifies:
 ### Next
 ZDB-008 Real Scenario Testing
 
+
+---
+
+## ZDB-008
+Date: 2026-04-24
+
+### Block
+Real Scenario Testing
+
+### Scenario
+High debt, low real income, high declared income.
+
+### Result
+ZENTRA rejects misleading strength.
+
+### Insight
+- Declared income suppressed
+- Real income dominates
+- Illusion detected
+
+### Outcome
+ZENTRA prevents false approval risk.
+
+### Next
+ZDB-009 Multi Scenario Proof
+
