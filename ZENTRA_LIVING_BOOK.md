@@ -133,7 +133,6 @@ Runtime file:
 ZDB-003
 Reality Classification
 
-
 ---
 
 ## ZDB-003
@@ -171,7 +170,6 @@ ZENTRA can now separate:
 ZDB-004
 Contradiction Resolver
 
-
 ---
 
 ## ZDB-004
@@ -195,7 +193,6 @@ ZENTRA now identifies dominant reality.
 
 ### Next
 ZDB-005 Final Aggregation
-
 
 ---
 
@@ -221,7 +218,6 @@ ZENTRA produces its first real decision.
 
 ### Next
 ZDB-006 Explain + Confidence refinement
-
 
 ---
 
@@ -251,7 +247,6 @@ ZENTRA now produces:
 ### Next
 ZDB-007 Loss Mapping + Proof Metrics
 
-
 ---
 
 ## ZDB-007
@@ -277,7 +272,6 @@ ZENTRA now quantifies:
 ### Next
 ZDB-008 Real Scenario Testing
 
-
 ---
 
 ## ZDB-008
@@ -302,7 +296,6 @@ ZENTRA prevents false approval risk.
 
 ### Next
 ZDB-009 Multi Scenario Proof
-
 
 ---
 
@@ -332,7 +325,6 @@ System produces consistent and explainable decisions.
 ### Next
 ZDB-010 System Hardening
 
-
 ---
 
 ## ZDB-011
@@ -354,7 +346,6 @@ ZENTRA converts decisions into controlled, actionable outcomes.
 
 ### Next
 ZDB-012 Proof Report Export (API/JSON for integration)
-
 
 ---
 
@@ -387,7 +378,6 @@ ZENTRA now produces structured proof output instead of loose test prints.
 ZDB-011
 Proof Report Export
 
-
 ---
 
 ## ZDB-012
@@ -411,66 +401,39 @@ Structured JSON report including:
 ZENTRA outputs are now integration-ready.
 
 ### Next
-ZDB-013 API Layer
-
 
 ---
 
-## ZDB-013
+## ZDB-013 FINAL LOCK
 Date: 2026-04-24
 
 ### Block
-ZENTRA Matrix Ecosystem Infrastructure Standard
+Full ZENTRA Matrix Ecosystem Infrastructure Standard
 
-### Correction
-This block is not only a ZDB-013 technical decision.
+### Final Decision
+Full ZENTRA Matrix Ecosystem uses the Vercel + Neon operating pattern.
 
-It is the correct infrastructure approach for the full ZENTRA Matrix Ecosystem.
+- Vercel: interface, deployment, web surface and API layer
+- Neon: memory, data, proof, audit and record layer
+- ZENTRA Core Logic: decision, intelligence and orchestration layer
 
-### Decision
-ZENTRA Matrix Ecosystem and all current and future ZENTRA systems will be built around a unified Vercel + Neon operating pattern:
+### Decision Layer Rule
+Core A and Core B are two decision lines inside the same Decision Layer:
 
-- Vercel as deployment, interface, web surface and API layer
-- Neon as persistent memory, data, audit, proof and system record layer
-- ZENTRA Core Logic as independent intelligence, decision and orchestration layer
+- Core A: existing operational decision line
+- Core B: ZDB proof decision line
 
-### Principle
-Vercel and Neon support ZENTRA.
+They run side by side for testing.
 
-They do not define ZENTRA.
+### Critical Rule
+Core B will NOT replace Core A until testing is completed.
 
-ZENTRA Core Logic remains portable and independent from infrastructure providers.
+No merge.
+No production switch.
+No architecture change before proof.
 
-### Scope
-This standard applies to:
+### Status
+ZDB-013 is locked.
+ZDB-014 is paused.
 
-- ZENTRA Matrix Ecosystem
-- ZENTRA Intel AI
-- ZENTRA General AI
-- ZENTRA Academia AI
-- Core A Operational System
-- Core B ZDB Decision System
-- Bridge Layer
-- Cockpits
-- Reports
-- Proof systems
-- Future modules
-- Future licensed enterprise packages
-
-### Constraint
-- Core A and Core B data must not be mixed.
-- Proof data and production data must remain separated until verified.
-- Core logic must not be locked inside Vercel.
-- Memory and proof records must be structured in Neon.
-- No patch-based merge is allowed.
-- Integration requires proof, audit and living book record.
-
-### Result
-ZENTRA Matrix Ecosystem now has a unified infrastructure standard.
-
-The system can operate through Vercel and Neon while preserving independent core intelligence.
-
-### Next
-ZDB-014
-Neon Data Structure + Bridge Tables
 
