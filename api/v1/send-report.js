@@ -153,6 +153,9 @@ export default async function handler(req, res) {
     const rules = await getRules();
     const result = runEngine(body, rules);
 
+    const token = crypto.randomBytes(24).toString("hex");
+    const link = `https://zentra-core.vercel.app/api/v1/report/view?token=${token}`;
+
     // 🔥 PROOF LIBRARY INSERT
     await pool.query(
       `insert into proof_library (input, derived, triggered, decision, explain, trace)
