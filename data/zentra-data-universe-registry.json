@@ -1,0 +1,130 @@
+{
+  "status": "ACTIVE_FULL_REGISTRY",
+  "principle": "ZENTRA learns before launch, launches loaded, and continues learning after launch.",
+  "core_rule": "External data is world signal. ZENTRA own data is decision, proof, indicator and simulation memory.",
+  "domains": {
+    "Intel AI": [
+      "credit data",
+      "bank reports",
+      "TCMB",
+      "TUIK",
+      "World Bank",
+      "market data",
+      "BIST",
+      "global market data",
+      "company financials",
+      "trade data",
+      "treasury data",
+      "compliance regulation",
+      "sector data",
+      "invoice data",
+      "receivables data",
+      "collateral data"
+    ],
+    "General AI": [
+      "web knowledge",
+      "Wikipedia",
+      "YouTube",
+      "X",
+      "Facebook",
+      "Instagram",
+      "content categories",
+      "social signals"
+    ],
+    "Academia AI": [
+      "papers",
+      "patents",
+      "datasets",
+      "official reports",
+      "benchmarks",
+      "research projects"
+    ],
+    "Financial Trade": [
+      "market data feed",
+      "chart engine",
+      "indicator engine",
+      "historical prices",
+      "live prices",
+      "volume",
+      "volatility",
+      "news",
+      "order execution logic"
+    ]
+  },
+  "own_data_layers": [
+    "automatic scenario generator",
+    "simulation cases",
+    "simulation runs",
+    "simulation results",
+    "indicator history",
+    "proof score history",
+    "reality gap score",
+    "learning candidate table",
+    "source trust score",
+    "domain specific schemas"
+  ],
+  "scenario_types": [
+    "clean",
+    "review",
+    "stress",
+    "extreme",
+    "edge_case",
+    "sector_specific",
+    "policy_breach",
+    "hidden_risk"
+  ],
+  "agents": [
+    {
+      "name": "data_collector_agent",
+      "status": "planned_runtime",
+      "role": "collects connected and available sources"
+    },
+    {
+      "name": "validator_agent",
+      "status": "planned_runtime",
+      "role": "checks freshness, license and trust"
+    },
+    {
+      "name": "simulator_agent",
+      "status": "planned_runtime",
+      "role": "generates and runs simulation cases"
+    },
+    {
+      "name": "proof_librarian_agent",
+      "status": "planned_runtime",
+      "role": "promotes strong records into proof library"
+    },
+    {
+      "name": "competitor_watcher_agent",
+      "status": "planned_runtime",
+      "role": "tracks competitors and missing gaps"
+    }
+  ],
+  "source_status": {
+    "connected_now": [
+      "TCMB",
+      "World Bank",
+      "ZENTRA own data",
+      "proof library",
+      "indicator records"
+    ],
+    "planned_public": [
+      "TUIK",
+      "Wikipedia",
+      "official reports",
+      "public datasets",
+      "papers",
+      "patents"
+    ],
+    "license_or_api_required": [
+      "BIST real time",
+      "Bloomberg",
+      "TradingView market data",
+      "YouTube API",
+      "X API",
+      "Facebook API",
+      "Instagram API",
+      "professional company financial feeds"
+    ]
+  }
+}

@@ -269,3 +269,42 @@ zentra_own_data_records
 No new endpoint.
 No parallel engine.
 Same send-report pipeline.
+
+---
+
+# ZENTRA DATA UNIVERSE — TECH BIRTH LOCK
+
+## Status
+ACTIVE
+
+## Registry Files
+- data/zentra-data-universe-registry.json
+- docs/data-universe/ZENTRA_DATA_UNIVERSE_FULL_BIRTH.md
+
+## Active Connected
+- TCMB
+- World Bank
+- ZENTRA own data
+- proof library
+- indicator records
+
+## Planned Sources
+- TUIK
+- Wikipedia
+- public reports
+- papers
+- patents
+- datasets
+
+## Licensed / API Required
+- BIST real-time data
+- Bloomberg
+- TradingView market data
+- YouTube API
+- X API
+- Facebook / Instagram APIs
+
+## Rule
+No fake connection.
+No parallel system.
+Everything is registered before integration.
