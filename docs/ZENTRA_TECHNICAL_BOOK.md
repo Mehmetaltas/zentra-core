@@ -238,3 +238,34 @@ input → derived → rules → policy → decision → live_context → trace �
 
 ## Not Connected
 - BIST real-time data requires licensed market data access.
+
+---
+
+# ZENTRA OWN DATA LAYER — TECH LOCK
+
+## Status
+ACTIVE
+
+## Files
+- lib/zentra-own-data.js
+- api/v1/send-report.js
+
+## DB Table
+zentra_own_data_records
+
+## Output
+- result.own_data
+- trace.own_data
+- zentra_own_data_records
+
+## Generated Scores
+- risk_indicator
+- payment_stress_indicator
+- limit_pressure_indicator
+- reality_gap_score
+- proof_score
+
+## Constraint
+No new endpoint.
+No parallel engine.
+Same send-report pipeline.

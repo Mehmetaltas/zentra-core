@@ -1,6 +1,7 @@
 import crypto from "crypto";
 import { Pool } from "pg";
 import { getLiveContext } from "../../lib/live-data.js";
+import { calculateOwnData, storeOwnData } from "../../lib/zentra-own-data.js";
 
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
@@ -219,6 +220,13 @@ export default async function handler(req, res) {
     if (result.trace) {
       result.trace.live_context = liveContext;
     }
+
+    const ownData = calculateOwnData(body, result);
+    result.own_data = ownData;
+    if (result.trace) {
+      result.trace.own_data = ownData;
+    }
+    await storeOwnData(pool, body, result, ownData);
 
     await pool.query(
       `insert into proof_library (input, derived, triggered, decision, explain, trace)

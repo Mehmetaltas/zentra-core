@@ -273,3 +273,34 @@ BIST resmi gerçek zamanlı veri lisanslıdır.
 Canlı veri için yeni sistem kurulmaz.
 
 Veri mevcut send-report pipeline içine context olarak girer ve trace/proof içinde saklanır.
+
+---
+
+# ZENTRA OWN DATA LAYER — FINAL LOCK
+
+## Tarih
+2026-04-24
+
+## Durum
+ACTIVE
+
+## Karar
+ZENTRA yalnızca dış veri tüketen sistem değildir.
+
+ZENTRA her karar çalışmasından kendi karar verisini üretir.
+
+## Üretilen Veriler
+- scenario type
+- risk indicator
+- payment stress indicator
+- limit pressure indicator
+- reality gap score
+- proof score
+- synthetic tags
+- data loop signal
+
+## İlke
+Kurum verisine bağlanmadan da ZENTRA kendi proof / simulation / indicator veri havuzunu büyütür.
+
+## Sonuç
+ZENTRA kendi iç kanıt ve öğrenme verisini üretmeye başlamıştır.

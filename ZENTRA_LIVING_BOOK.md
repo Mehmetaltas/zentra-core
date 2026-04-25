@@ -606,3 +606,29 @@ Same pipeline.
 
 ### Result
 ZENTRA now attaches live macro/FX context to decision trace and proof records.
+
+---
+
+## ZENTRA OWN DATA LAYER CHECKPOINT
+Date: 2026-04-24
+
+### Change
+ZENTRA own data generation layer added.
+
+### Active Outputs
+- scenario type
+- indicators
+- proof score
+- reality gap score
+- synthetic tags
+- data loop signal
+
+### Database
+zentra_own_data_records
+
+### Rule
+No new endpoint.
+Same pipeline.
+
+### Result
+ZENTRA now generates and stores its own internal evidence dataset.
