@@ -230,6 +230,21 @@ export default async function handler(req, res) {
     }
     await storeOwnData(pool, body, result, ownData);
 
+    await pool.query(
+      `insert into indicator_history 
+       (decision, risk_indicator, payment_stress_indicator, limit_pressure_indicator, proof_score, reality_gap_score, trace)
+       values ($1,$2,$3,$4,$5,$6,$7)`,
+      [
+        result.decision,
+        ownData.indicators?.risk_indicator || 0,
+        ownData.indicators?.payment_stress_indicator || 0,
+        ownData.indicators?.limit_pressure_indicator || 0,
+        ownData.indicators?.proof_score || 0,
+        ownData.indicators?.reality_gap_score || 0,
+        JSON.stringify(result.trace || {})
+      ]
+    );
+
     const simulation = await runSimulationEngine(pool, runEngine, rules, body);
     result.simulation = simulation;
 
