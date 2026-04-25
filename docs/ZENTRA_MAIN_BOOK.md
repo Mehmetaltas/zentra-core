@@ -412,3 +412,53 @@ ZENTRA geçmiş kararlarını analiz eder.
 
 ## Sonuç
 ZENTRA artık kendi karar kalitesini artıran sisteme geçti.
+
+---
+
+# LEARNING ENGINE — FIRST ACTIVE LAYER (LOCKED)
+
+## Tarih
+2026-04-25
+
+## Durum
+ACTIVE — CORE LEARNING ENABLED
+
+## Tanım
+Bu katman, ZENTRA’nın kendi karar geçmişini analiz ederek karar kalitesini artırmaya başladığı ilk aktif öğrenme katmanıdır.
+
+## İlke
+ZENTRA öğrenmez → öğrenmiş doğar.
+Bu katman:
+mevcut bilgi üzerine
+karar kalitesi optimizasyonu yapar.
+
+## Öğrenme Mantığı (v1)
+- düşük risk + reddet → yanlış → gevşetme sinyali
+- yüksek risk + onay → yanlış → sıkılaştırma sinyali
+
+## Fonksiyon
+- geçmiş kararları analiz eder
+- hata sinyali üretir
+- adjustment önerileri oluşturur
+
+## Sınır
+Bu versiyon:
+- rule değiştirmez
+- threshold update etmez
+
+Sadece:
+→ öğrenme sinyali üretir
+
+## Konum
+v1 → öğrenme başlatıldı
+v2 → rule update
+v3 → adaptif sistem
+
+## Sonuç
+ZENTRA artık:
+karar veren sistem değildir.
+
+ZENTRA:
+karar kalitesini ölçen
+ve iyileştiren sistemdir.
+
