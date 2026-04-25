@@ -3,6 +3,7 @@ import { Pool } from "pg";
 import { getLiveContext } from "../../lib/live-data.js";
 import { calculateOwnData, storeOwnData } from "../../lib/zentra-own-data.js";
 import { runSimulationEngine } from "../../lib/simulation-engine.js";
+import { runIndicatorIntelligence } from "../../lib/indicator-intelligence.js";
 
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
@@ -231,6 +232,13 @@ export default async function handler(req, res) {
 
     const simulation = await runSimulationEngine(pool, runEngine, rules, body);
     result.simulation = simulation;
+
+    const indicator_intelligence = await runIndicatorIntelligence(pool);
+    result.indicator_intelligence = indicator_intelligence;
+
+    if (result.trace) {
+      result.trace.indicator_intelligence = indicator_intelligence;
+    }
     if (result.trace) {
       result.trace.simulation = simulation;
     }

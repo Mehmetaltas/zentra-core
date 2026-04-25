@@ -370,3 +370,25 @@ ZENTRA:
 
 ## Sonuç
 ZENTRA kendi kendine çalışan simulation sistemine geçti.
+
+---
+
+# INDICATOR INTELLIGENCE — ACTIVATION
+
+## Tarih
+2026-04-25
+
+## Durum
+ACTIVE
+
+## Karar
+ZENTRA indicator üretmekle kalmaz.
+
+ZENTRA:
+- indicator history tutar
+- ortalama hesaplar
+- anomaly tespit eder
+- drift ölçer
+
+## Sonuç
+ZENTRA artık kendi skorlarını yorumlayan sisteme geçti.
