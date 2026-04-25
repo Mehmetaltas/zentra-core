@@ -5,6 +5,7 @@ import { calculateOwnData, storeOwnData } from "../../lib/zentra-own-data.js";
 import { runSimulationEngine } from "../../lib/simulation-engine.js";
 import { runIndicatorIntelligence } from "../../lib/indicator-intelligence.js";
 import { runLearningEngine } from "../../lib/learning-engine.js";
+import { getLearningPolicyState, runLearningMutationEngine } from "../../lib/learning-mutation-engine.js";
 
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
@@ -82,7 +83,7 @@ function buildDerived(input) {
   };
 }
 
-function applyPolicy(input, decision, derived) {
+function applyPolicy(input, decision, derived, learningPolicyState = {}) {
   const mode = getPolicyMode(input);
   const policyHits = [];
   let finalDecision = decision;
@@ -91,20 +92,34 @@ function applyPolicy(input, decision, derived) {
     return { decision: finalDecision, mode, policyHits };
   }
 
-  if (derived.payment_load > 0.5) {
+  const paymentLoadThreshold = Number(learningPolicyState.payment_load_threshold || 0.5);
+  const limitRatioThreshold = Number(learningPolicyState.limit_ratio_threshold || 4);
+  const zeroIncomePolicy = learningPolicyState.zero_income_policy || "reject_if_debt_positive";
+
+  if (zeroIncomePolicy === "reject_if_debt_positive" && Number(input.income || 0) <= 0 && Number(input.debt || 0) > 0) {
+    policyHits.push({
+      name: "zero_income_debt_policy",
+      rule: "income <= 0 && debt > 0",
+      value: Number(input.debt || 0),
+      action: "Reddet"
+    });
+    finalDecision = "Reddet";
+  }
+
+  if (derived.payment_load > paymentLoadThreshold) {
     policyHits.push({
       name: "payment_load_policy",
-      rule: "payment_load > 0.5",
+      rule: `payment_load > ${paymentLoadThreshold}`,
       value: derived.payment_load,
       action: "Reddet"
     });
     finalDecision = "Reddet";
   }
 
-  if (derived.limit_ratio > 4) {
+  if (derived.limit_ratio > limitRatioThreshold) {
     policyHits.push({
       name: "income_multiple_limit_policy",
-      rule: "limit_ratio > 4",
+      rule: `limit_ratio > ${limitRatioThreshold}`,
       value: derived.limit_ratio,
       action: "Reddet"
     });
@@ -140,7 +155,7 @@ function buildExplain(decision, derived, policyResult) {
   return explain;
 }
 
-function runEngine(input, rules) {
+function runEngine(input, rules, learningPolicyState = {}) {
   let score = 0;
   const triggered = [];
   const categoryScore = {};
@@ -175,9 +190,9 @@ function runEngine(input, rules) {
   else if (score > 30) decision = "İncele";
 
   if (derived.debt_to_income > 10) decision = "Reddet";
-  if (derived.payment_load > 0.5) decision = "Reddet";
+  if (derived.payment_load > Number(learningPolicyState.payment_load_threshold || 0.5)) decision = "Reddet";
 
-  const policy = applyPolicy(input, decision, derived);
+  const policy = applyPolicy(input, decision, derived, learningPolicyState);
   decision = policy.decision;
 
   const explain = buildExplain(decision, derived, policy);
@@ -217,7 +232,8 @@ export default async function handler(req, res) {
 
     const rules = await getRules();
     const liveContext = await getLiveContext();
-    const result = runEngine(body, rules);
+    const learningPolicyState = await getLearningPolicyState(pool);
+    const result = runEngine(body, rules, learningPolicyState);
 
     result.live_context = liveContext;
     if (result.trace) {
@@ -253,10 +269,13 @@ export default async function handler(req, res) {
     result.indicator_intelligence = indicator_intelligence;
 
     const learning = await runLearningEngine(pool);
+    const learningMutation = await runLearningMutationEngine(pool);
     result.learning = learning;
+    result.learning_mutation = learningMutation;
 
     if (result.trace) {
       result.trace.learning = learning;
+      result.trace.learning_mutation = learningMutation;
     }
 
     if (result.trace) {

@@ -658,3 +658,20 @@ ZENTRA launches loaded and keeps learning after launch.
 
 ### Result
 The full data universe birth layer is now registered.
+
+---
+
+## LEARNING ENGINE v2 CHECKPOINT
+Date: 2026-04-25
+
+### Change
+Safe mutation layer added.
+
+### Active
+- learning policy state
+- rule adjustment proposals
+- runtime threshold state
+- zero income debt policy
+
+### Result
+ZENTRA can now produce controlled self-optimization proposals.

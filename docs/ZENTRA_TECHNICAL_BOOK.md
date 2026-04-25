@@ -308,3 +308,33 @@ ACTIVE
 No fake connection.
 No parallel system.
 Everything is registered before integration.
+
+---
+
+# LEARNING ENGINE v2 — TECH LOCK
+
+## Status
+ACTIVE
+
+## File
+lib/learning-mutation-engine.js
+
+## Tables
+- learning_policy_state
+- rule_adjustments
+
+## Runtime Policy Keys
+- payment_load_threshold
+- limit_ratio_threshold
+- zero_income_policy
+
+## Mode
+safe_proposal_mode
+
+## Output
+- result.learning_mutation
+- trace.learning_mutation
+
+## Constraint
+No uncontrolled mutation.
+No blind rule update.

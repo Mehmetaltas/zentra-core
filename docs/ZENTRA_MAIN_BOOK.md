@@ -462,3 +462,35 @@ ZENTRA:
 karar kalitesini ölçen
 ve iyileştiren sistemdir.
 
+
+---
+
+# LEARNING ENGINE v2 — SAFE MUTATION LAYER
+
+## Tarih
+2026-04-25
+
+## Durum
+ACTIVE
+
+## Tanım
+Learning Engine v2, ZENTRA'nın karar geçmişinden policy threshold ayar önerileri ürettiği kontrollü mutasyon katmanıdır.
+
+## Kapsam
+- payment_load_threshold runtime policy state
+- limit_ratio_threshold runtime policy state
+- zero_income_policy
+- rule_adjustments kayıtları
+- safe proposal mode
+
+## İlke
+ZENTRA kendini değiştirebilir; ancak değişim kör uygulanmaz.
+
+Değişim sırası:
+1. öğrenme sinyali
+2. adjustment önerisi
+3. simülasyon doğrulama
+4. güvenli uygulama
+
+## Sonuç
+ZENTRA artık karar kalitesini ölçen değil, kontrollü şekilde optimize etmeye hazırlanan sistemdir.
