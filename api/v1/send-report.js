@@ -4,6 +4,7 @@ import { getLiveContext } from "../../lib/live-data.js";
 import { calculateOwnData, storeOwnData } from "../../lib/zentra-own-data.js";
 import { runSimulationEngine } from "../../lib/simulation-engine.js";
 import { runIndicatorIntelligence } from "../../lib/indicator-intelligence.js";
+import { runLearningEngine } from "../../lib/learning-engine.js";
 
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
@@ -250,6 +251,13 @@ export default async function handler(req, res) {
 
     const indicator_intelligence = await runIndicatorIntelligence(pool);
     result.indicator_intelligence = indicator_intelligence;
+
+    const learning = await runLearningEngine(pool);
+    result.learning = learning;
+
+    if (result.trace) {
+      result.trace.learning = learning;
+    }
 
     if (result.trace) {
       result.trace.indicator_intelligence = indicator_intelligence;

@@ -392,3 +392,23 @@ ZENTRA:
 
 ## Sonuç
 ZENTRA artık kendi skorlarını yorumlayan sisteme geçti.
+
+---
+
+# LEARNING ENGINE — ACTIVATION
+
+## Tarih
+2026-04-25
+
+## Durum
+ACTIVE
+
+## Karar
+ZENTRA geçmiş kararlarını analiz eder.
+
+## Öğrenme Mantığı
+- düşük risk + reddet → yanlış → gevşet
+- yüksek risk + onay → yanlış → sıkılaştır
+
+## Sonuç
+ZENTRA artık kendi karar kalitesini artıran sisteme geçti.
