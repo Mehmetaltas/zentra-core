@@ -347,3 +347,26 @@ ZENTRA own data karar/proof/indicator/simulation hafızasıdır.
 
 ## Sonuç
 ZENTRA Data Universe doğumu başlatılmıştır.
+
+---
+
+# SIMULATION ENGINE — FULL ACTIVATION
+
+## Tarih
+2026-04-25
+
+## Durum
+ACTIVE
+
+## Karar
+ZENTRA artık sadece senaryo üretmez.
+
+ZENTRA:
+- senaryo üretir
+- engine çalıştırır
+- sonucu üretir
+- DB’ye kaydeder
+- learning candidate üretir
+
+## Sonuç
+ZENTRA kendi kendine çalışan simulation sistemine geçti.
