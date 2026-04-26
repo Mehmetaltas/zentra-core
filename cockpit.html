@@ -1,257 +1,186 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-<meta charset="UTF-8" />
+<meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>ZENTRA Financial Cockpit</title>
+<title>ZENTRA Cockpit v4.1 (Live)</title>
+
 <style>
-*{box-sizing:border-box}
-body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#0b0f14;color:#e5e7eb}
-.topbar{height:54px;padding:10px 14px;background:#111827;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #243244}
-.logo{font-weight:700;letter-spacing:.5px}
-select,button{background:#1f2937;color:#e5e7eb;border:1px solid #374151;border-radius:8px;padding:8px 10px}
-button{width:100%;margin-top:8px;text-align:left;cursor:pointer}
-button:hover{background:#273449}
-.container{display:flex;min-height:calc(100vh - 54px)}
-.left{width:230px;background:#0f172a;padding:12px;border-right:1px solid #243244}
-.main{flex:1;padding:12px}
-.right{width:320px;background:#0f172a;padding:12px;border-left:1px solid #243244}
-.card{background:#111827;padding:14px;margin-bottom:12px;border-radius:12px;border:1px solid #243244;box-shadow:0 8px 20px rgba(0,0,0,.18)}
-.title{font-size:13px;color:#9ca3af;margin-bottom:8px}
-.value{font-size:28px;font-weight:700}
-.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
-.green{color:#22c55e}.red{color:#ef4444}.yellow{color:#facc15}.blue{color:#60a5fa}.gray{color:#9ca3af}
-.badge{display:inline-block;padding:4px 8px;border-radius:999px;background:#1f2937;border:1px solid #374151;font-size:12px;margin-top:6px}
-.chartBox{height:260px;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#111827,#172033);border-radius:10px;color:#9ca3af}
-.small{font-size:13px;line-height:1.45;color:#cbd5e1}
-hr{border:0;border-top:1px solid #243244;margin:10px 0}
+body{margin:0;background:#0b0f14;color:#e5e7eb;font-family:Arial}
+.top{display:flex;justify-content:space-between;padding:10px;background:#111827}
+.container{display:flex;height:calc(100vh - 50px)}
+.left,.right{width:260px;background:#0f172a;padding:10px}
+.main{flex:1;padding:10px}
+.card{background:#111827;padding:10px;margin-bottom:10px;border-radius:6px}
+button{display:block;width:100%;margin-bottom:5px;background:#1f2937;color:white;border:none;padding:8px;cursor:pointer}
+.green{color:#22c55e}.red{color:#ef4444}.yellow{color:#facc15}
 </style>
 </head>
+
 <body>
 
-<div class="topbar">
-  <div class="logo">ZENTRA Financial Cockpit</div>
-  <div>
-    <select id="mode" onchange="refreshCurrent()">
-      <option>Pulse</option>
-      <option>Signal</option>
-      <option>Vector</option>
-      <option>Forge</option>
-      <option>Sentinel</option>
-      <option>Atlas</option>
-      <option>Apex</option>
-      <option>Founder</option>
-    </select>
-  </div>
+<div class="top">
+  <div>ZENTRA Cockpit v4.1 (Live Data)</div>
+  <select id="mode" onchange="refresh()">
+    <option>Pulse</option>
+    <option>Signal</option>
+    <option>Vector</option>
+    <option>Forge</option>
+    <option>Sentinel</option>
+    <option>Atlas</option>
+    <option>Apex</option>
+    <option>Founder</option>
+  </select>
 </div>
 
 <div class="container">
-  <aside class="left">
-    <div class="card">
-      <div class="title">Market</div>
-      <button onclick="loadAsset('BIST:XU100')">BIST:XU100</button>
-      <button onclick="loadAsset('BIST:THYAO')">BIST:THYAO</button>
-      <button onclick="loadAsset('USDTRY')">USD/TRY</button>
-      <button onclick="loadAsset('GOLD')">Altın</button>
-      <button onclick="loadAsset('BTC')">BTC</button>
-    </div>
 
-    <div class="card small">
-      <b>Aktif kural:</b><br>
-      Veri + anlam + bağlam + etki gösterilir.
-    </div>
-  </aside>
+<div class="left">
+  <button onclick="load('XU100')">XU100</button>
+  <button onclick="load('BTCUSDT')">BTC</button>
+</div>
 
-  <main class="main">
-    <div class="grid">
-      <div class="card">
-        <div class="title">Varlık</div>
-        <div id="assetName" class="value">-</div>
-        <span id="trendBadge" class="badge">-</span>
-      </div>
-      <div class="card">
-        <div class="title">Fiyat</div>
-        <div id="price" class="value">-</div>
-        <div id="change" class="small">-</div>
-      </div>
-    </div>
+<div class="main">
+  <div class="card" id="modules"></div>
+  <div class="card" id="engine"></div>
+  <div class="card" id="assistant"></div>
+</div>
 
-    <div class="card">
-      <div class="title">Chart Layer</div>
-      <div id="chart" class="chartBox">Grafik alanı</div>
-    </div>
+<div class="right">
+  <div class="card" id="risk"></div>
+  <div class="card" id="decision"></div>
+  <div class="card" id="offer"></div>
+</div>
 
-    <div class="card">
-      <div class="title">Research / News</div>
-      <div id="news" class="small">-</div>
-    </div>
-  </main>
-
-  <aside class="right">
-    <div class="card">
-      <div class="title">Risk</div>
-      <div id="risk" class="value">-</div>
-      <div id="riskMeaning" class="small">-</div>
-    </div>
-
-    <div class="card">
-      <div class="title">Scenario / Simulation</div>
-      <div id="scenario" class="small">-</div>
-    </div>
-
-    <div class="card">
-      <div class="title">Decision / Assistant</div>
-      <div id="decision" class="small">-</div>
-    </div>
-
-    <div class="card">
-      <div class="title">Audit</div>
-      <div id="audit" class="small">-</div>
-    </div>
-  </aside>
 </div>
 
 <script>
-let currentAsset = "BIST:XU100";
 
-const productRegistry = {
-  zentra_pulse: {
-    name: "ZENTRA Pulse",
-    modules: ["market_overview","chart","news","basic_risk"],
-    market: ["public"],
-    assistant: "zentra_assistant_trade"
-  },
-  zentra_signal: {
-    name: "ZENTRA Signal",
-    modules: ["indicator","alert","screener","macro_signal"],
-    market: ["public","professional"],
-    assistant: "zentra_assistant_trade"
-  },
-  zentra_founder: {
-    name: "ZENTRA Founder",
-    modules: ["private_decision","risk","simulation","portfolio"],
-    market: ["founder"],
-    assistant: "zentra_assistant_founder"
-  }
+// ===== REGISTRY =====
+const registry = {
+modules:{
+  RiskCore:{desc:"Risk skor üretimi"},
+  PayRoute:{desc:"Ödeme yönlendirme"},
+  CreditCore:{desc:"Kredi skorlama"},
+  FraudSentinel:{desc:"Dolandırıcılık tespiti"},
+  ContractMind:{desc:"Sözleşme analizi"},
+  LiquidityCore:{desc:"Likidite yönetimi"},
+  Simulation:{desc:"Senaryo üretimi"}
+},
+modes:{
+  Pulse:["RiskCore"],
+  Signal:["RiskCore","FraudSentinel","CreditCore"],
+  Vector:["RiskCore","PayRoute","CreditCore","LiquidityCore"],
+  Forge:["RiskCore","Simulation"],
+  Sentinel:["RiskCore","FraudSentinel","ContractMind"],
+  Atlas:["RiskCore","LiquidityCore"],
+  Apex:["ALL"],
+  Founder:["ALL"]
+}
 };
 
-function randomBetween(min,max){
-  return Math.random()*(max-min)+min;
-}
+// ===== LIVE ENGINE =====
+async function engine(asset){
 
-function generateData(asset){
-  const risk = Math.floor(randomBetween(20,92));
-  const change = randomBetween(-3.5,3.5);
-  const bull = randomBetween(35,75);
-  const bear = 100 - bull;
+  let price, risk;
+
+  if(asset==="BTCUSDT"){
+    const res = await fetch("https://api.binance.com/api/v3/ticker/price?symbol=BTCUSDT");
+    const data = await res.json();
+    price = Math.floor(data.price);
+
+    // basit risk simülasyonu (şimdilik)
+    risk = Math.floor(Math.random()*100);
+  } else {
+    // fallback (BIST yok)
+    price = Math.floor(Math.random()*10000);
+    risk = Math.floor(Math.random()*100);
+  }
 
   return {
     asset,
-    price: Math.floor(randomBetween(1000,12000)),
-    change: change.toFixed(2),
-    trend: change >= 0 ? "up" : "down",
-    risk_score: risk,
-    volatility: risk > 70 ? "high" : risk > 45 ? "medium" : "low",
-    momentum: change > 1 ? "strong" : change < -1 ? "weak" : "neutral",
-    macro_pressure: risk > 65 ? "high" : "medium",
-    scenarios: [
-      { name: "Yukarı Senaryo", probability: bull.toFixed(1) },
-      { name: "Aşağı Senaryo", probability: bear.toFixed(1) }
-    ],
-    simulation: {
-      downside_risk: (risk/100).toFixed(2),
-      stress_result: risk > 70 ? "stressed" : "stable"
-    },
-    decision: {
-      public: risk > 70 ? "Risk yüksek, dikkatli ilerle." : risk > 45 ? "Kontrollü takip uygun." : "Risk düşük, izleme uygun.",
-      founder: risk > 70 ? "RISK_REDUCE" : change > 1 ? "BUY_PARTIAL" : "WAIT"
-    },
-    audit: {
-      source: "zentra_mock_engine_v1",
-      confidence: randomBetween(0.72,0.93).toFixed(2),
-      last_update: new Date().toISOString()
-    }
+    price,
+    risk,
+    decision: risk>70?"Dikkat":"Takip"
   };
 }
 
-function riskClass(score){
-  if(score > 70) return "red";
-  if(score > 45) return "yellow";
-  return "green";
-}
-
-function assistantMeaning(data){
-  let meaning = "";
-  if(data.risk_score > 70){
-    meaning = "Anlam: Yüksek risk. Bağlam: Volatilite ve makro baskı artmış. Etki: Pozisyon dikkatli yönetilmeli.";
-  } else if(data.risk_score > 45){
-    meaning = "Anlam: Orta risk. Bağlam: Piyasa yön arıyor. Etki: Kademeli ve kontrollü takip daha sağlıklı.";
-  } else {
-    meaning = "Anlam: Düşük risk. Bağlam: Stres sınırlı. Etki: İzleme ve fırsat tarama için uygun alan.";
+// ===== ASSISTANT =====
+function explain(m,risk){
+  if(m==="RiskCore"){
+    if(risk>70) return "Risk yüksek → dikkatli ilerle";
+    if(risk>40) return "Orta risk → kontrollü takip";
+    return "Düşük risk → uygun alan";
   }
-  return meaning;
+  if(m==="FraudSentinel") return "Fraud kontrol aktif";
+  if(m==="CreditCore") return "Kredi analiz yapılıyor";
+  if(m==="PayRoute") return "Ödeme rotası optimize ediliyor";
+  if(m==="LiquidityCore") return "Likidite analiz ediliyor";
+  if(m==="ContractMind") return "Sözleşme inceleniyor";
+  if(m==="Simulation") return "Senaryo üretiliyor";
+  return "Analiz çalışıyor";
 }
 
-function render(data){
+// ===== SALES =====
+function setMode(m){
+  document.getElementById("mode").value = m;
+  refresh();
+}
+
+function offer(risk){
+  if(risk<40) return "Başlangıç<br><button onclick='setMode(\"Signal\")'>Signal</button>";
+  if(risk<70) return "Orta<br><button onclick='setMode(\"Vector\")'>Vector</button>";
+  return "Yüksek<br><button onclick='setMode(\"Sentinel\")'>Sentinel</button>";
+}
+
+// ===== RENDER =====
+async function render(asset){
+  const data = await engine(asset);
   const mode = document.getElementById("mode").value;
 
-  document.getElementById("assetName").textContent = data.asset;
-  document.getElementById("price").textContent = data.price.toLocaleString("tr-TR");
-  document.getElementById("change").innerHTML =
-    `Değişim: <span class="${data.trend === "up" ? "green" : "red"}">%${data.change}</span>`;
+  let mods = registry.modes[mode];
+  if(mods[0]==="ALL") mods = Object.keys(registry.modules);
 
-  document.getElementById("trendBadge").textContent = data.trend === "up" ? "Yukarı trend" : "Aşağı baskı";
-  document.getElementById("trendBadge").className = "badge " + (data.trend === "up" ? "green" : "red");
+  let mhtml="<b>Modüller:</b><br>";
+  let ahtml="<b>Assistant:</b><br>";
 
-  document.getElementById("chart").innerHTML =
-    `<div>
-      <b>${data.asset}</b><br><br>
-      Grafik + Risk Overlay + Senaryo Yolu<br>
-      <span class="gray">Mode: ${mode}</span>
-    </div>`;
+  mods.forEach(m=>{
+    mhtml+=`<br><b>${m}</b><br>${registry.modules[m].desc}`;
+    ahtml+=`<br>${m}: ${explain(m,data.risk)}`;
+  });
 
-  document.getElementById("news").innerHTML =
-    `Veri: Piyasa hareketi izleniyor.<br>
-     Anlam: Haber ve makro baskı karar etkisine dönüştürülür.<br>
-     Etki: Public modda yatırım tavsiyesi verilmez, risk ve senaryo anlatılır.`;
+  document.getElementById("modules").innerHTML=mhtml;
+  document.getElementById("assistant").innerHTML=ahtml;
+
+  document.getElementById("engine").innerHTML =
+    "Asset:"+data.asset+"<br>Fiyat:"+data.price;
+
+  let rc=data.risk>70?"red":data.risk>40?"yellow":"green";
 
   document.getElementById("risk").innerHTML =
-    `<span class="${riskClass(data.risk_score)}">${data.risk_score}</span>`;
-
-  document.getElementById("riskMeaning").textContent = assistantMeaning(data);
-
-  document.getElementById("scenario").innerHTML =
-    `${data.scenarios[0].name}: %${data.scenarios[0].probability}<br>
-     ${data.scenarios[1].name}: %${data.scenarios[1].probability}<hr>
-     Stress: ${data.simulation.stress_result}<br>
-     Downside Risk: ${data.simulation.downside_risk}`;
-
-  const founderLine = mode === "Founder"
-    ? `<hr><b>Founder:</b> ${data.decision.founder}`
-    : "";
+    "Risk:<span class='"+rc+"'>"+data.risk+"</span>";
 
   document.getElementById("decision").innerHTML =
-    `<b>Public:</b> ${data.decision.public}
-     ${founderLine}
-     <hr>
-     <b>Assistant:</b> Bu çıktı veriyle birlikte anlam, bağlam ve etki gösterir.`;
+    "Decision:"+data.decision;
 
-  document.getElementById("audit").innerHTML =
-    `Source: ${data.audit.source}<br>
-     Confidence: ${data.audit.confidence}<br>
-     Update: ${data.audit.last_update}`;
+  document.getElementById("offer").innerHTML =
+    "<b>Öneri:</b><br>"+offer(data.risk);
 }
 
-function loadAsset(asset){
-  currentAsset = asset;
-  render(generateData(asset));
+// ===== LOAD =====
+let current="BTCUSDT";
+
+function load(a){
+  current=a;
+  render(a);
 }
 
-function refreshCurrent(){
-  loadAsset(currentAsset);
+function refresh(){
+  render(current);
 }
 
-loadAsset(currentAsset);
+load("BTCUSDT");
+
 </script>
 
 </body>
