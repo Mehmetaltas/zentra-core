@@ -368,3 +368,43 @@ lib/agent-workforce-v1.js
 
 ## Constraint
 Licensed feeds are registered as not_connected / licensed_required.
+
+---
+
+# REFERENCE EQUIPMENT LAYER — TECH LOCK
+
+## Status
+LOCKED
+
+## Files
+- docs/reference/ZENTRA_REFERENCE_EQUIPMENT_LAYER.md
+- docs/system/ZENTRA_SYSTEM_TRACE_LOCK.md
+- data/zentra-reference-equipment.json
+
+## Active Runtime Equipment
+- api/v1/send-report.js
+- lib/live-data.js
+- lib/zentra-own-data.js
+- lib/data-universe.js
+- lib/simulation-engine.js
+- lib/indicator-intelligence.js
+- lib/learning-engine.js
+- lib/learning-mutation-engine.js
+- lib/agent-workforce-v1.js
+
+## Runtime Outputs
+- result.live_context
+- result.own_data
+- result.simulation
+- result.indicator_intelligence
+- result.learning
+- result.learning_mutation
+- result.agent_workforce
+- result.link
+
+## Rule
+No fake connection.
+No uncontrolled mutation.
+No parallel engine.
+
+All equipment remains inside the same decision / trace / proof pipeline.

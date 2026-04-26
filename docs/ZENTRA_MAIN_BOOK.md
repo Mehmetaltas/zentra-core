@@ -533,3 +533,76 @@ Financial Trade stack başlatıldı:
 ## İlke
 Ajanlar sistemi büyütür ama çorba oluşturmaz.
 Her ajan çıktısı trace/proof akışına bağlanır.
+
+---
+
+# REFERENCE EQUIPMENT LAYER — FINAL LOCK
+
+## Tarih
+2026-04-25
+
+## Durum
+LOCKED
+
+## Ana Karar
+V1 / V2 / V3 donanımları ZENTRA'nın kalıcı referans ekipmanlarıdır.
+
+Bu donanımlar:
+- Academia tarafından sökülen piyasa ürün sınıflarını
+- ZENTRA içinde tekrar kullanılabilir sistem ekipmanına dönüştürür.
+
+## Kapsam
+- Live Data Layer
+- Own Data Layer
+- Simulation Engine
+- Indicator Intelligence
+- Learning Engine v1 / v2
+- Agent Workforce v1.1
+- Financial Trade Starter
+- Source / Competitor Registry
+- Proof Library
+- Decision Trace
+- Policy Layer
+
+## Piyasa Karşılıkları
+- Bloomberg / TradingView → Financial Trade
+- FICO / Experian / Provenir → Decision / Risk / Scoring
+- SAS → Risk Analytics / Governance
+- YouTube / X / Social Tools → General AI
+- Academia Tools → Papers / Patents / Datasets
+
+## Kural
+Bağlı olmayan kaynak aktif gösterilmez.
+
+Durumlar:
+- active
+- starter
+- planned
+- licensed_required
+- not_connected
+
+## Sonuç
+Academia söker.
+ZENTRA donanıma çevirir.
+Intel / General / Financial Trade kendi alanında kullanır.
+
+---
+
+# BOOK / SYSTEM EQUALITY LOCK
+
+## Tarih
+2026-04-25
+
+## Durum
+LOCKED
+
+## Karar
+Kod, ana kitap, teknik kitap ve living book eşit yürür.
+
+## İlke
+Sistem değişikliği kitapsız olmaz.
+Kitap kararı kodsuz kalmaz.
+Living book iz bırakır.
+
+## Sonuç
+ZENTRA üçlü kitap sistemi ile çalışan sistem tekrar hizalanmıştır.

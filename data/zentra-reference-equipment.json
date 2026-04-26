@@ -1,0 +1,35 @@
+{
+  "status": "LOCKED",
+  "principle": "Academia decomposes market products, ZENTRA converts them into reusable reference equipment.",
+  "active_equipment": [
+    "Live Data Layer",
+    "Own Data Layer",
+    "Simulation Engine",
+    "Indicator Intelligence",
+    "Learning Engine v1",
+    "Learning Engine v2 Safe Mutation",
+    "Agent Workforce v1.1",
+    "Financial Trade Starter",
+    "Source Registry",
+    "Competitor Registry",
+    "Proof Library",
+    "Decision Trace",
+    "Policy Layer"
+  ],
+  "market_references": {
+    "Bloomberg_TradingView": "Financial Trade / market data / chart / indicator",
+    "FICO_Experian_Provenir": "Decision / risk / scoring",
+    "SAS": "Risk analytics / governance",
+    "YouTube_X_Social": "General AI / content-social tracking",
+    "Academia_Tools": "papers / patents / datasets / research tracking"
+  },
+  "missing_or_planned": [
+    "Full market data feed",
+    "Full chart engine",
+    "Full order execution",
+    "Full social ingestion",
+    "Full academic ingestion",
+    "Full product-market watcher"
+  ],
+  "rule": "No fake connection. Licensed or unavailable data remains licensed_required or not_connected."
+}

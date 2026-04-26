@@ -698,3 +698,35 @@ No uncontrolled auto apply.
 
 ### Result
 ZENTRA now has a working agent runtime skeleton.
+
+---
+
+## REFERENCE EQUIPMENT + BOOK/SYSTEM EQUALITY CHECKPOINT
+Date: 2026-04-25
+
+### Status
+LOCKED
+
+### Decision
+V1 / V2 / V3 equipment is now permanent reusable reference infrastructure.
+
+### Active
+- Live Data Layer
+- Own Data Layer
+- Simulation Engine
+- Indicator Intelligence
+- Learning Engine v1/v2
+- Agent Workforce v1.1
+- Financial Trade Starter
+- Source / Competitor Registry
+
+### Rule
+Academia decomposes.
+ZENTRA converts into equipment.
+Intel / General / Financial Trade use by domain.
+
+### Book-System Rule
+Main book, technical book, living book and code must stay equal.
+
+### Result
+ZENTRA reference equipment layer and trace system are locked.
