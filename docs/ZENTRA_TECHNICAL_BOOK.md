@@ -408,3 +408,56 @@ No uncontrolled mutation.
 No parallel engine.
 
 All equipment remains inside the same decision / trace / proof pipeline.
+
+---
+
+# Technical Block: Self-Repair / Health / Fault Memory
+
+ZENTRA için Self-Repair mimarisi zorunlu teknik katmandır.
+
+Core repair cycle:
+
+1. Detect
+2. Classify
+3. Diagnose
+4. Safe Fix
+5. Verify
+6. Log
+7. Learn
+
+Planned files:
+
+core/health-check.js
+core/fault-classifier.js
+core/repair-rules.js
+core/repair-engine.js
+core/safe-fix-runner.js
+core/observability.js
+logs/health-log.json
+logs/repair-log.json
+docs/books/living/self-repair-memory.md
+
+Fault families:
+
+- Runtime / process / port
+- Frontend / render / cache
+- Backend / API / endpoint
+- Network / CORS / origin
+- Auth / session / plan
+- Data / fallback / source
+- Portfolio / weight / normalization
+- Decision / risk / trend
+- Security / role / plan guard
+- Git / version / deploy
+
+Mandatory health check after every major code block:
+
+curl -s http://127.0.0.1:3000/api/test
+curl -s http://127.0.0.1:3000/api/risk?symbol=BTCUSDT
+node -c core/server.js
+grep -n "ZENTRA v" cockpit.html
+git status --short
+
+Rule:
+No new ZENTRA system block is considered stable unless health check, syntax check, runtime check and git check pass.
+

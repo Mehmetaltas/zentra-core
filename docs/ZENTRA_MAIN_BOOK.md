@@ -586,3 +586,27 @@ Living book iz bırakır.
 
 ## Sonuç
 ZENTRA üçlü kitap sistemi ile çalışan sistem tekrar hizalanmıştır.
+
+---
+
+# ZENTRA Self-Repair & Maintenance Intelligence
+
+ZENTRA yalnızca çalışan bir sistem değil; kendi arızalarını tanıyan, sınıflandıran, güvenli şekilde düzelten ve her arızadan öğrenen bir sistem olarak tasarlanır.
+
+Ana döngü:
+
+Detect
+→ Classify
+→ Diagnose
+→ Fix
+→ Verify
+→ Log
+→ Learn
+
+ZENTRA; frontend, backend, auth, data, payment, portfolio, decision, security, deploy, runtime, cache, CORS, port ve API arızalarını kendi bakım hafızasında tutar.
+
+Her arıza yalnızca hata değil, sistemin öğrenme verisidir.
+
+Kilit karar:
+ZENTRA arızayı sadece bulmaz; güvenli sınırlar içinde düzeltir, sonucu test eder ve aynı hata tekrarlandığında repair memory üzerinden çözüm uygular.
+
