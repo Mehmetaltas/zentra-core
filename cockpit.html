@@ -3,185 +3,265 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>ZENTRA Cockpit v4.1 (Live)</title>
-
+<title>ZENTRA v6.6 SYSTEM FINAL</title>
 <style>
 body{margin:0;background:#0b0f14;color:#e5e7eb;font-family:Arial}
 .top{display:flex;justify-content:space-between;padding:10px;background:#111827}
-.container{display:flex;height:calc(100vh - 50px)}
-.left,.right{width:260px;background:#0f172a;padding:10px}
+.container{display:flex;min-height:calc(100vh - 50px)}
+.left,.right{width:250px;background:#0f172a;padding:10px}
 .main{flex:1;padding:10px}
-.card{background:#111827;padding:10px;margin-bottom:10px;border-radius:6px}
-button{display:block;width:100%;margin-bottom:5px;background:#1f2937;color:white;border:none;padding:8px;cursor:pointer}
+.card{background:#111827;padding:10px;margin-bottom:10px;border-radius:8px}
+button{width:100%;margin-top:6px;background:#1f2937;color:white;border:none;padding:8px;cursor:pointer;border-radius:6px}
+.lock{opacity:.4}
 .green{color:#22c55e}.red{color:#ef4444}.yellow{color:#facc15}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px}
+.small{font-size:12px;opacity:.8}
+input{width:60px}
 </style>
 </head>
-
 <body>
 
 <div class="top">
-  <div>ZENTRA Cockpit v4.1 (Live Data)</div>
-  <select id="mode" onchange="refresh()">
-    <option>Pulse</option>
-    <option>Signal</option>
-    <option>Vector</option>
-    <option>Forge</option>
-    <option>Sentinel</option>
-    <option>Atlas</option>
-    <option>Apex</option>
-    <option>Founder</option>
-  </select>
+  <div>ZENTRA v6.6 SYSTEM FINAL</div>
+  <div id="userBox"></div>
 </div>
 
+<div id="login" class="card">
+  <b>Login</b><br>
+  <input id="user" placeholder="username"><br>
+  <button onclick="login()">Giriş</button>
+</div>
+
+<div id="app" style="display:none">
 <div class="container">
 
 <div class="left">
-  <button onclick="load('XU100')">XU100</button>
-  <button onclick="load('BTCUSDT')">BTC</button>
+  <button onclick="setAsset('BTCUSDT')">BTC</button>
+  <button onclick="setAsset('ETHUSDT')">ETH</button>
+  <button onclick="setAsset('XAU')">Gold</button>
+  <button onclick="setAsset('USDTRY')">USDTRY</button>
+  <button onclick="logout()">Logout</button>
 </div>
 
 <div class="main">
   <div class="card" id="modules"></div>
   <div class="card" id="engine"></div>
   <div class="card" id="assistant"></div>
+  <div class="card"><b>Multi Asset</b><div id="grid" class="grid"></div></div>
+  <div class="card"><b>Portfolio</b><div id="portfolioList"></div><div id="portfolioRisk"></div></div>
 </div>
 
 <div class="right">
   <div class="card" id="risk"></div>
   <div class="card" id="decision"></div>
   <div class="card" id="offer"></div>
+
+  <div class="card">
+    <b>Plan</b><br>
+    <span id="plan"></span>
+    <button onclick="upgrade('pro')">Pro</button>
+    <button onclick="upgrade('institutional')">Institutional</button>
+  </div>
 </div>
 
+</div>
 </div>
 
 <script>
+// ===== USER / SAAS =====
+let user = JSON.parse(localStorage.getItem("zentra_user")) || null;
 
-// ===== REGISTRY =====
-const registry = {
-modules:{
-  RiskCore:{desc:"Risk skor üretimi"},
-  PayRoute:{desc:"Ödeme yönlendirme"},
-  CreditCore:{desc:"Kredi skorlama"},
-  FraudSentinel:{desc:"Dolandırıcılık tespiti"},
-  ContractMind:{desc:"Sözleşme analizi"},
-  LiquidityCore:{desc:"Likidite yönetimi"},
-  Simulation:{desc:"Senaryo üretimi"}
-},
-modes:{
-  Pulse:["RiskCore"],
-  Signal:["RiskCore","FraudSentinel","CreditCore"],
-  Vector:["RiskCore","PayRoute","CreditCore","LiquidityCore"],
-  Forge:["RiskCore","Simulation"],
-  Sentinel:["RiskCore","FraudSentinel","ContractMind"],
-  Atlas:["RiskCore","LiquidityCore"],
-  Apex:["ALL"],
-  Founder:["ALL"]
+function login(){
+  const name=document.getElementById("user").value || "founder";
+  user={name,plan:"free"};
+  localStorage.setItem("zentra_user",JSON.stringify(user));
+  init();
 }
+function logout(){localStorage.removeItem("zentra_user");location.reload();}
+function upgrade(p){user.plan=p;localStorage.setItem("zentra_user",JSON.stringify(user));renderAll();}
+
+// ===== ACCESS / PLAN LOCK =====
+const access={
+  free:["RiskCore"],
+  pro:["RiskCore","Portfolio","Decision","Simulation"],
+  institutional:["ALL"]
+};
+function allowed(module){
+  return access[user.plan].includes("ALL") || access[user.plan].includes(module);
+}
+
+// ===== FULL MODULE REGISTRY =====
+const registry={
+  RiskCore:"Risk analizi",
+  PayRoute:"Ödeme optimizasyonu",
+  CreditCore:"Kredi analizi",
+  FraudSentinel:"Fraud kontrol",
+  ContractMind:"Sözleşme analizi",
+  LiquidityCore:"Likidite yönetimi",
+  Portfolio:"Portföy analizi",
+  Decision:"Karar sistemi",
+  Simulation:"Senaryo"
 };
 
-// ===== LIVE ENGINE =====
-async function engine(asset){
+// ===== CACHE + LIVE/OFFLINE ENGINE =====
+const cache={};
+async function cachedFetch(url,ttl=5000){
+  const now=Date.now();
+  if(cache[url] && now-cache[url].t<ttl) return cache[url].d;
+  const d=await fetch(url).then(r=>r.json());
+  cache[url]={d,t:now};
+  return d;
+}
 
-  let price, risk;
+function clamp(v,min,max){return Math.max(min,Math.min(max,v));}
+function computeRisk(change,trend){
+  const vol=clamp(Math.abs(change)*8,0,1);
+  const tr=clamp(Math.abs(trend)*50,0,1);
+  return Math.floor(clamp((vol*0.6+tr*0.4)*100,0,100));
+}
 
-  if(asset==="BTCUSDT"){
-    const res = await fetch("https://api.binance.com/api/v3/ticker/price?symbol=BTCUSDT");
-    const data = await res.json();
-    price = Math.floor(data.price);
+async function engine(symbol){
+  try{
+    if(symbol.endsWith("USDT")){
+      const t=await cachedFetch(`https://api.binance.com/api/v3/ticker/24hr?symbol=${symbol}`);
+      const change=parseFloat(t.priceChangePercent)/100;
+      const trend=change;
+      return {
+        symbol,
+        price:Math.floor(parseFloat(t.lastPrice)),
+        change,
+        trend,
+        risk:computeRisk(change,trend),
+        source:"live"
+      };
+    }
+  }catch(e){}
 
-    // basit risk simülasyonu (şimdilik)
-    risk = Math.floor(Math.random()*100);
-  } else {
-    // fallback (BIST yok)
-    price = Math.floor(Math.random()*10000);
-    risk = Math.floor(Math.random()*100);
-  }
+  if(symbol==="BTCUSDT") return {symbol,price:65000,change:0.012,trend:0.004,risk:computeRisk(0.012,0.004),source:"fallback"};
+  if(symbol==="ETHUSDT") return {symbol,price:3200,change:0.009,trend:0.003,risk:computeRisk(0.009,0.003),source:"fallback"};
+  if(symbol==="XAU") return {symbol,price:2300,change:0.002,trend:0.001,risk:computeRisk(0.002,0.001),source:"fallback"};
+  if(symbol==="USDTRY") return {symbol,price:32,change:0.001,trend:0.0005,risk:computeRisk(0.001,0.0005),source:"fallback"};
 
-  return {
-    asset,
-    price,
-    risk,
-    decision: risk>70?"Dikkat":"Takip"
-  };
+  return {symbol,price:0,change:0,trend:0,risk:0,source:"fallback"};
 }
 
 // ===== ASSISTANT =====
-function explain(m,risk){
-  if(m==="RiskCore"){
-    if(risk>70) return "Risk yüksek → dikkatli ilerle";
-    if(risk>40) return "Orta risk → kontrollü takip";
-    return "Düşük risk → uygun alan";
+function moduleExplain(module,ctx){
+  if(module==="RiskCore"){
+    if(ctx.risk>75) return "Risk yüksek: pozisyon ve maruziyet azaltımı değerlendirilmeli.";
+    if(ctx.risk>50) return "Risk orta: temkinli takip ve hedge düşünülmeli.";
+    if(ctx.risk>30) return "Risk dengeli: pozisyon korunabilir.";
+    return "Risk düşük: izleme ve kademeli fırsat değerlendirme uygun.";
   }
-  if(m==="FraudSentinel") return "Fraud kontrol aktif";
-  if(m==="CreditCore") return "Kredi analiz yapılıyor";
-  if(m==="PayRoute") return "Ödeme rotası optimize ediliyor";
-  if(m==="LiquidityCore") return "Likidite analiz ediliyor";
-  if(m==="ContractMind") return "Sözleşme inceleniyor";
-  if(m==="Simulation") return "Senaryo üretiliyor";
-  return "Analiz çalışıyor";
+  if(module==="PayRoute") return "Ödeme optimizasyonu: rota, maliyet ve gecikme etkisi hesaplanır.";
+  if(module==="CreditCore") return "Kredi analizi: oynaklık ve risk skoru teminat/limit kararını etkiler.";
+  if(module==="FraudSentinel") return "Fraud kontrol: anomali ve olağandışı hareket izleme katmanı.";
+  if(module==="ContractMind") return "Sözleşme analizi: riskli koşullar ve yükümlülük etkisi okunur.";
+  if(module==="LiquidityCore") return "Likidite yönetimi: nakit tamponu ve stres kapasitesi izlenir.";
+  if(module==="Portfolio") return "Portföy analizi: tek varlık değil, ağırlıklı toplam risk hesaplanır.";
+  if(module==="Decision") return "Karar sistemi: risk skorunu aksiyon diline çevirir.";
+  if(module==="Simulation") return "Senaryo: alternatif hareket yolları ve stres ihtimalleri değerlendirilir.";
+  return "Analiz çalışıyor.";
 }
 
-// ===== SALES =====
-function setMode(m){
-  document.getElementById("mode").value = m;
-  refresh();
+// ===== DECISION / SALES =====
+function decisionEngine(r){
+  if(r>75)return{t:"RISK OFF",c:"red",d:"Pozisyon azalt / hedge düşün"};
+  if(r>50)return{t:"HEDGE",c:"yellow",d:"Kısmi koruma ve volatilite takibi"};
+  if(r>30)return{t:"HOLD",c:"yellow",d:"Pozisyonu koru, yeni giriş sınırlı"};
+  return{t:"ACCUMULATE",c:"green",d:"Kademeli alım izlenebilir"};
+}
+function offer(r){
+  if(r<40)return"Signal önerilir";
+  if(r<70)return"Vector önerilir";
+  return"Sentinel önerilir";
 }
 
-function offer(risk){
-  if(risk<40) return "Başlangıç<br><button onclick='setMode(\"Signal\")'>Signal</button>";
-  if(risk<70) return "Orta<br><button onclick='setMode(\"Vector\")'>Vector</button>";
-  return "Yüksek<br><button onclick='setMode(\"Sentinel\")'>Sentinel</button>";
+// ===== PORTFOLIO =====
+let portfolio=[
+  {symbol:"BTCUSDT",w:40},
+  {symbol:"ETHUSDT",w:30},
+  {symbol:"XAU",w:20},
+  {symbol:"USDTRY",w:10}
+];
+function updateW(s,v){
+  portfolio.find(p=>p.symbol===s).w=parseFloat(v)||0;
+  renderAll();
 }
 
 // ===== RENDER =====
-async function render(asset){
-  const data = await engine(asset);
-  const mode = document.getElementById("mode").value;
-
-  let mods = registry.modes[mode];
-  if(mods[0]==="ALL") mods = Object.keys(registry.modules);
-
-  let mhtml="<b>Modüller:</b><br>";
-  let ahtml="<b>Assistant:</b><br>";
-
-  mods.forEach(m=>{
-    mhtml+=`<br><b>${m}</b><br>${registry.modules[m].desc}`;
-    ahtml+=`<br>${m}: ${explain(m,data.risk)}`;
-  });
-
-  document.getElementById("modules").innerHTML=mhtml;
-  document.getElementById("assistant").innerHTML=ahtml;
-
-  document.getElementById("engine").innerHTML =
-    "Asset:"+data.asset+"<br>Fiyat:"+data.price;
-
-  let rc=data.risk>70?"red":data.risk>40?"yellow":"green";
-
-  document.getElementById("risk").innerHTML =
-    "Risk:<span class='"+rc+"'>"+data.risk+"</span>";
-
-  document.getElementById("decision").innerHTML =
-    "Decision:"+data.decision;
-
-  document.getElementById("offer").innerHTML =
-    "<b>Öneri:</b><br>"+offer(data.risk);
-}
-
-// ===== LOAD =====
 let current="BTCUSDT";
 
-function load(a){
-  current=a;
-  render(a);
+async function renderAll(){
+  document.getElementById("userBox").innerText=user.name+" ("+user.plan+")";
+  document.getElementById("plan").innerText=user.plan;
+
+  const ctx=await engine(current);
+
+  let modulesHtml="<b>Modules</b><br>";
+  let assistantHtml="<b>Assistant</b><br>";
+
+  Object.keys(registry).forEach(m=>{
+    const ok=allowed(m);
+    modulesHtml+=`<div class="${ok?'':'lock'}">${m} ${ok?'':'🔒'}<br><span class="small">${registry[m]}</span></div>`;
+    if(ok) assistantHtml+=`<br><b>${m}:</b> ${moduleExplain(m,ctx)}`;
+  });
+
+  document.getElementById("modules").innerHTML=modulesHtml;
+  document.getElementById("assistant").innerHTML=assistantHtml;
+
+  document.getElementById("engine").innerHTML=
+    `<b>${ctx.symbol}</b><br>Fiyat:${ctx.price}<br>
+    <span class="small">Change:${ctx.change.toFixed(4)} | Trend:${ctx.trend.toFixed(4)} | Source:${ctx.source}</span>`;
+
+  const rc=ctx.risk>70?"red":ctx.risk>40?"yellow":"green";
+  document.getElementById("risk").innerHTML=`Risk:<span class="${rc}">${ctx.risk}</span>`;
+
+  if(allowed("Decision")){
+    const d=decisionEngine(ctx.risk);
+    document.getElementById("decision").innerHTML=`<span class="${d.c}">${d.t}</span><br><span class="small">${d.d}</span>`;
+  }else{
+    document.getElementById("decision").innerHTML="🔒 Upgrade";
+  }
+
+  document.getElementById("offer").innerHTML=offer(ctx.risk);
+
+  const results=await Promise.all(portfolio.map(p=>engine(p.symbol)));
+
+  let grid="";
+  results.forEach(r=>{
+    const c=r.risk>70?"red":r.risk>40?"yellow":"green";
+    grid+=`<div class="card"><b>${r.symbol}</b><br>Fiyat:${r.price}<br>Risk:<span class="${c}">${r.risk}</span><br><span class="small">${r.source}</span></div>`;
+  });
+  document.getElementById("grid").innerHTML=grid;
+
+  if(allowed("Portfolio")){
+    const totalW=portfolio.reduce((s,p)=>s+p.w,0)||1;
+    let totalRisk=0, html="";
+    results.forEach((r,i)=>{
+      const w=portfolio[i].w/totalW;
+      totalRisk+=r.risk*w;
+      html+=`${r.symbol} <input value="${portfolio[i].w}" onchange="updateW('${r.symbol}',this.value)"> `;
+    });
+    const pr=Math.floor(totalRisk);
+    const pc=pr>70?"red":pr>40?"yellow":"green";
+    document.getElementById("portfolioList").innerHTML=html;
+    document.getElementById("portfolioRisk").innerHTML=`Portfolio Risk:<span class="${pc}">${pr}</span>`;
+  }else{
+    document.getElementById("portfolioList").innerHTML="🔒 Locked";
+    document.getElementById("portfolioRisk").innerHTML="";
+  }
 }
 
-function refresh(){
-  render(current);
+function setAsset(s){current=s;renderAll();}
+
+function init(){
+  document.getElementById("login").style.display="none";
+  document.getElementById("app").style.display="block";
+  renderAll();
 }
 
-load("BTCUSDT");
-
+if(user){init();}
 </script>
-
 </body>
 </html>
