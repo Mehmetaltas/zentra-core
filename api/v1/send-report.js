@@ -273,6 +273,17 @@ export default async function handler(req, res) {
     result.learning = learning;
     result.learning_mutation = learningMutation;
 
+    const agentWorkforce = await runAgentWorkforceV1(pool, runEngine, rules, body);
+    result.agent_workforce = {
+      status: agentWorkforce.status,
+      agents: agentWorkforce.agents,
+      real_data: agentWorkforce.real_data,
+      financial_trade: agentWorkforce.financial_trade,
+      simulation_feedback: agentWorkforce.simulation_feedback,
+      proposal_validation: agentWorkforce.proposal_validation,
+      controlled_apply: agentWorkforce.controlled_apply
+    };
+
     if (result.trace) {
       result.trace.learning = learning;
       result.trace.learning_mutation = learningMutation;

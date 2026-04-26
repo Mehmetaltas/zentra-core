@@ -675,3 +675,26 @@ Safe mutation layer added.
 
 ### Result
 ZENTRA can now produce controlled self-optimization proposals.
+
+---
+
+## AGENT WORKFORCE v1 CHECKPOINT
+Date: 2026-04-25
+
+### Change
+Agent Workforce runtime added.
+
+### Active
+- real data lite collection
+- validation
+- financial trade starter
+- simulation feedback
+- proposal validation
+- controlled apply placeholder
+
+### Rule
+No fake licensed data connection.
+No uncontrolled auto apply.
+
+### Result
+ZENTRA now has a working agent runtime skeleton.

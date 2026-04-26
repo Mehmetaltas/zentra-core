@@ -338,3 +338,33 @@ safe_proposal_mode
 ## Constraint
 No uncontrolled mutation.
 No blind rule update.
+
+---
+
+# AGENT WORKFORCE v1 — TECH LOCK
+
+## Status
+ACTIVE
+
+## File
+lib/agent-workforce-v1.js
+
+## Tables
+- agent_runtime_log
+- financial_trade_registry
+- financial_trade_indicators
+
+## Output
+- result.agent_workforce
+
+## Agents
+- data_collector_agent
+- validator_agent
+- simulator_agent
+- learning_agent
+- proposal_validation_agent
+- execution_agent
+- financial_trade_agent
+
+## Constraint
+Licensed feeds are registered as not_connected / licensed_required.

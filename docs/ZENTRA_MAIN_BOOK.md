@@ -494,3 +494,42 @@ Değişim sırası:
 
 ## Sonuç
 ZENTRA artık karar kalitesini ölçen değil, kontrollü şekilde optimize etmeye hazırlanan sistemdir.
+
+---
+
+# AGENT WORKFORCE v1 — RUNTIME LOCK
+
+## Tarih
+2026-04-25
+
+## Durum
+ACTIVE
+
+## Kapsam
+- data_collector_agent
+- validator_agent
+- simulator_agent
+- learning_agent
+- proposal_validation_agent
+- execution_agent
+- financial_trade_agent
+
+## Aktif Veri
+- TCMB
+- World Bank
+
+## Lisanslı / Bağlı Değil
+- BIST realtime
+- Bloomberg
+- TradingView realtime feeds
+
+## Financial Trade
+Financial Trade stack başlatıldı:
+- macro/FX context
+- indicator base
+- licensed feed registry
+- order execution inactive
+
+## İlke
+Ajanlar sistemi büyütür ama çorba oluşturmaz.
+Her ajan çıktısı trace/proof akışına bağlanır.
