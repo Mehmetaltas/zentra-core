@@ -1,50 +1,66 @@
 <!DOCTYPE html>
-<html>
+<html lang="tr">
 <head>
 <meta charset="UTF-8">
-<title>ZENTRA v9.1 PLAN FIXED</title>
+<title>ZENTRA v10 Full Cockpit Merge</title>
 <style>
-body{background:#0b0f14;color:#fff;font-family:Arial}
-.container{display:flex}
-.left,.right{width:200px;padding:10px}
+body{margin:0;background:#0b0f14;color:#fff;font-family:Arial}
+.top{display:flex;justify-content:space-between;align-items:center;padding:10px;background:#111827}
+.container{display:flex;min-height:calc(100vh - 52px)}
+.left,.right{width:250px;background:#0f172a;padding:10px}
 .main{flex:1;padding:10px}
-.card{background:#111827;padding:10px;margin:10px;border-radius:8px}
-button{margin:5px;padding:8px;background:#1f2937;color:white;border:none}
-.lock{opacity:.4}
+.card{background:#111827;padding:10px;margin-bottom:10px;border-radius:8px}
+button,input{margin:5px;padding:8px;background:#1f2937;color:white;border:0;border-radius:6px}
+button{cursor:pointer;width:100%}
+.green{color:#22c55e}.yellow{color:#facc15}.red{color:#ef4444}
+.lock{opacity:.45}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:10px}
+.small{font-size:12px;opacity:.8}
 </style>
 </head>
-
 <body>
 
-<h2>ZENTRA v9.1 PLAN FIXED</h2>
+<div class="top">
+  <div><b>ZENTRA v10 Full Cockpit Merge</b></div>
+  <div id="userBox"></div>
+</div>
 
 <div id="login" class="card">
-<input id="u" placeholder="user">
-<input id="p" placeholder="pass" type="password">
-<button onclick="login()">Login</button>
-<div id="loginMsg"></div>
+  <b>Login</b><br>
+  <input id="u" placeholder="user">
+  <input id="p" placeholder="pass" type="password">
+  <button onclick="login()">Login</button>
+  <div id="msg" class="small"></div>
 </div>
 
 <div id="app" style="display:none">
 <div class="container">
 
 <div class="left">
-<button onclick="setAsset('BTCUSDT')">BTC</button>
-<button onclick="setAsset('ETHUSDT')">ETH</button>
-<button onclick="setAsset('XAU')">Gold</button>
-<button onclick="setAsset('USDTRY')">USDTRY</button>
+  <button onclick="setAsset('BTCUSDT')">BTC</button>
+  <button onclick="setAsset('ETHUSDT')">ETH</button>
+  <button onclick="setAsset('XAU')">Gold</button>
+  <button onclick="setAsset('USDTRY')">USDTRY</button>
+  <button onclick="logout()">Logout</button>
 </div>
 
 <div class="main">
-<div class="card" id="engine"></div>
-<div class="card" id="advanced"></div>
+  <div class="card" id="modules"></div>
+  <div class="card" id="engine"></div>
+  <div class="card" id="assistant"></div>
+  <div class="card">
+    <b>Multi Asset / Portfolio</b>
+    <div id="portfolio" class="grid"></div>
+  </div>
 </div>
 
 <div class="right">
-<div class="card">
-Plan: <span id="plan"></span><br>
-<button id="upgradeBtn" onclick="upgrade()">Upgrade</button>
-</div>
+  <div class="card" id="risk"></div>
+  <div class="card" id="decision"></div>
+  <div class="card">
+    Plan: <span id="plan"></span><br>
+    <button id="upgradeBtn" onclick="upgrade()">Upgrade to Pro</button>
+  </div>
 </div>
 
 </div>
@@ -52,65 +68,162 @@ Plan: <span id="plan"></span><br>
 
 <script>
 let token=null;
+let userName=null;
 let plan="free";
 let current="BTCUSDT";
 
-async function login(){
-  try{
-    const r=await fetch("http://127.0.0.1:3000/api/login",{
-      method:"POST",
-      headers:{"Content-Type":"application/json"},
-      body:JSON.stringify({
-        user:document.getElementById("u").value,
-        password:document.getElementById("p").value
-      })
-    });
+const registry={
+  RiskCore:"Risk analizi",
+  PayRoute:"Ödeme optimizasyonu",
+  CreditCore:"Kredi analizi",
+  FraudSentinel:"Fraud kontrol",
+  ContractMind:"Sözleşme analizi",
+  LiquidityCore:"Likidite yönetimi",
+  Portfolio:"Portföy analizi",
+  Decision:"Karar sistemi",
+  Simulation:"Senaryo"
+};
 
-    const d=await r.json();
+const access={
+  free:["RiskCore"],
+  pro:["RiskCore","Portfolio","Decision","Simulation"],
+  institutional:["ALL"]
+};
 
-    if(d.ok){
-      token=d.token;
-      plan=d.plan;
-      document.getElementById("login").style.display="none";
-      document.getElementById("app").style.display="block";
-      render();
-    }else{
-      document.getElementById("loginMsg").innerText="Login failed";
-    }
-  }catch(e){
-    document.getElementById("loginMsg").innerText="Backend bağlantısı yok";
-  }
+function allowed(m){
+  return access[plan].includes("ALL") || access[plan].includes(m);
 }
 
-async function upgrade(){
-  await fetch(`http://127.0.0.1:3000/api/upgrade?token=${token}&plan=pro`);
-  plan="pro";
+async function login(){
+  const r=await fetch("/api/login",{
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body:JSON.stringify({
+      user:document.getElementById("u").value,
+      password:document.getElementById("p").value
+    })
+  });
+
+  const d=await r.json();
+
+  if(!d.ok){
+    document.getElementById("msg").innerText="Login failed";
+    return;
+  }
+
+  token=d.token;
+  userName=d.user;
+  plan=d.plan;
+
+  document.getElementById("login").style.display="none";
+  document.getElementById("app").style.display="block";
   render();
 }
 
+function logout(){
+  token=null;
+  plan="free";
+  location.reload();
+}
+
+async function upgrade(){
+  const r=await fetch("/api/upgrade?token="+token+"&plan=pro");
+  const d=await r.json();
+  if(d.ok){
+    plan=d.plan;
+    render();
+  }
+}
+
 async function engine(symbol){
-  const r=await fetch(`http://127.0.0.1:3000/api/risk?symbol=${symbol}`);
+  const r=await fetch("/api/risk?symbol="+symbol);
   return await r.json();
 }
 
+async function portfolio(){
+  const r=await fetch("/api/portfolio");
+  return await r.json();
+}
+
+function riskColor(r){
+  if(r>70)return"red";
+  if(r>40)return"yellow";
+  return"green";
+}
+
+function moduleExplain(m,d){
+  if(m==="RiskCore") return d.explain;
+  if(m==="PayRoute") return "Ödeme rotası risk ve gecikmeye göre optimize edilir.";
+  if(m==="CreditCore") return "Kredi limiti risk, trend ve volatiliteye göre sıkılaşır.";
+  if(m==="FraudSentinel") return "Anomali ve olağandışı hareketler izlenir.";
+  if(m==="ContractMind") return "Yükümlülükler ve riskli şartlar bağlama göre okunur.";
+  if(m==="LiquidityCore") return "Likidite tamponu risk artışında kritik hale gelir.";
+  if(m==="Portfolio") return "Portföy toplam risk üzerinden okunur.";
+  if(m==="Decision") return "Risk ve momentum aksiyona çevrilir.";
+  if(m==="Simulation") return "Alternatif senaryolar ve stres yolları değerlendirilir.";
+  return "Analiz çalışıyor.";
+}
+
 async function render(){
+  const d=await engine(current);
+  const p=await portfolio();
+
+  document.getElementById("userBox").innerText=(userName||"user")+" ("+plan+")";
   document.getElementById("plan").innerText=plan;
 
-  const d=await engine(current);
+  let mhtml="<b>Modules</b><br>";
+  let ahtml="<b>Assistant</b><br>";
+
+  Object.keys(registry).forEach(m=>{
+    const ok=allowed(m);
+    mhtml+=`<div class="${ok?'':'lock'}"><b>${m}</b> ${ok?'':'🔒'}<br><span class="small">${registry[m]}</span></div>`;
+    if(ok){
+      ahtml+=`<br><b>${m}:</b> ${moduleExplain(m,d)}`;
+    }
+  });
+
+  document.getElementById("modules").innerHTML=mhtml;
+  document.getElementById("assistant").innerHTML=ahtml;
 
   document.getElementById("engine").innerHTML=
-    `${d.symbol}<br>Fiyat:${d.price}<br>Risk:${d.risk}<br>Source:${d.source}`;
+    `<b>${d.symbol}</b><br>
+     Fiyat:${d.price}<br>
+     Change:${d.change}<br>
+     Trend:${d.trend}<br>
+     Vol:${d.volatility.toFixed(2)} | Momentum:${d.momentum.toFixed(2)}<br>
+     Source:${d.source}`;
 
-  if(plan==="free"){
-    document.getElementById("advanced").innerHTML=
-      `<div class="lock">🔒 Advanced analytics locked</div>`;
+  document.getElementById("risk").innerHTML=
+    `Risk:<span class="${riskColor(d.risk)}">${d.risk}</span>`;
+
+  if(allowed("Decision")){
+    document.getElementById("decision").innerHTML=
+      `<b>${d.decision}</b><br><span class="small">${d.explain}</span>`;
   }else{
-    document.getElementById("advanced").innerHTML=
-      `Decision: ${d.decision}<br>Trend: ${d.trend}`;
+    document.getElementById("decision").innerHTML="🔒 Upgrade required";
   }
 
   document.getElementById("upgradeBtn").style.display =
-    plan==="institutional" ? "none" : "inline-block";
+    plan==="institutional" ? "none" : "block";
+
+  let ph="";
+  p.assets.forEach(a=>{
+    ph+=`<div class="card">
+      <b>${a.symbol}</b><br>
+      Fiyat:${a.price}<br>
+      Risk:<span class="${riskColor(a.risk)}">${a.risk}</span><br>
+      Weight:${a.weight}<br>
+      ${a.decision}
+    </div>`;
+  });
+
+  ph+=`<div class="card">
+    <b>Portfolio Risk</b><br>
+    <span class="${riskColor(p.portfolioRisk)}">${p.portfolioRisk}</span><br>
+    ${allowed("Portfolio") ? p.decision : "🔒 Locked"}
+  </div>`;
+
+  document.getElementById("portfolio").innerHTML=ph;
 }
 
 function setAsset(s){
