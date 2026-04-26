@@ -6,6 +6,7 @@ import { runSimulationEngine } from "../../lib/simulation-engine.js";
 import { runIndicatorIntelligence } from "../../lib/indicator-intelligence.js";
 import { runLearningEngine } from "../../lib/learning-engine.js";
 import { getLearningPolicyState, runLearningMutationEngine } from "../../lib/learning-mutation-engine.js";
+import { runAgentWorkforceV1 } from "../../lib/agent-workforce-v1.js";
 
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
