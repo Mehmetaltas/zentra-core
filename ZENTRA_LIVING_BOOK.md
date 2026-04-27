@@ -740,3 +740,30 @@ Agent orchestration layer added.
 
 ### Result
 System now flows as job chain.
+
+---
+
+## LAUNCH STRATEGY CHECKPOINT
+Date: 2026-04-27
+
+### Decision
+ZENTRA will not launch as a small demo, pilot, or idea presentation.
+
+### Locked Sequence
+1. Modules complete
+2. Screens complete
+3. Internal test / simulation complete
+4. Proof pack complete
+5. Launch
+6. Marketing / advertising / public distribution
+7. Selected investor outreach
+
+### Founder Rule
+Founder control remains protected.
+
+### Investor Rule
+If a suitable investor joins, ZENTRA accelerates.
+If not, ZENTRA continues independently.
+
+### Result
+The launch model is now locked as full-system-first.

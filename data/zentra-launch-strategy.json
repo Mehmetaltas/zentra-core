@@ -1,0 +1,21 @@
+{
+  "status": "LOCKED",
+  "model": "full_system_first",
+  "sequence": [
+    "modules_completed",
+    "screens_completed",
+    "internal_test_simulation_completed",
+    "proof_pack_completed",
+    "public_launch",
+    "marketing_distribution",
+    "selected_investor_outreach"
+  ],
+  "rules": {
+    "demo_first": false,
+    "pilot_first": false,
+    "half_product_launch": false,
+    "founder_control": true,
+    "investor_role": "acceleration_not_survival",
+    "preferred_structure": "70_founder_30_investor"
+  }
+}

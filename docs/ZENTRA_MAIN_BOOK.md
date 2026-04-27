@@ -610,3 +610,40 @@ Her arıza yalnızca hata değil, sistemin öğrenme verisidir.
 Kilit karar:
 ZENTRA arızayı sadece bulmaz; güvenli sınırlar içinde düzeltir, sonucu test eder ve aynı hata tekrarlandığında repair memory üzerinden çözüm uygular.
 
+
+---
+
+# ZENTRA LAUNCH STRATEGY — FULL SYSTEM FIRST LOCK
+
+## Durum
+LOCKED
+
+## Karar
+ZENTRA küçük demo, yarım pilot veya fikir sunumu olarak çıkmaz.
+
+ZENTRA önce tam yayınlanabilir sistem olur, sonra güçlü çıkış yapar.
+
+## Çıkış Sırası
+1. Modüller tamam
+2. Ekranlar tamam
+3. İç test / simülasyon tamam
+4. Proof pack tamam
+5. Yayın
+6. Pazarlama / reklam / tanıtım
+7. Seçilmiş yatırımcı outreach
+
+## Yatırımcı Kuralı
+Önce sistem kanıtlanır.
+Sonra 2-3 seçilmiş güçlü yatırımcıya durum gösterilir.
+
+Varsayılan ortaklık ilkesi:
+- Kurucu kontrolü korunur
+- Hedef yapı: %70 kurucu / %30 yatırımcı
+
+## İlke
+Yatırımcı gelirse hızlanılır.
+Yatırımcı gelmezse ZENTRA bağımsız devam eder.
+
+## Sonuç
+ZENTRA'nın çıkış modeli:
+FULL BUILD → INTERNAL PROOF → PUBLIC LAUNCH → DISTRIBUTION → SELECTIVE INVESTOR OUTREACH → SCALE

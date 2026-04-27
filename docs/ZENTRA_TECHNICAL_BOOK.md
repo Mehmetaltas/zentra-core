@@ -477,3 +477,35 @@ result.agent_orchestration
 
 ## Rule
 No parallel orchestration systems.
+
+---
+
+# LAUNCH STRATEGY — TECH TRACE LOCK
+
+## Status
+LOCKED
+
+## Rule
+No demo-first.
+No pilot-first.
+No half-product launch.
+
+## Required Before Launch
+- modules completed
+- screens completed
+- internal simulation tests completed
+- proof pack completed
+- public launch prepared
+- marketing/distribution prepared
+- selected investor outreach prepared
+
+## System Rule
+Launch readiness is not only UI readiness.
+
+Launch readiness requires:
+- working runtime
+- proof outputs
+- simulation evidence
+- product packages
+- cockpit readiness
+- trace / audit evidence
