@@ -5,6 +5,7 @@ const { URL } = require("url");
 const intel = require("./intelligence");
 const portfolioIntel = require("./portfolio-intel");
 const actionLayer = require("./action");
+const db = require("./db");
 const userContext = require("./user-context");
 
 const PORT = 3000;
@@ -59,7 +60,10 @@ const server = http.createServer((req,res)=>{
       const token=Math.random().toString(36).slice(2);
       sessions[token]=p.user;
 
-      return send(res,{ok:true,token,plan:f.plan,user:p.user});
+      
+db.saveUser(p.user,{plan:f.plan});
+return send(res,{ok:true,token,plan:f.plan,user:p.user});
+
     });
     return;
   }
@@ -117,6 +121,29 @@ action_personal: personalized,
 source:"backend"
 
     });
+  }
+
+  
+  if(u.pathname==="/api/save-portfolio"){
+    const token=u.searchParams.get("token");
+    const username=sessions[token];
+
+    if(!username){
+      return send(res,{ok:false,error:"unauthorized"});
+    }
+
+    let body="";
+    req.on("data",c=>body+=c);
+    req.on("end",()=>{
+      try{
+        const weights = JSON.parse(body||"{}");
+        db.savePortfolio(username,weights);
+        return send(res,{ok:true});
+      }catch{
+        return send(res,{ok:false});
+      }
+    });
+    return;
   }
 
   if(u.pathname==="/api/portfolio"){

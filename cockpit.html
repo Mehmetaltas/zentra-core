@@ -46,12 +46,15 @@ button{cursor:pointer;width:100%}
 
 <div class="main">
   <div class="card" id="modules"></div>
-  <div class="card" id="engine"></div>
+  <div class="card" id="actionBox"></div>
+<div class="card" id="engine"></div>
   <div class="card" id="assistant"></div>
   <div class="card" id="technicalExplain"></div>
+
   <div class="card">
     <b>Multi Asset / Portfolio</b>
     <div id="portfolio" class="grid"></div>
+    <div class="card" id="portfolioExplain"></div>
   </div>
 </div>
 
@@ -96,29 +99,33 @@ function allowed(m){
 }
 
 async function login(){
-  const r=await fetch("/api/login",{
-    method:"POST",
-    headers:{"Content-Type":"application/json"},
-    body:JSON.stringify({
-      user:document.getElementById("u").value,
-      password:document.getElementById("p").value
-    })
-  });
+  try{
+    const r=await fetch("/api/login",{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({
+        user:document.getElementById("u").value,
+        password:document.getElementById("p").value
+      })
+    });
 
-  const d=await r.json();
+    const d=await r.json();
 
-  if(!d.ok){
-    document.getElementById("msg").innerText="Login failed";
-    return;
+    if(!d.ok){
+      document.getElementById("msg").innerText="Login failed";
+      return;
+    }
+
+    token=d.token;
+    userName=d.user;
+    plan=d.plan;
+
+    document.getElementById("login").style.display="none";
+    document.getElementById("app").style.display="block";
+    savePortfolio(); render();
+  }catch(e){
+    document.getElementById("msg").innerText="Backend bağlantısı yok";
   }
-
-  token=d.token;
-  userName=d.user;
-  plan=d.plan;
-
-  document.getElementById("login").style.display="none";
-  document.getElementById("app").style.display="block";
-  render();
 }
 
 function logout(){
@@ -132,7 +139,7 @@ async function upgrade(){
   const d=await r.json();
   if(d.ok){
     plan=d.plan;
-    render();
+    savePortfolio(); render();
   }
 }
 
@@ -189,12 +196,17 @@ async function render(){
   document.getElementById("technicalExplain").innerHTML =
     `<b>Technical Explain</b><br>${d.explain_technical || "Teknik açıklama yok"}`;
 
-  document.getElementById("engine").innerHTML=
+  
+document.getElementById("actionBox").innerHTML =
+  `<b>🎯 Action</b><br>${d.action_personal || d.action.text : "Yok"}`;
+
+document.getElementById("engine").innerHTML=
+
     `<b>${d.symbol}</b><br>
      Fiyat:${d.price}<br>
      Change:${d.change}<br>
      Trend:${d.trend}<br>
-     Vol:${d.volatility.toFixed(2)} | Momentum:${d.momentum.toFixed(2)}<br>
+     Vol:${Number(d.volatility||0).toFixed(2)} | Momentum:${Number(d.momentum||0).toFixed(2)}<br>
      Source:${d.source}`;
 
   document.getElementById("risk").innerHTML=
@@ -202,7 +214,7 @@ async function render(){
 
   if(allowed("Decision")){
     document.getElementById("decision").innerHTML=
-      `<b>${d.decision}</b><br><span class="small">${d.explain}</span>`;
+      `<b>${d.decision}</b><br><span class="small">${d.explain_human || d.explain}</span>`;
   }else{
     document.getElementById("decision").innerHTML="🔒 Upgrade required";
   }
@@ -228,11 +240,23 @@ async function render(){
   </div>`;
 
   document.getElementById("portfolio").innerHTML=ph;
+
+  if(p.analysis){
+    document.getElementById("portfolioExplain").innerHTML =
+      `<b>Portfolio Insight</b><br>
+       ${p.analysis.human}<br><br>
+       <b>Technical</b><br>
+       ${p.analysis.technical}<br>
+       <b>Recommendation</b><br>
+       ${p.analysis.recommendation}`;
+  }else{
+    document.getElementById("portfolioExplain").innerHTML="";
+  }
 }
 
 function setAsset(s){
   current=s;
-  render();
+  savePortfolio(); render();
 }
 </script>
 

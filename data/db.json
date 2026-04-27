@@ -1,0 +1,19 @@
+{
+  "users": {
+    "test": {
+      "plan": "free"
+    },
+    "admin": {
+      "plan": "institutional"
+    }
+  },
+  "portfolios": {
+    "test": {
+      "BTCUSDT": 50,
+      "ETHUSDT": 20,
+      "XAU": 20,
+      "USDTRY": 10
+    }
+  },
+  "contexts": {}
+}
