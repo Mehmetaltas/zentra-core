@@ -7,5 +7,91 @@
     "decision": "ACCUMULATE",
     "source": "backend",
     "explain": "Risk düşük görünüyor. Sert baskı zayıf; kademeli ve kontrollü ilerleme düşünülebilir."
+  },
+  {
+    "timestamp": 1777268116643,
+    "type": "risk",
+    "symbol": "BTCUSDT",
+    "risk": 15,
+    "decision": "ACCUMULATE",
+    "source": "backend",
+    "explain": "Risk düşük görünüyor. Sert baskı zayıf; kademeli ve kontrollü ilerleme düşünülebilir."
+  },
+  {
+    "timestamp": 1777268116656,
+    "type": "risk",
+    "symbol": "BTCUSDT",
+    "risk": 15,
+    "decision": "ACCUMULATE",
+    "source": "backend",
+    "explain": "Risk düşük görünüyor. Sert baskı zayıf; kademeli ve kontrollü ilerleme düşünülebilir."
+  },
+  {
+    "timestamp": 1777268116660,
+    "type": "risk",
+    "symbol": "BTCUSDT",
+    "risk": 15,
+    "decision": "ACCUMULATE",
+    "source": "backend",
+    "explain": "Risk düşük görünüyor. Sert baskı zayıf; kademeli ve kontrollü ilerleme düşünülebilir."
+  },
+  {
+    "timestamp": 1777268116665,
+    "type": "risk",
+    "symbol": "BTCUSDT",
+    "risk": 15,
+    "decision": "ACCUMULATE",
+    "source": "backend",
+    "explain": "Risk düşük görünüyor. Sert baskı zayıf; kademeli ve kontrollü ilerleme düşünülebilir."
+  },
+  {
+    "timestamp": 1777268116668,
+    "type": "risk",
+    "symbol": "BTCUSDT",
+    "risk": 15,
+    "decision": "ACCUMULATE",
+    "source": "backend",
+    "explain": "Risk düşük görünüyor. Sert baskı zayıf; kademeli ve kontrollü ilerleme düşünülebilir."
+  },
+  {
+    "timestamp": 1777268116676,
+    "type": "risk",
+    "symbol": "BTCUSDT",
+    "risk": 15,
+    "decision": "ACCUMULATE",
+    "source": "backend",
+    "explain": "Risk düşük görünüyor. Sert baskı zayıf; kademeli ve kontrollü ilerleme düşünülebilir."
+  },
+  {
+    "timestamp": 1777268149134,
+    "type": "risk",
+    "symbol": "BTCUSDT",
+    "risk": 15,
+    "decision": "ACCUMULATE",
+    "source": "backend",
+    "explain": "Risk düşük görünüyor. Sert baskı zayıf; kademeli ve kontrollü ilerleme düşünülebilir."
+  },
+  {
+    "timestamp": 1777268149149,
+    "type": "portfolio",
+    "portfolioRisk": 10,
+    "decision": "ACCUMULATE",
+    "source": "backend"
+  },
+  {
+    "timestamp": 1777268221661,
+    "type": "risk",
+    "symbol": "ETHUSDT",
+    "risk": 11,
+    "decision": "ACCUMULATE",
+    "source": "backend",
+    "explain": "Risk düşük görünüyor. Sert baskı zayıf; kademeli ve kontrollü ilerleme düşünülebilir."
+  },
+  {
+    "timestamp": 1777268221676,
+    "type": "portfolio",
+    "portfolioRisk": 10,
+    "decision": "ACCUMULATE",
+    "source": "backend"
   }
 ]

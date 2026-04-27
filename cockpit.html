@@ -2,79 +2,119 @@
 <html lang="tr">
 <head>
 <meta charset="UTF-8">
-<title>ZENTRA v10 Full Cockpit Merge</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ZENTRA v10 Premium Cockpit</title>
 <style>
-body{margin:0;background:#0b0f14;color:#fff;font-family:Arial}
-.top{display:flex;justify-content:space-between;align-items:center;padding:10px;background:#111827}
-.container{display:flex;min-height:calc(100vh - 52px)}
-.left,.right{width:250px;background:#0f172a;padding:10px}
-.main{flex:1;padding:10px}
-.card{background:#111827;padding:10px;margin-bottom:10px;border-radius:8px}
-button,input{margin:5px;padding:8px;background:#1f2937;color:white;border:0;border-radius:6px}
-button{cursor:pointer;width:100%}
-.green{color:#22c55e}.yellow{color:#facc15}.red{color:#ef4444}
+:root{
+  --bg:#070b12;--panel:#0f172a;--card:#111827;--soft:#1f2937;
+  --text:#e5e7eb;--muted:#94a3b8;--green:#22c55e;--yellow:#facc15;--red:#ef4444;
+  --line:#243244;--blue:#38bdf8;
+}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(circle at top,#162033 0,#070b12 42%);color:var(--text);font-family:Arial,Helvetica,sans-serif}
+.top{display:flex;justify-content:space-between;align-items:center;padding:14px 18px;background:rgba(15,23,42,.92);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:5}
+.brand{font-weight:800;letter-spacing:.5px}
+.badge{padding:5px 9px;border:1px solid var(--line);border-radius:999px;color:var(--muted);font-size:12px}
+.wrap{padding:14px}
+.login{max-width:420px;margin:60px auto;background:rgba(17,24,39,.92);padding:22px;border-radius:18px;border:1px solid var(--line);box-shadow:0 20px 60px rgba(0,0,0,.35)}
+input,button{padding:10px;border-radius:10px;border:1px solid var(--line);background:#0b1220;color:white}
+input{width:100%;margin:7px 0}
+button{cursor:pointer;background:linear-gradient(135deg,#1f2937,#111827);transition:.15s}
+button:hover{transform:translateY(-1px);border-color:#3b82f6}
+.layout{display:grid;grid-template-columns:230px 1fr 280px;gap:14px}
+.card{background:rgba(17,24,39,.88);border:1px solid var(--line);border-radius:18px;padding:14px;box-shadow:0 12px 35px rgba(0,0,0,.22)}
+.side button{width:100%;margin:6px 0;text-align:left}
+h2,h3{margin:0 0 10px}
+.small{font-size:12px;color:var(--muted);line-height:1.5}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:12px}
+.metric{font-size:34px;font-weight:800}
+.green{color:var(--green)}.yellow{color:var(--yellow)}.red{color:var(--red)}
 .lock{opacity:.45}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:10px}
-.small{font-size:12px;opacity:.8}
+.row{display:flex;justify-content:space-between;gap:10px;margin:6px 0}
+.kpi{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.kpi .card{min-height:105px}
+.action{border-left:4px solid var(--blue)}
+.reportBtn{width:100%;margin-top:10px;background:linear-gradient(135deg,#0f766e,#0f172a)}
+@media(max-width:900px){.layout{grid-template-columns:1fr}.kpi{grid-template-columns:1fr}.top{align-items:flex-start;gap:8px;flex-direction:column}}
 </style>
 </head>
 <body>
 
 <div class="top">
-  <div><b>ZENTRA v10 Full Cockpit Merge</b></div>
-  <div id="userBox"></div>
+  <div>
+    <div class="brand">ZENTRA v10 Premium Cockpit</div>
+    <div class="small">Risk • Portfolio • Decision • Evidence</div>
+  </div>
+  <div id="userBox" class="badge"></div>
 </div>
 
-<div id="login" class="card">
-  <b>Login</b><br>
+<div class="wrap">
+
+<div id="login" class="login">
+  <h2>Login</h2>
+  <div class="small">ZENTRA cockpit’e giriş yap.</div>
   <input id="u" placeholder="user">
   <input id="p" placeholder="pass" type="password">
-  <button onclick="login()">Login</button>
+  <button style="width:100%" onclick="login()">Login</button>
   <div id="msg" class="small"></div>
 </div>
 
 <div id="app" style="display:none">
-<div class="container">
+<div class="layout">
 
-<div class="left">
-  <button onclick="setAsset('BTCUSDT')">BTC</button>
-  <button onclick="setAsset('ETHUSDT')">ETH</button>
-  <button onclick="setAsset('XAU')">Gold</button>
+<div class="side card">
+  <h3>Assets</h3>
+  <button onclick="setAsset('BTCUSDT')">₿ BTC</button>
+  <button onclick="setAsset('ETHUSDT')">◇ ETH</button>
+  <button onclick="setAsset('XAU')">Gold / XAU</button>
   <button onclick="setAsset('USDTRY')">USDTRY</button>
+  <button onclick="downloadReport()" class="reportBtn">Download Report</button>
   <button onclick="logout()">Logout</button>
 </div>
 
-<div class="main">
-  <div class="card" id="modules"></div>
-  <div class="card" id="actionBox"></div>
-<div class="card" id="engine"></div>
+<div>
+  <div class="kpi">
+    <div class="card">
+      <div class="small">Selected Asset</div>
+      <div id="assetName" class="metric">-</div>
+    </div>
+    <div class="card">
+      <div class="small">Risk Score</div>
+      <div id="riskScore" class="metric">-</div>
+    </div>
+    <div class="card action">
+      <div class="small">Decision</div>
+      <div id="decisionText" class="metric" style="font-size:24px">-</div>
+    </div>
+  </div>
+
+  <div class="card" id="engine"></div>
   <div class="card" id="assistant"></div>
   <div class="card" id="technicalExplain"></div>
 
   <div class="card">
-    <b>Multi Asset / Portfolio</b>
+    <h3>Multi Asset / Portfolio</h3>
     <div id="portfolio" class="grid"></div>
-    <div class="card" id="portfolioExplain"></div>
+    <div class="card" id="portfolioExplain" style="margin-top:12px"></div>
   </div>
 </div>
 
-<div class="right">
-  <div class="card" id="risk"></div>
-  <div class="card" id="decision"></div>
+<div>
   <div class="card">
-    Plan: <span id="plan"></span><br>
+    <h3>Plan</h3>
+    <div>Current: <b id="plan"></b></div>
     <button id="upgradeBtn" onclick="upgrade()">Upgrade to Pro</button>
   </div>
+  <div class="card" id="modules"></div>
 </div>
 
 </div>
+</div>
+
 </div>
 
 <script>
-let token=null;
-let userName=null;
-let plan="free";
-let current="BTCUSDT";
+let token=null,userName=null,plan="free",current="BTCUSDT";
 
 const registry={
   RiskCore:"Risk analizi",
@@ -94,70 +134,32 @@ const access={
   institutional:["ALL"]
 };
 
-function allowed(m){
-  return access[plan].includes("ALL") || access[plan].includes(m);
-}
+function allowed(m){return access[plan].includes("ALL")||access[plan].includes(m)}
+function riskColor(r){if(r>70)return"red"; if(r>40)return"yellow"; return"green"}
 
 async function login(){
   try{
-    const r=await fetch("/api/login",{
-      method:"POST",
-      headers:{"Content-Type":"application/json"},
-      body:JSON.stringify({
-        user:document.getElementById("u").value,
-        password:document.getElementById("p").value
-      })
-    });
-
+    const r=await fetch("/api/login",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({user:document.getElementById("u").value,password:document.getElementById("p").value})});
     const d=await r.json();
-
-    if(!d.ok){
-      document.getElementById("msg").innerText="Login failed";
-      return;
-    }
-
-    token=d.token;
-    userName=d.user;
-    plan=d.plan;
-
+    if(!d.ok){document.getElementById("msg").innerText="Login failed";return}
+    token=d.token; userName=d.user; plan=d.plan;
     document.getElementById("login").style.display="none";
     document.getElementById("app").style.display="block";
-    savePortfolio(); render();
-  }catch(e){
-    document.getElementById("msg").innerText="Backend bağlantısı yok";
-  }
+    render();
+  }catch(e){document.getElementById("msg").innerText="Backend bağlantısı yok"}
 }
 
-function logout(){
-  token=null;
-  plan="free";
-  location.reload();
-}
+function logout(){location.reload()}
 
 async function upgrade(){
   const r=await fetch("/api/upgrade?token="+token+"&plan=pro");
   const d=await r.json();
-  if(d.ok){
-    plan=d.plan;
-    savePortfolio(); render();
-  }
+  if(d.ok){plan=d.plan;render()}
 }
 
-async function engine(symbol){
-  const r=await fetch("/api/risk?symbol="+symbol);
-  return await r.json();
-}
-
-async function portfolio(){
-  const r=await fetch("/api/portfolio");
-  return await r.json();
-}
-
-function riskColor(r){
-  if(r>70)return"red";
-  if(r>40)return"yellow";
-  return"green";
-}
+async function engine(symbol){const r=await fetch("/api/risk?symbol="+symbol);return await r.json()}
+async function portfolio(){const r=await fetch("/api/portfolio");return await r.json()}
+function downloadReport(){window.open("/api/report?symbol="+current,"_blank")}
 
 function moduleExplain(m,d){
   if(m==="RiskCore") return d.explain_human || d.explain;
@@ -178,86 +180,57 @@ async function render(){
 
   document.getElementById("userBox").innerText=(userName||"user")+" ("+plan+")";
   document.getElementById("plan").innerText=plan;
+  document.getElementById("assetName").innerText=d.symbol;
+  document.getElementById("riskScore").innerHTML=`<span class="${riskColor(d.risk)}">${d.risk}</span>`;
+  document.getElementById("decisionText").innerHTML=`<span class="${riskColor(d.risk)}">${d.decision}</span>`;
 
-  let mhtml="<b>Modules</b><br>";
-  let ahtml="<b>Assistant</b><br>";
-
+  let mhtml="<h3>Modules</h3>";
+  let ahtml="<h3>Assistant</h3>";
   Object.keys(registry).forEach(m=>{
     const ok=allowed(m);
     mhtml+=`<div class="${ok?'':'lock'}"><b>${m}</b> ${ok?'':'🔒'}<br><span class="small">${registry[m]}</span></div>`;
-    if(ok){
-      ahtml+=`<br><b>${m}:</b> ${moduleExplain(m,d)}`;
-    }
+    if(ok)ahtml+=`<div class="row"><div><b>${m}</b></div></div><div class="small">${moduleExplain(m,d)}</div>`;
   });
 
   document.getElementById("modules").innerHTML=mhtml;
   document.getElementById("assistant").innerHTML=ahtml;
 
-  document.getElementById("technicalExplain").innerHTML =
-    `<b>Technical Explain</b><br>${d.explain_technical || "Teknik açıklama yok"}`;
+  document.getElementById("technicalExplain").innerHTML=
+    `<h3>Technical Explain</h3>${d.explain_technical||"Teknik açıklama yok"}`;
 
-  
-document.getElementById("actionBox").innerHTML =
-  `<b>🎯 Action</b><br>${d.action_personal || d.action.text : "Yok"}`;
+  document.getElementById("engine").innerHTML=
+    `<h3>${d.symbol}</h3>
+    <div class="row"><span>Fiyat</span><b>${d.price}</b></div>
+    <div class="row"><span>Change</span><b>${d.change}</b></div>
+    <div class="row"><span>Trend</span><b>${d.trend}</b></div>
+    <div class="row"><span>Vol / Momentum</span><b>${Number(d.volatility||0).toFixed(2)} / ${Number(d.momentum||0).toFixed(2)}</b></div>
+    <div class="row"><span>Source</span><b>${d.source}</b></div>`;
 
-document.getElementById("engine").innerHTML=
-
-    `<b>${d.symbol}</b><br>
-     Fiyat:${d.price}<br>
-     Change:${d.change}<br>
-     Trend:${d.trend}<br>
-     Vol:${Number(d.volatility||0).toFixed(2)} | Momentum:${Number(d.momentum||0).toFixed(2)}<br>
-     Source:${d.source}`;
-
-  document.getElementById("risk").innerHTML=
-    `Risk:<span class="${riskColor(d.risk)}">${d.risk}</span>`;
-
-  if(allowed("Decision")){
-    document.getElementById("decision").innerHTML=
-      `<b>${d.decision}</b><br><span class="small">${d.explain_human || d.explain}</span>`;
-  }else{
-    document.getElementById("decision").innerHTML="🔒 Upgrade required";
-  }
-
-  document.getElementById("upgradeBtn").style.display =
-    plan==="institutional" ? "none" : "block";
+  document.getElementById("upgradeBtn").style.display=plan==="institutional"?"none":"block";
 
   let ph="";
   p.assets.forEach(a=>{
     ph+=`<div class="card">
       <b>${a.symbol}</b><br>
-      Fiyat:${a.price}<br>
+      <span class="small">Fiyat:${a.price}</span><br>
       Risk:<span class="${riskColor(a.risk)}">${a.risk}</span><br>
-      Weight:${a.weight}<br>
+      <span class="small">Weight:${a.weight}</span><br>
       ${a.decision}
     </div>`;
   });
-
-  ph+=`<div class="card">
-    <b>Portfolio Risk</b><br>
-    <span class="${riskColor(p.portfolioRisk)}">${p.portfolioRisk}</span><br>
-    ${allowed("Portfolio") ? p.decision : "🔒 Locked"}
-  </div>`;
-
+  ph+=`<div class="card"><b>Portfolio Risk</b><br><span class="${riskColor(p.portfolioRisk)} metric">${p.portfolioRisk}</span><br>${allowed("Portfolio")?p.decision:"🔒 Locked"}</div>`;
   document.getElementById("portfolio").innerHTML=ph;
 
   if(p.analysis){
-    document.getElementById("portfolioExplain").innerHTML =
-      `<b>Portfolio Insight</b><br>
-       ${p.analysis.human}<br><br>
-       <b>Technical</b><br>
-       ${p.analysis.technical}<br>
-       <b>Recommendation</b><br>
-       ${p.analysis.recommendation}`;
-  }else{
-    document.getElementById("portfolioExplain").innerHTML="";
+    document.getElementById("portfolioExplain").innerHTML=
+      `<h3>Portfolio Insight</h3>
+      <div>${p.analysis.human}</div><br>
+      <b>Technical</b><br><span class="small">${p.analysis.technical}</span><br><br>
+      <b>Recommendation</b><br>${p.analysis.recommendation}`;
   }
 }
 
-function setAsset(s){
-  current=s;
-  savePortfolio(); render();
-}
+function setAsset(s){current=s;render()}
 </script>
 
 </body>
