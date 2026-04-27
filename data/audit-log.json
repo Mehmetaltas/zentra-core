@@ -1,0 +1,11 @@
+[
+  {
+    "timestamp": 1777265693403,
+    "type": "risk",
+    "symbol": "BTCUSDT",
+    "risk": 15,
+    "decision": "ACCUMULATE",
+    "source": "backend",
+    "explain": "Risk düşük görünüyor. Sert baskı zayıf; kademeli ve kontrollü ilerleme düşünülebilir."
+  }
+]
