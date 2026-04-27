@@ -1,649 +1,82 @@
 # ZENTRA MAIN BOOK
 
----
+ZENTRA bir dashboard değildir.
+ZENTRA bir ekonomik zeka ve işletim sistemidir.
 
-# ZENTRA MATRIX ECOSYSTEM — INFRASTRUCTURE STANDARD
+## Core
+- Risk
+- Portfolio
+- Decision
+- Report
+- Audit
 
-## Date
-2026-04-24
-
-## Status
-LOCKED
-
-## Final Decision
-Full ZENTRA Matrix Ecosystem will be aligned around the Vercel + Neon operating pattern after current infrastructure verification.
-
-## First Rule
-Before adding new structure, the existing system must be checked.
-
-Required verification:
-- Is Vercel already active?
-- Is Neon already connected?
-- Which parts of the current ZENTRA system already use them?
-- Which parts are missing?
-
-## Target Pattern
-- Vercel: interface, deployment, web surface and API layer
-- Neon: memory, data, proof, audit and record layer
-- ZENTRA Core Logic: decision, intelligence and orchestration layer
-
-## Sequence
-1. Verify current system state.
-2. Update books with the verified reality.
-3. Align the system with the books.
-4. Only then continue new technical blocks.
-
-## Rule
-No new decision layer, bridge, A/B test, merge or production switch will be defined before the current Vercel + Neon reality is verified.
+## Amaç
+Veri → karar → aksiyon → sistem
 
 ---
 
-# ZENTRA MATRIX ECOSYSTEM — CORE PRODUCT & MOAT (FINAL LOCK)
-
-## Date
-2026-04-24
-
-## Status
-LOCKED
-
-## Scope
-This block defines only:
-- ZENTRA Matrix Ecosystem core structure
-- ZDB product layers
-- Core moat
-
----
-
-## MAIN STRUCTURE
-
-ZENTRA Matrix Ecosystem is the main system.
-
-Under this system:
-
-- ZDB-13 → Operational Decision Core
-- ZDB-14 → Deep Reality / Contradiction Layer
-- ZDB-15 → Proof / Licensing Layer
-
----
-
-## ZDB-13
-Operational decision layer.
-
-- decision
-- explain
-- report
-
----
-
-## ZDB-14
-Deep decision layer.
-
-- contradiction detection
-- misleading signal resolution
-- real capacity evaluation
-
----
-
-## ZDB-15
-Proof layer.
-
-- decision comparison
-- impact measurement
-- audit-ready output
-
----
-
-## MOAT
-
-- Decision Trace
-- Proof Base
-- Simulation Base
-- Policy Layer
-- Data Loop
-- Audit Layer
-
----
-
-## FINAL
-
-ZENTRA core:
-
-ZDB-13 + ZDB-14 + ZDB-15 + MOAT
-
-
----
-
-# ZENTRA MATRIX ECOSYSTEM — POST ZDB-15 ROADMAP (FINAL LOCK)
-
-## Date
-2026-04-24
-
-## Status
-LOCKED
-
-## Scope
-Applies after ZDB-15 completion.
-No new architecture. No new cores. Same system.
-
----
-
-## OBJECTIVE
-Complete market parity + surpass via proof, simulation and traceability.
-
----
-
-## BLOCKS
-
-### 1) Competitor Matrix
-- product mapping
-- feature comparison
-- pricing/pack logic (high level)
-- gap vs ZENTRA
-
----
-
-### 2) Proof Library
-- case records
-- existing vs ZENTRA decisions
-- risk / loss difference
-- audit-ready outputs
-
----
-
-### 3) Simulation Bank
-- DTI scenarios
-- payment load scenarios
-- limit ratio scenarios
-- stress / edge cases
-
----
-
-### 4) Decision Trace Graph
-- rule → signal → explain → outcome
-- full traceability
-
----
-
-### 5) Licensing Pack
-- ZDB-13 / 14 / 15 packaging
-- institution-ready outputs
-- regulatory-compatible language
-
----
-
-## RULE
-No system change.
-Only depth and completeness.
-
-
----
-
-
-# ZDB-15 CHECKPOINT — FINAL LOCK
-
-## Tarih
-2026-04-24
-
-## Durum
-LOCKED
-
-## Sistem
-- tek engine
-- tek endpoint (send-report)
-- tek pipeline
-
-## Özellikler
-- decision
-- explain
-- derived metrics (DTI, payment load, limit ratio)
-- trace
-- proof library (DB kayıt)
-- report link
-
-## Simulation
-- ayrı endpoint yok
-- batch execution
-- same pipeline reuse
-- edge / stress test destekli
-
-## İlke
-ZENTRA genişlemez, derinleşir.
-
-## Sonuç
-ZENTRA:
-- karar verir
-- nasıl verdiğini gösterir
-- DB’ye kaydeder
-- tekrar üretilebilir
-- paylaşılabilir
-
----
-
-# POLICY LAYER — CONTEXTUAL ENFORCEMENT LOCK
-
-## Tarih
-2026-04-24
-
-## Durum
-LOCKED
-
-## Karar
-Policy Layer sistemin tamamına kör uygulanmaz.
-
-ZENTRA aynı core engine ile çalışır; ancak policy ürün, sektör ve kullanım bağlamına göre aktive edilir.
-
-## Aktivasyon
-- ZENTRA Intel AI / Economic / Banking: ON
-- RiskLens: ON
-- Financial Trade: ON
-- Trade: CONDITIONAL
-- Economic: CONDITIONAL
-- ZENTRA General AI: OFF
-- ZENTRA Academia AI: EXPERIMENTAL
-
-## İlk Policy Set
-- payment_load > 0.5 → Reddet
-- limit_ratio > 4 → Reddet
-
-## İlke
-ZENTRA limitleri sadece yorumlamaz; doğru ekonomik bağlamda policy seviyesinde uygular.
-
-
----
-
-# LIVE DATA LAYER — PARTIAL LIVE LOCK
-
-## Tarih
-2026-04-24
-
-## Durum
-ACTIVE - PARTIAL LIVE
-
-## Bağlanan Veriler
-- TCMB günlük döviz kurları
-- World Bank makro göstergeleri
-
-## Bağlanmayan Veriler
-- BIST gerçek zamanlı piyasa verisi
-
-Sebep:
-BIST resmi gerçek zamanlı veri lisanslıdır.
-
-## İlke
-Canlı veri için yeni sistem kurulmaz.
-
-Veri mevcut send-report pipeline içine context olarak girer ve trace/proof içinde saklanır.
-
----
-
-# ZENTRA OWN DATA LAYER — FINAL LOCK
-
-## Tarih
-2026-04-24
-
-## Durum
-ACTIVE
-
-## Karar
-ZENTRA yalnızca dış veri tüketen sistem değildir.
-
-ZENTRA her karar çalışmasından kendi karar verisini üretir.
-
-## Üretilen Veriler
-- scenario type
-- risk indicator
-- payment stress indicator
-- limit pressure indicator
-- reality gap score
-- proof score
-- synthetic tags
-- data loop signal
-
-## İlke
-Kurum verisine bağlanmadan da ZENTRA kendi proof / simulation / indicator veri havuzunu büyütür.
-
-## Sonuç
-ZENTRA kendi iç kanıt ve öğrenme verisini üretmeye başlamıştır.
-
----
-
-# ZENTRA DATA UNIVERSE — FULL BIRTH LOCK
-
-## Tarih
-2026-04-25
-
-## Durum
-ACTIVE
-
-## Karar
-ZENTRA boş doğmayacak.
-
-ZENTRA:
-- bilgi yüklü doğar
-- güncel doğar
-- geçmişi bilir
-- anı takip eder
-- geleceği simüle eder
-- piyasaya çıktıktan sonra öğrenmeye devam eder
-
-## Kapsam
-Bu blok:
-- Intel AI veri evreni
-- General AI veri evreni
-- Academia AI veri evreni
-- Financial Trade veri evreni
-- own data
-- simulation
-- indicator
-- learning
-- source registry
-- agent jobs
-
-alanlarını kapsar.
-
-## İlke
-Dış veri dünya sinyalidir.
-ZENTRA own data karar/proof/indicator/simulation hafızasıdır.
-
-## Sonuç
-ZENTRA Data Universe doğumu başlatılmıştır.
-
----
-
-# SIMULATION ENGINE — FULL ACTIVATION
-
-## Tarih
-2026-04-25
-
-## Durum
-ACTIVE
-
-## Karar
-ZENTRA artık sadece senaryo üretmez.
-
-ZENTRA:
-- senaryo üretir
-- engine çalıştırır
-- sonucu üretir
-- DB’ye kaydeder
-- learning candidate üretir
-
-## Sonuç
-ZENTRA kendi kendine çalışan simulation sistemine geçti.
-
----
-
-# INDICATOR INTELLIGENCE — ACTIVATION
-
-## Tarih
-2026-04-25
-
-## Durum
-ACTIVE
-
-## Karar
-ZENTRA indicator üretmekle kalmaz.
-
-ZENTRA:
-- indicator history tutar
-- ortalama hesaplar
-- anomaly tespit eder
-- drift ölçer
-
-## Sonuç
-ZENTRA artık kendi skorlarını yorumlayan sisteme geçti.
-
----
-
-# LEARNING ENGINE — FIRST ACTIVE LAYER (LOCKED)
-
-## Tarih
-2026-04-25
-
-## Durum
-ACTIVE — CORE LEARNING ENABLED
-
-## Tanım
-Bu katman, ZENTRA’nın kendi karar geçmişini analiz ederek karar kalitesini artırmaya başladığı ilk aktif öğrenme katmanıdır.
-
-## İlke
-ZENTRA öğrenmez → öğrenmiş doğar.
-Bu katman:
-mevcut bilgi üzerine
-karar kalitesi optimizasyonu yapar.
-
-## Öğrenme Mantığı (v1)
-- düşük risk + reddet → yanlış → gevşetme sinyali
-- yüksek risk + onay → yanlış → sıkılaştırma sinyali
-
-## Fonksiyon
-- geçmiş kararları analiz eder
-- hata sinyali üretir
-- adjustment önerileri oluşturur
-
-## Sınır
-Bu versiyon:
-- rule değiştirmez
-- threshold update etmez
-
-Sadece:
-→ öğrenme sinyali üretir
-
-## Konum
-v1 → öğrenme başlatıldı
-v2 → rule update
-v3 → adaptif sistem
-
-## Sonuç
-ZENTRA artık:
-karar veren sistem değildir.
-
-ZENTRA:
-karar kalitesini ölçen
-ve iyileştiren sistemdir.
-
-
----
-
-# LEARNING ENGINE v2 — SAFE MUTATION LAYER
-
-## Tarih
-2026-04-25
-
-## Durum
-ACTIVE
-
-## Tanım
-Learning Engine v2, ZENTRA'nın karar geçmişinden policy threshold ayar önerileri ürettiği kontrollü mutasyon katmanıdır.
-
-## Kapsam
-- payment_load_threshold runtime policy state
-- limit_ratio_threshold runtime policy state
-- zero_income_policy
-- rule_adjustments kayıtları
-- safe proposal mode
-
-## İlke
-ZENTRA kendini değiştirebilir; ancak değişim kör uygulanmaz.
-
-Değişim sırası:
-1. öğrenme sinyali
-2. adjustment önerisi
-3. simülasyon doğrulama
-4. güvenli uygulama
-
-## Sonuç
-ZENTRA artık karar kalitesini ölçen değil, kontrollü şekilde optimize etmeye hazırlanan sistemdir.
-
----
-
-# AGENT WORKFORCE v1 — RUNTIME LOCK
-
-## Tarih
-2026-04-25
-
-## Durum
-ACTIVE
-
-## Kapsam
-- data_collector_agent
-- validator_agent
-- simulator_agent
-- learning_agent
-- proposal_validation_agent
-- execution_agent
-- financial_trade_agent
-
-## Aktif Veri
-- TCMB
-- World Bank
-
-## Lisanslı / Bağlı Değil
-- BIST realtime
-- Bloomberg
-- TradingView realtime feeds
-
-## Financial Trade
-Financial Trade stack başlatıldı:
-- macro/FX context
-- indicator base
-- licensed feed registry
-- order execution inactive
-
-## İlke
-Ajanlar sistemi büyütür ama çorba oluşturmaz.
-Her ajan çıktısı trace/proof akışına bağlanır.
-
----
-
-# REFERENCE EQUIPMENT LAYER — FINAL LOCK
-
-## Tarih
-2026-04-25
-
-## Durum
-LOCKED
-
-## Ana Karar
-V1 / V2 / V3 donanımları ZENTRA'nın kalıcı referans ekipmanlarıdır.
-
-Bu donanımlar:
-- Academia tarafından sökülen piyasa ürün sınıflarını
-- ZENTRA içinde tekrar kullanılabilir sistem ekipmanına dönüştürür.
-
-## Kapsam
-- Live Data Layer
-- Own Data Layer
-- Simulation Engine
-- Indicator Intelligence
-- Learning Engine v1 / v2
-- Agent Workforce v1.1
-- Financial Trade Starter
-- Source / Competitor Registry
-- Proof Library
-- Decision Trace
-- Policy Layer
-
-## Piyasa Karşılıkları
-- Bloomberg / TradingView → Financial Trade
-- FICO / Experian / Provenir → Decision / Risk / Scoring
-- SAS → Risk Analytics / Governance
-- YouTube / X / Social Tools → General AI
-- Academia Tools → Papers / Patents / Datasets
-
-## Kural
-Bağlı olmayan kaynak aktif gösterilmez.
-
-Durumlar:
-- active
-- starter
-- planned
-- licensed_required
-- not_connected
-
-## Sonuç
-Academia söker.
-ZENTRA donanıma çevirir.
-Intel / General / Financial Trade kendi alanında kullanır.
-
----
-
-# BOOK / SYSTEM EQUALITY LOCK
-
-## Tarih
-2026-04-25
-
-## Durum
-LOCKED
-
-## Karar
-Kod, ana kitap, teknik kitap ve living book eşit yürür.
-
-## İlke
-Sistem değişikliği kitapsız olmaz.
-Kitap kararı kodsuz kalmaz.
-Living book iz bırakır.
-
-## Sonuç
-ZENTRA üçlü kitap sistemi ile çalışan sistem tekrar hizalanmıştır.
-
----
-
-# ZENTRA Self-Repair & Maintenance Intelligence
-
-ZENTRA yalnızca çalışan bir sistem değil; kendi arızalarını tanıyan, sınıflandıran, güvenli şekilde düzelten ve her arızadan öğrenen bir sistem olarak tasarlanır.
-
-Ana döngü:
-
-Detect
-→ Classify
-→ Diagnose
-→ Fix
-→ Verify
-→ Log
-→ Learn
-
-ZENTRA; frontend, backend, auth, data, payment, portfolio, decision, security, deploy, runtime, cache, CORS, port ve API arızalarını kendi bakım hafızasında tutar.
-
-Her arıza yalnızca hata değil, sistemin öğrenme verisidir.
-
-Kilit karar:
-ZENTRA arızayı sadece bulmaz; güvenli sınırlar içinde düzeltir, sonucu test eder ve aynı hata tekrarlandığında repair memory üzerinden çözüm uygular.
-
-
----
-
-# ZENTRA LAUNCH STRATEGY — FULL SYSTEM FIRST LOCK
-
-## Durum
-LOCKED
-
-## Karar
-ZENTRA küçük demo, yarım pilot veya fikir sunumu olarak çıkmaz.
-
-ZENTRA önce tam yayınlanabilir sistem olur, sonra güçlü çıkış yapar.
-
-## Çıkış Sırası
-1. Modüller tamam
-2. Ekranlar tamam
-3. İç test / simülasyon tamam
-4. Proof pack tamam
+# FULL ZENTRA MODÜL ENVANTERİ V1 — KİLİT
+
+## Gerçek Durum
+
+ZENTRA çekirdek motoru ve ilk ürün hattı ayağa kalkmıştır. Ancak full ZENTRA ürün evreni henüz tamam değildir.
+
+Genel fotoğraf:
+
+- Core engine: tamam
+- İlk cockpit: tamam
+- Risk Intelligence: çalışıyor
+- Portfolio Intelligence: çalışıyor
+- Financial Trade: başladı / çalışıyor
+- Audit / report / premium UI: başladı
+- Full ürün evreni: eksik
+- General AI: başlamadı
+- Academia: sistem var ama ürünleşme eksik
+- Intel geniş modül ailesi: ürünleşme eksik
+
+## Ana Eksik
+
+Eksik olan şey modül isimleri değildir.
+
+Eksik olan şey:
+
+modül → ürün → cockpit → assistant → rapor → audit → lisans → market
+
+zincirinin her modülde tamamlanmamış olmasıdır.
+
+## Kilit Ürünleşme Alanları
+
+1. Risk Intelligence
+2. Portfolio Intelligence
+3. Financial Trade Intelligence
+4. Credit Intelligence
+5. Invoice / Receivables
+6. Alternative Finance / Tasarruf
+7. Trade Intelligence
+8. Banking Intelligence
+9. Contract Intelligence
+10. Compliance Intelligence
+11. Fraud Intelligence
+12. Treasury / Liquidity
+13. Collateral
+14. Insurance
+15. Logistics
+16. ERP Intelligence
+17. Cyber / Cloud Intelligence
+18. Academia Product Discovery
+19. General AI
+
+## Yeni Tamamlama Sırası
+
+1. Full ZENTRA Modül Envanteri
+2. Modül / Cockpit / Assistant / Rapor / Lisans boşlukları
+3. Eksikleri kapatma
+4. Proof Pack
 5. Yayın
-6. Pazarlama / reklam / tanıtım
+6. Pazarlama
 7. Seçilmiş yatırımcı outreach
 
-## Yatırımcı Kuralı
-Önce sistem kanıtlanır.
-Sonra 2-3 seçilmiş güçlü yatırımcıya durum gösterilir.
+## Net Karar
 
-Varsayılan ortaklık ilkesi:
-- Kurucu kontrolü korunur
-- Hedef yapı: %70 kurucu / %30 yatırımcı
+ZENTRA önce tam yayınlanabilir sistem olur. Sonra güçlü çıkış yapar. Payment, pricing ve satış baskısı bu sıradan sonra değerlendirilir.
 
-## İlke
-Yatırımcı gelirse hızlanılır.
-Yatırımcı gelmezse ZENTRA bağımsız devam eder.
-
-## Sonuç
-ZENTRA'nın çıkış modeli:
-FULL BUILD → INTERNAL PROOF → PUBLIC LAUNCH → DISTRIBUTION → SELECTIVE INVESTOR OUTREACH → SCALE
