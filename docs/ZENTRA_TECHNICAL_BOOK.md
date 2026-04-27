@@ -461,3 +461,19 @@ git status --short
 Rule:
 No new ZENTRA system block is considered stable unless health check, syntax check, runtime check and git check pass.
 
+
+---
+
+# AGENT ORCHESTRATOR v2 — TECH LOCK
+
+## File
+lib/agent-orchestrator-v2.js
+
+## Table
+agent_job_registry
+
+## Output
+result.agent_orchestration
+
+## Rule
+No parallel orchestration systems.

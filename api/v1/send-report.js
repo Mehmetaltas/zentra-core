@@ -7,6 +7,7 @@ import { runIndicatorIntelligence } from "../../lib/indicator-intelligence.js";
 import { runLearningEngine } from "../../lib/learning-engine.js";
 import { getLearningPolicyState, runLearningMutationEngine } from "../../lib/learning-mutation-engine.js";
 import { runAgentWorkforceV1 } from "../../lib/agent-workforce-v1.js";
+import { runAgentOrchestratorV2 } from "../../lib/agent-orchestrator-v2.js";
 
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
@@ -275,7 +276,21 @@ export default async function handler(req, res) {
     result.learning_mutation = learningMutation;
 
     const agentWorkforce = await runAgentWorkforceV1(pool, runEngine, rules, body, result.live_context);
-    result.agent_workforce = {
+    
+    const agentOrchestrator = await runAgentOrchestratorV2(pool, {
+      input: body,
+      live: result.live_context,
+      indicators: result.indicator_intelligence,
+      learning: result.learning
+    });
+
+    result.agent_orchestration = agentOrchestrator;
+
+    if (result.trace) {
+      result.trace.agent_orchestration = agentOrchestrator;
+    }
+
+result.agent_workforce = {
       status: agentWorkforce.status,
       agents: agentWorkforce.agents,
       real_data: agentWorkforce.real_data,

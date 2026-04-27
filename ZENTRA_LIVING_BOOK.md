@@ -730,3 +730,13 @@ Main book, technical book, living book and code must stay equal.
 
 ### Result
 ZENTRA reference equipment layer and trace system are locked.
+
+---
+
+## AGENT WORKFORCE v2 CHECKPOINT
+
+### Change
+Agent orchestration layer added.
+
+### Result
+System now flows as job chain.
