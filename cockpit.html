@@ -154,7 +154,7 @@ function logout(){location.reload()}
 async function upgrade(){
   const r=await fetch("/api/upgrade?token="+token+"&plan=pro");
   const d=await r.json();
-  if(d.ok){plan=d.plan;render()}
+  if(d.ok){plan=d.plan; alert("Plan upgraded (mock)"); render()}
 }
 
 async function engine(symbol){const r=await fetch("/api/risk?symbol="+symbol);return await r.json()}

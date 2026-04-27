@@ -93,5 +93,28 @@
     "portfolioRisk": 10,
     "decision": "ACCUMULATE",
     "source": "backend"
+  },
+  {
+    "timestamp": 1777268877163,
+    "type": "risk",
+    "symbol": "BTCUSDT",
+    "risk": 15,
+    "decision": "ACCUMULATE",
+    "source": "backend",
+    "explain": "Risk düşük görünüyor. Sert baskı zayıf; kademeli ve kontrollü ilerleme düşünülebilir."
+  },
+  {
+    "timestamp": 1777268877186,
+    "type": "portfolio",
+    "portfolioRisk": 10,
+    "decision": "ACCUMULATE",
+    "source": "backend"
+  },
+  {
+    "timestamp": 1777270556950,
+    "type": "payment",
+    "user": "user",
+    "plan": "pro",
+    "payment_id": "f2x8ne0t26f"
   }
 ]

@@ -5,6 +5,7 @@ const { URL } = require("url");
 
 const intel = require("./intelligence");
 const audit = require("./audit");
+const payment = require("./payment");
 
 const PORT = 3000;
 
@@ -126,7 +127,37 @@ const server = http.createServer((req,res)=>{
       return send(res,{assets,portfolioRisk,decision,analysis,source:"backend"});
     }
 
-    if(u.pathname==="/api/audit"){
+    
+  if(u.pathname==="/api/upgrade"){
+    const token=u.searchParams.get("token");
+    const plan=u.searchParams.get("plan")||"pro";
+    const username=sessions[token];
+
+    if(!username){
+      return send(res,{ok:false,error:"unauthorized"});
+    }
+
+    const pay = payment.simulatePayment(username, plan);
+
+    if(pay.ok){
+      // plan güncelle
+      users[username].plan = plan;
+
+      // audit
+      audit.logDecision({
+        type:"payment",
+        user: username,
+        plan: plan,
+        payment_id: pay.payment_id
+      });
+
+      return send(res,{ok:true,plan,paid:true});
+    }
+
+    return send(res,{ok:false});
+  }
+
+  if(u.pathname==="/api/audit"){
       return send(res,{logs:audit.getLogs()});
     }
 
