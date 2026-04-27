@@ -90,7 +90,9 @@ const server = http.createServer((req,res)=>{
       volatility:scores.vol,
       momentum:scores.mom,
       decision:dec,
-      explain:exp,
+      explain: exp.human,
+      explain_human: exp.human,
+      explain_technical: exp.technical,
       source:"backend"
     });
   }

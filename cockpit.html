@@ -48,6 +48,7 @@ button{cursor:pointer;width:100%}
   <div class="card" id="modules"></div>
   <div class="card" id="engine"></div>
   <div class="card" id="assistant"></div>
+  <div class="card" id="technicalExplain"></div>
   <div class="card">
     <b>Multi Asset / Portfolio</b>
     <div id="portfolio" class="grid"></div>
@@ -152,7 +153,7 @@ function riskColor(r){
 }
 
 function moduleExplain(m,d){
-  if(m==="RiskCore") return d.explain;
+  if(m==="RiskCore") return d.explain_human || d.explain;
   if(m==="PayRoute") return "Ödeme rotası risk ve gecikmeye göre optimize edilir.";
   if(m==="CreditCore") return "Kredi limiti risk, trend ve volatiliteye göre sıkılaşır.";
   if(m==="FraudSentinel") return "Anomali ve olağandışı hareketler izlenir.";
@@ -184,6 +185,9 @@ async function render(){
 
   document.getElementById("modules").innerHTML=mhtml;
   document.getElementById("assistant").innerHTML=ahtml;
+
+  document.getElementById("technicalExplain").innerHTML =
+    `<b>Technical Explain</b><br>${d.explain_technical || "Teknik açıklama yok"}`;
 
   document.getElementById("engine").innerHTML=
     `<b>${d.symbol}</b><br>

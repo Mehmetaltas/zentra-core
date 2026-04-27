@@ -24,11 +24,28 @@ function decision(risk,mom){
   return mom>0.3 ? "ACCUMULATE (STRONG)" : "ACCUMULATE";
 }
 
-function explain(risk,vol,mom){
-  if(risk>70) return `Yüksek risk. Vol:${vol.toFixed(2)} Momentum:${mom.toFixed(2)}. Koruma öncelikli.`;
-  if(risk>50) return `Orta-yüksek risk. Vol:${vol.toFixed(2)} Momentum:${mom.toFixed(2)}. Hedge düşünülebilir.`;
-  if(risk>30) return `Dengeli risk. Vol:${vol.toFixed(2)} Momentum:${mom.toFixed(2)}. Pozisyon korunabilir.`;
-  return `Düşük risk. Vol:${vol.toFixed(2)} Momentum:${mom.toFixed(2)}. Kademeli izleme uygun.`;
+function explainHuman(risk,vol,mom){
+  if(risk>70) return "Piyasa şu an yüksek riskli. Öncelik korunma, maruziyeti azaltma ve acele karar vermemek olmalı.";
+  if(risk>50) return "Risk yükseliyor. Pozisyonlar korunmalı, yeni girişlerde temkinli olunmalı.";
+  if(risk>30) return "Piyasa dengeli ama tamamen risksiz değil. Bekle-gör ve kontrollü takip daha sağlıklı.";
+  return "Risk düşük görünüyor. Sert baskı zayıf; kademeli ve kontrollü ilerleme düşünülebilir.";
 }
 
-module.exports = { computeScores, decision, explain };
+function explainTechnical(risk,vol,mom){
+  return `Risk:${risk} | Volatility:${vol.toFixed(2)} | Momentum:${mom.toFixed(2)}`;
+}
+
+function explain(risk,vol,mom){
+  return {
+    human: explainHuman(risk,vol,mom),
+    technical: explainTechnical(risk,vol,mom)
+  };
+}
+
+module.exports = {
+  computeScores,
+  decision,
+  explain,
+  explainHuman,
+  explainTechnical
+};
