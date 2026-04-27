@@ -3,6 +3,9 @@ const fs = require("fs");
 const path = require("path");
 const { URL } = require("url");
 const intel = require("./intelligence");
+const portfolioIntel = require("./portfolio-intel");
+const actionLayer = require("./action");
+const userContext = require("./user-context");
 
 const PORT = 3000;
 
@@ -78,7 +81,20 @@ const server = http.createServer((req,res)=>{
     const symbol=(u.searchParams.get("symbol")||"BTCUSDT").toUpperCase();
     const b=base(symbol);
     const scores=intel.computeScores(b.change,b.trend);
-    const dec=intel.decision(scores.risk,scores.mom);
+    
+const dec=intel.decision(scores.risk,scores.mom);
+
+const act = actionLayer.action(scores.risk, portfolioRisk);
+
+// demo context (sonra DB olacak)
+const context = {
+  risk: "medium",
+  horizon: "mid"
+};
+
+const personalized = userContext.personalize(act, context);
+
+
     const exp=intel.explain(scores.risk,scores.vol,scores.mom);
 
     return send(res,{
@@ -93,7 +109,13 @@ const server = http.createServer((req,res)=>{
       explain: exp.human,
       explain_human: exp.human,
       explain_technical: exp.technical,
-      source:"backend"
+      
+
+action: act,
+action_personal: personalized,
+
+source:"backend"
+
     });
   }
 
@@ -120,7 +142,23 @@ const server = http.createServer((req,res)=>{
     const scores={risk:portfolioRisk,mom:0.2};
     const decision=intel.decision(portfolioRisk,0.2);
 
-    return send(res,{assets,portfolioRisk,decision,source:"backend"});
+    
+const analysis = portfolioIntel.analyzePortfolio(assets);
+
+return send(res,{
+  assets,
+  portfolioRisk,
+  decision,
+  analysis,
+  
+
+action: act,
+action_personal: personalized,
+
+source:"backend"
+
+});
+
   }
 
   if(u.pathname==="/" || u.pathname==="/index.html" || u.pathname==="/cockpit.html"){
