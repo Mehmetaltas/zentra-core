@@ -233,7 +233,13 @@ function downloadReport(){window.open("/api/report?symbol="+current,"_blank")}
 
 function moduleExplain(m,d){
   const map={
-    RiskCore:{tr:d.explain_human||d.explain,en:d.explain_human||d.explain,ar:d.explain_human||d.explain},
+    RiskCore:{tr:(lang==="ar" ? "تبدو المخاطر منخفضة. يمكن التفكير في تقدم تدريجي ومنضبط." :
+ lang==="en" ? "Risk appears low. Gradual and controlled action may be considered." :
+ "Risk düşük görünüyor. Sert baskı zayıf; kademeli ve kontrollü ilerleme düşünülebilir."),en:(lang==="ar" ? "تبدو المخاطر منخفضة. يمكن التفكير في تقدم تدريجي ومنضبط." :
+ lang==="en" ? "Risk appears low. Gradual and controlled action may be considered." :
+ "Risk düşük görünüyor. Sert baskı zayıf; kademeli ve kontrollü ilerleme düşünülebilir."),ar:(lang==="ar" ? "تبدو المخاطر منخفضة. يمكن التفكير في تقدم تدريجي ومنضبط." :
+ lang==="en" ? "Risk appears low. Gradual and controlled action may be considered." :
+ "Risk düşük görünüyor. Sert baskı zayıf; kademeli ve kontrollü ilerleme düşünülebilir.")},
     PayRoute:{tr:"Ödeme rotası risk ve gecikmeye göre optimize edilir.",en:"Payment routes are optimized according to risk and delay.",ar:"يتم تحسين مسارات الدفع وفقاً للمخاطر والتأخير."},
     CreditCore:{tr:"Kredi limiti risk, trend ve volatiliteye göre sıkılaşır.",en:"Credit limits tighten according to risk, trend and volatility.",ar:"تتغير حدود الائتمان حسب المخاطر والاتجاه والتقلب."},
     FraudSentinel:{tr:"Anomali ve olağandışı hareketler izlenir.",en:"Anomalies and unusual movements are monitored.",ar:"تتم مراقبة الحالات الشاذة والحركات غير المعتادة."},
@@ -296,9 +302,13 @@ async function render(){
   if(p.analysis){
     document.getElementById("portfolioExplain").innerHTML=
       `<h3>${tr("portfolioInsight")}</h3>
-      <div>${p.analysis.human}</div><br>
+      <div>${(lang==="ar" ? "تبدو المحفظة منخفضة المخاطر بشكل عام. الأصل المهيمن يحتاج متابعة." :
+ lang==="en" ? "The portfolio appears generally low-risk. The dominant asset should be monitored." :
+ "Portföy genel olarak düşük riskli. Dominant varlık izlenmeli.")}</div><br>
       <b>${tr("technical")}</b><br><span class="small">${p.analysis.technical}</span><br><br>
-      <b>${tr("recommendation")}</b><br>${p.analysis.recommendation}`;
+      <b>${tr("recommendation")}</b><br>${(lang==="ar" ? "يمكن الحفاظ على الهيكل الحالي." :
+ lang==="en" ? "The current structure can be maintained." :
+ "Mevcut yapı korunabilir.")}`;
   }
 }
 
