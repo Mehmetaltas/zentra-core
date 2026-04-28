@@ -76,7 +76,22 @@ Kapanış Notu:
 Decision paneli kredi onay sürecini net şekilde gösterir.
 
 # 5. Driver Breakdown
-Durum: OPEN
+Durum: CLOSED
+
+✔ İlk 3 ana kredi riski nedeni gösterilir
+✔ Her driver için kısa açıklama var
+✔ Etki seviyesi (LOW / MEDIUM / HIGH) var
+
+Driver Standard:
+1. Income Risk
+2. Cashflow Stress
+3. Payment History / Stability
+
+Impact:
+LOW / MEDIUM / HIGH
+
+Kapanış Notu:
+Driver breakdown kredi kararının nedenini açıklar.
 
 ---
 
@@ -86,7 +101,7 @@ Durum: OPEN
 - [x] Stress
 - [x] Payment Capacity
 - [x] Decision
-- [ ] Drivers
+- [x] Drivers
 
 ---
 
