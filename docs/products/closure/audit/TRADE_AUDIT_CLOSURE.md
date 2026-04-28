@@ -6,11 +6,24 @@ ACTIVE — AUDIT STARTED
 ---
 
 # 1. Audit Log
-Durum: OPEN
+Durum: CLOSED
 
-- [ ] Trade decision kayıt
-- [ ] Timestamp
-- [ ] User / System
+✔ Trade decision kayıt var
+✔ Timestamp var
+✔ User / System bilgisi var
+
+Standard:
+- Trade ID
+- Timestamp
+- User/System
+- Output
+
+Kapanış Notu:
+Audit log tüm trade kararlarını saklar.
+
+- [x] Trade decision kayıt
+- [x] Timestamp
+- [x] User / System
 
 ---
 
@@ -40,7 +53,7 @@ Durum: OPEN
 
 ## Checklist
 
-- [ ] Audit log
+- [x] Audit log
 - [ ] Trace
 - [ ] Data source
 - [ ] Explain
