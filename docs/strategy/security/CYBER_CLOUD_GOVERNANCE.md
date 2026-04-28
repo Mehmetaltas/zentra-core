@@ -184,7 +184,45 @@ sağlar
 
 # 4. Cyber Security
 
-Durum: OPEN
+Durum: CLOSED
+
+ZENTRA siber güvenlik katmanı:
+
+✔ Saldırı tespiti
+✔ Kötüye kullanım engelleme
+✔ Fraud detection
+✔ Abuse monitoring
+✔ Anomaly detection
+✔ Suspicious activity logging
+✔ Incident response flow
+✔ Security audit trail
+
+---
+
+## Siber Güvenlik Prensibi
+
+ZENTRA:
+
+- anormal davranışları izler
+- kötüye kullanımı kayıt altına alır
+- fraud sinyallerini ayırır
+- saldırı veya şüpheli aktiviteyi işaretler
+- olay sonrası iz ve kanıt üretir
+
+---
+
+## Kurumsal Güç
+
+Bu katman:
+
+- kötüye kullanım azaltma
+- sistem güvenliği
+- müşteri güveni
+- regülasyon ve denetim desteği
+
+sağlar
+
+
 
 - saldırı tespiti
 - kötüye kullanım engelleme
@@ -231,7 +269,7 @@ güvenli + uyumlu + kontrol edilebilir sistemdir.
 - [x] Data governance
 - [x] Legal / compliance
 - [x] Cloud security
-- [ ] Cyber security
+- [x] Cyber security
 - [ ] Access / token
 - [ ] Governance core
 
