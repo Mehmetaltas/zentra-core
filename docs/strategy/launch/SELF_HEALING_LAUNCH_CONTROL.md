@@ -295,3 +295,25 @@ Kilit cümle:
 
 ZENTRA arızayı saklamaz; tespit eder, izler, düzeltir veya governance’a taşır.
 
+
+
+---
+
+## Service Credit / Compensation Policy
+
+İz:
+docs/strategy/launch/COMPENSATION_POLICY.md
+
+Self Healing katmanı, sistem kaynaklı hatalarda telafi politikasını tetikler.
+
+Telafi türleri:
+
+- report token iadesi
+- yeni rapor hakkı
+- ücretsiz ek kullanım
+- plan süresi uzatma
+- kurumsal service credit
+- ağır durumda ödeme iadesi
+
+Telafi yalnızca sistem kaynaklı, audit ile doğrulanabilir durumlarda uygulanır.
+

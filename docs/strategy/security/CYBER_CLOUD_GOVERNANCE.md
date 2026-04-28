@@ -377,3 +377,14 @@ FINAL STATUS: SECURITY GOVERNANCE CLOSED
 
 🎯 ENTERPRISE STATUS: CONTROLLED / TRACEABLE / GOVERNABLE
 
+
+
+---
+
+## Compensation / Service Credit Governance
+
+Sistem kaynaklı hata, erişim problemi, token tüketimi veya rapor üretim arızalarında telafi kararı audit + governance ile yönetilir.
+
+Bağlantılı dosya:
+docs/strategy/launch/COMPENSATION_POLICY.md
+
