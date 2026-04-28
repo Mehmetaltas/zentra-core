@@ -3,184 +3,134 @@
 <head>
 <meta charset="utf-8">
 <title>ZENTRA Intelligence Report</title>
+
 <style>
-body{
-  margin:0;
-  background:#f4f6fb;
-  color:#111827;
-  font-family:Arial,sans-serif;
-}
-.page{
-  max-width:980px;
-  margin:30px auto;
-  background:white;
-  padding:42px;
-  border-radius:18px;
-  box-shadow:0 20px 60px rgba(0,0,0,.08);
-}
-.header{
-  display:flex;
-  justify-content:space-between;
-  border-bottom:2px solid #111827;
-  padding-bottom:18px;
-}
-.brand{
-  font-size:26px;
-  font-weight:900;
-  letter-spacing:.08em;
-}
-.meta{
-  text-align:right;
-  color:#6b7280;
-  font-size:13px;
-}
+body{margin:0;background:#f3f5fa;font-family:Arial;color:#111}
+.page{max-width:1000px;margin:30px auto;background:#fff;padding:40px;border-radius:18px;box-shadow:0 20px 60px rgba(0,0,0,.08)}
+.header{display:flex;justify-content:space-between;border-bottom:2px solid #111;padding-bottom:14px}
+.brand{font-size:28px;font-weight:900}
+.meta{font-size:12px;color:#555;text-align:right}
+
 .decision{
-  margin-top:28px;
-  padding:24px;
-  border-radius:16px;
-  background:#0f172a;
-  color:white;
+margin-top:28px;
+padding:28px;
+border-radius:16px;
+background:#0b1220;
+color:#fff;
 }
-.decision .value{
-  font-size:48px;
-  font-weight:900;
-  margin-top:8px;
-}
-.grid{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:14px;
-  margin-top:22px;
-}
-.card{
-  border:1px solid #e5e7eb;
-  border-radius:14px;
-  padding:16px;
-}
-.label{
-  color:#6b7280;
-  font-size:11px;
-  text-transform:uppercase;
-  letter-spacing:.06em;
-}
-.value{
-  font-size:24px;
-  font-weight:800;
-  margin-top:8px;
-}
-.section{
-  margin-top:28px;
-}
-.box{
-  border:1px solid #e5e7eb;
-  border-radius:14px;
-  padding:16px;
-  margin-top:10px;
-  line-height:1.55;
-}
-table{
-  width:100%;
-  border-collapse:collapse;
-  margin-top:10px;
-}
-td,th{
-  padding:12px;
-  border-bottom:1px solid #e5e7eb;
-  text-align:left;
-}
-.footer{
-  margin-top:40px;
-  padding-top:16px;
-  border-top:1px solid #e5e7eb;
-  color:#6b7280;
-  font-size:12px;
-}
-@media print{
-  body{background:white}
-  .page{box-shadow:none;margin:0;border-radius:0}
-}
+
+.decision h2{margin:0;font-size:54px}
+.decision p{margin-top:10px;opacity:.8}
+
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:20px}
+.card{border:1px solid #ddd;border-radius:12px;padding:16px}
+.label{font-size:11px;color:#777;text-transform:uppercase}
+.value{font-size:24px;font-weight:800;margin-top:6px}
+
+.section{margin-top:28px}
+.box{border:1px solid #ddd;border-radius:12px;padding:16px;margin-top:10px;line-height:1.6}
+
+table{width:100%;border-collapse:collapse;margin-top:10px}
+td,th{padding:10px;border-bottom:1px solid #eee}
+
+.footer{margin-top:40px;border-top:1px solid #eee;padding-top:14px;font-size:12px;color:#777}
+
 </style>
 </head>
 
 <body>
 <div class="page">
 
-  <div class="header">
-    <div>
-      <div class="brand">ZENTRA</div>
-      <div>Intelligence Report</div>
-    </div>
-    <div class="meta">
-      Report Type: Expert<br>
-      Status: Export Ready<br>
-      Generated: 2026-04-28
-    </div>
-  </div>
+<div class="header">
+<div>
+<div class="brand">ZENTRA</div>
+<div>Intelligence Report</div>
+</div>
+<div class="meta">
+Expert Report<br>
+Export Ready<br>
+2026-04-28
+</div>
+</div>
 
-  <section class="decision">
-    <div class="label">Final Decision</div>
-    <div class="value" id="decision"></div>
-    <div id="summary"></div>
-  </section>
+<div class="decision">
+<h2 id="decision">BUY</h2>
 
-  <section class="grid">
-    <div class="card">
-      <div class="label">Risk Score</div>
-      <div class="value" id="risk"></div>
-    </div>
-    <div class="card">
-      <div class="label">Stress</div>
-      <div class="value" id="stress"></div>
-    </div>
-    <div class="card">
-      <div class="label">Confidence</div>
-      <div class="value" id="confidence"></div>
-    </div>
-  </section>
+<p>
+Execution Status: READY<br>
+Risk Level: ELEVATED (CONTROLLED)<br>
+Confidence: STRONG
+</p>
 
-  <section class="section">
-    <div class="label">Executive Insight</div>
-    <div class="box" id="insight"></div>
-  </section>
+<p id="summary">
+Controlled execution is recommended with monitored exposure.
+</p>
+</div>
 
-  <section class="section">
-    <div class="label">Assistant Analysis</div>
-    <div class="box" id="assistant"></div>
-  </section>
+<div class="grid">
+<div class="card">
+<div class="label">Risk Score</div>
+<div class="value" id="risk"></div>
+</div>
 
-  <section class="section">
-    <div class="label">Evidence / Trace</div>
-    <div class="box">
-      Decision trace: Input → Risk → Stress → Macro → Decision → Audit → Snapshot<br>
-      Evidence status: available<br>
-      Audit status: traceable
-    </div>
-  </section>
+<div class="card">
+<div class="label">Stress</div>
+<div class="value" id="stress"></div>
+</div>
 
-  <section class="section">
-    <div class="label">Portfolio View</div>
-    <table id="portfolio"></table>
-  </section>
+<div class="card">
+<div class="label">Confidence</div>
+<div class="value" id="confidence"></div>
+</div>
+</div>
 
-  <div class="footer">
-    ZENTRA Intelligence Report — confidential system output. Export-ready institutional format.
-  </div>
+<div class="section">
+<div class="label">Executive Insight</div>
+<div class="box" id="insight"></div>
+</div>
+
+<div class="section">
+<div class="label">Assistant Analysis</div>
+<div class="box" id="assistant"></div>
+</div>
+
+<div class="section">
+<div class="label">Evidence & System Integrity</div>
+<div class="box">
+✔ Decision trace available<br>
+✔ Audit snapshot recorded<br>
+✔ Evidence path verifiable<br>
+✔ System state consistent
+</div>
+</div>
+
+<div class="section">
+<div class="label">Portfolio Intelligence</div>
+<table id="portfolio"></table>
+</div>
+
+<div class="footer">
+ZENTRA Intelligence Report — institutional grade output. Decision-ready, audit-traceable.
+</div>
 
 </div>
 
 <script>
 const data = {
 decision:"BUY",
-summary:"Controlled execution is reasonable. Risk is elevated but still inside acceptable decision range.",
 risk:72,
 stress:64,
 confidence:78,
 drivers:[
-"Macro trend positive",
-"Risk aligned with decision",
-"Liquidity stable"
+"Primary Driver: Macro trend supports upward bias.",
+"Secondary Driver: Risk aligned with decision threshold.",
+"Supporting Factor: Liquidity conditions stable."
 ],
-assistant:"WHY: Signal strength is positive and risk remains controllable. ACTION: proceed with controlled exposure. WARNING: high risk requires limited sizing.",
+assistant:{
+why:"Signal strength is positive and supported by macro alignment.",
+action:"Proceed with controlled exposure, avoid full allocation.",
+warning:"High risk requires disciplined position sizing."
+},
 portfolio:[
 ["Risk Intelligence","CAUTION","72"],
 ["Credit Intelligence","REVIEW","66"],
@@ -188,16 +138,18 @@ portfolio:[
 ]
 };
 
-document.getElementById("decision").textContent=data.decision;
-document.getElementById("summary").textContent=data.summary;
 document.getElementById("risk").textContent=data.risk;
 document.getElementById("stress").textContent=data.stress;
 document.getElementById("confidence").textContent=data.confidence+"%";
 
 document.getElementById("insight").innerHTML =
-data.drivers.map(x=>"<p>"+x+"</p>").join("");
+data.drivers.map(x=>"<p>"+x+"</p>").join("") +
+"<p><strong>Conclusion:</strong> Decision is supported but requires controlled execution.</p>";
 
-document.getElementById("assistant").textContent=data.assistant;
+document.getElementById("assistant").innerHTML =
+"<strong>WHY:</strong> "+data.assistant.why+"<br><br>"+
+"<strong>ACTION:</strong> "+data.assistant.action+"<br><br>"+
+"<strong>WARNING:</strong> "+data.assistant.warning;
 
 document.getElementById("portfolio").innerHTML =
 "<tr><th>Product</th><th>Decision</th><th>Score</th></tr>" +
