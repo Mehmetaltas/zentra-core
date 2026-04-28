@@ -28,7 +28,8 @@ Durum: IN PROGRESS
 İz: docs/products/closure/cockpit/CREDIT_COCKPIT_CLOSURE.md
 
 # 2. ASSISTANT
-Durum: OPEN
+Durum: IN PROGRESS
+İz: docs/products/closure/assistant/CREDIT_ASSISTANT_CLOSURE.md
 
 # 3. REPORT
 Durum: OPEN
