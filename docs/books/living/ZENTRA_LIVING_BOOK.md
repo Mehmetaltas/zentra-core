@@ -108,3 +108,20 @@ Function count must be checked before new API endpoints are added.
 
 ### Result
 Repo, books, runtime folders and system trace are aligned.
+
+---
+
+## API LIMIT CLEANUP CHECKPOINT
+
+### Status
+LOCKED
+
+### Decision
+Active repo API surface was reduced to prevent Vercel function-limit risk.
+
+### Rule
+No uncontrolled new API function files.
+
+### Result
+Legacy API endpoints removed from active repo.
+Future features expand inside existing runtime.

@@ -105,3 +105,34 @@ Vercel 12 function limiti unutulmaz.
 
 ## İlke
 Aktif sistemde yedek, eski kopya, log, geçici dosya ve duplicate living book kalmaz.
+
+---
+
+# API FUNCTION LIMIT / ACTIVE REPO CLEANUP LOCK
+
+## Durum
+LOCKED
+
+## Karar
+ZENTRA aktif core repo içinde yalnızca aktif endpointler kalır.
+
+## Aktif API Mantığı
+Yeni özellikler yeni Vercel function dosyası açılarak değil, mevcut runtime içine bağlanarak büyütülür.
+
+## Aktif Kalacak API Alanları
+- health
+- send-report
+- report view
+- credit stress
+
+## Kaldırılan Eski API Alanları
+- document intelligence
+- document rules
+- knowledge-base
+- market-context
+- rule-registry
+- source-registry
+
+## Vercel Kuralı
+api/ function sayısı her yeni endpoint öncesi kontrol edilir.
+Limit aşılmaz.

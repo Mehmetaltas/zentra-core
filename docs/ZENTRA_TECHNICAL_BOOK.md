@@ -155,3 +155,25 @@ find api -type f -name "*.js" | wc -l
 
 ## Cleanup Rule
 Backup, temp, logs, pycache and duplicate root living book files are not active system files.
+
+---
+
+# API FUNCTION LIMIT — TECH LOCK
+
+## Status
+LOCKED
+
+## Active Endpoint Strategy
+ZENTRA does not grow by adding uncontrolled Vercel serverless functions.
+
+## Active Runtime Expansion
+- Existing send-report pipeline
+- Existing core/server runtime
+- lib modules
+- core modules
+
+## Removed
+Legacy API endpoints removed from active repo.
+
+## Check
+find api -type f -name "*.js" | wc -l
