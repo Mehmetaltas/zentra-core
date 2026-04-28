@@ -44,3 +44,6 @@ Durum: OPEN
 - [ ] Assistant
 - [ ] Report
 
+- [ ] Assistant
+- [ ] Report
+
