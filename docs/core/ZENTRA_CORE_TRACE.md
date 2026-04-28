@@ -427,3 +427,58 @@ ZENTRA artık:
 ## Sonraki Doğru Blok
 Aggregation / Portfolio Intelligence
 
+
+# ZENTRA CORE TRACE — AGGREGATION / PORTFOLIO INTELLIGENCE
+
+## Tarih
+2026-04-28
+
+## İşlenen Blok
+Aggregation Engine (V1 — Portfolio Intelligence)
+
+---
+
+## Önceki Durum
+- portfolio çalışıyordu
+- ama tek anlam üretilmiyordu
+
+---
+
+## Yeni Durum
+- aggregation-engine.js oluşturuldu
+- portfolio sonuçları işlendi
+- ortalama risk üretildi
+- final decision üretildi
+
+---
+
+## Test Sonucu
+- portfolio size: 3
+- avg risk score üretildi
+- decision üretildi (CAUTION)
+- execution + audit + snapshot çalıştı
+
+---
+
+## Durum
+Aggregation: V1 ACTIVE
+
+---
+
+## Açık Kalanlar
+- ağırlıklı risk hesaplama
+- ürün bazlı katkı analizi
+- portföy risk dağılımı
+- ileri decision modeli
+
+---
+
+## Kritik Netlik
+ZENTRA artık:
+→ portföyden tek karar üreten sistem
+
+---
+
+## Sonraki Doğru Blok
+Product Perfection (Cockpit)
+
