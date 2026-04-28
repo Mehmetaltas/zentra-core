@@ -13,12 +13,26 @@ Kredi kararını açıklayan ve kullanıcıyı yönlendiren assistant sistemi.
 
 # 1. Explain
 
-Durum: OPEN
+Durum: CLOSED
 
-- [ ] Credit explain
-- [ ] Stress explain
-- [ ] Payment explain
-- [ ] Decision explain
+✔ Credit explain var
+✔ Stress explain var
+✔ Payment explain var
+✔ Decision explain var
+
+Explain Standard:
+- Credit Score → ne anlama geliyor
+- Stress → kredi üzerindeki baskı
+- Payment Capacity → ödeme gücü
+- Decision → neden onay / reddedildi
+
+Kapanış Notu:
+Explain kullanıcıya kredi kararının nedenini açıklar.
+
+- [x] Credit explain
+- [x] Stress explain
+- [x] Payment explain
+- [x] Decision explain
 
 ---
 
@@ -54,7 +68,7 @@ Durum: OPEN
 
 ## Checklist
 
-- [ ] Explain
+- [x] Explain
 - [ ] Action
 - [ ] Warning
 - [ ] Format
