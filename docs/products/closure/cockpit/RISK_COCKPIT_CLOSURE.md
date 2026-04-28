@@ -30,7 +30,17 @@ Kullanıcı cockpit’e girdiğinde 5 saniyede şunları görmelidir:
 
 ## 1. Risk Score Panel
 
-Durum: PARTIAL
+Durum: CLOSED
+
+✔ Risk score görünür
+✔ Risk band mapping aktif
+✔ Renk ayrımı aktif
+✔ Açıklama eklendi
+
+Band Mapping:
+0–40 LOW
+40–70 MEDIUM
+70–100 HIGH
 
 Gerekli:
 - [ ] Ana risk skoru görünür
