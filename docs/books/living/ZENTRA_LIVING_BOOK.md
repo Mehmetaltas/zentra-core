@@ -84,3 +84,27 @@ The next active workstream outside this page is:
 
 Full ZENTRA productization and module gap closure.
 
+
+---
+
+## REPO CLEAN STRUCTURE CHECKPOINT
+
+### Status
+LOCKED
+
+### Decision
+Active repo structure cleaned and locked.
+
+### Canonical Books
+- Main: docs/ZENTRA_MAIN_BOOK.md
+- Technical: docs/ZENTRA_TECHNICAL_BOOK.md
+- Living: docs/books/living/ZENTRA_LIVING_BOOK.md
+
+### Legacy
+Root living book moved to archive reference.
+
+### Vercel Rule
+Function count must be checked before new API endpoints are added.
+
+### Result
+Repo, books, runtime folders and system trace are aligned.

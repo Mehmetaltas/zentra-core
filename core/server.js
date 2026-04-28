@@ -161,7 +161,15 @@ const server = http.createServer((req,res)=>{
       return send(res,{logs:audit.getLogs()});
     }
 
-    if(u.pathname==="/" || u.pathname==="/index.html" || u.pathname==="/cockpit.html"){
+    
+if(u.pathname==="/" || u.pathname==="/index.html"){
+  const file=path.join(process.cwd(),"public/index.html");
+  res.setHeader("Content-Type","text/html; charset=utf-8");
+  return fs.createReadStream(file).pipe(res);
+}
+
+if(u.pathname==="/cockpit.html"){
+
       const file=path.join(process.cwd(),"cockpit.html");
       res.setHeader("Content-Type","text/html; charset=utf-8");
       return fs.createReadStream(file).pipe(res);

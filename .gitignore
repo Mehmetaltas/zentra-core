@@ -1,2 +1,11 @@
-.vercel
-.env*.local
+node_modules/
+.env
+.env.local
+.vercel/
+
+# ZENTRA cleanup rules
+*.bak*
+*.tmp
+logs/
+__pycache__/
+*.pyc

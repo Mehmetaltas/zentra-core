@@ -127,3 +127,31 @@ Not started. Must be treated as a separate product universe after current ZENTRA
 
 A module is not complete because its name exists. A module is complete only when code, cockpit, assistant, report, audit, license and market packaging are aligned.
 
+
+---
+
+# REPO STRUCTURE — TECH LOCK
+
+## Status
+LOCKED
+
+## Canonical Runtime Folders
+- api
+- core
+- lib
+- app
+- public
+- data
+- docs
+
+## Canonical Books
+- docs/ZENTRA_MAIN_BOOK.md
+- docs/ZENTRA_TECHNICAL_BOOK.md
+- docs/books/living/ZENTRA_LIVING_BOOK.md
+
+## Vercel Function Limit
+Before adding any new API file:
+find api -type f -name "*.js" | wc -l
+
+## Cleanup Rule
+Backup, temp, logs, pycache and duplicate root living book files are not active system files.

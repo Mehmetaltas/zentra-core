@@ -80,3 +80,28 @@ zincirinin her modülde tamamlanmamış olmasıdır.
 
 ZENTRA önce tam yayınlanabilir sistem olur. Sonra güçlü çıkış yapar. Payment, pricing ve satış baskısı bu sıradan sonra değerlendirilir.
 
+
+---
+
+# REPO STRUCTURE / CLEAN SYSTEM LOCK
+
+## Durum
+LOCKED
+
+## Karar
+ZENTRA repo yapısı aktif sistem dosyaları, üçlü kitap sistemi, veri kayıtları ve kontrollü arşiv mantığıyla temizlenmiştir.
+
+## Aktif Kitaplar
+- Ana Kitap: docs/ZENTRA_MAIN_BOOK.md
+- Teknik Kitap: docs/ZENTRA_TECHNICAL_BOOK.md
+- Yaşayan Kitap: docs/books/living/ZENTRA_LIVING_BOOK.md
+
+## Arşiv
+- archive/legacy-books/ZENTRA_LIVING_BOOK.root.legacy.md
+
+## Vercel Kuralı
+api/ altına yeni endpoint eklenmeden önce function sayısı kontrol edilir.
+Vercel 12 function limiti unutulmaz.
+
+## İlke
+Aktif sistemde yedek, eski kopya, log, geçici dosya ve duplicate living book kalmaz.
