@@ -118,7 +118,20 @@ Institutional tier kurumsal müşteriler içindir.
 
 # 5. Feature Gate
 
-Durum: OPEN
+Durum: CLOSED
+
+✔ Kullanıcı seviyesine göre erişim var
+✔ Feature kısıtlama aktif
+✔ Upgrade yönlendirme var
+
+Feature Gate Standard:
+- Free → limited output
+- Pro → extended output
+- Expert → full output
+- Institutional → API + batch
+
+Kapanış Notu:
+Feature gate ürünün monetization kontrolüdür.
 
 ## Gerekli
 
@@ -134,7 +147,7 @@ Durum: OPEN
 - [x] Pro tamam
 - [x] Expert tamam
 - [x] Institutional tamam
-- [ ] Feature gate aktif
+- [x] Feature gate aktif
 
 ---
 
