@@ -49,6 +49,16 @@ function assetResult(symbol){
     explain:exp.human || exp,
     explain_human:exp.human || exp,
     explain_technical:exp.technical || "",
+    decision_i18n:{
+      tr: decision,
+      en: decision,
+      ar: decision==="ACCUMULATE" ? "تجميع" : decision
+    },
+    explain_i18n:{
+      tr: exp.human || exp,
+      en: "Risk appears low. Gradual and controlled action may be considered.",
+      ar: "تبدو المخاطر منخفضة. يمكن التفكير في تقدم تدريجي ومنضبط."
+    },
     source:"backend"
   };
 }
