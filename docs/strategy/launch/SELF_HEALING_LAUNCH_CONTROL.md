@@ -317,3 +317,19 @@ Telafi türleri:
 
 Telafi yalnızca sistem kaynaklı, audit ile doğrulanabilir durumlarda uygulanır.
 
+
+
+---
+
+## Legal / Commercial Integration
+
+Self Healing sistemi:
+
+- kullanıcı haklarını korur
+- telafi politikasını uygular
+- dispute durumlarını loglar
+- governance escalation üretir
+
+Bağlantı:
+docs/strategy/legal/GLOBAL_LEGAL_COMMERCIAL_FRAMEWORK.md
+

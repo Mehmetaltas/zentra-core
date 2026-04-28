@@ -96,3 +96,11 @@ OPEN (Strategic Execution Phase):
 - Shane Shin Layer
 - Valuation / Positioning
 
+
+
+---
+
+# 6. Legal / Commercial Framework
+Durum: IN PROGRESS
+İz: docs/strategy/legal/GLOBAL_LEGAL_COMMERCIAL_FRAMEWORK.md
+
