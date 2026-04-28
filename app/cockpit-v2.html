@@ -1,451 +1,114 @@
 <!doctype html>
-<html lang="tr">
+<html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
+<meta charset="utf-8">
 <title>ZENTRA Cockpit V2</title>
-
 <style>
-body{
-  margin:0;
-  background:#05080f;
-  color:#eaf0ff;
-  font-family:Arial,sans-serif;
-}
-
-.wrap{max-width:1200px;margin:auto;padding:20px}
-
-.top{
-  display:flex;justify-content:space-between;align-items:center;
-  margin-bottom:20px
-}
-
-.brand{
-  font-size:24px;font-weight:900;letter-spacing:.08em
-}
-
-.tag{opacity:.6;font-size:12px}
-
-.hero{
-  padding:28px;
-  border-radius:24px;
-  background:linear-gradient(135deg,#0c1426,#0a0f1c);
-  border:1px solid #243556;
-  box-shadow:0 0 40px rgba(0,0,0,0.6)
-}
-
-.decision{
-  font-size:64px;
-  font-weight:900;
-  margin:10px 0;
-}
-
-.buy{color:#2effa1}
-.sell{color:#ff5c5c}
-.wait{color:#ffd166}
-
-.pill{
-  display:inline-block;
-  padding:6px 12px;
-  border-radius:999px;
-  background:#16233a;
-  margin-right:6px;
-  font-size:13px;
-}
-
-.row{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:14px;
-  margin-top:16px
-}
-
-.card{
-  padding:18px;
-  border-radius:18px;
-  background:#0c1322;
-  border:1px solid #22314d;
-  transition:.2s;
-}
-
-.card:hover{
-  transform:translateY(-2px);
-  border-color:#3a4e7a;
-}
-
-.label{
-  opacity:.6;
-  font-size:11px;
-  text-transform:uppercase;
-}
-
-.value{
-  font-size:30px;
-  font-weight:900;
-  margin-top:8px;
-}
-
-.section{
-  display:grid;
-  grid-template-columns:1.2fr .8fr;
-  gap:14px;
-  margin-top:16px
-}
-
-.driver{
-  padding:12px;
-  border-radius:14px;
-  background:#101a2e;
-  margin-top:8px;
-}
-
-.portfolio{
-  margin-top:16px;
-}
-
-.portfolio table{
-  width:100%;
-  border-collapse:collapse;
-}
-
-.portfolio td{
-  padding:12px;
-  border-bottom:1px solid #23314d;
-}
-
-.badge{
-  padding:4px 8px;
-  border-radius:8px;
-  font-size:12px;
-}
-
-.badge-buy{background:#123c2a;color:#2effa1}
-.badge-sell{background:#3c1a1a;color:#ff5c5c}
-.badge-wait{background:#3c3312;color:#ffd166}
-
-.decision-grid{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:12px;
-  margin-top:20px;
-}
-
-.decision-grid > div{
-  background:#0b1324;
-  border:1px solid #22314d;
-  border-radius:16px;
-  padding:14px;
-}
-
-.mini-value{
-  font-size:20px;
-  font-weight:900;
-  margin-top:8px;
-}
-
-.mini-text{
-  font-size:13px;
-  opacity:.78;
-  margin-top:8px;
-  line-height:1.45;
-}
-
-@media(max-width:800px){
-  .row,.section{grid-template-columns:1fr}
-  .decision{font-size:44px}
-}
+body{margin:0;background:#0b1220;color:#fff;font-family:Arial}
+.wrap{max-width:1100px;margin:20px auto;padding:20px}
+.grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px}
+.card{background:#111a2f;border-radius:14px;padding:16px}
+.label{font-size:11px;color:#9aa3b2;text-transform:uppercase}
+.value{font-size:28px;font-weight:800;margin-top:6px}
+.big{font-size:48px;font-weight:900}
+.section{margin-top:20px}
+.row{display:flex;justify-content:space-between;margin-top:8px}
+.box{margin-top:8px;line-height:1.5;color:#d1d5db}
 </style>
 </head>
 
 <body>
-<main class="wrap">
+<div class="wrap">
 
-<div class="top">
-  <div>
-    <div class="brand">ZENTRA COCKPIT</div>
-    <div class="tag">Investor-Level Decision Surface</div>
-  </div>
-  <div class="pill">LIVE</div>
-</div>
-
-<div class="hero">
+<!-- DECISION SURFACE -->
+<div class="card">
   <div class="label">Final Decision</div>
-  <div id="decision" class="decision">BUY</div>
-  <div>
-    <span class="pill" id="confidence"></span>
-    <span class="pill" id="riskBand"></span>
-    <span class="pill" id="systemState"></span>
-  </div>
-
-  <div class="decision-grid">
-    <div>
-      <div class="label">Recommended Action</div>
-      <div class="mini-value" id="recommendedAction"></div>
-    </div>
-    <div>
-      <div class="label">Decision Reason</div>
-      <div class="mini-text" id="decisionReason"></div>
-    </div>
-    <div>
-      <div class="label">Execution Readiness</div>
-      <div class="mini-value" id="executionReadiness"></div>
-    </div>
-  </div>
+  <div class="big" id="decision"></div>
+  <div class="box" id="decisionExplain"></div>
 </div>
 
-<div class="row">
-  <div class="card"><div class="label">Risk</div><div id="risk" class="value"></div></div>
-  <div class="card"><div class="label">Stress</div><div id="stress" class="value"></div></div>
-  <div class="card"><div class="label">Signal</div><div id="signal" class="value"></div></div>
-  <div class="card"><div class="label">Macro</div><div id="macro" class="value"></div></div>
-</div>
+<!-- METRICS -->
+<div class="grid section">
 
-<div class="section">
   <div class="card">
-    <div class="label">Insight</div>
-    <div id="drivers"></div>
+    <div class="label">Risk Score</div>
+    <div class="value" id="risk"></div>
   </div>
 
   <div class="card">
-    <div class="label">Scenario</div>
-    <div id="position" class="value"></div>
-    <p id="scenario"></p>
+    <div class="label">Stress</div>
+    <div class="value" id="stress"></div>
   </div>
+
+  <div class="card">
+    <div class="label">Confidence</div>
+    <div class="value" id="confidence"></div>
+  </div>
+
 </div>
 
-<div class="card portfolio">
-  <div class="label">Portfolio</div>
-  <table id="portfolio"></table>
+<!-- INSIGHT -->
+<div class="card section">
+  <div class="label">Insight</div>
+  <div id="insight" class="box"></div>
 </div>
 
-</main>
+<!-- ASSISTANT -->
+<div class="card section">
+  <div class="label">Assistant</div>
+  <div id="assistant" class="box"></div>
+</div>
+
+<!-- PORTFOLIO -->
+<div class="card section">
+  <div class="label">Portfolio View</div>
+  <div id="portfolio"></div>
+</div>
+
+</div>
 
 <script>
-const data={
-activeProduct:"Financial Trade",
+
+const data = {
 decision:"BUY",
-confidence:78,
 risk:72,
 stress:64,
-signal:"BUY",
-macro:68,
-position:"LONG",
-scenario:"UP scenario active — risk/reward acceptable.",
-systemState:"OPERATIONAL",
-recommendedAction:"Proceed with controlled exposure",
-decisionReason:"Signal strength is positive, risk is elevated but still acceptable, and liquidity remains stable.",
-executionReadiness:"READY",
+confidence:78,
 drivers:[
-{
-title:"Macro trend positive",
-detail:"External pressure supports the decision direction.",
-impact:"HIGH"
-},
-{
-title:"Risk aligned",
-detail:"Risk level is elevated but still inside acceptable decision range.",
-impact:"MEDIUM"
-},
-{
-title:"Liquidity stable",
-detail:"No immediate liquidity stress detected in the current scenario.",
-impact:"LOW"
-}
+"Macro trend positive",
+"Risk aligned with decision",
+"Liquidity stable"
 ],
 portfolio:[
-{entity:"Risk Intelligence",decision:"WAIT",score:72,risk:"HIGH",confidence:71,comment:"Risk elevated; monitor before action."},
-{entity:"Credit Intelligence",decision:"REVIEW",score:66,risk:"MEDIUM",confidence:69,comment:"Payment capacity requires additional check."},
-{entity:"Financial Trade",decision:"BUY",score:78,risk:"MEDIUM",confidence:78,comment:"Signal is strong with acceptable risk bridge."}
+["Risk Intelligence","CAUTION","72"],
+["Credit Intelligence","REVIEW","66"],
+["Financial Trade","BUY","78"]
 ]
 };
 
-function band(v){
- if(v<40)return"LOW";
- if(v<70)return"MEDIUM";
- return"HIGH";
-}
+// decision
+document.getElementById("decision").textContent = data.decision;
+document.getElementById("decisionExplain").textContent =
+"Controlled execution recommended. Risk elevated but manageable.";
 
-const d=document.getElementById("decision");
-d.textContent=data.decision;
-d.className="decision "+data.decision.toLowerCase();
+// metrics
+document.getElementById("risk").textContent = data.risk;
+document.getElementById("stress").textContent = data.stress;
+document.getElementById("confidence").textContent = data.confidence+"%";
 
-document.getElementById("confidence").textContent="Confidence "+data.confidence+"%";
-document.getElementById("riskBand").textContent="Risk "+band(data.risk);
-document.getElementById("systemState").textContent=data.systemState;
-document.getElementById("recommendedAction").textContent=data.recommendedAction;
-document.getElementById("decisionReason").textContent=data.decisionReason;
-document.getElementById("executionReadiness").textContent=data.executionReadiness;
+// insight
+document.getElementById("insight").innerHTML =
+data.drivers.map(x=>"<div>"+x+"</div>").join("");
 
-document.getElementById("risk").textContent=data.risk;
-document.getElementById("stress").textContent=data.stress;
-document.getElementById("signal").textContent=data.signal;
-document.getElementById("macro").textContent=data.macro;
+// assistant
+document.getElementById("assistant").innerHTML =
+"WHY: Signal strong<br>ACTION: Controlled entry<br>WARNING: High risk";
 
-document.getElementById("position").textContent=data.position;
-document.getElementById("scenario").textContent=data.scenario;
-
-document.getElementById("assistant").innerText = zentraAssistant(data);
-document.getElementById("assistantBox").innerHTML = zentraGuidance(data);
-
-document.getElementById("drivers").innerHTML=
-data.drivers.map(x=>{
-  return "<div class='driver'>"+
-    "<strong>"+x.title+"</strong>"+
-    "<p style='margin:6px 0 0;opacity:.72;font-size:13px'>"+x.detail+"</p>"+
-    "<span class='pill' style='margin-top:8px'>Impact "+x.impact+"</span>"+
-  "</div>";
-}).join("");
-
-document.getElementById("portfolio").innerHTML=
-"<tr><td><b>Entity</b></td><td><b>Decision</b></td><td><b>Score</b></td><td><b>Risk</b></td><td><b>Confidence</b></td><td><b>Comment</b></td></tr>"+
-data.portfolio.map(r=>{
-let cls=r.decision=="BUY"?"badge-buy":r.decision=="SELL"?"badge-sell":"badge-wait";
-return "<tr>"+
-"<td>"+r.entity+"</td>"+
-"<td><span class='badge "+cls+"'>"+r.decision+"</span></td>"+
-"<td>"+r.score+"</td>"+
-"<td>"+r.risk+"</td>"+
-"<td>"+r.confidence+"%</td>"+
-"<td style='opacity:.75'>"+r.comment+"</td>"+
-"</tr>";
-}).join("");
-
-
-
-
-
-function zentraAssistant(data){
-
-  let ctx = {
-    product: data.activeProduct || "General",
-    decision: data.decision,
-    confidence: data.confidence,
-    risk: data.risk,
-    stress: data.stress,
-    macro: data.macro,
-    position: data.position,
-    drivers: data.drivers
-  };
-
-  let productVoice = "";
-
-  if(ctx.product === "Risk Intelligence"){
-    productVoice = "Risk view: focus on exposure, stress, and deviation. ";
-  } else if(ctx.product === "Credit Intelligence"){
-    productVoice = "Credit view: focus on payment capacity, credit stress, and approval risk. ";
-  } else if(ctx.product === "Financial Trade"){
-    productVoice = "Trade view: focus on signal strength, risk bridge, and execution readiness. ";
-  } else {
-    productVoice = "System view: focus on decision quality and risk control. ";
-  }
-
-  let explain = productVoice;
-  explain += "Decision: " + ctx.decision + ". ";
-  explain += "Risk level: " + ctx.risk + ". ";
-  explain += "Confidence: " + ctx.confidence + "%. ";
-
-  if(ctx.drivers && ctx.drivers.length){
-    explain += "Drivers: " + ctx.drivers.map(d => d.title).join(", ") + ". ";
-  }
-
-  let action = "";
-
-  if(ctx.product === "Risk Intelligence"){
-    action = ctx.risk > 70
-      ? "Reduce exposure or review before commitment."
-      : "Proceed with monitored risk.";
-  } else if(ctx.product === "Credit Intelligence"){
-    action = ctx.risk > 70
-      ? "Request additional payment evidence or restructure."
-      : "Credit decision can move forward with standard checks.";
-  } else if(ctx.product === "Financial Trade"){
-    if(ctx.decision === "BUY"){
-      action = ctx.risk > 70 ? "Use controlled exposure only." : "Controlled execution is reasonable.";
-    } else if(ctx.decision === "SELL"){
-      action = "Reduce or close exposure.";
-    } else {
-      action = "Wait for stronger confirmation.";
-    }
-  } else {
-    action = "Monitor and proceed according to risk band.";
-  }
-
-  let warnings = [];
-
-  if(ctx.risk >= 80){
-    warnings.push("CRITICAL RISK: exposure should be reduced before execution.");
-  } else if(ctx.risk >= 70){
-    warnings.push("HIGH RISK: proceed only with controlled exposure.");
-  }
-
-  if(ctx.confidence < 50){
-    warnings.push("LOW CONFIDENCE: decision reliability is weak.");
-  } else if(ctx.confidence < 65){
-    warnings.push("MODERATE CONFIDENCE: confirmation is recommended.");
-  }
-
-  if(ctx.stress >= 70){
-    warnings.push("STRESS ALERT: system pressure is elevated.");
-  }
-
-  if(ctx.macro >= 70){
-    warnings.push("MACRO ALERT: external pressure may affect the decision.");
-  }
-
-  if(ctx.product === "Financial Trade" && ctx.decision === "BUY" && ctx.risk >= 70){
-    warnings.push("TRADE-RISK TENSION: signal is positive but risk is high.");
-  }
-
-  if(ctx.product === "Credit Intelligence" && ctx.risk >= 70){
-    warnings.push("APPROVAL RISK: additional evidence or restructuring may be required.");
-  }
-
-  if(ctx.product === "Risk Intelligence" && ctx.risk >= 70){
-    warnings.push("RISK REVIEW: identify exposure drivers before commitment.");
-  }
-
-  let warningText = warnings.length ? warnings.join(" ") : "No critical warning.";
-
-  return (
-    "PRODUCT: " + ctx.product +
-    " | WHY: " + explain +
-    " | ACTION: " + action +
-    " | WARNING: " + warningText
-  );
-}
-
-
-
-
-
-function zentraGuidance(data){
-
-  let step = "";
-  let tool = data.activeProduct;
-  let riskNote = "";
-
-  if(data.decision === "BUY"){
-    step = data.risk > 70
-      ? "Enter with small size."
-      : "Entry is acceptable.";
-  } else if(data.decision === "SELL"){
-    step = "Reduce or close position.";
-  } else {
-    step = "Wait for confirmation.";
-  }
-
-  if(data.risk > 70){
-    riskNote = "High risk. Avoid full exposure.";
-  } else {
-    riskNote = "Risk acceptable.";
-  }
-
-  return `
-  <div><strong>NEXT STEP:</strong> ${step}</div>
-  <div><strong>TOOL:</strong> ${tool}</div>
-  <div><strong>RISK NOTE:</strong> ${riskNote}</div>
-  `;
-}
+// portfolio
+document.getElementById("portfolio").innerHTML =
+data.portfolio.map(p=>
+"<div class='row'><div>"+p[0]+"</div><div>"+p[1]+" ("+p[2]+")</div></div>"
+).join("");
 
 </script>
 
