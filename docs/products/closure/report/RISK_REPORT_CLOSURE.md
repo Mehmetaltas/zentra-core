@@ -85,7 +85,17 @@ Expert report derin analiz isteyen kullanıcı ve kurumlar içindir.
 
 # 3. Export
 
-Durum: OPEN
+Durum: CLOSED
+
+✔ JSON export var
+✔ PDF export opsiyonel
+
+Export Standard:
+- JSON: machine-readable çıktı
+- PDF: paylaşım / sunum (opsiyonel)
+
+Kapanış Notu:
+Export özelliği raporu dış dünyaya taşır.
 
 ## Gerekli
 
@@ -98,7 +108,7 @@ Durum: OPEN
 
 - [x] Pro report tamam
 - [x] Expert report tamam
-- [ ] Export tamam
+- [x] Export tamam
 
 ---
 
