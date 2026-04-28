@@ -30,13 +30,28 @@ Pro rapor hızlı trade değerlendirmesi içindir.
 ---
 
 # 2. Expert Report
-Durum: OPEN
+Durum: CLOSED
+
+✔ Signal var
+✔ Risk var
+✔ Decision var
+✔ Driver analysis var
+✔ Detailed explain var
+
+Standard:
+- Full trade output
+- Risk + Decision
+- Driver Breakdown
+- Detailed Explanation
+
+Kapanış Notu:
+Expert rapor derin trade analizi içindir.
 
 - [x] Signal
 - [x] Risk
 - [x] Decision
-- [ ] Driver analysis
-- [ ] Detailed explain
+- [x] Driver analysis
+- [x] Detailed explain
 
 ---
 
@@ -51,6 +66,6 @@ Durum: OPEN
 ## Checklist
 
 - [x] Pro
-- [ ] Expert
+- [x] Expert
 - [ ] Export
 
