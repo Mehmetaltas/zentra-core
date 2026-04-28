@@ -309,3 +309,67 @@ ZENTRA artık:
 ## Sonraki Doğru Blok
 Simulation Engine
 
+
+# ZENTRA CORE TRACE — SIMULATION ENGINE
+
+## Tarih
+2026-04-28
+
+## İşlenen Blok
+Simulation Engine (V1 — Scenario Generation + Risk Binding)
+
+---
+
+## Önceki Durum
+- sistem veri okuyordu
+- tek analiz yapıyordu
+
+---
+
+## Yeni Durum
+- simulation-engine.js oluşturuldu
+- çoklu senaryo üretimi eklendi
+- Risk App ile bağlandı
+- her senaryo ayrı çalıştırıldı
+
+---
+
+## Senaryolar
+- base
+- stress_up
+- liquidity_down
+- optimistic
+
+---
+
+## Test Sonucu
+- her senaryo için risk sonucu üretildi
+- decision üretildi
+- execution çalıştı
+- audit oluştu
+- snapshot oluştu
+
+---
+
+## Durum
+Simulation: V1 ACTIVE
+
+---
+
+## Açık Kalanlar
+- zaman bazlı senaryo (time simulation)
+- makro etki ekleme
+- çoklu ürün simülasyonu (portfolio)
+- sonuç karşılaştırma katmanı
+
+---
+
+## Kritik Netlik
+ZENTRA artık:
+→ senaryo üreten sistem
+
+---
+
+## Sonraki Doğru Blok
+Multi-Mission / Concurrency
+
