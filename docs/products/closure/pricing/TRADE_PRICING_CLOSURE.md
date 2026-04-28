@@ -6,10 +6,20 @@ ACTIVE — PRICING STARTED
 ---
 
 # 1. Free Tier
-Durum: OPEN
+Durum: CLOSED
 
-- [ ] Basic signal
-- [ ] Short decision
+✔ Basic signal var
+✔ Short decision var
+
+Standard:
+- Signal
+- Basic Decision
+
+Kapanış Notu:
+Free tier kullanıcıyı sisteme çeker.
+
+- [x] Basic signal
+- [x] Short decision
 
 ---
 
@@ -52,7 +62,7 @@ Durum: OPEN
 
 ## Checklist
 
-- [ ] Free
+- [x] Free
 - [ ] Pro
 - [ ] Expert
 - [ ] Institutional
