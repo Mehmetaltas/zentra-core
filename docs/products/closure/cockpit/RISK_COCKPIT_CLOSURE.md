@@ -75,7 +75,19 @@ Gerekli:
 
 ## 3. Macro Pressure Panel
 
-Durum: PARTIAL
+Durum: CLOSED
+
+✔ Macro pressure görünür
+✔ Macro band mapping aktif
+✔ Macro etkisi açıklaması eklendi
+
+Macro Mapping:
+0–30 LOW
+30–60 MEDIUM
+60–100 HIGH
+
+Kapanış Notu:
+Macro paneli sistem dışı ekonomik baskıyı kullanıcıya açık şekilde gösterir.
 
 Gerekli:
 - [ ] Macro pressure görünür
@@ -133,7 +145,7 @@ Gerekli:
 
 - [ ] Risk Score panel tamam
 - [x] Stress panel tamam
-- [ ] Macro panel tamam
+- [x] Macro panel tamam
 - [ ] Decision panel tamam
 - [ ] Driver Breakdown tamam
 - [ ] Deviation panel tamam
