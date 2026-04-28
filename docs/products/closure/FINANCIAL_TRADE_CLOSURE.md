@@ -51,7 +51,8 @@ Durum: IN PROGRESS
 Durum: OPEN
 
 # 8. PROOF PACK
-Durum: OPEN
+Durum: IN PROGRESS
+İz: docs/products/closure/proof/TRADE_PROOF_PACK.md
 
 ---
 
