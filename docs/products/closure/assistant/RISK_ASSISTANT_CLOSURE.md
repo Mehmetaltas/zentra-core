@@ -51,7 +51,19 @@ Explain engine kullanıcıya sistemin nasıl düşündüğünü açıklar.
 
 # 2. Action Guidance
 
-Durum: OPEN
+Durum: CLOSED
+
+✔ “Ne yapmalıyım?” cevabı var
+✔ Risk seviyesine göre öneri üretilir
+✔ Aksiyon yönlendirme yapılır
+
+Action Standard:
+- LOW → Proceed (devam edilebilir)
+- MEDIUM → Caution (dikkatli ilerle)
+- HIGH → Stop (dur / yeniden değerlendir)
+
+Kapanış Notu:
+Action guidance kullanıcıya doğrudan hareket yönü verir.
 
 ## Gerekli
 
@@ -89,7 +101,7 @@ Durum: OPEN
 # Assistant Closure Checklist
 
 - [x] Explain tamam
-- [ ] Action guidance tamam
+- [x] Action guidance tamam
 - [ ] Warning system tamam
 - [ ] Response format tamam
 
