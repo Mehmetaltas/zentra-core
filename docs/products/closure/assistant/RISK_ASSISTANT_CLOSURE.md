@@ -75,7 +75,19 @@ Action guidance kullanıcıya doğrudan hareket yönü verir.
 
 # 3. Risk Warning System
 
-Durum: OPEN
+Durum: CLOSED
+
+✔ Yüksek risk uyarısı var
+✔ Kritik durum uyarısı var
+✔ Kullanıcı dikkat mesajı var
+
+Warning Standard:
+- HIGH risk → güçlü uyarı
+- CRITICAL → işlem durdurma önerisi
+- MEDIUM → dikkat uyarısı
+
+Kapanış Notu:
+Warning system kullanıcıyı riskli durumlarda korur.
 
 ## Gerekli
 
@@ -102,7 +114,7 @@ Durum: OPEN
 
 - [x] Explain tamam
 - [x] Action guidance tamam
-- [ ] Warning system tamam
+- [x] Warning system tamam
 - [ ] Response format tamam
 
 ---
