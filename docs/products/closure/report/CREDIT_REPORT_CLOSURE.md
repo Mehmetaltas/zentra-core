@@ -41,14 +41,30 @@ Pro rapor hızlı kredi değerlendirmesi içindir.
 
 # 2. Expert Report
 
-Durum: OPEN
+Durum: CLOSED
+
+✔ Credit Score var
+✔ Stress var
+✔ Payment Capacity var
+✔ Decision var
+✔ Driver Analysis var
+✔ Detailed explain var
+
+Expert Standard:
+- Full credit output
+- Stress + Payment + Decision
+- Driver Breakdown
+- Detailed Explanation
+
+Kapanış Notu:
+Expert rapor derin analiz içindir.
 
 - [x] Credit Score
 - [x] Stress
 - [x] Payment Capacity
 - [x] Decision
-- [ ] Driver Analysis
-- [ ] Detailed explain
+- [x] Driver Analysis
+- [x] Detailed explain
 
 ---
 
@@ -64,6 +80,6 @@ Durum: OPEN
 ## Checklist
 
 - [x] Pro
-- [ ] Expert
+- [x] Expert
 - [ ] Export
 
