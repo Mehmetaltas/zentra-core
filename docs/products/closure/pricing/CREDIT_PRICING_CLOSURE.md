@@ -68,9 +68,9 @@ Durum: CLOSED
 # 5. Feature Gate
 Durum: CLOSED
 
-- [ ] Tier access
-- [ ] Feature restriction
-- [ ] Upgrade guidance
+- [x] Tier access
+- [x] Feature restriction
+- [x] Upgrade guidance
 
 ---
 
@@ -80,5 +80,8 @@ Durum: CLOSED
 - [x] Pro
 - [ ] Expert
 - [x] Institutional
-- [ ] Feature gate
+- [x] Feature gate
 
+
+
+STATUS: PRICING CLOSED
