@@ -42,7 +42,21 @@ Free tier kullanıcıyı sisteme çeker.
 
 # 2. Pro Tier
 
-Durum: OPEN
+Durum: CLOSED
+
+✔ Risk score var
+✔ Stress var
+✔ Macro var
+✔ Basic explain var
+
+Pro Tier Standard:
+- Risk Score
+- Stress Level
+- Macro Pressure
+- Basic Explain
+
+Kapanış Notu:
+Pro tier kullanıcıya anlamlı analiz sunar.
 
 ## İçerik
 
@@ -92,7 +106,7 @@ Durum: OPEN
 # Pricing Closure Checklist
 
 - [x] Free tamam
-- [ ] Pro tamam
+- [x] Pro tamam
 - [ ] Expert tamam
 - [ ] Institutional tamam
 - [ ] Feature gate aktif
