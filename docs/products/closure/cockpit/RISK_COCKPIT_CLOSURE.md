@@ -175,7 +175,22 @@ Gerekli:
 
 ## 7. Before / After Comparison
 
-Durum: OPEN
+Durum: CLOSED
+
+✔ Önceki skor gösterilir
+✔ Güncel skor gösterilir
+✔ Değişim yönü (artış / azalış) gösterilir
+✔ Kısa yorum eklenir
+
+Comparison Standard:
+- Previous Score
+- Current Score
+- Change Value
+- Direction (UP / DOWN / STABLE)
+- Short Explanation
+
+Kapanış Notu:
+Before / After paneli riskin zaman içindeki değişimini kullanıcıya gösterir.
 
 Gerekli:
 - [ ] Önceki skor
@@ -193,7 +208,7 @@ Gerekli:
 - [x] Decision panel tamam
 - [x] Driver Breakdown tamam
 - [x] Deviation panel tamam
-- [ ] Before / After tamam
+- [x] Before / After tamam
 
 ---
 
