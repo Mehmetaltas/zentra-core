@@ -70,11 +70,23 @@ Expert tier profesyonel kullanıcılar içindir.
 ---
 
 # 4. Institutional Tier
-Durum: OPEN
+Durum: CLOSED
 
-- [ ] API access
-- [ ] Batch trade signals
-- [ ] Portfolio trading view
+✔ API access var
+✔ Batch trade signals var
+✔ Portfolio trading view var
+
+Standard:
+- API Integration
+- Batch Processing
+- Portfolio Trade Analysis
+
+Kapanış Notu:
+Institutional tier kurumsal müşteriler içindir.
+
+- [x] API access
+- [x] Batch trade signals
+- [x] Portfolio trading view
 
 ---
 
@@ -92,6 +104,6 @@ Durum: OPEN
 - [x] Free
 - [x] Pro
 - [x] Expert
-- [ ] Institutional
+- [x] Institutional
 - [ ] Feature gate
 
