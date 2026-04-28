@@ -104,3 +104,11 @@ OPEN (Strategic Execution Phase):
 Durum: IN PROGRESS
 İz: docs/strategy/legal/GLOBAL_LEGAL_COMMERCIAL_FRAMEWORK.md
 
+
+
+---
+
+# 7. Global Control Layer
+Durum: ACTIVE
+İz: docs/strategy/core/GLOBAL_CONTROL_LAYER.md
+
