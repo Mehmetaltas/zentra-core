@@ -46,7 +46,19 @@ Kapanış Notu:
 Risk bridge trade kararını risk ile bağlar.
 
 # 3. Trade Decision Panel
-Durum: OPEN
+Durum: CLOSED
+
+✔ Final trade decision var
+✔ Action mapping aktif
+✔ Açıklama eklendi
+
+Mapping:
+BUY → open position
+SELL → close / short
+WAIT → no action
+
+Kapanış Notu:
+Trade decision paneli aksiyonu belirler.
 
 # 4. Scenario / Position Panel
 Durum: OPEN
@@ -60,7 +72,7 @@ Durum: OPEN
 
 - [x] Signal
 - [x] Risk Bridge
-- [ ] Trade Decision
+- [x] Trade Decision
 - [ ] Scenario / Position
 - [ ] Drivers
 
