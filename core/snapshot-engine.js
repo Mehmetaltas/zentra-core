@@ -1,41 +1,45 @@
-/*
-ZENTRA CORE — SNAPSHOT ENGINE
-Mission / system durum kaydı
-*/
+const fs = require('fs');
+const path = require('path');
+const LOG = require('./logger');
 
-const fs = require("fs");
-const path = require("path");
+const FILE = path.join(__dirname, '../data/core-snapshots.json');
 
-const SNAPSHOT_FILE = path.join(__dirname, "../data/core-snapshots.json");
-
-function ensureFile() {
-  const dir = path.dirname(SNAPSHOT_FILE);
+function ensure() {
+  const dir = path.dirname(FILE);
   if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
-  if (!fs.existsSync(SNAPSHOT_FILE)) fs.writeFileSync(SNAPSHOT_FILE, "[]");
+  if (!fs.existsSync(FILE)) fs.writeFileSync(FILE, '[]');
 }
 
-const SNAPSHOT_ENGINE = {
-  create(snapshot) {
-    ensureFile();
-
-    const current = JSON.parse(fs.readFileSync(SNAPSHOT_FILE, "utf8"));
-
-    const record = {
-      id: "snapshot_" + Date.now(),
-      timestamp: new Date().toISOString(),
-      ...snapshot
-    };
-
-    current.push(record);
-    fs.writeFileSync(SNAPSHOT_FILE, JSON.stringify(current, null, 2));
-
-    return record;
-  },
-
-  list() {
-    ensureFile();
-    return JSON.parse(fs.readFileSync(SNAPSHOT_FILE, "utf8"));
+function safeRead() {
+  try {
+    ensure();
+    return JSON.parse(fs.readFileSync(FILE, 'utf8') || '[]');
+  } catch(e) {
+    LOG.error('snapshot_read_error', {e: String(e)});
+    return [];
   }
+}
+
+function safeWrite(arr) {
+  const tmp = FILE + '.tmp';
+  fs.writeFileSync(tmp, JSON.stringify(arr, null, 2));
+  fs.renameSync(tmp, FILE);
+}
+
+const SNAPSHOT = {
+  create(entry) {
+    const cur = safeRead();
+    const rec = {
+      id: 'snapshot_' + Date.now(),
+      ts: new Date().toISOString(),
+      ...entry
+    };
+    cur.push(rec);
+    safeWrite(cur);
+    LOG.info('snapshot_create', {id: rec.id, type: entry.type});
+    return rec;
+  },
+  list() { return safeRead(); }
 };
 
-module.exports = SNAPSHOT_ENGINE;
+module.exports = SNAPSHOT;

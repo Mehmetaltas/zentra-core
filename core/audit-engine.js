@@ -1,41 +1,45 @@
-/*
-ZENTRA CORE — AUDIT ENGINE
-Execution iz ve kanıt kayıt katmanı
-*/
+const fs = require('fs');
+const path = require('path');
+const LOG = require('./logger');
 
-const fs = require("fs");
-const path = require("path");
+const FILE = path.join(__dirname, '../data/core-audit-log.json');
 
-const AUDIT_FILE = path.join(__dirname, "../data/core-audit-log.json");
-
-function ensureFile() {
-  const dir = path.dirname(AUDIT_FILE);
+function ensure() {
+  const dir = path.dirname(FILE);
   if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
-  if (!fs.existsSync(AUDIT_FILE)) fs.writeFileSync(AUDIT_FILE, "[]");
+  if (!fs.existsSync(FILE)) fs.writeFileSync(FILE, '[]');
 }
 
-const AUDIT_ENGINE = {
+function safeRead() {
+  try {
+    ensure();
+    return JSON.parse(fs.readFileSync(FILE, 'utf8') || '[]');
+  } catch(e) {
+    LOG.error('audit_read_error', {e: String(e)});
+    return [];
+  }
+}
+
+function safeWrite(arr) {
+  const tmp = FILE + '.tmp';
+  fs.writeFileSync(tmp, JSON.stringify(arr, null, 2));
+  fs.renameSync(tmp, FILE);
+}
+
+const AUDIT = {
   log(entry) {
-    ensureFile();
-
-    const current = JSON.parse(fs.readFileSync(AUDIT_FILE, "utf8"));
-
-    const record = {
-      id: "audit_" + Date.now(),
-      timestamp: new Date().toISOString(),
+    const cur = safeRead();
+    const rec = {
+      id: 'audit_' + Date.now(),
+      ts: new Date().toISOString(),
       ...entry
     };
-
-    current.push(record);
-    fs.writeFileSync(AUDIT_FILE, JSON.stringify(current, null, 2));
-
-    return record;
+    cur.push(rec);
+    safeWrite(cur);
+    LOG.info('audit_log', {id: rec.id, type: entry.type});
+    return rec;
   },
-
-  list() {
-    ensureFile();
-    return JSON.parse(fs.readFileSync(AUDIT_FILE, "utf8"));
-  }
+  list() { return safeRead(); }
 };
 
-module.exports = AUDIT_ENGINE;
+module.exports = AUDIT;

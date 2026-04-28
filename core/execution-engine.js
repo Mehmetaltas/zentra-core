@@ -1,104 +1,75 @@
-/*
-ZENTRA CORE — EXECUTION ENGINE
-Mission → Task → Operator → Action → Audit → Snapshot akışı
-*/
-
 const MODULES = require('./module-registry');
 const PRODUCTS = require('./product-registry');
 const APPS = require('./app-registry');
 const MISSIONS = require('./mission-registry');
-const OPERATORS = require('./operator-engine');
+const OPS = require('./operator-engine');
 const AUDIT = require('./audit-engine');
-const SNAPSHOT = require('./snapshot-engine');
+const SNAP = require('./snapshot-engine');
+const LOG = require('./logger');
 
-const EXECUTION_ENGINE = {
+const EXEC = {
+  startMission(id){
+    const m = MISSIONS.get ? MISSIONS.get(id) : MISSIONS.list().find(x=>x.id===id);
+    if (!m) return LOG.error('mission_not_found',{id});
 
-  startMission(mission_id) {
-    const mission = MISSIONS.list().find(m => m.id === mission_id);
-
-    if (!mission) {
-      return console.log("Mission not found:", mission_id);
+    if (m.status === 'tamamlandı') {
+      return LOG.info('mission_already_completed',{id});
     }
 
-    console.log("=== START MISSION ===", mission.name);
+    const mod = MODULES.get(m.module_id);
+    const prod = PRODUCTS.get(m.product_id);
+    const app = APPS.get(m.app_id);
 
-    const module = MODULES.get(mission.module_id);
-    const product = PRODUCTS.get(mission.product_id);
-    const app = APPS.get(mission.app_id);
+    if (!mod || !prod || !app) {
+      LOG.error('dependency_missing',{id, module:!!mod, product:!!prod, app:!!app});
+      return;
+    }
 
-    if (!module) return console.log("Module missing:", mission.module_id);
-    if (!product) return console.log("Product missing:", mission.product_id);
-    if (!app) return console.log("App missing:", mission.app_id);
+    AUDIT.log({ type:'mission_started', mission_id:id, module_id:m.module_id, product_id:m.product_id, app_id:m.app_id });
 
-    AUDIT.log({
-      type: "mission_started",
-      mission_id,
-      mission_name: mission.name,
-      module_id: mission.module_id,
-      product_id: mission.product_id,
-      app_id: mission.app_id
+    for (const t of m.tasks) {
+      this.executeTask(m, t);
+    }
+
+    MISSIONS.updateStatus(id, 'tamamlandı');
+
+    const snap = SNAP.create({
+      type:'mission_completed',
+      mission_id:id,
+      task_count:m.tasks.length,
+      status:'tamamlandı'
     });
 
-    mission.tasks.forEach(task => {
-      this.executeTask(mission, task);
-    });
-
-    MISSIONS.updateStatus(mission_id, "tamamlandı");
-
-    const snapshot = SNAPSHOT.create({
-      type: "mission_completed",
-      mission_id,
-      mission_name: mission.name,
-      status: "tamamlandı",
-      task_count: mission.tasks.length
-    });
-
-    AUDIT.log({
-      type: "mission_completed",
-      mission_id,
-      snapshot_id: snapshot.id
-    });
-
-    console.log("=== MISSION COMPLETED ===", mission.name);
+    AUDIT.log({ type:'mission_completed', mission_id:id, snapshot_id:snap.id });
+    LOG.info('mission_done',{id});
   },
 
-  executeTask(mission, task) {
-    console.log("Running task:", task.name);
+  executeTask(m, t){
+    try {
+      const opRes = OPS.run(t.operator, t);
+      AUDIT.log({
+        type:'task_operator_run',
+        mission_id:m.id,
+        task_id:t.id,
+        operator:t.operator,
+        result:opRes
+      });
 
-    const operatorResult = OPERATORS.run(task.operator, task);
+      const status = opRes.ok ? 'executed' : 'failed';
 
-    AUDIT.log({
-      type: "task_operator_run",
-      mission_id: mission.id,
-      task_id: task.id,
-      task_name: task.name,
-      operator: task.operator,
-      result: operatorResult
-    });
+      AUDIT.log({
+        type:'action_executed',
+        mission_id:m.id,
+        task_id:t.id,
+        status
+      });
 
-    this.executeAction(mission, task, operatorResult);
-
-    task.status = "tamamlandı";
-  },
-
-  executeAction(mission, task, operatorResult) {
-    const action = {
-      mission_id: mission.id,
-      task_id: task.id,
-      task_name: task.name,
-      operator: task.operator,
-      status: operatorResult.ok ? "executed" : "failed",
-      timestamp: new Date().toISOString()
-    };
-
-    AUDIT.log({
-      type: "action_executed",
-      ...action
-    });
-
-    console.log("Action status:", action.status, "task:", task.name);
-    return action;
+      t.status = 'tamamlandı';
+    } catch(e) {
+      AUDIT.log({ type:'task_error', mission_id:m.id, task_id:t.id, error:String(e) });
+      LOG.error('task_error',{e:String(e), task_id:t.id});
+    }
   }
 };
 
-module.exports = EXECUTION_ENGINE;
+module.exports = EXEC;
