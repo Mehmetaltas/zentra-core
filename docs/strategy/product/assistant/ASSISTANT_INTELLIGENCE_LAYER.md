@@ -126,3 +126,15 @@ Durum: IN PROGRESS
 - Decision + Risk + Confidence birlikte yorumlanıyor
 - İlk context-aware çıktı üretildi
 
+
+
+---
+
+## Decision Deepening
+Durum: IN PROGRESS
+
+- Assistant WHY (neden) üretir
+- ACTION (ne yapılmalı) üretir
+- WARNING (risk uyarısı) üretir
+- Driver bazlı açıklama eklendi
+

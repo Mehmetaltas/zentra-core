@@ -309,57 +309,67 @@ return "<tr>"+
 }).join("");
 
 
+
+
 function zentraAssistant(data){
 
-  let context = {
+  let ctx = {
     decision: data.decision,
     confidence: data.confidence,
     risk: data.risk,
     stress: data.stress,
     macro: data.macro,
-    position: data.position
+    position: data.position,
+    drivers: data.drivers
   };
 
-  let message = "";
+  let explain = "";
+  let action = "";
+  let warning = "";
 
-  // Decision explanation
-  if(context.decision === "BUY"){
-    message += "System suggests entering position. ";
-  } else if(context.decision === "SELL"){
-    message += "System suggests reducing exposure. ";
-  } else {
-    message += "System suggests waiting. ";
+  // WHY (neden)
+  explain += "Decision: " + ctx.decision + ". ";
+  explain += "Risk level: " + ctx.risk + ". ";
+  explain += "Confidence: " + ctx.confidence + "%. ";
+
+  if(ctx.drivers && ctx.drivers.length){
+    explain += "Drivers: " + ctx.drivers.map(d => d.title).join(", ") + ". ";
   }
 
-  // Risk interpretation
-  if(context.risk > 70){
-    message += "Risk is elevated. ";
-  } else if(context.risk > 40){
-    message += "Risk is moderate. ";
+  // HOW (nasıl uygulanmalı)
+  if(ctx.decision === "BUY"){
+    if(ctx.risk > 70){
+      action = "Enter with limited exposure.";
+    } else {
+      action = "Entry is supported.";
+    }
+  } else if(ctx.decision === "SELL"){
+    action = "Reduce or close positions.";
   } else {
-    message += "Risk is low. ";
+    action = "Wait for stronger confirmation.";
   }
 
-  // Confidence
-  if(context.confidence < 50){
-    message += "Confidence is weak. ";
-  } else if(context.confidence < 75){
-    message += "Confidence is acceptable. ";
-  } else {
-    message += "Confidence is strong. ";
+  // WARNING
+  if(ctx.risk > 75){
+    warning = "High risk environment.";
   }
 
-  // Final guidance
-  if(context.risk > 70 && context.confidence < 60){
-    message += "Recommendation: Proceed with caution.";
-  } else if(context.decision === "BUY" && context.confidence > 70){
-    message += "Recommendation: Controlled execution is reasonable.";
-  } else {
-    message += "Recommendation: Monitor closely.";
+  if(ctx.confidence < 55){
+    warning += " Low confidence.";
   }
 
-  return message;
+  if(ctx.risk > 70 && ctx.confidence < 60){
+    warning += " Signal-risk mismatch.";
+  }
+
+  // FINAL OUTPUT (structured)
+  return (
+    "WHY: " + explain +
+    " | ACTION: " + action +
+    (warning ? " | WARNING: " + warning : "")
+  );
 }
+
 
 </script>
 
