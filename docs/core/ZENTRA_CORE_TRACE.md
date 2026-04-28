@@ -191,3 +191,64 @@ Credit App artık:
 ## Sonraki Doğru Blok
 Trade App
 
+
+# ZENTRA CORE TRACE — TRADE APP
+
+## Tarih
+2026-04-28
+
+## Commit
+b428426
+
+## İşlenen Blok
+Trade App (Signal + Risk + Decision + Execution Binding)
+
+---
+
+## Önceki Durum
+- Financial Trade ürün sayfası vardı
+- ama çalışan app yoktu
+
+---
+
+## Yeni Durum
+- trade-app.js oluşturuldu
+- signal engine kuruldu
+- risk + decision logic eklendi
+- execution engine bağlandı
+- mission → task → action çalıştırıldı
+
+---
+
+## Test Sonucu
+- signal üretildi (BUY/SELL)
+- decision üretildi
+- audit oluştu
+- snapshot oluştu
+
+---
+
+## Durum
+Trade App: %80+
+
+---
+
+## Açık Kalanlar
+- gerçek market data
+- gelişmiş signal engine
+- portfolio logic
+- assistant bağlama
+
+---
+
+## Kritik Netlik
+Trade App artık:
+→ çalışan
+→ execution bağlı
+→ audit/snapshot kanıtlı
+
+---
+
+## Sonraki Doğru Blok
+Ürün kapanışı (Productization)
+
