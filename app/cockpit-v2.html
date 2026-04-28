@@ -123,6 +123,33 @@ body{
 .badge-sell{background:#3c1a1a;color:#ff5c5c}
 .badge-wait{background:#3c3312;color:#ffd166}
 
+.decision-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:12px;
+  margin-top:20px;
+}
+
+.decision-grid > div{
+  background:#0b1324;
+  border:1px solid #22314d;
+  border-radius:16px;
+  padding:14px;
+}
+
+.mini-value{
+  font-size:20px;
+  font-weight:900;
+  margin-top:8px;
+}
+
+.mini-text{
+  font-size:13px;
+  opacity:.78;
+  margin-top:8px;
+  line-height:1.45;
+}
+
 @media(max-width:800px){
   .row,.section{grid-template-columns:1fr}
   .decision{font-size:44px}
@@ -147,6 +174,22 @@ body{
   <div>
     <span class="pill" id="confidence"></span>
     <span class="pill" id="riskBand"></span>
+    <span class="pill" id="systemState"></span>
+  </div>
+
+  <div class="decision-grid">
+    <div>
+      <div class="label">Recommended Action</div>
+      <div class="mini-value" id="recommendedAction"></div>
+    </div>
+    <div>
+      <div class="label">Decision Reason</div>
+      <div class="mini-text" id="decisionReason"></div>
+    </div>
+    <div>
+      <div class="label">Execution Readiness</div>
+      <div class="mini-value" id="executionReadiness"></div>
+    </div>
   </div>
 </div>
 
@@ -187,6 +230,10 @@ signal:"BUY",
 macro:68,
 position:"LONG",
 scenario:"UP scenario active — risk/reward acceptable.",
+systemState:"OPERATIONAL",
+recommendedAction:"Proceed with controlled exposure",
+decisionReason:"Signal strength is positive, risk is elevated but still acceptable, and liquidity remains stable.",
+executionReadiness:"READY",
 drivers:[
 {
 title:"Macro trend positive",
@@ -223,6 +270,10 @@ d.className="decision "+data.decision.toLowerCase();
 
 document.getElementById("confidence").textContent="Confidence "+data.confidence+"%";
 document.getElementById("riskBand").textContent="Risk "+band(data.risk);
+document.getElementById("systemState").textContent=data.systemState;
+document.getElementById("recommendedAction").textContent=data.recommendedAction;
+document.getElementById("decisionReason").textContent=data.decisionReason;
+document.getElementById("executionReadiness").textContent=data.executionReadiness;
 
 document.getElementById("risk").textContent=data.risk;
 document.getElementById("stress").textContent=data.stress;
