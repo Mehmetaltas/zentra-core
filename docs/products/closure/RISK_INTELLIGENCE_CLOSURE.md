@@ -1,7 +1,7 @@
 # ZENTRA — RISK INTELLIGENCE CLOSURE TRACKING
 
 ## Durum
-ACTIVE — CLOSURE IN PROGRESS
+ACTIVE — CLOSURE CLOSED
 
 ---
 
@@ -131,7 +131,7 @@ docs/products/closure/market/RISK_MARKET_CLOSURE.md
 
 # 7. SALES READINESS
 
-Durum: OPEN
+Durum: CLOSED
 
 ## Checklist
 

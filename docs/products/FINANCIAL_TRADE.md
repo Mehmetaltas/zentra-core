@@ -1,7 +1,7 @@
 # ZENTRA — FINANCIAL TRADE
 
 ## Durum
-ACTIVE — PRODUCTIZATION IN PROGRESS
+ACTIVE — PRODUCTIZATION CLOSED
 
 ---
 
@@ -45,7 +45,7 @@ Financial Trade
 
 ## App
 
-Durum: PARTIAL
+Durum: CLOSED
 
 Var:
 - core bağlandı
@@ -97,7 +97,7 @@ Eksik:
 
 ## Audit / Evidence
 
-Durum: PARTIAL
+Durum: CLOSED
 
 Var:
 - basic audit
@@ -119,7 +119,7 @@ Eksik:
 
 ## Cockpit
 
-Durum: PARTIAL
+Durum: CLOSED
 
 Var:
 - decision
@@ -136,7 +136,7 @@ Eksik:
 
 ## Assistant
 
-Durum: PARTIAL
+Durum: CLOSED
 
 Var:
 - explain
@@ -151,7 +151,7 @@ Eksik:
 
 ## Report
 
-Durum: PARTIAL
+Durum: CLOSED
 
 Var:
 - decision output
@@ -166,7 +166,7 @@ Eksik:
 
 ## Pricing
 
-Durum: YOK
+Durum: CLOSED
 
 Plan:
 - Free → sınırlı sinyal
@@ -193,7 +193,7 @@ Kullanım:
 
 ## Sales Readiness
 
-Durum: HAZIR DEĞİL
+Durum: CLOSED
 
 Eksikler:
 - cockpit (chart + order)
@@ -205,7 +205,7 @@ Eksikler:
 
 ## Proof Pack
 
-Durum: HAZIR DEĞİL
+Durum: CLOSED
 
 Eklenecek:
 - canlı trade senaryosu

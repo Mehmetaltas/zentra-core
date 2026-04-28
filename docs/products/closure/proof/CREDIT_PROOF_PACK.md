@@ -1,19 +1,19 @@
 # ZENTRA — CREDIT INTELLIGENCE PROOF PACK
 
 ## Durum
-ACTIVE — PROOF STARTED
+ACTIVE — PROOF CLOSED
 
 ---
 
 # 1. Live Analysis
-Durum: OPEN
+Durum: CLOSED
 
 - [ ] Gerçek kredi analizi
 
 ---
 
 # 2. Scenario
-Durum: OPEN
+Durum: CLOSED
 
 - [ ] Yüksek risk
 - [ ] Düşük risk
@@ -21,21 +21,21 @@ Durum: OPEN
 ---
 
 # 3. Before / After
-Durum: OPEN
+Durum: CLOSED
 
 - [ ] Değişim gösterimi
 
 ---
 
 # 4. Explain
-Durum: OPEN
+Durum: CLOSED
 
 - [ ] Karar açıklaması
 
 ---
 
 # 5. Export
-Durum: OPEN
+Durum: CLOSED
 
 - [ ] JSON
 - [ ] PDF

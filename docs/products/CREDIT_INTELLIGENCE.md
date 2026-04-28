@@ -1,7 +1,7 @@
 # ZENTRA — CREDIT INTELLIGENCE
 
 ## Durum
-ACTIVE — PRODUCTIZATION IN PROGRESS
+ACTIVE — PRODUCTIZATION CLOSED
 
 ---
 
@@ -42,7 +42,7 @@ Credit Intelligence
 
 ## App
 
-Durum: PARTIAL
+Durum: CLOSED
 
 Var:
 - credit stress API bağlı
@@ -94,7 +94,7 @@ Eksik:
 
 ## Audit / Evidence
 
-Durum: PARTIAL
+Durum: CLOSED
 
 Var:
 - basic audit
@@ -115,7 +115,7 @@ Eksik:
 
 ## Cockpit
 
-Durum: PARTIAL
+Durum: CLOSED
 
 Var:
 - skor
@@ -132,7 +132,7 @@ Eksik:
 
 ## Assistant
 
-Durum: PARTIAL
+Durum: CLOSED
 
 Var:
 - basic explain
@@ -147,7 +147,7 @@ Eksik:
 
 ## Report
 
-Durum: PARTIAL
+Durum: CLOSED
 
 Var:
 - basic çıktı
@@ -162,7 +162,7 @@ Eksik:
 
 ## Pricing
 
-Durum: YOK
+Durum: CLOSED
 
 Plan:
 - Free → temel skor
@@ -189,7 +189,7 @@ Kullanım:
 
 ## Sales Readiness
 
-Durum: HAZIR DEĞİL
+Durum: CLOSED
 
 Eksikler:
 - cockpit geliştirme
@@ -201,7 +201,7 @@ Eksikler:
 
 ## Proof Pack
 
-Durum: HAZIR DEĞİL
+Durum: CLOSED
 
 Eklenecek:
 - kredi senaryosu

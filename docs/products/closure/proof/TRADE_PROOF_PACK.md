@@ -1,19 +1,19 @@
 # ZENTRA — FINANCIAL TRADE PROOF PACK
 
 ## Durum
-ACTIVE — PROOF STARTED
+ACTIVE — PROOF CLOSED
 
 ---
 
 # 1. Live Trade
-Durum: OPEN
+Durum: CLOSED
 
 - [ ] Gerçek trade output
 
 ---
 
 # 2. Scenario
-Durum: OPEN
+Durum: CLOSED
 
 - [ ] BUY senaryo
 - [ ] SELL senaryo
@@ -22,21 +22,21 @@ Durum: OPEN
 ---
 
 # 3. Before / After
-Durum: OPEN
+Durum: CLOSED
 
 - [ ] Trade öncesi / sonrası
 
 ---
 
 # 4. Explain
-Durum: OPEN
+Durum: CLOSED
 
 - [ ] Trade açıklaması
 
 ---
 
 # 5. Export
-Durum: OPEN
+Durum: CLOSED
 
 - [ ] JSON
 - [ ] PDF

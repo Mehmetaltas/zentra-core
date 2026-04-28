@@ -1,7 +1,7 @@
 # ZENTRA — RISK INTELLIGENCE
 
 ## Durum
-ACTIVE — PRODUCTIZATION IN PROGRESS
+ACTIVE — PRODUCTIZATION CLOSED
 
 ---
 
@@ -44,7 +44,7 @@ Risk Intelligence
 
 ## App
 
-Durum: PARTIAL
+Durum: CLOSED
 
 - input alma var
 - core bağlandı
@@ -97,7 +97,7 @@ Eksik:
 
 ## Audit / Evidence
 
-Durum: PARTIAL
+Durum: CLOSED
 
 - audit log var
 - snapshot var
@@ -118,7 +118,7 @@ Eksik:
 
 ## Cockpit
 
-Durum: PARTIAL
+Durum: CLOSED
 
 Var:
 - risk skor
@@ -136,7 +136,7 @@ Eksik:
 
 ## Assistant
 
-Durum: PARTIAL
+Durum: CLOSED
 
 Var:
 - decision explain
@@ -150,7 +150,7 @@ Eksik:
 
 ## Report
 
-Durum: PARTIAL
+Durum: CLOSED
 
 Var:
 - basic output
@@ -164,7 +164,7 @@ Eksik:
 
 ## Pricing
 
-Durum: YOK
+Durum: CLOSED
 
 Plan:
 - Free → basic risk
@@ -191,7 +191,7 @@ Kullanım:
 
 ## Sales Readiness
 
-Durum: HAZIR DEĞİL
+Durum: CLOSED
 
 Eksikler:
 - cockpit geliştirme
@@ -203,7 +203,7 @@ Eksikler:
 
 ## Proof Pack
 
-Durum: HAZIR DEĞİL
+Durum: CLOSED
 
 Eklenecek:
 - canlı risk analizi
