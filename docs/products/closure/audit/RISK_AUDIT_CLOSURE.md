@@ -57,7 +57,21 @@ Audit log tüm kararları kayıt altına alır.
 
 # 2. Decision Trace
 
-Durum: OPEN
+Durum: CLOSED
+
+✔ Risk → Stress → Macro → Decision akışı kayıtlı
+✔ Ara çıktılar saklanır
+✔ Her adım izlenebilir
+
+Trace Standard:
+- Input
+- Risk Output
+- Stress Output
+- Macro Output
+- Final Decision
+
+Kapanış Notu:
+Decision trace kararın nasıl oluştuğunu adım adım gösterir.
 
 ## Gerekli
 
@@ -94,7 +108,7 @@ Durum: OPEN
 # Audit Closure Checklist
 
 - [x] Audit log tamam
-- [ ] Decision trace tamam
+- [x] Decision trace tamam
 - [ ] Data source tracking tamam
 - [ ] Explain registry tamam
 
