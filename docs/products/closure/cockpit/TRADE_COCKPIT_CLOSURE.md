@@ -61,7 +61,19 @@ Kapanış Notu:
 Trade decision paneli aksiyonu belirler.
 
 # 4. Scenario / Position Panel
-Durum: OPEN
+Durum: CLOSED
+
+✔ Position yönü var
+✔ Senaryo çıktıları var
+✔ Risk / reward görünür
+
+Standard:
+- Position (LONG / SHORT / NONE)
+- Scenario (UP / DOWN / FLAT)
+- Risk / Reward
+
+Kapanış Notu:
+Scenario paneli olası trade sonuçlarını gösterir.
 
 # 5. Driver Breakdown
 Durum: OPEN
@@ -73,6 +85,6 @@ Durum: OPEN
 - [x] Signal
 - [x] Risk Bridge
 - [x] Trade Decision
-- [ ] Scenario / Position
+- [x] Scenario / Position
 - [ ] Drivers
 
