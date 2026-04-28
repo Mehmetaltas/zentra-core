@@ -117,3 +117,16 @@ Durum: IN PROGRESS
 - User-level explanation (simple/technical) eklendi
 - Report görsel + anlatım katmanına taşındı
 
+
+
+---
+
+## Report Interaction + Delivery Expansion
+Durum: IN PROGRESS
+
+- Report mode seçimi eklendi: simple / technical / executive
+- User-level explanation interaktif hale getirildi
+- Delivery output alanı eklendi
+- Email / mesaj / executive brief mantığı başlatıldı
+- Token, single/multi reporting ve individual/corporate reporting ayrı layer dosyasına işlendi
+
