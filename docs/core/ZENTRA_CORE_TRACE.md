@@ -67,3 +67,65 @@ ZENTRA artık:
 - Financial Trade
 - Credit Intelligence
 
+
+# ZENTRA CORE TRACE — RISK APP
+
+## Tarih
+2026-04-28
+
+## Commit
+1067064
+
+## İşlenen Blok
+Risk App (Input + Process + Output + Execution Binding)
+
+---
+
+## Önceki Durum
+- Risk Intelligence core vardı
+- execution çalışıyordu
+- ama app yoktu
+
+---
+
+## Yeni Durum
+- risk-app.js oluşturuldu
+- input katmanı kuruldu
+- process (risk calculation) eklendi
+- output standardı eklendi
+- execution engine bağlandı
+- mission → task → action akışı çalıştırıldı
+
+---
+
+## Test Sonucu
+- risk score üretildi
+- decision üretildi
+- audit oluştu
+- snapshot oluştu
+
+---
+
+## Durum
+Risk App: %90+
+
+---
+
+## Açık Kalanlar
+- explain geliştirme
+- cockpit detay
+- assistant bağlama
+
+---
+
+## Kritik Netlik
+Risk App artık:
+→ çalışan
+→ execution bağlı
+→ audit/snapshot kanıtlı
+
+---
+
+## Sonraki Doğru Blok
+Credit App
+
