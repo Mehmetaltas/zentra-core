@@ -46,10 +46,21 @@ Action guidance trade aksiyonunu belirler.
 ---
 
 # 3. Warning System
-Durum: OPEN
+Durum: CLOSED
 
-- [ ] Yüksek risk uyarısı
-- [ ] Yanlış trade uyarısı
+✔ Yüksek risk uyarısı var
+✔ Yanlış trade uyarısı var
+
+Standard:
+- HIGH risk → dikkat
+- WRONG signal → uyarı
+- CONFLICT → trade açma
+
+Kapanış Notu:
+Warning system kullanıcıyı hatalı trade’den korur.
+
+- [x] Yüksek risk uyarısı
+- [x] Yanlış trade uyarısı
 
 ---
 
@@ -59,7 +70,7 @@ Durum: OPEN
 - [ ] Short
 - [ ] Detail
 - [x] Action
-- [ ] Warning
+- [x] Warning
 
 ---
 
@@ -67,6 +78,6 @@ Durum: OPEN
 
 - [x] Explain
 - [x] Action
-- [ ] Warning
+- [x] Warning
 - [ ] Format
 
