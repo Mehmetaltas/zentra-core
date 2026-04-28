@@ -252,3 +252,60 @@ Trade App artık:
 ## Sonraki Doğru Blok
 Ürün kapanışı (Productization)
 
+
+# ZENTRA CORE TRACE — LIVE DATA ENGINE
+
+## Tarih
+2026-04-28
+
+## İşlenen Blok
+Live Data Engine (V1 — Structure + Risk App Binding)
+
+---
+
+## Önceki Durum
+- sistem çalışıyordu
+- app’ler mock veri ile çalışıyordu
+
+---
+
+## Yeni Durum
+- live-data-engine.js oluşturuldu
+- market ve company data üretimi eklendi
+- normalize katmanı kuruldu
+- Risk App’e bağlandı
+- execution ile çalıştırıldı
+
+---
+
+## Test Sonucu
+- live data üretildi
+- normalize edildi
+- risk sonucu üretildi
+- audit oluştu
+- snapshot oluştu
+
+---
+
+## Durum
+Live Data: V1 ACTIVE (pseudo-live)
+
+---
+
+## Açık Kalanlar
+- gerçek API bağlantısı
+- veri doğrulama
+- multi-source veri
+- caching
+
+---
+
+## Kritik Netlik
+ZENTRA artık:
+→ veri ile çalışan sistem
+
+---
+
+## Sonraki Doğru Blok
+Simulation Engine
+
