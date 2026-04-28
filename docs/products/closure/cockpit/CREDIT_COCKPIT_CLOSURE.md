@@ -16,7 +16,19 @@ ACTIVE — COCKPIT CLOSURE STARTED
 ---
 
 # 1. Credit Score Panel
-Durum: OPEN
+Durum: CLOSED
+
+✔ Credit score görünür
+✔ Score band mapping aktif
+✔ Açıklama eklendi
+
+Mapping:
+0–40 LOW
+40–70 MEDIUM
+70–100 HIGH
+
+Kapanış Notu:
+Credit score paneli kredi riskini net gösterir.
 
 # 2. Stress Panel
 Durum: OPEN
@@ -34,7 +46,7 @@ Durum: OPEN
 
 ## Checklist
 
-- [ ] Credit Score
+- [x] Credit Score
 - [ ] Stress
 - [ ] Payment Capacity
 - [ ] Decision
