@@ -31,7 +31,21 @@ açık olmalıdır.
 
 # 1. Audit Log
 
-Durum: OPEN
+Durum: CLOSED
+
+✔ Karar kaydı var
+✔ Timestamp var
+✔ Kullanıcı / sistem bilgisi var
+
+Audit Log Standard:
+- Decision ID
+- Timestamp
+- User / System
+- Decision Output
+- Risk Score Snapshot
+
+Kapanış Notu:
+Audit log tüm kararları kayıt altına alır.
 
 ## Gerekli
 
@@ -79,7 +93,7 @@ Durum: OPEN
 
 # Audit Closure Checklist
 
-- [ ] Audit log tamam
+- [x] Audit log tamam
 - [ ] Decision trace tamam
 - [ ] Data source tracking tamam
 - [ ] Explain registry tamam
