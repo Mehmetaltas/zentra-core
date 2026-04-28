@@ -175,6 +175,12 @@ const access={
 
 function tr(key){const v=I18N[key];return v?(v[lang]||v.tr||v.en):key}
 function pick(obj){return obj?(obj[lang]||obj.tr||obj.en||""):""}
+function apiText(obj,fallback){
+  if(obj && obj[lang]) return obj[lang];
+  if(obj && obj.tr) return obj.tr;
+  if(obj && obj.en) return obj.en;
+  return fallback || "";
+}
 function allowed(m){return access[plan].includes("ALL")||access[plan].includes(m)}
 function riskColor(r){if(r>70)return"red"; if(r>40)return"yellow"; return"green"}
 
@@ -260,7 +266,7 @@ async function render(){
   document.getElementById("plan").innerText=plan;
   document.getElementById("assetName").innerText=d.symbol;
   document.getElementById("riskScore").innerHTML=`<span class="${riskColor(d.risk)}">${d.risk}</span>`;
-  document.getElementById("decisionText").innerHTML=`<span class="${riskColor(d.risk)}">${d.decision}</span>`;
+  document.getElementById("decisionText").innerHTML=`<span class="${riskColor(d.risk)}">${apiText(d.decision_i18n,d.decision)}</span>`;
 
   let mhtml=`<h3>${tr("modules")}</h3>`;
   let ahtml=`<h3>${tr("assistant")}</h3>`;
@@ -293,10 +299,10 @@ async function render(){
       <span class="small">${tr("price")}:${a.price}</span><br>
       ${tr("riskScore")}:<span class="${riskColor(a.risk)}">${a.risk}</span><br>
       <span class="small">${tr("weight")}:${a.weight}</span><br>
-      ${a.decision}
+      ${a.decision_i18n ? apiText(a.decision_i18n,a.decision) : a.decision}
     </div>`;
   });
-  ph+=`<div class="card"><b>${tr("portfolioRisk")}</b><br><span class="${riskColor(p.portfolioRisk)} metric">${p.portfolioRisk}</span><br>${allowed("Portfolio")?p.decision:"🔒 "+tr("locked")}</div>`;
+  ph+=`<div class="card"><b>${tr("portfolioRisk")}</b><br><span class="${riskColor(p.portfolioRisk)} metric">${p.portfolioRisk}</span><br>${allowed("Portfolio")?(p.decision_i18n ? apiText(p.decision_i18n,p.decision) : p.decision):"🔒 "+tr("locked")}</div>`;
   document.getElementById("portfolio").innerHTML=ph;
 
   if(p.analysis){
