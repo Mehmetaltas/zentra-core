@@ -91,11 +91,24 @@ Institutional tier kurumsal müşteriler içindir.
 ---
 
 # 5. Feature Gate
-Durum: OPEN
+Durum: CLOSED
 
-- [ ] Tier access
-- [ ] Feature restriction
-- [ ] Upgrade guidance
+✔ Tier access var
+✔ Feature restriction var
+✔ Upgrade guidance var
+
+Standard:
+- Free → basic signal
+- Pro → signal + risk + decision
+- Expert → full analysis
+- Institutional → API + batch
+
+Kapanış Notu:
+Feature gate ürün erişimini kontrol eder.
+
+- [x] Tier access
+- [x] Feature restriction
+- [x] Upgrade guidance
 
 ---
 
@@ -105,5 +118,5 @@ Durum: OPEN
 - [x] Pro
 - [x] Expert
 - [x] Institutional
-- [ ] Feature gate
+- [x] Feature gate
 
