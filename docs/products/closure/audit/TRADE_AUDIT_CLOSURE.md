@@ -68,10 +68,23 @@ Data source trade analizinin güvenilirliğini sağlar.
 ---
 
 # 4. Explain Registry
-Durum: OPEN
+Durum: CLOSED
 
-- [ ] Explain kayıt
-- [ ] Decision explain
+✔ Explain kayıtları tutulur
+✔ Decision explain saklanır
+
+Standard:
+- Explain ID
+- Related Trade ID
+- Explain Content
+- Timestamp
+- Version
+
+Kapanış Notu:
+Explain registry trade karar açıklamalarını saklar.
+
+- [x] Explain kayıt
+- [x] Decision explain
 
 ---
 
@@ -80,5 +93,5 @@ Durum: OPEN
 - [x] Audit log
 - [x] Trace
 - [x] Data source
-- [ ] Explain
+- [x] Explain
 
