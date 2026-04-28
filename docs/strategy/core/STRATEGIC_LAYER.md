@@ -6,7 +6,6 @@ ACTIVE — STARTED
 ---
 
 ## Amaç
-
 ZENTRA’nın:
 - moat
 - dağıtım
