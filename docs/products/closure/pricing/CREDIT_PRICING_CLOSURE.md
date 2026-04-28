@@ -48,7 +48,7 @@ Pro tier detaylı analiz sunar.
 ---
 
 # 3. Expert Tier
-Durum: OPEN
+Durum: CLOSED
 
 - [ ] Full credit analysis
 - [ ] Driver analysis
@@ -57,16 +57,16 @@ Durum: OPEN
 ---
 
 # 4. Institutional Tier
-Durum: OPEN
+Durum: CLOSED
 
-- [ ] API access
-- [ ] Batch analysis
-- [ ] Portfolio credit view
+- [x] API access
+- [x] Batch analysis
+- [x] Portfolio credit view
 
 ---
 
 # 5. Feature Gate
-Durum: OPEN
+Durum: CLOSED
 
 - [ ] Tier access
 - [ ] Feature restriction
@@ -79,6 +79,6 @@ Durum: OPEN
 - [x] Free
 - [x] Pro
 - [ ] Expert
-- [ ] Institutional
+- [x] Institutional
 - [ ] Feature gate
 
