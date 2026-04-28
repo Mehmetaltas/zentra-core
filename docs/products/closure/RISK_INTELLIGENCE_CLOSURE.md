@@ -144,7 +144,10 @@ Durum: OPEN
 
 # 8. PROOF PACK
 
-Durum: OPEN
+Durum: IN PROGRESS
+
+İz dosyası:
+docs/products/closure/proof/RISK_PROOF_PACK.md
 
 ## Gerekli
 
