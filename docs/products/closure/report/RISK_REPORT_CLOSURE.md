@@ -52,7 +52,25 @@ Pro report hızlı karar almak isteyen kullanıcı içindir.
 
 # 2. Expert Report
 
-Durum: OPEN
+Durum: CLOSED
+
+✔ Risk Score var
+✔ Stress var
+✔ Macro var
+✔ Decision var
+✔ Driver Analysis var
+✔ Detaylı explain var
+
+Expert Report Standard:
+- Risk Score
+- Stress Level
+- Macro Pressure
+- Final Decision
+- Driver Breakdown
+- Detailed Explanation
+
+Kapanış Notu:
+Expert report derin analiz isteyen kullanıcı ve kurumlar içindir.
 
 ## İçerik
 
@@ -79,7 +97,7 @@ Durum: OPEN
 # Report Closure Checklist
 
 - [x] Pro report tamam
-- [ ] Expert report tamam
+- [x] Expert report tamam
 - [ ] Export tamam
 
 ---
