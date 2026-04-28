@@ -294,7 +294,55 @@ sağlar
 
 # 6. Governance Core (STEP 32)
 
-Durum: OPEN
+Durum: CLOSED
+
+ZENTRA governance core:
+
+✔ Decision conflict resolution
+✔ Cross-lens validation
+✔ Override rules
+✔ Governance control
+✔ Policy-based decision review
+✔ Human override option
+✔ Audit-backed governance trace
+
+---
+
+## Governance Prensibi
+
+ZENTRA:
+
+- çelişen lens çıktılarını işaretler
+- karar çatışmalarını çözer
+- yüksek riskte override kuralı uygular
+- policy / evidence / audit üçlüsüyle kararları kontrol eder
+- gerektiğinde insan onayı gerektirir
+
+---
+
+## STEP 32 Bağlantısı
+
+STEP 32:
+
+- cross-lens conflict
+- portfolio-level decision alignment
+- system governance
+- final decision safety
+
+katmanıdır.
+
+---
+
+## Kurumsal Güç
+
+Bu katman:
+
+- kontrolsüz otomasyonu engeller
+- kurumsal karar güvenliği sağlar
+- regülasyon ve denetim uyumu güçlendirir
+- ZENTRA’yı “kara kutu AI” olmaktan çıkarır
+
+
 
 - decision conflict resolution
 - cross-lens validation
@@ -319,5 +367,13 @@ güvenli + uyumlu + kontrol edilebilir sistemdir.
 - [x] Cloud security
 - [x] Cyber security
 - [x] Access / token
-- [ ] Governance core
+- [x] Governance core
+
+
+
+---
+
+FINAL STATUS: SECURITY GOVERNANCE CLOSED
+
+🎯 ENTERPRISE STATUS: CONTROLLED / TRACEABLE / GOVERNABLE
 
