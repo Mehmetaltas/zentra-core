@@ -222,6 +222,7 @@ body{
 
 <script>
 const data={
+activeProduct:"Financial Trade",
 decision:"BUY",
 confidence:78,
 risk:72,
@@ -311,9 +312,11 @@ return "<tr>"+
 
 
 
+
 function zentraAssistant(data){
 
   let ctx = {
+    product: data.activeProduct || "General",
     decision: data.decision,
     confidence: data.confidence,
     risk: data.risk,
@@ -323,11 +326,19 @@ function zentraAssistant(data){
     drivers: data.drivers
   };
 
-  let explain = "";
-  let action = "";
-  let warning = "";
+  let productVoice = "";
 
-  // WHY (neden)
+  if(ctx.product === "Risk Intelligence"){
+    productVoice = "Risk view: focus on exposure, stress, and deviation. ";
+  } else if(ctx.product === "Credit Intelligence"){
+    productVoice = "Credit view: focus on payment capacity, credit stress, and approval risk. ";
+  } else if(ctx.product === "Financial Trade"){
+    productVoice = "Trade view: focus on signal strength, risk bridge, and execution readiness. ";
+  } else {
+    productVoice = "System view: focus on decision quality and risk control. ";
+  }
+
+  let explain = productVoice;
   explain += "Decision: " + ctx.decision + ". ";
   explain += "Risk level: " + ctx.risk + ". ";
   explain += "Confidence: " + ctx.confidence + "%. ";
@@ -336,39 +347,47 @@ function zentraAssistant(data){
     explain += "Drivers: " + ctx.drivers.map(d => d.title).join(", ") + ". ";
   }
 
-  // HOW (nasıl uygulanmalı)
-  if(ctx.decision === "BUY"){
-    if(ctx.risk > 70){
-      action = "Enter with limited exposure.";
+  let action = "";
+
+  if(ctx.product === "Risk Intelligence"){
+    action = ctx.risk > 70
+      ? "Reduce exposure or review before commitment."
+      : "Proceed with monitored risk.";
+  } else if(ctx.product === "Credit Intelligence"){
+    action = ctx.risk > 70
+      ? "Request additional payment evidence or restructure."
+      : "Credit decision can move forward with standard checks.";
+  } else if(ctx.product === "Financial Trade"){
+    if(ctx.decision === "BUY"){
+      action = ctx.risk > 70 ? "Use controlled exposure only." : "Controlled execution is reasonable.";
+    } else if(ctx.decision === "SELL"){
+      action = "Reduce or close exposure.";
     } else {
-      action = "Entry is supported.";
+      action = "Wait for stronger confirmation.";
     }
-  } else if(ctx.decision === "SELL"){
-    action = "Reduce or close positions.";
   } else {
-    action = "Wait for stronger confirmation.";
+    action = "Monitor and proceed according to risk band.";
   }
 
-  // WARNING
-  if(ctx.risk > 75){
-    warning = "High risk environment.";
+  let warning = "";
+
+  if(ctx.risk > 75) warning += "High risk environment. ";
+  if(ctx.confidence < 55) warning += "Low confidence. ";
+  if(ctx.product === "Financial Trade" && ctx.risk > 70 && ctx.decision === "BUY"){
+    warning += "Trade-risk tension detected. ";
+  }
+  if(ctx.product === "Credit Intelligence" && ctx.risk > 70){
+    warning += "Approval risk is elevated. ";
   }
 
-  if(ctx.confidence < 55){
-    warning += " Low confidence.";
-  }
-
-  if(ctx.risk > 70 && ctx.confidence < 60){
-    warning += " Signal-risk mismatch.";
-  }
-
-  // FINAL OUTPUT (structured)
   return (
-    "WHY: " + explain +
+    "PRODUCT: " + ctx.product +
+    " | WHY: " + explain +
     " | ACTION: " + action +
     (warning ? " | WARNING: " + warning : "")
   );
 }
+
 
 
 </script>

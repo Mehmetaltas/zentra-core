@@ -138,3 +138,16 @@ Durum: IN PROGRESS
 - WARNING (risk uyarısı) üretir
 - Driver bazlı açıklama eklendi
 
+
+
+---
+
+## Product Awareness Binding
+Durum: IN PROGRESS
+
+- Assistant activeProduct alanını okumaya başladı
+- Risk Intelligence için risk/deviation dili
+- Credit Intelligence için payment/approval dili
+- Financial Trade için signal/execution dili eklendi
+- Assistant ürün tipine göre farklı ACTION ve WARNING üretir
+
