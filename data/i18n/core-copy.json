@@ -1,0 +1,32 @@
+{
+  "zentra.title": {
+    "tr": "ZENTRA Premium Cockpit",
+    "en": "ZENTRA Premium Cockpit",
+    "ar": "قمرة ZENTRA المميزة",
+    "es": null,
+    "fr": null,
+    "de": null,
+    "ru": null,
+    "cn": null
+  },
+  "action.lowRisk": {
+    "tr": "Risk düşük görünüyor. Kademeli ve kontrollü ilerleme düşünülebilir.",
+    "en": "Risk appears low. Gradual and controlled action may be considered.",
+    "ar": "تبدو المخاطر منخفضة. يمكن التفكير في تقدم تدريجي ومنضبط.",
+    "es": null,
+    "fr": null,
+    "de": null,
+    "ru": null,
+    "cn": null
+  },
+  "portfolio.lowRisk": {
+    "tr": "Portföy genel olarak düşük riskli görünüyor.",
+    "en": "The portfolio appears generally low-risk.",
+    "ar": "تبدو المحفظة منخفضة المخاطر بشكل عام.",
+    "es": null,
+    "fr": null,
+    "de": null,
+    "ru": null,
+    "cn": null
+  }
+}
