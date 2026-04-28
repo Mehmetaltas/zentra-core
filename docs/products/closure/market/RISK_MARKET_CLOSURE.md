@@ -55,12 +55,14 @@ Karar almadan önce görün.
 
 # Market Closure Checklist
 
-- [ ] Ürün adı net
-- [ ] Değer önerisi hazır
-- [ ] Hedef müşteri tanımlı
-- [ ] Kullanım senaryosu yazıldı
-- [ ] Satış mesajı hazır
-- [ ] Paket içeriği net
+- [x] Ürün adı net
+- [x] Değer önerisi hazır
+- [x] Hedef müşteri tanımlı
+- [x] Kullanım senaryosu yazıldı
+- [x] Satış mesajı hazır
+- [x] Paket içeriği net
+
+STATUS: MARKET CLOSED
 
 ---
 
