@@ -121,7 +121,22 @@ Gerekli:
 
 ## 5. Driver Breakdown
 
-Durum: OPEN
+Durum: CLOSED
+
+✔ İlk 3 ana risk nedeni gösterilir
+✔ Her driver için kısa açıklama eklenir
+✔ Driver etkisi LOW / MEDIUM / HIGH olarak ayrılır
+
+Driver Standard:
+1. Primary Driver
+2. Secondary Driver
+3. Tertiary Driver
+
+Impact Mapping:
+LOW / MEDIUM / HIGH
+
+Kapanış Notu:
+Driver Breakdown paneli risk skorunun neden oluştuğunu kullanıcıya açıklar.
 
 Gerekli:
 - [ ] İlk 3 ana risk nedeni gösterilir
@@ -159,7 +174,7 @@ Gerekli:
 - [x] Stress panel tamam
 - [x] Macro panel tamam
 - [x] Decision panel tamam
-- [ ] Driver Breakdown tamam
+- [x] Driver Breakdown tamam
 - [ ] Deviation panel tamam
 - [ ] Before / After tamam
 
