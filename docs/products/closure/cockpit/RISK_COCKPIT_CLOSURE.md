@@ -98,7 +98,19 @@ Gerekli:
 
 ## 4. Final Decision Panel
 
-Durum: PARTIAL
+Durum: CLOSED
+
+✔ Final decision görünür
+✔ Decision nedeni görünür
+✔ Proceed / Caution / Stop ayrımı net
+
+Decision Mapping:
+0–40 → PROCEED
+40–70 → CAUTION
+70–100 → STOP
+
+Kapanış Notu:
+Decision paneli kullanıcıya doğrudan aksiyon yönü verir.
 
 Gerekli:
 - [ ] Final decision görünür
@@ -146,7 +158,7 @@ Gerekli:
 - [ ] Risk Score panel tamam
 - [x] Stress panel tamam
 - [x] Macro panel tamam
-- [ ] Decision panel tamam
+- [x] Decision panel tamam
 - [ ] Driver Breakdown tamam
 - [ ] Deviation panel tamam
 - [ ] Before / After tamam
