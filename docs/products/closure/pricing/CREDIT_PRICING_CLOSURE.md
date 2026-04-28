@@ -24,12 +24,26 @@ Free tier kullanıcıyı sisteme çeker.
 ---
 
 # 2. Pro Tier
-Durum: OPEN
+Durum: CLOSED
 
-- [ ] Credit score
-- [ ] Stress
-- [ ] Payment capacity
-- [ ] Basic explain
+✔ Credit score var
+✔ Stress var
+✔ Payment capacity var
+✔ Basic explain var
+
+Standard:
+- Credit Score
+- Stress
+- Payment Capacity
+- Basic Explain
+
+Kapanış Notu:
+Pro tier detaylı analiz sunar.
+
+- [x] Credit score
+- [x] Stress
+- [x] Payment capacity
+- [x] Basic explain
 
 ---
 
@@ -63,7 +77,7 @@ Durum: OPEN
 ## Checklist
 
 - [x] Free
-- [ ] Pro
+- [x] Pro
 - [ ] Expert
 - [ ] Institutional
 - [ ] Feature gate
