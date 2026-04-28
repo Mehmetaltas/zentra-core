@@ -61,7 +61,19 @@ Kapanış Notu:
 Payment capacity paneli kullanıcının geri ödeme gücünü açık şekilde gösterir.
 
 # 4. Decision Panel
-Durum: OPEN
+Durum: CLOSED
+
+✔ Final decision görünür
+✔ Decision mapping aktif
+✔ Açıklama eklendi
+
+Mapping:
+0–40 → APPROVE
+40–70 → REVIEW
+70–100 → REJECT
+
+Kapanış Notu:
+Decision paneli kredi onay sürecini net şekilde gösterir.
 
 # 5. Driver Breakdown
 Durum: OPEN
@@ -73,7 +85,7 @@ Durum: OPEN
 - [x] Credit Score
 - [x] Stress
 - [x] Payment Capacity
-- [ ] Decision
+- [x] Decision
 - [ ] Drivers
 
 ---
