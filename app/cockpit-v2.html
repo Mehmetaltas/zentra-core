@@ -1,118 +1,234 @@
 <!doctype html>
 <html lang="tr">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>ZENTRA Cockpit V2</title>
-  <style>
-    body{margin:0;background:#070b14;color:#eef3ff;font-family:Arial,sans-serif}
-    .wrap{padding:18px;max-width:1200px;margin:auto}
-    .top{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}
-    .brand{font-size:22px;font-weight:800;letter-spacing:.08em}
-    .tag{opacity:.7;font-size:13px}
-    .grid{display:grid;gap:14px}
-    .hero{background:linear-gradient(135deg,#111a2e,#0b1220);border:1px solid #263656;border-radius:22px;padding:24px}
-    .decision{font-size:54px;font-weight:900;margin:8px 0}
-    .row{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
-    .card{background:#0d1424;border:1px solid #23314d;border-radius:18px;padding:16px}
-    .label{opacity:.65;font-size:12px;text-transform:uppercase}
-    .value{font-size:28px;font-weight:800;margin-top:8px}
-    .section{display:grid;grid-template-columns:1.2fr .8fr;gap:14px}
-    .driver{padding:12px;border-radius:14px;background:#111a2c;margin-top:10px}
-    .portfolio table{width:100%;border-collapse:collapse}
-    .portfolio td{padding:10px;border-bottom:1px solid #253452}
-    .pill{display:inline-block;padding:6px 10px;border-radius:999px;background:#18243a}
-    @media(max-width:800px){.row,.section{grid-template-columns:1fr}.decision{font-size:40px}}
-  </style>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>ZENTRA Cockpit V2</title>
+
+<style>
+body{
+  margin:0;
+  background:#05080f;
+  color:#eaf0ff;
+  font-family:Arial,sans-serif;
+}
+
+.wrap{max-width:1200px;margin:auto;padding:20px}
+
+.top{
+  display:flex;justify-content:space-between;align-items:center;
+  margin-bottom:20px
+}
+
+.brand{
+  font-size:24px;font-weight:900;letter-spacing:.08em
+}
+
+.tag{opacity:.6;font-size:12px}
+
+.hero{
+  padding:28px;
+  border-radius:24px;
+  background:linear-gradient(135deg,#0c1426,#0a0f1c);
+  border:1px solid #243556;
+  box-shadow:0 0 40px rgba(0,0,0,0.6)
+}
+
+.decision{
+  font-size:64px;
+  font-weight:900;
+  margin:10px 0;
+}
+
+.buy{color:#2effa1}
+.sell{color:#ff5c5c}
+.wait{color:#ffd166}
+
+.pill{
+  display:inline-block;
+  padding:6px 12px;
+  border-radius:999px;
+  background:#16233a;
+  margin-right:6px;
+  font-size:13px;
+}
+
+.row{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:14px;
+  margin-top:16px
+}
+
+.card{
+  padding:18px;
+  border-radius:18px;
+  background:#0c1322;
+  border:1px solid #22314d;
+  transition:.2s;
+}
+
+.card:hover{
+  transform:translateY(-2px);
+  border-color:#3a4e7a;
+}
+
+.label{
+  opacity:.6;
+  font-size:11px;
+  text-transform:uppercase;
+}
+
+.value{
+  font-size:30px;
+  font-weight:900;
+  margin-top:8px;
+}
+
+.section{
+  display:grid;
+  grid-template-columns:1.2fr .8fr;
+  gap:14px;
+  margin-top:16px
+}
+
+.driver{
+  padding:12px;
+  border-radius:14px;
+  background:#101a2e;
+  margin-top:8px;
+}
+
+.portfolio{
+  margin-top:16px;
+}
+
+.portfolio table{
+  width:100%;
+  border-collapse:collapse;
+}
+
+.portfolio td{
+  padding:12px;
+  border-bottom:1px solid #23314d;
+}
+
+.badge{
+  padding:4px 8px;
+  border-radius:8px;
+  font-size:12px;
+}
+
+.badge-buy{background:#123c2a;color:#2effa1}
+.badge-sell{background:#3c1a1a;color:#ff5c5c}
+.badge-wait{background:#3c3312;color:#ffd166}
+
+@media(max-width:800px){
+  .row,.section{grid-template-columns:1fr}
+  .decision{font-size:44px}
+}
+</style>
 </head>
+
 <body>
-  <main class="wrap">
-    <div class="top">
-      <div>
-        <div class="brand">ZENTRA COCKPIT V2</div>
-        <div class="tag">Investor-Level Decision Surface</div>
-      </div>
-      <div class="pill">LIVE SYSTEM VIEW</div>
-    </div>
+<main class="wrap">
 
-    <section class="hero">
-      <div class="label">Final Decision</div>
-      <div class="decision" id="decision">BUY</div>
-      <div>
-        <span class="pill" id="confidence">Confidence 78%</span>
-        <span class="pill" id="riskBand">Risk HIGH</span>
-      </div>
-    </section>
+<div class="top">
+  <div>
+    <div class="brand">ZENTRA COCKPIT</div>
+    <div class="tag">Investor-Level Decision Surface</div>
+  </div>
+  <div class="pill">LIVE</div>
+</div>
 
-    <section class="row" style="margin-top:14px">
-      <div class="card"><div class="label">Risk Score</div><div class="value" id="risk">72</div></div>
-      <div class="card"><div class="label">Stress</div><div class="value" id="stress">64</div></div>
-      <div class="card"><div class="label">Trade Signal</div><div class="value" id="signal">BUY</div></div>
-      <div class="card"><div class="label">Macro</div><div class="value" id="macro">68</div></div>
-    </section>
+<div class="hero">
+  <div class="label">Final Decision</div>
+  <div id="decision" class="decision">BUY</div>
+  <div>
+    <span class="pill" id="confidence"></span>
+    <span class="pill" id="riskBand"></span>
+  </div>
+</div>
 
-    <section class="section" style="margin-top:14px">
-      <div class="card">
-        <div class="label">Insight Layer</div>
-        <div id="drivers"></div>
-      </div>
+<div class="row">
+  <div class="card"><div class="label">Risk</div><div id="risk" class="value"></div></div>
+  <div class="card"><div class="label">Stress</div><div id="stress" class="value"></div></div>
+  <div class="card"><div class="label">Signal</div><div id="signal" class="value"></div></div>
+  <div class="card"><div class="label">Macro</div><div id="macro" class="value"></div></div>
+</div>
 
-      <div class="card">
-        <div class="label">Scenario / Position</div>
-        <div class="value" id="position">LONG</div>
-        <p id="scenario">UP scenario active — risk/reward acceptable.</p>
-      </div>
-    </section>
+<div class="section">
+  <div class="card">
+    <div class="label">Insight</div>
+    <div id="drivers"></div>
+  </div>
 
-    <section class="card portfolio" style="margin-top:14px">
-      <div class="label">Portfolio View</div>
-      <table id="portfolio"></table>
-    </section>
-  </main>
+  <div class="card">
+    <div class="label">Scenario</div>
+    <div id="position" class="value"></div>
+    <p id="scenario"></p>
+  </div>
+</div>
+
+<div class="card portfolio">
+  <div class="label">Portfolio</div>
+  <table id="portfolio"></table>
+</div>
+
+</main>
 
 <script>
-const data = {
-  decision:"BUY",
-  confidence:78,
-  risk:72,
-  stress:64,
-  signal:"BUY",
-  macro:68,
-  position:"LONG",
-  scenario:"UP scenario active — risk/reward acceptable.",
-  drivers:[
-    "Macro trend positive",
-    "Risk aligned with decision",
-    "Liquidity stable"
-  ],
-  portfolio:[
-    ["Risk Intelligence","CAUTION","72"],
-    ["Credit Intelligence","REVIEW","66"],
-    ["Financial Trade","BUY","78"]
-  ]
+const data={
+decision:"BUY",
+confidence:78,
+risk:72,
+stress:64,
+signal:"BUY",
+macro:68,
+position:"LONG",
+scenario:"UP scenario active — risk/reward acceptable.",
+drivers:[
+"Macro trend positive",
+"Risk aligned",
+"Liquidity stable"
+],
+portfolio:[
+["Risk Intelligence","WAIT","72"],
+["Credit Intelligence","REVIEW","66"],
+["Financial Trade","BUY","78"]
+]
 };
 
 function band(v){
-  if(v < 40) return "LOW";
-  if(v < 70) return "MEDIUM";
-  return "HIGH";
+ if(v<40)return"LOW";
+ if(v<70)return"MEDIUM";
+ return"HIGH";
 }
 
-document.getElementById("decision").textContent = data.decision;
-document.getElementById("confidence").textContent = "Confidence " + data.confidence + "%";
-document.getElementById("riskBand").textContent = "Risk " + band(data.risk);
-document.getElementById("risk").textContent = data.risk;
-document.getElementById("stress").textContent = data.stress;
-document.getElementById("signal").textContent = data.signal;
-document.getElementById("macro").textContent = data.macro;
-document.getElementById("position").textContent = data.position;
-document.getElementById("scenario").textContent = data.scenario;
+const d=document.getElementById("decision");
+d.textContent=data.decision;
+d.className="decision "+data.decision.toLowerCase();
 
-document.getElementById("drivers").innerHTML =
-  data.drivers.map(x => `<div class="driver">${x}</div>`).join("");
+document.getElementById("confidence").textContent="Confidence "+data.confidence+"%";
+document.getElementById("riskBand").textContent="Risk "+band(data.risk);
 
-document.getElementById("portfolio").innerHTML =
-  data.portfolio.map(r => `<tr><td>${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td></tr>`).join("");
+document.getElementById("risk").textContent=data.risk;
+document.getElementById("stress").textContent=data.stress;
+document.getElementById("signal").textContent=data.signal;
+document.getElementById("macro").textContent=data.macro;
+
+document.getElementById("position").textContent=data.position;
+document.getElementById("scenario").textContent=data.scenario;
+
+document.getElementById("drivers").innerHTML=
+data.drivers.map(x=>"<div class='driver'>"+x+"</div>").join("");
+
+document.getElementById("portfolio").innerHTML=
+data.portfolio.map(r=>{
+let cls=r[1]=="BUY"?"badge-buy":r[1]=="SELL"?"badge-sell":"badge-wait";
+return "<tr><td>"+r[0]+"</td><td><span class='badge "+cls+"'>"+r[1]+"</span></td><td>"+r[2]+"</td></tr>";
+}).join("");
 </script>
+
 </body>
 </html>
