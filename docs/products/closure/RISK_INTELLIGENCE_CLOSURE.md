@@ -66,7 +66,10 @@ docs/products/closure/assistant/RISK_ASSISTANT_CLOSURE.md
 
 # 3. REPORT
 
-Durum: OPEN
+Durum: IN PROGRESS
+
+İz dosyası:
+docs/products/closure/report/RISK_REPORT_CLOSURE.md
 
 ## Gerekli
 
