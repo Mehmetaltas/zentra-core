@@ -13,13 +13,29 @@ Credit Intelligence çıktısını satışa hazır rapor haline getirmek.
 
 # 1. Pro Report
 
-Durum: OPEN
+Durum: CLOSED
 
-- [ ] Credit Score
-- [ ] Stress
-- [ ] Payment Capacity
-- [ ] Decision
-- [ ] Short explain
+✔ Credit Score var
+✔ Stress var
+✔ Payment Capacity var
+✔ Decision var
+✔ Short explain var
+
+Pro Standard:
+- Credit Score
+- Stress
+- Payment Capacity
+- Decision
+- Short Explain
+
+Kapanış Notu:
+Pro rapor hızlı kredi değerlendirmesi içindir.
+
+- [x] Credit Score
+- [x] Stress
+- [x] Payment Capacity
+- [x] Decision
+- [x] Short explain
 
 ---
 
@@ -27,10 +43,10 @@ Durum: OPEN
 
 Durum: OPEN
 
-- [ ] Credit Score
-- [ ] Stress
-- [ ] Payment Capacity
-- [ ] Decision
+- [x] Credit Score
+- [x] Stress
+- [x] Payment Capacity
+- [x] Decision
 - [ ] Driver Analysis
 - [ ] Detailed explain
 
@@ -47,7 +63,7 @@ Durum: OPEN
 
 ## Checklist
 
-- [ ] Pro
+- [x] Pro
 - [ ] Expert
 - [ ] Export
 
