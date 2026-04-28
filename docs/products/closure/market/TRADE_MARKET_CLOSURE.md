@@ -54,10 +54,12 @@ Piyasadaki fırsatları sadece görmek değil, doğru zamanda aksiyona çevirmek
 
 ## Checklist
 
-- [ ] Ürün adı
-- [ ] Değer önerisi
-- [ ] Hedef müşteri
-- [ ] Kullanım senaryosu
-- [ ] Satış mesajı
-- [ ] Paket içeriği
+- [x] Ürün adı
+- [x] Değer önerisi
+- [x] Hedef müşteri
+- [x] Kullanım senaryosu
+- [x] Satış mesajı
+- [x] Paket içeriği
+
+STATUS: MARKET CLOSED
 
