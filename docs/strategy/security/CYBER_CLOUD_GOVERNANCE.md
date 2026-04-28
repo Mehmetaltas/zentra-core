@@ -133,7 +133,46 @@ ZENTRA:
 
 # 3. Cloud Security
 
-Durum: OPEN
+Durum: CLOSED
+
+ZENTRA bulut güvenlik katmanı:
+
+✔ Multi-tenant veri izolasyonu
+✔ Encryption at rest
+✔ Encryption in transit
+✔ Secret management
+✔ Role-based access control
+✔ API authentication
+✔ Rate limiting
+✔ Environment separation (dev / staging / production)
+✔ Backup / recovery policy
+
+---
+
+## Cloud Güvenlik Prensibi
+
+ZENTRA:
+
+- veriyi tenant bazlı ayırır
+- gizli anahtarları kod içinde tutmaz
+- API erişimini doğrular
+- production ortamını ayrı yönetir
+- yedekleme ve geri dönüş planı tutar
+
+---
+
+## Kurumsal Güç
+
+Bu katman:
+
+- enterprise deployment
+- güvenli ölçekleme
+- müşteri veri izolasyonu
+- operasyonel süreklilik
+
+sağlar
+
+
 
 - veri izolasyonu (multi-tenant)
 - encryption (at rest / in transit)
@@ -191,7 +230,7 @@ güvenli + uyumlu + kontrol edilebilir sistemdir.
 
 - [x] Data governance
 - [x] Legal / compliance
-- [ ] Cloud security
+- [x] Cloud security
 - [ ] Cyber security
 - [ ] Access / token
 - [ ] Governance core
