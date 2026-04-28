@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>ZENTRA Intelligence Report</title>
+<style>
+body{font-family:Arial;margin:40px;background:#ffffff;color:#111}
+h1{font-size:26px}
+.section{margin-top:28px}
+.box{padding:16px;border:1px solid #ddd;border-radius:10px;margin-top:10px}
+.label{font-size:12px;color:#666;text-transform:uppercase}
+.value{font-size:20px;font-weight:700;margin-top:6px}
+.table{width:100%;border-collapse:collapse;margin-top:10px}
+.table td{padding:8px;border-bottom:1px solid #eee}
+</style>
+</head>
+
+<body>
+
+<h1>ZENTRA Intelligence Report</h1>
+
+<div class="section">
+<div class="label">Final Decision</div>
+<div class="value" id="decision"></div>
+</div>
+
+<div class="section">
+<div class="label">Key Metrics</div>
+<div class="box">
+Risk: <span id="risk"></span><br>
+Stress: <span id="stress"></span><br>
+Confidence: <span id="confidence"></span>
+</div>
+</div>
+
+<div class="section">
+<div class="label">Insight</div>
+<div class="box" id="insight"></div>
+</div>
+
+<div class="section">
+<div class="label">Assistant Analysis</div>
+<div class="box" id="assistant"></div>
+</div>
+
+<div class="section">
+<div class="label">Portfolio</div>
+<table class="table" id="portfolio"></table>
+</div>
+
+<script>
+const data = {
+decision:"BUY",
+risk:72,
+stress:64,
+confidence:78,
+drivers:[
+"Macro trend positive",
+"Risk aligned",
+"Liquidity stable"
+],
+assistant:"System suggests controlled entry with elevated risk awareness.",
+portfolio:[
+["Risk Intelligence","72"],
+["Credit Intelligence","66"],
+["Financial Trade","78"]
+]
+};
+
+document.getElementById("decision").textContent = data.decision;
+document.getElementById("risk").textContent = data.risk;
+document.getElementById("stress").textContent = data.stress;
+document.getElementById("confidence").textContent = data.confidence + "%";
+
+document.getElementById("insight").innerHTML =
+data.drivers.map(x=>"<div>"+x+"</div>").join("");
+
+document.getElementById("assistant").textContent = data.assistant;
+
+document.getElementById("portfolio").innerHTML =
+data.portfolio.map(r=>"<tr><td>"+r[0]+"</td><td>"+r[1]+"</td></tr>").join("");
+</script>
+
+</body>
+</html>
