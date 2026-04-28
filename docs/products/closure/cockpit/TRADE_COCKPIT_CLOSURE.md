@@ -31,7 +31,19 @@ Kapanış Notu:
 Signal panel trade fırsatını ilk gösteren katmandır.
 
 # 2. Risk Bridge Panel
-Durum: OPEN
+Durum: CLOSED
+
+✔ Risk score bağlı
+✔ Stress bağlı
+✔ Trade → Risk etkisi görünür
+
+Standard:
+- Risk Score
+- Stress Level
+- Trade Impact
+
+Kapanış Notu:
+Risk bridge trade kararını risk ile bağlar.
 
 # 3. Trade Decision Panel
 Durum: OPEN
@@ -47,7 +59,7 @@ Durum: OPEN
 ## Checklist
 
 - [x] Signal
-- [ ] Risk Bridge
+- [x] Risk Bridge
 - [ ] Trade Decision
 - [ ] Scenario / Position
 - [ ] Drivers
