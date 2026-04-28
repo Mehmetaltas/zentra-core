@@ -16,7 +16,19 @@ ACTIVE — COCKPIT STARTED
 ---
 
 # 1. Signal Panel
-Durum: OPEN
+Durum: CLOSED
+
+✔ Signal görünür (BUY / SELL / WAIT)
+✔ Confidence level var
+✔ Zaman bilgisi var
+
+Standard:
+- Signal Type (BUY / SELL / WAIT)
+- Confidence (%)
+- Timeframe
+
+Kapanış Notu:
+Signal panel trade fırsatını ilk gösteren katmandır.
 
 # 2. Risk Bridge Panel
 Durum: OPEN
@@ -34,7 +46,7 @@ Durum: OPEN
 
 ## Checklist
 
-- [ ] Signal
+- [x] Signal
 - [ ] Risk Bridge
 - [ ] Trade Decision
 - [ ] Scenario / Position
