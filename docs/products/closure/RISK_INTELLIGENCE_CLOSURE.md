@@ -115,7 +115,10 @@ docs/products/closure/pricing/RISK_PRICING_CLOSURE.md
 
 # 6. MARKET PACKAGE
 
-Durum: OPEN
+Durum: IN PROGRESS
+
+İz dosyası:
+docs/products/closure/market/RISK_MARKET_CLOSURE.md
 
 ## Gerekli
 
