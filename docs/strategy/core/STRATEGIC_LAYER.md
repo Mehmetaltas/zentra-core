@@ -15,7 +15,8 @@ ZENTRA’nın:
 ---
 
 # 1. Moat Planı
-Durum: OPEN
+Durum: IN PROGRESS
+İz: docs/strategy/moat/MOAT_LAYER.md
 
 - data moat
 - execution moat
