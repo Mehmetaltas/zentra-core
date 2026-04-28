@@ -73,3 +73,11 @@ Pozisyon:
 - [ ] Shane Shin
 - [ ] Valuation
 
+
+
+---
+
+# 5. Cyber / Cloud / Governance
+Durum: IN PROGRESS
+İz: docs/strategy/security/CYBER_CLOUD_GOVERNANCE.md
+
