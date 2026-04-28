@@ -1,0 +1,19 @@
+[
+  {
+    "id": "snapshot_1777369375919",
+    "timestamp": "2026-04-28T09:42:55.919Z",
+    "type": "mission_completed",
+    "mission_id": "mission_1",
+    "mission_name": "Risk Analysis Run",
+    "status": "tamamlandı",
+    "task_count": 1
+  },
+  {
+    "id": "snapshot_1777369776595",
+    "ts": "2026-04-28T09:49:36.595Z",
+    "type": "mission_completed",
+    "mission_id": "mission_1",
+    "task_count": 1,
+    "status": "tamamlandı"
+  }
+]

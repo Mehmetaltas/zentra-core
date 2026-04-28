@@ -1,0 +1,89 @@
+[
+  {
+    "id": "audit_1777369375903",
+    "timestamp": "2026-04-28T09:42:55.909Z",
+    "type": "mission_started",
+    "mission_id": "mission_1",
+    "mission_name": "Risk Analysis Run",
+    "module_id": "risk_intel",
+    "product_id": "risk_product",
+    "app_id": "risk_app"
+  },
+  {
+    "id": "audit_1777369375914",
+    "timestamp": "2026-04-28T09:42:55.914Z",
+    "type": "task_operator_run",
+    "mission_id": "mission_1",
+    "task_id": "task_1",
+    "task_name": "Run Risk Calculation",
+    "operator": "execution_operator",
+    "result": {
+      "ok": true,
+      "operator_id": "execution_operator",
+      "operator_name": "Execution Operator",
+      "role": "Mission ve task çalıştırır",
+      "task_id": "task_1",
+      "task_name": "Run Risk Calculation",
+      "status": "action_ready",
+      "timestamp": "2026-04-28T09:42:55.914Z"
+    }
+  },
+  {
+    "id": "audit_1777369375916",
+    "timestamp": "2026-04-28T09:42:55.915Z",
+    "type": "action_executed",
+    "mission_id": "mission_1",
+    "task_id": "task_1",
+    "task_name": "Run Risk Calculation",
+    "operator": "execution_operator",
+    "status": "executed"
+  },
+  {
+    "id": "audit_1777369375920",
+    "timestamp": "2026-04-28T09:42:55.920Z",
+    "type": "mission_completed",
+    "mission_id": "mission_1",
+    "snapshot_id": "snapshot_1777369375919"
+  },
+  {
+    "id": "audit_1777369776582",
+    "ts": "2026-04-28T09:49:36.582Z",
+    "type": "mission_started",
+    "mission_id": "mission_1",
+    "module_id": "risk_intel",
+    "product_id": "risk_product",
+    "app_id": "risk_app"
+  },
+  {
+    "id": "audit_1777369776590",
+    "ts": "2026-04-28T09:49:36.590Z",
+    "type": "task_operator_run",
+    "mission_id": "mission_1",
+    "task_id": "task_1",
+    "operator": "execution_operator",
+    "result": {
+      "ok": true,
+      "operator_id": "execution_operator",
+      "operator_name": "Execution Operator",
+      "role": "run tasks",
+      "task_id": "task_1",
+      "task_name": "Run Risk Calculation",
+      "ts": "2026-04-28T09:49:36.589Z"
+    }
+  },
+  {
+    "id": "audit_1777369776591",
+    "ts": "2026-04-28T09:49:36.591Z",
+    "type": "action_executed",
+    "mission_id": "mission_1",
+    "task_id": "task_1",
+    "status": "executed"
+  },
+  {
+    "id": "audit_1777369776598",
+    "ts": "2026-04-28T09:49:36.598Z",
+    "type": "mission_completed",
+    "mission_id": "mission_1",
+    "snapshot_id": "snapshot_1777369776595"
+  }
+]
