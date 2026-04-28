@@ -65,10 +65,32 @@ Warning system kullanıcıyı hatalı trade’den korur.
 ---
 
 # 4. Response Format
-Durum: OPEN
+Durum: CLOSED
 
-- [ ] Short
-- [ ] Detail
+✔ Short çıktı var
+✔ Detail çıktı var
+✔ Action çıktı var
+✔ Warning çıktı var
+
+Response Standard:
+
+1. SHORT:
+Kısa özet
+
+2. DETAIL:
+Signal + Risk + Decision
+
+3. ACTION:
+Ne yapılmalı
+
+4. WARNING:
+Risk uyarısı
+
+Kapanış Notu:
+Response format çıktıyı standart hale getirir.
+
+- [x] Short
+- [x] Detail
 - [x] Action
 - [x] Warning
 
@@ -79,5 +101,5 @@ Durum: OPEN
 - [x] Explain
 - [x] Action
 - [x] Warning
-- [ ] Format
+- [x] Format
 
