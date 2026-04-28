@@ -93,3 +93,16 @@ Durum: IN PROGRESS
 - Decision / Metrics / Insight / Assistant / Portfolio blokları ayrıldı
 - Basit ama profesyonel çıktı formatı kuruldu
 
+
+
+---
+
+## Report Premium Upgrade
+Durum: IN PROGRESS
+
+- Report kurumsal premium görünüme taşındı
+- Executive decision alanı eklendi
+- Evidence / Trace bölümü eklendi
+- Print/PDF-ready yapı hazırlandı
+- Portfolio tablosu profesyonelleştirildi
+
