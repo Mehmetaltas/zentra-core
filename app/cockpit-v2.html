@@ -285,6 +285,7 @@ document.getElementById("position").textContent=data.position;
 document.getElementById("scenario").textContent=data.scenario;
 
 document.getElementById("assistant").innerText = zentraAssistant(data);
+document.getElementById("assistantBox").innerHTML = zentraGuidance(data);
 
 document.getElementById("drivers").innerHTML=
 data.drivers.map(x=>{
@@ -414,6 +415,37 @@ function zentraAssistant(data){
 }
 
 
+
+
+
+function zentraGuidance(data){
+
+  let step = "";
+  let tool = data.activeProduct;
+  let riskNote = "";
+
+  if(data.decision === "BUY"){
+    step = data.risk > 70
+      ? "Enter with small size."
+      : "Entry is acceptable.";
+  } else if(data.decision === "SELL"){
+    step = "Reduce or close position.";
+  } else {
+    step = "Wait for confirmation.";
+  }
+
+  if(data.risk > 70){
+    riskNote = "High risk. Avoid full exposure.";
+  } else {
+    riskNote = "Risk acceptable.";
+  }
+
+  return `
+  <div><strong>NEXT STEP:</strong> ${step}</div>
+  <div><strong>TOOL:</strong> ${tool}</div>
+  <div><strong>RISK NOTE:</strong> ${riskNote}</div>
+  `;
+}
 
 </script>
 

@@ -238,3 +238,15 @@ NEXT STEP: Pozisyona küçük miktarla gir
 TOOL: Financial Trade  
 RISK NOTE: Risk yüksek, tam giriş önerilmez  
 
+
+
+---
+
+## Cockpit Integration
+Durum: IN PROGRESS
+
+- Assistant cockpit içine yerleştirildi
+- Guidance panel eklendi
+- NEXT STEP / TOOL / RISK NOTE çıktıları üretildi
+- Assistant kullanıcıyı yönlendiren aktif katmana dönüştü
+
