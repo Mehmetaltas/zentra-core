@@ -28,10 +28,23 @@ Audit log tüm kredi kararlarını saklar.
 ---
 
 # 2. Decision Trace
-Durum: OPEN
+Durum: CLOSED
 
-- [ ] Credit → Stress → Payment → Decision
-- [ ] Ara çıktılar
+✔ Credit → Stress → Payment → Decision akışı kayıtlı
+✔ Ara çıktılar saklanır
+✔ Her adım izlenebilir
+
+Trace Standard:
+- Credit Score
+- Stress Output
+- Payment Capacity
+- Final Decision
+
+Kapanış Notu:
+Decision trace kredi kararının nasıl oluştuğunu gösterir.
+
+- [x] Credit → Stress → Payment → Decision
+- [x] Ara çıktılar
 
 ---
 
@@ -54,7 +67,7 @@ Durum: OPEN
 ## Checklist
 
 - [x] Audit log
-- [ ] Trace
+- [x] Trace
 - [ ] Data source
 - [ ] Explain
 
