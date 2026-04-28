@@ -48,10 +48,22 @@ Decision trace trade kararının nasıl oluştuğunu gösterir.
 ---
 
 # 3. Data Source
-Durum: OPEN
+Durum: CLOSED
 
-- [ ] Kaynak tipi
-- [ ] Veri referansı
+✔ Kaynak tipi belirtilir
+✔ Veri referansı tutulur
+
+Standard:
+- Source Type (API / Internal / Manual)
+- Source Name
+- Timestamp
+- Reference ID
+
+Kapanış Notu:
+Data source trade analizinin güvenilirliğini sağlar.
+
+- [x] Kaynak tipi
+- [x] Veri referansı
 
 ---
 
@@ -67,6 +79,6 @@ Durum: OPEN
 
 - [x] Audit log
 - [x] Trace
-- [ ] Data source
+- [x] Data source
 - [ ] Explain
 
