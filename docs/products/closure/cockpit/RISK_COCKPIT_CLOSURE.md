@@ -52,7 +52,19 @@ Gerekli:
 
 ## 2. Stress Panel
 
-Durum: PARTIAL
+Durum: CLOSED
+
+✔ Stress skoru görünür
+✔ Stress band mapping aktif
+✔ Stress açıklaması eklendi
+
+Stress Mapping:
+0–35 LOW
+35–65 MEDIUM
+65–100 HIGH
+
+Kapanış Notu:
+Stress paneli kullanıcıya sistem üzerindeki baskıyı tek bakışta gösterir.
 
 Gerekli:
 - [ ] Stress skoru görünür
@@ -120,7 +132,7 @@ Gerekli:
 ## Cockpit Closure Checklist
 
 - [ ] Risk Score panel tamam
-- [ ] Stress panel tamam
+- [x] Stress panel tamam
 - [ ] Macro panel tamam
 - [ ] Decision panel tamam
 - [ ] Driver Breakdown tamam
