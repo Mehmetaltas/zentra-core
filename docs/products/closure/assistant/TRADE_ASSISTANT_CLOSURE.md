@@ -27,10 +27,21 @@ Explain trade kararının mantığını açıklar.
 ---
 
 # 2. Action Guidance
-Durum: OPEN
+Durum: CLOSED
 
-- [ ] Trade aç / kapat yönlendirme
-- [ ] Risk azaltma önerisi
+✔ Trade aç / kapat yönlendirme var
+✔ Risk azaltma önerisi var
+
+Standard:
+- BUY → open position
+- SELL → close / short
+- WAIT → no action
+
+Kapanış Notu:
+Action guidance trade aksiyonunu belirler.
+
+- [x] Trade aç / kapat yönlendirme
+- [x] Risk azaltma önerisi
 
 ---
 
@@ -47,7 +58,7 @@ Durum: OPEN
 
 - [ ] Short
 - [ ] Detail
-- [ ] Action
+- [x] Action
 - [ ] Warning
 
 ---
@@ -55,7 +66,7 @@ Durum: OPEN
 ## Checklist
 
 - [x] Explain
-- [ ] Action
+- [x] Action
 - [ ] Warning
 - [ ] Format
 
