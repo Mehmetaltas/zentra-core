@@ -145,3 +145,11 @@ ZENTRA'nın tüm yüzeyleri erişilebilirlik standardına bağlıdır:
 - legal / governance
 - delivery outputs
 
+
+
+---
+
+# 9. Academia Accessibility Integration
+
+ZENTRA Academia, erişilebilirlik katmanının sürekli gelişimini sağlar.
+

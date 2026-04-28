@@ -21,6 +21,11 @@ Bu katman:
 
 genelinde uygulanır.
 
+Ayrıca:
+
+- ZENTRA Academia (araştırma ve geliştirme)
+erişilebilirlik katmanının üretici ve geliştirici tarafıdır.
+
 ---
 
 # 1. Visual Accessibility
@@ -153,4 +158,29 @@ erişilebilir doğan sistem olmalıdır.
 Kullanıcı sistemi bilmese de,
 görmekte veya anlamakta zorlansa da,
 assistant onu sade dille yönlendirir ve sistem kullanılabilir kalır.
+
+
+
+---
+
+# 9. Academia Role
+
+Durum: ACTIVE
+
+ZENTRA Academia:
+
+- erişilebilirlik standartlarını araştırır
+- WCAG ve global regülasyonları takip eder
+- kullanıcı davranışı verisini analiz eder
+- yeni erişilebilir kullanım modelleri üretir
+- ZENTRA Intel ve General AI tarafına iyileştirme besler
+
+---
+
+## Kritik Rol
+
+Academia:
+
+→ sadece öğrenmez  
+→ sistemi erişilebilir hale getirir  
 
