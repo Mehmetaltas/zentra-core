@@ -48,11 +48,24 @@ Pro tier detaylı trade analizi sunar.
 ---
 
 # 3. Expert Tier
-Durum: OPEN
+Durum: CLOSED
 
-- [ ] Full trade analysis
-- [ ] Driver analysis
-- [ ] Detailed explain
+✔ Full trade analysis var
+✔ Driver analysis var
+✔ Detailed explain var
+
+Standard:
+- Full Trade Output
+- Risk + Decision
+- Driver Breakdown
+- Detailed Explanation
+
+Kapanış Notu:
+Expert tier profesyonel kullanıcılar içindir.
+
+- [x] Full trade analysis
+- [x] Driver analysis
+- [x] Detailed explain
 
 ---
 
@@ -78,7 +91,7 @@ Durum: OPEN
 
 - [x] Free
 - [x] Pro
-- [ ] Expert
+- [x] Expert
 - [ ] Institutional
 - [ ] Feature gate
 
