@@ -164,3 +164,77 @@ Durum: IN PROGRESS
 - Credit için approval risk uyarısı eklendi
 - Risk Intelligence için exposure review uyarısı eklendi
 
+
+
+---
+
+# 6. User Guidance Intelligence
+
+Durum: IN PROGRESS
+
+Assistant artık sadece yorumlamaz, kullanıcıyı yönlendirir.
+
+---
+
+## Amaç
+
+Kullanıcı:
+- sistemi bilmeden kullanabilmeli
+- ne yapacağını assistant'tan öğrenmeli
+- karmaşık kararları sade anlayabilmeli
+
+---
+
+## Kapsam
+
+Assistant:
+
+✔ halk diliyle anlatır  
+✔ teknik seviyede detay açar  
+✔ kullanıcıya aksiyon söyler  
+✔ sistemi nasıl kullanacağını gösterir  
+
+---
+
+## Davranış
+
+Assistant şu sorulara cevap verir:
+
+- Bu ne demek?
+- Ben şimdi ne yapmalıyım?
+- Bu riskli mi?
+- Hangi ürünü kullanmalıyım?
+- Bu karar uygulanır mı?
+
+---
+
+## Dil Seviyesi
+
+1. Basit anlatım (default)
+
+Örnek:
+"Risk yüksek, dikkatli ilerlemelisin."
+
+2. Teknik anlatım (isteğe bağlı)
+
+Örnek:
+"Risk seviyesi 72, stress 64. Bu durumda kontrollü exposure önerilir."
+
+---
+
+## Guidance Output
+
+Assistant şu çıktıları üretir:
+
+- NEXT STEP: kullanıcı ne yapmalı
+- TOOL: hangi ürün / modül kullanılmalı
+- RISK NOTE: dikkat edilmesi gereken nokta
+
+---
+
+## Örnek
+
+NEXT STEP: Pozisyona küçük miktarla gir  
+TOOL: Financial Trade  
+RISK NOTE: Risk yüksek, tam giriş önerilmez  
+
