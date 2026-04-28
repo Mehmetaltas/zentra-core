@@ -223,3 +223,75 @@ LAUNCH BLOCKER VAR
 
 kararı bu katmanın kontrolünden sonra verilir.
 
+
+
+---
+
+## Sürekli Çalışma Kuralı
+
+Bu katman sadece launch öncesi kontrol değildir.
+
+Self Healing Launch Control launch sonrası da aktif kalır ve şu görevleri sürekli yürütür:
+
+- system health kontrolü
+- user flow continuity kontrolü
+- report / assistant / access izleme
+- fallback üretimi
+- repair önerisi
+- governance escalation
+- audit / snapshot kaydı
+- agent / twin koordinasyonu
+
+---
+
+## Agent / Twin Görev Ayrımı
+
+### Detection Agent
+Arızayı, kopan akışı veya tutarsızlığı tespit eder.
+
+### Repair Agent
+Düzeltme önerisi üretir veya fallback çalıştırır.
+
+### Governance Agent
+Devam / durdur / insan onayı kararını verir.
+
+### Audit Agent
+Her olayı kayıt altına alır.
+
+### Assistant
+Kullanıcıya sade ve teknik açıklama yapar.
+
+---
+
+## Fallback Seviyeleri
+
+### Level 1 — Soft Fallback
+Kullanıcıya basit açıklama ve tekrar deneme önerisi verilir.
+
+### Level 2 — Functional Fallback
+Gelişmiş çıktı yerine basic output üretilir.
+
+### Level 3 — Safe Mode
+Riskli fonksiyonlar kapanır, sadece güvenli görüntüleme çalışır.
+
+### Level 4 — Governance Hold
+Karar, rapor veya aksiyon durdurulur ve governance review gerekir.
+
+---
+
+## Permanent Health Brain
+
+Self Healing Launch Control, ZENTRA’nın sürekli çalışan:
+
+- sağlık kontrol beyni
+- kalite kontrol beyni
+- güvenlik erken uyarı beyni
+- kullanıcı sürekliliği beyni
+- controlled automation beyni
+
+olarak kabul edilir.
+
+Kilit cümle:
+
+ZENTRA arızayı saklamaz; tespit eder, izler, düzeltir veya governance’a taşır.
+
