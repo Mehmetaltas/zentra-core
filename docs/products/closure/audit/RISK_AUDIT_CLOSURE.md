@@ -108,7 +108,21 @@ Data source tracking veri güvenilirliğini ve izlenebilirliği sağlar.
 
 # 4. Explain Registry
 
-Durum: OPEN
+Durum: CLOSED
+
+✔ Explain kayıtları tutulur
+✔ Decision explain saklanır
+✔ Versiyonlanabilir yapı hazır
+
+Explain Registry Standard:
+- Explain ID
+- Related Decision ID
+- Explain Content
+- Timestamp
+- Version
+
+Kapanış Notu:
+Explain registry geçmiş kararların nasıl açıklandığını saklar.
 
 ## Gerekli
 
@@ -123,7 +137,7 @@ Durum: OPEN
 - [x] Audit log tamam
 - [x] Decision trace tamam
 - [x] Data source tracking tamam
-- [ ] Explain registry tamam
+- [x] Explain registry tamam
 
 ---
 
