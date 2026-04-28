@@ -98,7 +98,10 @@ docs/products/closure/audit/RISK_AUDIT_CLOSURE.md
 
 # 5. PRICING
 
-Durum: OPEN
+Durum: IN PROGRESS
+
+İz dosyası:
+docs/products/closure/pricing/RISK_PRICING_CLOSURE.md
 
 ## Gerekli
 
