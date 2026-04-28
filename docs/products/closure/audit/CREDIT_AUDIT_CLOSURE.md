@@ -69,10 +69,23 @@ Data source kredi analizinin güvenilirliğini sağlar.
 ---
 
 # 4. Explain Registry
-Durum: OPEN
+Durum: CLOSED
 
-- [ ] Explain kayıt
-- [ ] Decision explain
+✔ Explain kayıtları tutulur
+✔ Decision explain saklanır
+
+Standard:
+- Explain ID
+- Related Decision ID
+- Explain Content
+- Timestamp
+- Version
+
+Kapanış Notu:
+Explain registry kredi karar açıklamalarını kayıt altında tutar.
+
+- [x] Explain kayıt
+- [x] Decision explain
 
 ---
 
@@ -81,5 +94,5 @@ Durum: OPEN
 - [x] Audit log
 - [x] Trace
 - [x] Data source
-- [ ] Explain
+- [x] Explain
 
