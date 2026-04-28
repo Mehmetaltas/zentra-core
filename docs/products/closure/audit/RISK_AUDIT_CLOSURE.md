@@ -83,7 +83,20 @@ Decision trace kararın nasıl oluştuğunu adım adım gösterir.
 
 # 3. Data Source Tracking
 
-Durum: OPEN
+Durum: CLOSED
+
+✔ Veri kaynağı işaretlenir
+✔ Input tipi belirlenir (manual / API / internal)
+✔ Veri referansı tutulur
+
+Data Source Standard:
+- Source Type (API / Internal / Manual)
+- Source Name
+- Timestamp
+- Data Reference ID
+
+Kapanış Notu:
+Data source tracking veri güvenilirliğini ve izlenebilirliği sağlar.
 
 ## Gerekli
 
@@ -109,7 +122,7 @@ Durum: OPEN
 
 - [x] Audit log tamam
 - [x] Decision trace tamam
-- [ ] Data source tracking tamam
+- [x] Data source tracking tamam
 - [ ] Explain registry tamam
 
 ---
