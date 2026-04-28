@@ -188,9 +188,21 @@ macro:68,
 position:"LONG",
 scenario:"UP scenario active — risk/reward acceptable.",
 drivers:[
-"Macro trend positive",
-"Risk aligned",
-"Liquidity stable"
+{
+title:"Macro trend positive",
+detail:"External pressure supports the decision direction.",
+impact:"HIGH"
+},
+{
+title:"Risk aligned",
+detail:"Risk level is elevated but still inside acceptable decision range.",
+impact:"MEDIUM"
+},
+{
+title:"Liquidity stable",
+detail:"No immediate liquidity stress detected in the current scenario.",
+impact:"LOW"
+}
 ],
 portfolio:[
 ["Risk Intelligence","WAIT","72"],
@@ -221,7 +233,13 @@ document.getElementById("position").textContent=data.position;
 document.getElementById("scenario").textContent=data.scenario;
 
 document.getElementById("drivers").innerHTML=
-data.drivers.map(x=>"<div class='driver'>"+x+"</div>").join("");
+data.drivers.map(x=>{
+  return "<div class='driver'>"+
+    "<strong>"+x.title+"</strong>"+
+    "<p style='margin:6px 0 0;opacity:.72;font-size:13px'>"+x.detail+"</p>"+
+    "<span class='pill' style='margin-top:8px'>Impact "+x.impact+"</span>"+
+  "</div>";
+}).join("");
 
 document.getElementById("portfolio").innerHTML=
 data.portfolio.map(r=>{

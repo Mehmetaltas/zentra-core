@@ -47,3 +47,14 @@ Durum: OPEN
 - [ ] Assistant
 - [ ] Report
 
+
+
+---
+
+## Cockpit Insight Deepening
+Durum: IN PROGRESS
+
+- Driver açıklamaları derinleştirildi
+- Impact seviyesi eklendi
+- Insight layer zeka anlatan yapıya taşındı
+
