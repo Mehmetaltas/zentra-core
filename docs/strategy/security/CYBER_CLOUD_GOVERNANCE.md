@@ -20,7 +20,51 @@ hale getirmek.
 
 # 1. Data Governance
 
-Durum: OPEN
+Durum: CLOSED
+
+ZENTRA veri yönetimi:
+
+✔ Veri sınıflandırma (public / internal / sensitive)
+✔ Veri erişim kontrolü (role-based)
+✔ Veri anonimleştirme / maskeleme
+✔ Veri lifecycle (create / process / store / archive / delete)
+✔ Kullanıcı veri hakları (silme / unutulma / erişim)
+✔ Log ve audit ile veri izlenebilirliği
+
+---
+
+## Veri Politikası
+
+- Veri minimum prensibi
+- Amaç sınırlaması
+- Güvenli saklama
+- Yetkisiz erişim engelleme
+
+---
+
+## Kullanıcı Hakları
+
+Kullanıcı:
+
+- verisini görebilir
+- verisini silebilir
+- verisini dışa aktarabilir
+- veri kullanımını sınırlandırabilir
+
+---
+
+## Kurumsal Güç
+
+Bu katman:
+
+- KVKK uyumu
+- GDPR uyumu
+- kurumsal veri güveni
+- regülasyon uyumu
+
+sağlar
+
+
 
 - veri saklama politikası
 - veri erişim kontrolü
@@ -100,7 +144,7 @@ güvenli + uyumlu + kontrol edilebilir sistemdir.
 
 ## Checklist
 
-- [ ] Data governance
+- [x] Data governance
 - [ ] Legal / compliance
 - [ ] Cloud security
 - [ ] Cyber security
