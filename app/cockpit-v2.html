@@ -205,9 +205,9 @@ impact:"LOW"
 }
 ],
 portfolio:[
-["Risk Intelligence","WAIT","72"],
-["Credit Intelligence","REVIEW","66"],
-["Financial Trade","BUY","78"]
+{entity:"Risk Intelligence",decision:"WAIT",score:72,risk:"HIGH",confidence:71,comment:"Risk elevated; monitor before action."},
+{entity:"Credit Intelligence",decision:"REVIEW",score:66,risk:"MEDIUM",confidence:69,comment:"Payment capacity requires additional check."},
+{entity:"Financial Trade",decision:"BUY",score:78,risk:"MEDIUM",confidence:78,comment:"Signal is strong with acceptable risk bridge."}
 ]
 };
 
@@ -242,9 +242,17 @@ data.drivers.map(x=>{
 }).join("");
 
 document.getElementById("portfolio").innerHTML=
+"<tr><td><b>Entity</b></td><td><b>Decision</b></td><td><b>Score</b></td><td><b>Risk</b></td><td><b>Confidence</b></td><td><b>Comment</b></td></tr>"+
 data.portfolio.map(r=>{
-let cls=r[1]=="BUY"?"badge-buy":r[1]=="SELL"?"badge-sell":"badge-wait";
-return "<tr><td>"+r[0]+"</td><td><span class='badge "+cls+"'>"+r[1]+"</span></td><td>"+r[2]+"</td></tr>";
+let cls=r.decision=="BUY"?"badge-buy":r.decision=="SELL"?"badge-sell":"badge-wait";
+return "<tr>"+
+"<td>"+r.entity+"</td>"+
+"<td><span class='badge "+cls+"'>"+r.decision+"</span></td>"+
+"<td>"+r.score+"</td>"+
+"<td>"+r.risk+"</td>"+
+"<td>"+r.confidence+"%</td>"+
+"<td style='opacity:.75'>"+r.comment+"</td>"+
+"</tr>";
 }).join("");
 </script>
 

@@ -58,3 +58,14 @@ Durum: IN PROGRESS
 - Impact seviyesi eklendi
 - Insight layer zeka anlatan yapıya taşındı
 
+
+
+---
+
+## Portfolio View Deepening
+Durum: IN PROGRESS
+
+- Portfolio listesi çoklu karar yüzeyine çevrildi
+- Decision / score / risk / confidence / comment alanları eklendi
+- Çoklu ürün/varlık görünümü kurumsal analiz seviyesine taşındı
+
