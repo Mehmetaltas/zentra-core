@@ -76,7 +76,22 @@ Kapanış Notu:
 Scenario paneli olası trade sonuçlarını gösterir.
 
 # 5. Driver Breakdown
-Durum: OPEN
+Durum: CLOSED
+
+✔ Ana trade driver’ları gösterilir
+✔ Her driver için açıklama var
+✔ Etki seviyesi var
+
+Driver Standard:
+1. Macro Signal
+2. Market Structure
+3. Risk Alignment
+
+Impact:
+LOW / MEDIUM / HIGH
+
+Kapanış Notu:
+Driver breakdown trade kararının nedenini açıklar.
 
 ---
 
@@ -86,5 +101,5 @@ Durum: OPEN
 - [x] Risk Bridge
 - [x] Trade Decision
 - [x] Scenario / Position
-- [ ] Drivers
+- [x] Drivers
 
