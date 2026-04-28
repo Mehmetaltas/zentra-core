@@ -69,7 +69,20 @@ Pro tier kullanıcıya anlamlı analiz sunar.
 
 # 3. Expert Tier
 
-Durum: OPEN
+Durum: CLOSED
+
+✔ Full multi-lens var
+✔ Driver analysis var
+✔ Detailed explain var
+
+Expert Tier Standard:
+- Full Risk Output
+- Stress + Macro + Decision
+- Driver Breakdown
+- Detailed Explanation
+
+Kapanış Notu:
+Expert tier profesyonel kullanıcılar içindir.
 
 ## İçerik
 
@@ -107,7 +120,7 @@ Durum: OPEN
 
 - [x] Free tamam
 - [x] Pro tamam
-- [ ] Expert tamam
+- [x] Expert tamam
 - [ ] Institutional tamam
 - [ ] Feature gate aktif
 
