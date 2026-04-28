@@ -147,7 +147,24 @@ Gerekli:
 
 ## 6. Deviation Panel
 
-Durum: OPEN
+Durum: CLOSED
+
+✔ Normalden sapma gösterilir
+✔ Sapma nedeni gösterilir
+✔ Sapma seviyesi belirtilir
+
+Deviation Standard:
+- Current Value
+- Expected / Normal Value
+- Difference
+- Direction
+- Reason
+
+Deviation Level:
+LOW / MEDIUM / HIGH
+
+Kapanış Notu:
+Deviation paneli riskin normalden ne kadar saptığını ve nedenini gösterir.
 
 Gerekli:
 - [ ] Normalden sapma gösterilir
@@ -175,7 +192,7 @@ Gerekli:
 - [x] Macro panel tamam
 - [x] Decision panel tamam
 - [x] Driver Breakdown tamam
-- [ ] Deviation panel tamam
+- [x] Deviation panel tamam
 - [ ] Before / After tamam
 
 ---
