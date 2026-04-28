@@ -6,10 +6,20 @@ ACTIVE — PRICING STARTED
 ---
 
 # 1. Free Tier
-Durum: OPEN
+Durum: CLOSED
 
-- [ ] Basic credit score
-- [ ] Short decision
+✔ Basic credit score var
+✔ Short decision var
+
+Standard:
+- Credit Score
+- Basic Decision
+
+Kapanış Notu:
+Free tier kullanıcıyı sisteme çeker.
+
+- [x] Basic credit score
+- [x] Short decision
 
 ---
 
@@ -52,7 +62,7 @@ Durum: OPEN
 
 ## Checklist
 
-- [ ] Free
+- [x] Free
 - [ ] Pro
 - [ ] Expert
 - [ ] Institutional
