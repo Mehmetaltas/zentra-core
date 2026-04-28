@@ -46,7 +46,19 @@ Kapanış Notu:
 Stress paneli kredi üzerindeki baskıyı gösterir.
 
 # 3. Payment Capacity Panel
-Durum: OPEN
+Durum: CLOSED
+
+✔ Payment capacity skoru görünür
+✔ Capacity band mapping aktif
+✔ Açıklama eklendi
+
+Mapping:
+0–40 LOW (yetersiz)
+40–70 MEDIUM (sınırda)
+70–100 HIGH (yeterli)
+
+Kapanış Notu:
+Payment capacity paneli kullanıcının geri ödeme gücünü açık şekilde gösterir.
 
 # 4. Decision Panel
 Durum: OPEN
@@ -60,7 +72,7 @@ Durum: OPEN
 
 - [x] Credit Score
 - [x] Stress
-- [ ] Payment Capacity
+- [x] Payment Capacity
 - [ ] Decision
 - [ ] Drivers
 
