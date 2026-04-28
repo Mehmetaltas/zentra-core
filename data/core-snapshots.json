@@ -39,5 +39,29 @@
     "mission_id": "trade_run_1777371974247",
     "task_count": 1,
     "status": "tamamlandı"
+  },
+  {
+    "id": "snapshot_1777383509960",
+    "ts": "2026-04-28T13:38:29.960Z",
+    "type": "mission_completed",
+    "mission_id": "risk_run_1777383509945",
+    "task_count": 1,
+    "status": "tamamlandı"
+  },
+  {
+    "id": "snapshot_1777383510488",
+    "ts": "2026-04-28T13:38:30.488Z",
+    "type": "mission_completed",
+    "mission_id": "credit_run_1777383510475",
+    "task_count": 1,
+    "status": "tamamlandı"
+  },
+  {
+    "id": "snapshot_1777383511019",
+    "ts": "2026-04-28T13:38:31.019Z",
+    "type": "mission_completed",
+    "mission_id": "trade_run_1777383511005",
+    "task_count": 1,
+    "status": "tamamlandı"
   }
 ]

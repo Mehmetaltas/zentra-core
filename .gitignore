@@ -11,3 +11,4 @@ __pycache__/
 *.pyc
 data/audit-log.json
 data/audit-log.json
+logs/

@@ -208,5 +208,128 @@
     "type": "mission_completed",
     "mission_id": "trade_run_1777371974247",
     "snapshot_id": "snapshot_1777371974264"
+  },
+  {
+    "id": "audit_1777383509949",
+    "ts": "2026-04-28T13:38:29.949Z",
+    "type": "mission_started",
+    "mission_id": "risk_run_1777383509945",
+    "module_id": "risk_intel",
+    "product_id": "risk_product",
+    "app_id": "risk_app"
+  },
+  {
+    "id": "audit_1777383509955",
+    "ts": "2026-04-28T13:38:29.955Z",
+    "type": "task_operator_run",
+    "mission_id": "risk_run_1777383509945",
+    "task_id": "task_calc",
+    "operator": "execution_operator",
+    "result": {
+      "ok": true,
+      "operator_id": "execution_operator",
+      "operator_name": "Execution Operator",
+      "role": "run tasks",
+      "task_id": "task_calc",
+      "task_name": "Run Risk Calculation",
+      "ts": "2026-04-28T13:38:29.954Z"
+    }
+  },
+  {
+    "id": "audit_1777383509956",
+    "ts": "2026-04-28T13:38:29.956Z",
+    "type": "action_executed",
+    "mission_id": "risk_run_1777383509945",
+    "task_id": "task_calc",
+    "status": "executed"
+  },
+  {
+    "id": "audit_1777383509961",
+    "ts": "2026-04-28T13:38:29.961Z",
+    "type": "mission_completed",
+    "mission_id": "risk_run_1777383509945",
+    "snapshot_id": "snapshot_1777383509960"
+  },
+  {
+    "id": "audit_1777383510479",
+    "ts": "2026-04-28T13:38:30.479Z",
+    "type": "mission_started",
+    "mission_id": "credit_run_1777383510475",
+    "module_id": "credit_intel",
+    "product_id": "credit_product",
+    "app_id": "credit_app"
+  },
+  {
+    "id": "audit_1777383510484",
+    "ts": "2026-04-28T13:38:30.484Z",
+    "type": "task_operator_run",
+    "mission_id": "credit_run_1777383510475",
+    "task_id": "task_credit",
+    "operator": "execution_operator",
+    "result": {
+      "ok": true,
+      "operator_id": "execution_operator",
+      "operator_name": "Execution Operator",
+      "role": "run tasks",
+      "task_id": "task_credit",
+      "task_name": "Run Credit Calculation",
+      "ts": "2026-04-28T13:38:30.483Z"
+    }
+  },
+  {
+    "id": "audit_1777383510485",
+    "ts": "2026-04-28T13:38:30.485Z",
+    "type": "action_executed",
+    "mission_id": "credit_run_1777383510475",
+    "task_id": "task_credit",
+    "status": "executed"
+  },
+  {
+    "id": "audit_1777383510490",
+    "ts": "2026-04-28T13:38:30.490Z",
+    "type": "mission_completed",
+    "mission_id": "credit_run_1777383510475",
+    "snapshot_id": "snapshot_1777383510488"
+  },
+  {
+    "id": "audit_1777383511008",
+    "ts": "2026-04-28T13:38:31.008Z",
+    "type": "mission_started",
+    "mission_id": "trade_run_1777383511005",
+    "module_id": "trade_intel",
+    "product_id": "trade_product",
+    "app_id": "trade_app"
+  },
+  {
+    "id": "audit_1777383511013",
+    "ts": "2026-04-28T13:38:31.013Z",
+    "type": "task_operator_run",
+    "mission_id": "trade_run_1777383511005",
+    "task_id": "task_trade",
+    "operator": "execution_operator",
+    "result": {
+      "ok": true,
+      "operator_id": "execution_operator",
+      "operator_name": "Execution Operator",
+      "role": "run tasks",
+      "task_id": "task_trade",
+      "task_name": "Run Trade Signal",
+      "ts": "2026-04-28T13:38:31.013Z"
+    }
+  },
+  {
+    "id": "audit_1777383511015",
+    "ts": "2026-04-28T13:38:31.016Z",
+    "type": "action_executed",
+    "mission_id": "trade_run_1777383511005",
+    "task_id": "task_trade",
+    "status": "executed"
+  },
+  {
+    "id": "audit_1777383511021",
+    "ts": "2026-04-28T13:38:31.021Z",
+    "type": "mission_completed",
+    "mission_id": "trade_run_1777383511005",
+    "snapshot_id": "snapshot_1777383511019"
   }
 ]
