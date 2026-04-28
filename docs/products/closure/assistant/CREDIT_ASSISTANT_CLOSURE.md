@@ -38,7 +38,7 @@ Explain kullanıcıya kredi kararının nedenini açıklar.
 
 # 2. Action Guidance
 
-Durum: OPEN
+Durum: CLOSED
 
 - [ ] Ne yapmalıyım cevabı
 - [ ] Kredi iyileştirme önerisi
@@ -48,7 +48,7 @@ Durum: OPEN
 
 # 3. Warning System
 
-Durum: OPEN
+Durum: CLOSED
 
 - [ ] Yüksek risk uyarısı
 - [ ] Reddedilme uyarısı
@@ -95,3 +95,6 @@ Response format çıktıyı standart hale getirir.
 - [x] Warning
 - [x] Format
 
+
+
+STATUS: ASSISTANT CLOSED
