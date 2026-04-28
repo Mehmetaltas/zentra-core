@@ -28,10 +28,22 @@ Audit log tüm trade kararlarını saklar.
 ---
 
 # 2. Decision Trace
-Durum: OPEN
+Durum: CLOSED
 
-- [ ] Signal → Risk → Decision
-- [ ] Ara çıktılar
+✔ Signal → Risk → Decision akışı kayıtlı
+✔ Ara çıktılar saklanır
+✔ Her adım izlenebilir
+
+Trace Standard:
+- Signal Output
+- Risk Output
+- Final Decision
+
+Kapanış Notu:
+Decision trace trade kararının nasıl oluştuğunu gösterir.
+
+- [x] Signal → Risk → Decision
+- [x] Ara çıktılar
 
 ---
 
@@ -54,7 +66,7 @@ Durum: OPEN
 ## Checklist
 
 - [x] Audit log
-- [ ] Trace
+- [x] Trace
 - [ ] Data source
 - [ ] Explain
 
