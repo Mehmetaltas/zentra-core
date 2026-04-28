@@ -94,7 +94,19 @@ Expert tier profesyonel kullanıcılar içindir.
 
 # 4. Institutional Tier
 
-Durum: OPEN
+Durum: CLOSED
+
+✔ API access var
+✔ Batch analysis var
+✔ Portfolio analysis var
+
+Institutional Tier Standard:
+- API Integration
+- Batch Processing
+- Portfolio Risk View
+
+Kapanış Notu:
+Institutional tier kurumsal müşteriler içindir.
 
 ## İçerik
 
@@ -121,7 +133,7 @@ Durum: OPEN
 - [x] Free tamam
 - [x] Pro tamam
 - [x] Expert tamam
-- [ ] Institutional tamam
+- [x] Institutional tamam
 - [ ] Feature gate aktif
 
 ---
