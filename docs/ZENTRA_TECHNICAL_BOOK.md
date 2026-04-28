@@ -195,3 +195,30 @@ All legacy repositories permanently deleted.
 ## Rule
 No parallel repository structures allowed.
 System evolves inside single core architecture.
+
+---
+
+# TECHNICAL LOCK — MULTI-LANGUAGE ENGINE
+
+ZENTRA multi-language foundation has been added.
+
+## Files
+- core/i18n/languages.js
+- core/i18n/i18n-engine.js
+- core/i18n/check-i18n.js
+- data/i18n/core-copy.json
+
+## Active Languages
+TR / EN / AR
+
+## Extended Ready Languages
+ES / FR / DE / RU / CN
+
+## Technical Rule
+Every language entry must include active languages.
+
+Missing active language = failed health check.
+
+## Vercel Limit Note
+This language engine does not add a new serverless function. It is a core/data layer addition only. Vercel Hobby 12 Serverless Function limit remains protected.
+

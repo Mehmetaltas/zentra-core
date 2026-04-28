@@ -144,3 +144,26 @@ ZENTRA is now:
 
 ### Rule
 No new repo fragmentation allowed.
+
+---
+
+# LIVING UPDATE — MULTI-LANGUAGE ENGINE
+
+## Decision
+ZENTRA will operate with TR / EN / AR as active required languages.
+
+## Extension
+ES / FR / DE / RU / CN are prepared as future expandable world languages.
+
+## Implementation
+Multi-language foundation added under:
+
+- core/i18n/
+- data/i18n/
+
+## Vercel Safety
+No new serverless function was added. Vercel 12 function limit is not affected.
+
+## Next
+Bind i18n engine to cockpit UI, assistant outputs, report system and public site.
+

@@ -161,3 +161,27 @@ ZENTRA artık:
 Yeni repo açılmaz.
 Sistem parçalanmaz.
 Tüm gelişim mevcut çekirdek içinde yapılır.
+
+---
+
+# ZENTRA MULTI-LANGUAGE SYSTEM — LOCKED
+
+ZENTRA tek dilde doğmaz. ZENTRA çok dilli doğar.
+
+## Active Core Languages
+- Türkçe (TR)
+- English (EN)
+- Arabic (AR)
+
+## Extended Ready Languages
+- Spanish (ES)
+- French (FR)
+- German (DE)
+- Russian (RU)
+- Chinese (CN)
+
+## Rule
+All ZENTRA modules, cockpits, assistants, reports, public pages, product descriptions and market outputs must support TR / EN / AR as active languages.
+
+ES / FR / DE / RU / CN will remain infrastructure-ready and can be activated after launch readiness.
+
