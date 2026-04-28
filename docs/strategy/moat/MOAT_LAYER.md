@@ -12,7 +12,39 @@ ZENTRA’nın kolay kopyalanamayan üstünlük katmanlarını tanımlamak ve kil
 ---
 
 # 1. Data Moat
-Durum: OPEN
+Durum: CLOSED
+
+ZENTRA veri katmanı:
+
+✔ Live Data Layer
+✔ Own Data Layer
+✔ User Interaction Data
+✔ Report Output History
+✔ Decision History
+✔ Portfolio Evolution Data
+
+---
+
+## Moat Gücü
+
+ZENTRA:
+
+- kendi veri setini üretir
+- kullanıcı davranışını öğrenir
+- karar geçmişini biriktirir
+- rapor çıktısını veri haline getirir
+
+---
+
+## Kritik Avantaj
+
+ZENTRA kullanıldıkça:
+
+→ veri büyür  
+→ sistem güçlenir  
+→ kopyalanamaz hale gelir  
+
+
 
 ZENTRA’nın kendi veri üretme, veri işleme ve veri biriktirme gücü.
 
