@@ -28,7 +28,10 @@ Bir ürün kapalıdır eğer:
 
 # 1. COCKPIT
 
-Durum: OPEN
+Durum: IN PROGRESS
+
+İz dosyası:
+docs/products/closure/cockpit/RISK_COCKPIT_CLOSURE.md
 
 ## Gerekli
 
