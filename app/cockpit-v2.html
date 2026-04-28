@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>ZENTRA Cockpit V2</title>
+  <style>
+    body{margin:0;background:#070b14;color:#eef3ff;font-family:Arial,sans-serif}
+    .wrap{padding:18px;max-width:1200px;margin:auto}
+    .top{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}
+    .brand{font-size:22px;font-weight:800;letter-spacing:.08em}
+    .tag{opacity:.7;font-size:13px}
+    .grid{display:grid;gap:14px}
+    .hero{background:linear-gradient(135deg,#111a2e,#0b1220);border:1px solid #263656;border-radius:22px;padding:24px}
+    .decision{font-size:54px;font-weight:900;margin:8px 0}
+    .row{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+    .card{background:#0d1424;border:1px solid #23314d;border-radius:18px;padding:16px}
+    .label{opacity:.65;font-size:12px;text-transform:uppercase}
+    .value{font-size:28px;font-weight:800;margin-top:8px}
+    .section{display:grid;grid-template-columns:1.2fr .8fr;gap:14px}
+    .driver{padding:12px;border-radius:14px;background:#111a2c;margin-top:10px}
+    .portfolio table{width:100%;border-collapse:collapse}
+    .portfolio td{padding:10px;border-bottom:1px solid #253452}
+    .pill{display:inline-block;padding:6px 10px;border-radius:999px;background:#18243a}
+    @media(max-width:800px){.row,.section{grid-template-columns:1fr}.decision{font-size:40px}}
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <div class="top">
+      <div>
+        <div class="brand">ZENTRA COCKPIT V2</div>
+        <div class="tag">Investor-Level Decision Surface</div>
+      </div>
+      <div class="pill">LIVE SYSTEM VIEW</div>
+    </div>
+
+    <section class="hero">
+      <div class="label">Final Decision</div>
+      <div class="decision" id="decision">BUY</div>
+      <div>
+        <span class="pill" id="confidence">Confidence 78%</span>
+        <span class="pill" id="riskBand">Risk HIGH</span>
+      </div>
+    </section>
+
+    <section class="row" style="margin-top:14px">
+      <div class="card"><div class="label">Risk Score</div><div class="value" id="risk">72</div></div>
+      <div class="card"><div class="label">Stress</div><div class="value" id="stress">64</div></div>
+      <div class="card"><div class="label">Trade Signal</div><div class="value" id="signal">BUY</div></div>
+      <div class="card"><div class="label">Macro</div><div class="value" id="macro">68</div></div>
+    </section>
+
+    <section class="section" style="margin-top:14px">
+      <div class="card">
+        <div class="label">Insight Layer</div>
+        <div id="drivers"></div>
+      </div>
+
+      <div class="card">
+        <div class="label">Scenario / Position</div>
+        <div class="value" id="position">LONG</div>
+        <p id="scenario">UP scenario active — risk/reward acceptable.</p>
+      </div>
+    </section>
+
+    <section class="card portfolio" style="margin-top:14px">
+      <div class="label">Portfolio View</div>
+      <table id="portfolio"></table>
+    </section>
+  </main>
+
+<script>
+const data = {
+  decision:"BUY",
+  confidence:78,
+  risk:72,
+  stress:64,
+  signal:"BUY",
+  macro:68,
+  position:"LONG",
+  scenario:"UP scenario active — risk/reward acceptable.",
+  drivers:[
+    "Macro trend positive",
+    "Risk aligned with decision",
+    "Liquidity stable"
+  ],
+  portfolio:[
+    ["Risk Intelligence","CAUTION","72"],
+    ["Credit Intelligence","REVIEW","66"],
+    ["Financial Trade","BUY","78"]
+  ]
+};
+
+function band(v){
+  if(v < 40) return "LOW";
+  if(v < 70) return "MEDIUM";
+  return "HIGH";
+}
+
+document.getElementById("decision").textContent = data.decision;
+document.getElementById("confidence").textContent = "Confidence " + data.confidence + "%";
+document.getElementById("riskBand").textContent = "Risk " + band(data.risk);
+document.getElementById("risk").textContent = data.risk;
+document.getElementById("stress").textContent = data.stress;
+document.getElementById("signal").textContent = data.signal;
+document.getElementById("macro").textContent = data.macro;
+document.getElementById("position").textContent = data.position;
+document.getElementById("scenario").textContent = data.scenario;
+
+document.getElementById("drivers").innerHTML =
+  data.drivers.map(x => `<div class="driver">${x}</div>`).join("");
+
+document.getElementById("portfolio").innerHTML =
+  data.portfolio.map(r => `<tr><td>${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td></tr>`).join("");
+</script>
+</body>
+</html>
