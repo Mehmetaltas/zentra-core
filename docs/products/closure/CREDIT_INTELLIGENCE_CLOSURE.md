@@ -44,7 +44,8 @@ Durum: IN PROGRESS
 İz: docs/products/closure/pricing/CREDIT_PRICING_CLOSURE.md
 
 # 6. MARKET PACKAGE
-Durum: OPEN
+Durum: IN PROGRESS
+İz: docs/products/closure/market/CREDIT_MARKET_CLOSURE.md
 
 # 7. SALES READINESS
 Durum: OPEN
