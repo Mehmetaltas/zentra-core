@@ -63,5 +63,133 @@
     "mission_id": "trade_run_1777383511005",
     "task_count": 1,
     "status": "tamamlandı"
+  },
+  {
+    "id": "snapshot_1777384951707",
+    "ts": "2026-04-28T14:02:31.707Z",
+    "type": "mission_completed",
+    "mission_id": "risk_run_1777384951689",
+    "task_count": 1,
+    "status": "tamamlandı"
+  },
+  {
+    "id": "snapshot_1777385120687",
+    "ts": "2026-04-28T14:05:20.687Z",
+    "type": "mission_completed",
+    "mission_id": "risk_run_1777385120670",
+    "task_count": 1,
+    "status": "tamamlandı"
+  },
+  {
+    "id": "snapshot_1777385120702",
+    "ts": "2026-04-28T14:05:20.702Z",
+    "type": "mission_completed",
+    "mission_id": "risk_run_1777385120693",
+    "task_count": 1,
+    "status": "tamamlandı"
+  },
+  {
+    "id": "snapshot_1777385120718",
+    "ts": "2026-04-28T14:05:20.718Z",
+    "type": "mission_completed",
+    "mission_id": "risk_run_1777385120708",
+    "task_count": 1,
+    "status": "tamamlandı"
+  },
+  {
+    "id": "snapshot_1777385120729",
+    "ts": "2026-04-28T14:05:20.729Z",
+    "type": "mission_completed",
+    "mission_id": "risk_run_1777385120722",
+    "task_count": 1,
+    "status": "tamamlandı"
+  },
+  {
+    "id": "snapshot_1777385310959",
+    "ts": "2026-04-28T14:08:30.959Z",
+    "type": "mission_completed",
+    "mission_id": "m1",
+    "task_count": 1,
+    "status": "tamamlandı"
+  },
+  {
+    "id": "snapshot_1777385310976",
+    "ts": "2026-04-28T14:08:30.976Z",
+    "type": "mission_completed",
+    "mission_id": "m2",
+    "task_count": 1,
+    "status": "tamamlandı"
+  },
+  {
+    "id": "snapshot_1777385395161",
+    "ts": "2026-04-28T14:09:55.161Z",
+    "type": "mission_completed",
+    "mission_id": "q1",
+    "task_count": 1,
+    "status": "tamamlandı"
+  },
+  {
+    "id": "snapshot_1777385395179",
+    "ts": "2026-04-28T14:09:55.179Z",
+    "type": "mission_completed",
+    "mission_id": "q2",
+    "task_count": 1,
+    "status": "tamamlandı"
+  },
+  {
+    "id": "snapshot_1777385439470",
+    "ts": "2026-04-28T14:10:39.470Z",
+    "type": "mission_completed",
+    "mission_id": "p2",
+    "task_count": 1,
+    "status": "tamamlandı"
+  },
+  {
+    "id": "snapshot_1777385439488",
+    "ts": "2026-04-28T14:10:39.488Z",
+    "type": "mission_completed",
+    "mission_id": "p1",
+    "task_count": 1,
+    "status": "tamamlandı"
+  },
+  {
+    "id": "snapshot_1777385478262",
+    "ts": "2026-04-28T14:11:18.262Z",
+    "type": "mission_completed",
+    "mission_id": "pa1",
+    "task_count": 1,
+    "status": "tamamlandı"
+  },
+  {
+    "id": "snapshot_1777385478280",
+    "ts": "2026-04-28T14:11:18.280Z",
+    "type": "mission_completed",
+    "mission_id": "pa2",
+    "task_count": 1,
+    "status": "tamamlandı"
+  },
+  {
+    "id": "snapshot_1777385615136",
+    "ts": "2026-04-28T14:13:35.136Z",
+    "type": "mission_completed",
+    "mission_id": "risk_run_1777385615116",
+    "task_count": 1,
+    "status": "tamamlandı"
+  },
+  {
+    "id": "snapshot_1777385615160",
+    "ts": "2026-04-28T14:13:35.160Z",
+    "type": "mission_completed",
+    "mission_id": "credit_run_1777385615145",
+    "task_count": 1,
+    "status": "tamamlandı"
+  },
+  {
+    "id": "snapshot_1777385615179",
+    "ts": "2026-04-28T14:13:35.179Z",
+    "type": "mission_completed",
+    "mission_id": "trade_run_1777385615167",
+    "task_count": 1,
+    "status": "tamamlandı"
   }
 ]
