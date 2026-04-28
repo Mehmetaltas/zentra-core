@@ -40,7 +40,8 @@ Durum: IN PROGRESS
 İz: docs/products/closure/audit/CREDIT_AUDIT_CLOSURE.md
 
 # 5. PRICING
-Durum: OPEN
+Durum: IN PROGRESS
+İz: docs/products/closure/pricing/CREDIT_PRICING_CLOSURE.md
 
 # 6. MARKET PACKAGE
 Durum: OPEN
