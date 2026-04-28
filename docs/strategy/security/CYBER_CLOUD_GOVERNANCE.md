@@ -234,7 +234,55 @@ sağlar
 
 # 5. Access / Token System
 
-Durum: OPEN
+Durum: CLOSED
+
+ZENTRA erişim ve token katmanı:
+
+✔ User token
+✔ Report token
+✔ Corporate access
+✔ Session management
+✔ Permission layer
+✔ Single report access
+✔ Multi-report access
+✔ Individual / corporate access ayrımı
+
+---
+
+## Access Prensibi
+
+ZENTRA:
+
+- kullanıcıyı token ile tanır
+- rapor erişimini token ile sınırlar
+- kurumsal erişimi ayrı yönetir
+- session bazlı güvenlik uygular
+- izin seviyesine göre çıktı gösterir
+
+---
+
+## Token Kullanım Alanları
+
+- tek rapor erişimi
+- çoklu rapor erişimi
+- kurum içi paylaşım
+- email / message rapor bağlantısı
+- sınırlı / tam çıktı ayrımı
+
+---
+
+## Kurumsal Güç
+
+Bu katman:
+
+- güvenli paylaşım
+- kontrollü raporlama
+- ödeme / plan bazlı erişim
+- enterprise kullanıcı yönetimi
+
+sağlar
+
+
 
 - user token
 - report token
@@ -270,6 +318,6 @@ güvenli + uyumlu + kontrol edilebilir sistemdir.
 - [x] Legal / compliance
 - [x] Cloud security
 - [x] Cyber security
-- [ ] Access / token
+- [x] Access / token
 - [ ] Governance core
 
