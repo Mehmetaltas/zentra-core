@@ -136,3 +136,28 @@ Yeni özellikler yeni Vercel function dosyası açılarak değil, mevcut runtime
 ## Vercel Kuralı
 api/ function sayısı her yeni endpoint öncesi kontrol edilir.
 Limit aşılmaz.
+
+---
+
+# GITHUB CLEAN STATE / SINGLE CORE SYSTEM
+
+## Durum
+LOCKED
+
+## Karar
+ZENTRA eski tüm repo yapıları kaldırılmıştır.
+
+## Aktif Repolar
+- zentra-core
+- zentra-ui
+
+## Sonuç
+ZENTRA artık:
+- tek çekirdek sistem
+- tek runtime
+- tek referans yapısı
+
+## İlke
+Yeni repo açılmaz.
+Sistem parçalanmaz.
+Tüm gelişim mevcut çekirdek içinde yapılır.

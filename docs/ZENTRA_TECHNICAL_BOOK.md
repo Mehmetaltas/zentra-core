@@ -177,3 +177,21 @@ Legacy API endpoints removed from active repo.
 
 ## Check
 find api -type f -name "*.js" | wc -l
+
+---
+
+# GITHUB CLEAN STATE — TECH LOCK
+
+## Status
+LOCKED
+
+## Active Repositories
+- zentra-core
+- zentra-ui
+
+## Removed
+All legacy repositories permanently deleted.
+
+## Rule
+No parallel repository structures allowed.
+System evolves inside single core architecture.
