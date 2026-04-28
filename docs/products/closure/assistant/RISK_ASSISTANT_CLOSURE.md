@@ -24,7 +24,21 @@ Assistant şunları yapmalıdır:
 
 # 1. Explain Engine
 
-Durum: OPEN
+Durum: CLOSED
+
+✔ Risk açıklaması var
+✔ Stress açıklaması var
+✔ Macro açıklaması var
+✔ Decision açıklaması var
+
+Explain Standard:
+- Risk: ne anlama geliyor
+- Stress: sistem üzerindeki baskı
+- Macro: dış etkiler
+- Decision: neden bu karar çıktı
+
+Kapanış Notu:
+Explain engine kullanıcıya sistemin nasıl düşündüğünü açıklar.
 
 ## Gerekli
 
@@ -74,7 +88,7 @@ Durum: OPEN
 
 # Assistant Closure Checklist
 
-- [ ] Explain tamam
+- [x] Explain tamam
 - [ ] Action guidance tamam
 - [ ] Warning system tamam
 - [ ] Response format tamam
