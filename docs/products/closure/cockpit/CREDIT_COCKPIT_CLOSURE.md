@@ -31,7 +31,19 @@ Kapanış Notu:
 Credit score paneli kredi riskini net gösterir.
 
 # 2. Stress Panel
-Durum: OPEN
+Durum: CLOSED
+
+✔ Stress skoru görünür
+✔ Stress band mapping aktif
+✔ Açıklama eklendi
+
+Mapping:
+0–35 LOW
+35–65 MEDIUM
+65–100 HIGH
+
+Kapanış Notu:
+Stress paneli kredi üzerindeki baskıyı gösterir.
 
 # 3. Payment Capacity Panel
 Durum: OPEN
@@ -47,7 +59,7 @@ Durum: OPEN
 ## Checklist
 
 - [x] Credit Score
-- [ ] Stress
+- [x] Stress
 - [ ] Payment Capacity
 - [ ] Decision
 - [ ] Drivers
