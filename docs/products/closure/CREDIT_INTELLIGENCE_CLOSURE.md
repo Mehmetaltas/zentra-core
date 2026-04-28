@@ -36,7 +36,8 @@ Durum: IN PROGRESS
 İz: docs/products/closure/report/CREDIT_REPORT_CLOSURE.md
 
 # 4. AUDIT / EVIDENCE
-Durum: OPEN
+Durum: IN PROGRESS
+İz: docs/products/closure/audit/CREDIT_AUDIT_CLOSURE.md
 
 # 5. PRICING
 Durum: OPEN
