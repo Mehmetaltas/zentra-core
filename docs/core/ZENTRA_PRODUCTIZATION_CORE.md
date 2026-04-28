@@ -20,7 +20,7 @@ ZENTRA içindeki tüm app’lerin:
 |-----|--------|------|-----------|-----|
 | risk_app | Risk Intelligence | var | evet | production-ready |
 | trade_app | Financial Trade | partial | partial | geliştirilecek |
-| credit_app | Credit Intelligence | partial | evet | API bağlı |
+| credit_app | Credit Intelligence | var | evet | production-ready |
 
 ---
 
@@ -103,7 +103,7 @@ Kontrol:
 
 ## 7. DURUM
 
-APP COMPLETION: %75
+APP COMPLETION: %85
 
 ---
 

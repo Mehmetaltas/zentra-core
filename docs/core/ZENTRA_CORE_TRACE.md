@@ -129,3 +129,65 @@ Risk App artık:
 ## Sonraki Doğru Blok
 Credit App
 
+
+# ZENTRA CORE TRACE — CREDIT APP
+
+## Tarih
+2026-04-28
+
+## Commit
+4241376
+
+## İşlenen Blok
+Credit App (Input + Process + Output + Execution Binding)
+
+---
+
+## Önceki Durum
+- Credit Intelligence core vardı
+- API vardı
+- ama çalışan app yoktu
+
+---
+
+## Yeni Durum
+- credit-app.js oluşturuldu
+- input katmanı kuruldu
+- credit logic eklendi
+- output standardı eklendi
+- execution engine bağlandı
+- mission → task → action çalıştırıldı
+
+---
+
+## Test Sonucu
+- credit score üretildi
+- decision üretildi
+- audit oluştu
+- snapshot oluştu
+
+---
+
+## Durum
+Credit App: %85+
+
+---
+
+## Açık Kalanlar
+- explain geliştirme
+- cockpit detay
+- assistant bağlama
+
+---
+
+## Kritik Netlik
+Credit App artık:
+→ çalışan
+→ execution bağlı
+→ audit/snapshot kanıtlı
+
+---
+
+## Sonraki Doğru Blok
+Trade App
+
