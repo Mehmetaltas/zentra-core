@@ -70,10 +70,20 @@ Expert rapor derin analiz içindir.
 
 # 3. Export
 
-Durum: OPEN
+Durum: CLOSED
 
-- [ ] JSON
-- [ ] PDF (opsiyonel)
+✔ JSON export var
+✔ PDF opsiyonel
+
+Export Standard:
+- JSON (zorunlu)
+- PDF (opsiyonel)
+
+Kapanış Notu:
+Export raporu dış dünyaya taşır.
+
+- [x] JSON
+- [x] PDF (opsiyonel)
 
 ---
 
@@ -81,5 +91,5 @@ Durum: OPEN
 
 - [x] Pro
 - [x] Expert
-- [ ] Export
+- [x] Export
 
