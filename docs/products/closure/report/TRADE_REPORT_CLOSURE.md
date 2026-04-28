@@ -6,21 +6,35 @@ ACTIVE — REPORT STARTED
 ---
 
 # 1. Pro Report
-Durum: OPEN
+Durum: CLOSED
 
-- [ ] Signal
-- [ ] Risk
-- [ ] Decision
-- [ ] Short explain
+✔ Signal var
+✔ Risk var
+✔ Decision var
+✔ Short explain var
+
+Standard:
+- Signal
+- Risk
+- Decision
+- Short Explain
+
+Kapanış Notu:
+Pro rapor hızlı trade değerlendirmesi içindir.
+
+- [x] Signal
+- [x] Risk
+- [x] Decision
+- [x] Short explain
 
 ---
 
 # 2. Expert Report
 Durum: OPEN
 
-- [ ] Signal
-- [ ] Risk
-- [ ] Decision
+- [x] Signal
+- [x] Risk
+- [x] Decision
 - [ ] Driver analysis
 - [ ] Detailed explain
 
@@ -36,7 +50,7 @@ Durum: OPEN
 
 ## Checklist
 
-- [ ] Pro
+- [x] Pro
 - [ ] Expert
 - [ ] Export
 
