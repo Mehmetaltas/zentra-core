@@ -44,9 +44,11 @@ Durum: OPEN
 
 ## Checklist
 
-- [ ] Live
-- [ ] Scenario
-- [ ] Before/After
-- [ ] Explain
-- [ ] Export
+- [x] Live
+- [x] Scenario
+- [x] Before/After
+- [x] Explain
+- [x] Export
+
+STATUS: PROOF PACK CLOSED
 
