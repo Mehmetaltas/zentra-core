@@ -82,7 +82,10 @@ docs/products/closure/report/RISK_REPORT_CLOSURE.md
 
 # 4. AUDIT / EVIDENCE
 
-Durum: OPEN
+Durum: IN PROGRESS
+
+İz dosyası:
+docs/products/closure/audit/RISK_AUDIT_CLOSURE.md
 
 ## Gerekli
 
