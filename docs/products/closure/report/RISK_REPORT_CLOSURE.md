@@ -22,7 +22,23 @@ Minimum:
 
 # 1. Pro Report
 
-Durum: OPEN
+Durum: CLOSED
+
+✔ Risk Score var
+✔ Stress var
+✔ Macro var
+✔ Decision var
+✔ Kısa explain var
+
+Pro Report Standard:
+- Risk Score
+- Stress Level
+- Macro Pressure
+- Final Decision
+- Short Explanation
+
+Kapanış Notu:
+Pro report hızlı karar almak isteyen kullanıcı içindir.
 
 ## İçerik
 
@@ -62,7 +78,7 @@ Durum: OPEN
 
 # Report Closure Checklist
 
-- [ ] Pro report tamam
+- [x] Pro report tamam
 - [ ] Expert report tamam
 - [ ] Export tamam
 
