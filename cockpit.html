@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ZENTRA v10 Multilingual Premium Cockpit</title>
+<style>
+:root{
+  --bg:#070b12;--panel:#0f172a;--card:#111827;--soft:#1f2937;
+  --text:#e5e7eb;--muted:#94a3b8;--green:#22c55e;--yellow:#facc15;--red:#ef4444;
+  --line:#243244;--blue:#38bdf8;
+}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(circle at top,#162033 0,#070b12 42%);color:var(--text);font-family:Arial,Helvetica,sans-serif}
+.top{display:flex;justify-content:space-between;align-items:center;padding:14px 18px;background:rgba(15,23,42,.92);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:5}
+.brand{font-weight:800;letter-spacing:.5px}
+.badge{padding:5px 9px;border:1px solid var(--line);border-radius:999px;color:var(--muted);font-size:12px}
+.lang button{width:auto;margin:0 3px;padding:6px 9px}
+.wrap{padding:14px}
+.login{max-width:420px;margin:60px auto;background:rgba(17,24,39,.92);padding:22px;border-radius:18px;border:1px solid var(--line);box-shadow:0 20px 60px rgba(0,0,0,.35)}
+input,button{padding:10px;border-radius:10px;border:1px solid var(--line);background:#0b1220;color:white}
+input{width:100%;margin:7px 0}
+button{cursor:pointer;background:linear-gradient(135deg,#1f2937,#111827);transition:.15s}
+button:hover{transform:translateY(-1px);border-color:#3b82f6}
+.layout{display:grid;grid-template-columns:230px 1fr 280px;gap:14px}
+.card{background:rgba(17,24,39,.88);border:1px solid var(--line);border-radius:18px;padding:14px;box-shadow:0 12px 35px rgba(0,0,0,.22)}
+.side button{width:100%;margin:6px 0;text-align:left}
+h2,h3{margin:0 0 10px}
+.small{font-size:12px;color:var(--muted);line-height:1.5}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:12px}
+.metric{font-size:34px;font-weight:800}
+.green{color:var(--green)}.yellow{color:var(--yellow)}.red{color:var(--red)}
+.lock{opacity:.45}
+.row{display:flex;justify-content:space-between;gap:10px;margin:6px 0}
+.kpi{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.kpi .card{min-height:105px}
+.action{border-left:4px solid var(--blue)}
+.reportBtn{width:100%;margin-top:10px;background:linear-gradient(135deg,#0f766e,#0f172a)}
+@media(max-width:900px){.layout{grid-template-columns:1fr}.kpi{grid-template-columns:1fr}.top{align-items:flex-start;gap:8px;flex-direction:column}}
+</style>
+</head>
+<body>
+
+<div class="top">
+  <div>
+    <div class="brand" id="titleText">ZENTRA Premium Cockpit</div>
+    <div class="small" id="subtitleText">Risk • Portfolio • Decision • Evidence</div>
+  </div>
+  <div style="display:flex;gap:10px;align-items:center">
+    <div class="lang">
+      <button onclick="setLang('tr')">TR</button>
+      <button onclick="setLang('en')">EN</button>
+      <button onclick="setLang('ar')">AR</button>
+    </div>
+    <div id="userBox" class="badge"></div>
+  </div>
+</div>
+
+<div class="wrap">
+
+<div id="login" class="login">
+  <h2 id="loginTitle">Login</h2>
+  <div class="small" id="loginHelp">ZENTRA cockpit’e giriş yap.</div>
+  <input id="u" placeholder="user">
+  <input id="p" placeholder="pass" type="password">
+  <button style="width:100%" onclick="login()" id="loginBtn">Login</button>
+  <div id="msg" class="small"></div>
+</div>
+
+<div id="app" style="display:none">
+<div class="layout">
+
+<div class="side card">
+  <h3 id="assetsTitle">Assets</h3>
+  <button onclick="setAsset('BTCUSDT')">₿ BTC</button>
+  <button onclick="setAsset('ETHUSDT')">◇ ETH</button>
+  <button onclick="setAsset('XAU')" id="goldBtn">Gold / XAU</button>
+  <button onclick="setAsset('USDTRY')">USDTRY</button>
+  <button onclick="downloadReport()" class="reportBtn" id="reportBtn">Download Report</button>
+  <button onclick="logout()" id="logoutBtn">Logout</button>
+</div>
+
+<div>
+  <div class="kpi">
+    <div class="card">
+      <div class="small" id="selectedAssetLabel">Selected Asset</div>
+      <div id="assetName" class="metric">-</div>
+    </div>
+    <div class="card">
+      <div class="small" id="riskScoreLabel">Risk Score</div>
+      <div id="riskScore" class="metric">-</div>
+    </div>
+    <div class="card action">
+      <div class="small" id="decisionLabel">Decision</div>
+      <div id="decisionText" class="metric" style="font-size:24px">-</div>
+    </div>
+  </div>
+
+  <div class="card" id="engine"></div>
+  <div class="card" id="assistant"></div>
+  <div class="card" id="technicalExplain"></div>
+
+  <div class="card">
+    <h3 id="portfolioTitle">Multi Asset / Portfolio</h3>
+    <div id="portfolio" class="grid"></div>
+    <div class="card" id="portfolioExplain" style="margin-top:12px"></div>
+  </div>
+</div>
+
+<div>
+  <div class="card">
+    <h3 id="planTitle">Plan</h3>
+    <div><span id="currentPlanLabel">Current</span>: <b id="plan"></b></div>
+    <button id="upgradeBtn" onclick="upgrade()">Upgrade to Pro</button>
+  </div>
+  <div class="card" id="modules"></div>
+</div>
+
+</div>
+</div>
+
+</div>
+
+<script>
+let token=null,userName=null,plan="free",current="BTCUSDT";
+let lang=localStorage.getItem("zentra_lang") || "tr";
+
+const I18N={
+  title:{tr:"ZENTRA Premium Cockpit",en:"ZENTRA Premium Cockpit",ar:"قمرة ZENTRA المميزة",es:null,fr:null,de:null,ru:null,cn:null},
+  subtitle:{tr:"Risk • Portföy • Karar • Kanıt",en:"Risk • Portfolio • Decision • Evidence",ar:"المخاطر • المحفظة • القرار • الدليل",es:null,fr:null,de:null,ru:null,cn:null},
+  login:{tr:"Giriş",en:"Login",ar:"تسجيل الدخول",es:null,fr:null,de:null,ru:null,cn:null},
+  loginHelp:{tr:"ZENTRA cockpit’e giriş yap.",en:"Sign in to the ZENTRA cockpit.",ar:"سجّل الدخول إلى قمرة ZENTRA.",es:null,fr:null,de:null,ru:null,cn:null},
+  assets:{tr:"Varlıklar",en:"Assets",ar:"الأصول",es:null,fr:null,de:null,ru:null,cn:null},
+  gold:{tr:"Altın / XAU",en:"Gold / XAU",ar:"الذهب / XAU",es:null,fr:null,de:null,ru:null,cn:null},
+  report:{tr:"Rapor İndir",en:"Download Report",ar:"تنزيل التقرير",es:null,fr:null,de:null,ru:null,cn:null},
+  logout:{tr:"Çıkış",en:"Logout",ar:"خروج",es:null,fr:null,de:null,ru:null,cn:null},
+  selectedAsset:{tr:"Seçili Varlık",en:"Selected Asset",ar:"الأصل المحدد",es:null,fr:null,de:null,ru:null,cn:null},
+  riskScore:{tr:"Risk Skoru",en:"Risk Score",ar:"درجة المخاطر",es:null,fr:null,de:null,ru:null,cn:null},
+  decision:{tr:"Karar",en:"Decision",ar:"القرار",es:null,fr:null,de:null,ru:null,cn:null},
+  portfolio:{tr:"Çoklu Varlık / Portföy",en:"Multi Asset / Portfolio",ar:"أصول متعددة / محفظة",es:null,fr:null,de:null,ru:null,cn:null},
+  plan:{tr:"Plan",en:"Plan",ar:"الخطة",es:null,fr:null,de:null,ru:null,cn:null},
+  current:{tr:"Mevcut",en:"Current",ar:"الحالي",es:null,fr:null,de:null,ru:null,cn:null},
+  upgrade:{tr:"Pro’ya Yükselt",en:"Upgrade to Pro",ar:"الترقية إلى Pro",es:null,fr:null,de:null,ru:null,cn:null},
+  modules:{tr:"Modüller",en:"Modules",ar:"الوحدات",es:null,fr:null,de:null,ru:null,cn:null},
+  assistant:{tr:"Asistan",en:"Assistant",ar:"المساعد",es:null,fr:null,de:null,ru:null,cn:null},
+  technicalExplain:{tr:"Teknik Açıklama",en:"Technical Explain",ar:"الشرح الفني",es:null,fr:null,de:null,ru:null,cn:null},
+  portfolioInsight:{tr:"Portföy İçgörüsü",en:"Portfolio Insight",ar:"رؤية المحفظة",es:null,fr:null,de:null,ru:null,cn:null},
+  technical:{tr:"Teknik",en:"Technical",ar:"فني",es:null,fr:null,de:null,ru:null,cn:null},
+  recommendation:{tr:"Öneri",en:"Recommendation",ar:"التوصية",es:null,fr:null,de:null,ru:null,cn:null},
+  price:{tr:"Fiyat",en:"Price",ar:"السعر",es:null,fr:null,de:null,ru:null,cn:null},
+  source:{tr:"Kaynak",en:"Source",ar:"المصدر",es:null,fr:null,de:null,ru:null,cn:null},
+  weight:{tr:"Ağırlık",en:"Weight",ar:"الوزن",es:null,fr:null,de:null,ru:null,cn:null},
+  portfolioRisk:{tr:"Portföy Riski",en:"Portfolio Risk",ar:"مخاطر المحفظة",es:null,fr:null,de:null,ru:null,cn:null},
+  locked:{tr:"Kilitli",en:"Locked",ar:"مغلق",es:null,fr:null,de:null,ru:null,cn:null},
+  upgradeRequired:{tr:"Yükseltme gerekli",en:"Upgrade required",ar:"الترقية مطلوبة",es:null,fr:null,de:null,ru:null,cn:null}
+};
+
+const registry={
+  RiskCore:{tr:"Risk analizi",en:"Risk analysis",ar:"تحليل المخاطر"},
+  PayRoute:{tr:"Ödeme optimizasyonu",en:"Payment route optimization",ar:"تحسين مسار الدفع"},
+  CreditCore:{tr:"Kredi analizi",en:"Credit analysis",ar:"تحليل الائتمان"},
+  FraudSentinel:{tr:"Fraud kontrol",en:"Fraud control",ar:"مراقبة الاحتيال"},
+  ContractMind:{tr:"Sözleşme analizi",en:"Contract analysis",ar:"تحليل العقود"},
+  LiquidityCore:{tr:"Likidite yönetimi",en:"Liquidity management",ar:"إدارة السيولة"},
+  Portfolio:{tr:"Portföy analizi",en:"Portfolio analysis",ar:"تحليل المحفظة"},
+  Decision:{tr:"Karar sistemi",en:"Decision system",ar:"نظام القرار"},
+  Simulation:{tr:"Senaryo",en:"Scenario",ar:"السيناريو"}
+};
+
+const access={
+  free:["RiskCore"],
+  pro:["RiskCore","Portfolio","Decision","Simulation"],
+  institutional:["ALL"]
+};
+
+function tr(key){const v=I18N[key];return v?(v[lang]||v.tr||v.en):key}
+function pick(obj){return obj?(obj[lang]||obj.tr||obj.en||""):""}
+function allowed(m){return access[plan].includes("ALL")||access[plan].includes(m)}
+function riskColor(r){if(r>70)return"red"; if(r>40)return"yellow"; return"green"}
+
+function applyI18n(){
+  document.documentElement.lang=lang;
+  document.documentElement.dir=lang==="ar"?"rtl":"ltr";
+  document.getElementById("titleText").innerText=tr("title");
+  document.getElementById("subtitleText").innerText=tr("subtitle");
+  document.getElementById("loginTitle").innerText=tr("login");
+  document.getElementById("loginHelp").innerText=tr("loginHelp");
+  document.getElementById("loginBtn").innerText=tr("login");
+  document.getElementById("assetsTitle").innerText=tr("assets");
+  document.getElementById("goldBtn").innerText=tr("gold");
+  document.getElementById("reportBtn").innerText=tr("report");
+  document.getElementById("logoutBtn").innerText=tr("logout");
+  document.getElementById("selectedAssetLabel").innerText=tr("selectedAsset");
+  document.getElementById("riskScoreLabel").innerText=tr("riskScore");
+  document.getElementById("decisionLabel").innerText=tr("decision");
+  document.getElementById("portfolioTitle").innerText=tr("portfolio");
+  document.getElementById("planTitle").innerText=tr("plan");
+  document.getElementById("currentPlanLabel").innerText=tr("current");
+  document.getElementById("upgradeBtn").innerText=tr("upgrade");
+}
+
+function setLang(l){
+  lang=l;
+  localStorage.setItem("zentra_lang",lang);
+  applyI18n();
+  if(token) render();
+}
+
+async function login(){
+  try{
+    const r=await fetch("/api/login",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({user:document.getElementById("u").value,password:document.getElementById("p").value})});
+    const d=await r.json();
+    if(!d.ok){document.getElementById("msg").innerText="Login failed";return}
+    token=d.token; userName=d.user; plan=d.plan;
+    document.getElementById("login").style.display="none";
+    document.getElementById("app").style.display="block";
+    applyI18n();
+    render();
+  }catch(e){document.getElementById("msg").innerText="Backend bağlantısı yok"}
+}
+
+function logout(){location.reload()}
+
+async function upgrade(){
+  const r=await fetch("/api/upgrade?token="+token+"&plan=pro");
+  const d=await r.json();
+  if(d.ok){plan=d.plan;render()}
+}
+
+async function engine(symbol){const r=await fetch("/api/risk?symbol="+symbol);return await r.json()}
+async function portfolio(){const r=await fetch("/api/portfolio");return await r.json()}
+function downloadReport(){window.open("/api/report?symbol="+current,"_blank")}
+
+function moduleExplain(m,d){
+  const map={
+    RiskCore:{tr:d.explain_human||d.explain,en:d.explain_human||d.explain,ar:d.explain_human||d.explain},
+    PayRoute:{tr:"Ödeme rotası risk ve gecikmeye göre optimize edilir.",en:"Payment routes are optimized according to risk and delay.",ar:"يتم تحسين مسارات الدفع وفقاً للمخاطر والتأخير."},
+    CreditCore:{tr:"Kredi limiti risk, trend ve volatiliteye göre sıkılaşır.",en:"Credit limits tighten according to risk, trend and volatility.",ar:"تتغير حدود الائتمان حسب المخاطر والاتجاه والتقلب."},
+    FraudSentinel:{tr:"Anomali ve olağandışı hareketler izlenir.",en:"Anomalies and unusual movements are monitored.",ar:"تتم مراقبة الحالات الشاذة والحركات غير المعتادة."},
+    ContractMind:{tr:"Yükümlülükler ve riskli şartlar bağlama göre okunur.",en:"Obligations and risky terms are interpreted by context.",ar:"يتم تفسير الالتزامات والشروط الخطرة حسب السياق."},
+    LiquidityCore:{tr:"Likidite tamponu risk artışında kritik hale gelir.",en:"Liquidity buffers become critical when risk increases.",ar:"تصبح السيولة الاحتياطية مهمة عند ارتفاع المخاطر."},
+    Portfolio:{tr:"Portföy toplam risk üzerinden okunur.",en:"The portfolio is evaluated through total risk.",ar:"يتم تقييم المحفظة من خلال المخاطر الإجمالية."},
+    Decision:{tr:"Risk ve momentum aksiyona çevrilir.",en:"Risk and momentum are converted into action.",ar:"يتم تحويل المخاطر والزخم إلى إجراء."},
+    Simulation:{tr:"Alternatif senaryolar ve stres yolları değerlendirilir.",en:"Alternative scenarios and stress paths are evaluated.",ar:"يتم تقييم السيناريوهات البديلة ومسارات الضغط."}
+  };
+  return pick(map[m]);
+}
+
+async function render(){
+  const d=await engine(current);
+  const p=await portfolio();
+
+  document.getElementById("userBox").innerText=(userName||"user")+" ("+plan+")";
+  document.getElementById("plan").innerText=plan;
+  document.getElementById("assetName").innerText=d.symbol;
+  document.getElementById("riskScore").innerHTML=`<span class="${riskColor(d.risk)}">${d.risk}</span>`;
+  document.getElementById("decisionText").innerHTML=`<span class="${riskColor(d.risk)}">${d.decision}</span>`;
+
+  let mhtml=`<h3>${tr("modules")}</h3>`;
+  let ahtml=`<h3>${tr("assistant")}</h3>`;
+  Object.keys(registry).forEach(m=>{
+    const ok=allowed(m);
+    mhtml+=`<div class="${ok?'':'lock'}"><b>${m}</b> ${ok?'':'🔒'}<br><span class="small">${pick(registry[m])}</span></div>`;
+    if(ok)ahtml+=`<div class="row"><div><b>${m}</b></div></div><div class="small">${moduleExplain(m,d)}</div>`;
+  });
+
+  document.getElementById("modules").innerHTML=mhtml;
+  document.getElementById("assistant").innerHTML=ahtml;
+
+  document.getElementById("technicalExplain").innerHTML=
+    `<h3>${tr("technicalExplain")}</h3>${d.explain_technical||"Teknik açıklama yok"}`;
+
+  document.getElementById("engine").innerHTML=
+    `<h3>${d.symbol}</h3>
+    <div class="row"><span>${tr("price")}</span><b>${d.price}</b></div>
+    <div class="row"><span>Change</span><b>${d.change}</b></div>
+    <div class="row"><span>Trend</span><b>${d.trend}</b></div>
+    <div class="row"><span>Vol / Momentum</span><b>${Number(d.volatility||0).toFixed(2)} / ${Number(d.momentum||0).toFixed(2)}</b></div>
+    <div class="row"><span>${tr("source")}</span><b>${d.source}</b></div>`;
+
+  document.getElementById("upgradeBtn").style.display=plan==="institutional"?"none":"block";
+
+  let ph="";
+  p.assets.forEach(a=>{
+    ph+=`<div class="card">
+      <b>${a.symbol}</b><br>
+      <span class="small">${tr("price")}:${a.price}</span><br>
+      ${tr("riskScore")}:<span class="${riskColor(a.risk)}">${a.risk}</span><br>
+      <span class="small">${tr("weight")}:${a.weight}</span><br>
+      ${a.decision}
+    </div>`;
+  });
+  ph+=`<div class="card"><b>${tr("portfolioRisk")}</b><br><span class="${riskColor(p.portfolioRisk)} metric">${p.portfolioRisk}</span><br>${allowed("Portfolio")?p.decision:"🔒 "+tr("locked")}</div>`;
+  document.getElementById("portfolio").innerHTML=ph;
+
+  if(p.analysis){
+    document.getElementById("portfolioExplain").innerHTML=
+      `<h3>${tr("portfolioInsight")}</h3>
+      <div>${p.analysis.human}</div><br>
+      <b>${tr("technical")}</b><br><span class="small">${p.analysis.technical}</span><br><br>
+      <b>${tr("recommendation")}</b><br>${p.analysis.recommendation}`;
+  }
+}
+
+function setAsset(s){current=s;render()}
+applyI18n();
+</script>
+
+</body>
+</html>
