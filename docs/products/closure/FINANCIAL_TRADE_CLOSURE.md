@@ -24,7 +24,8 @@ Financial Trade ürününü satışa hazır hale getirmek.
 ---
 
 # 1. COCKPIT
-Durum: OPEN
+Durum: IN PROGRESS
+İz: docs/products/closure/cockpit/TRADE_COCKPIT_CLOSURE.md
 
 # 2. ASSISTANT
 Durum: OPEN
