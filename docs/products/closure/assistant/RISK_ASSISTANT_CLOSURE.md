@@ -99,7 +99,29 @@ Warning system kullanıcıyı riskli durumlarda korur.
 
 # 4. Response Format
 
-Durum: OPEN
+Durum: CLOSED
+
+✔ Kısa explain var
+✔ Detaylı explain var
+✔ Aksiyon önerisi var
+✔ Uyarı var
+
+Response Standard:
+
+1. SHORT:
+Kısa özet (1–2 cümle)
+
+2. DETAIL:
+Risk + stress + macro + decision açıklaması
+
+3. ACTION:
+Ne yapılmalı (Proceed / Caution / Stop)
+
+4. WARNING:
+Varsa kritik uyarı
+
+Kapanış Notu:
+Response format tüm çıktıyı standart hale getirir.
 
 ## Gerekli
 
@@ -115,7 +137,7 @@ Durum: OPEN
 - [x] Explain tamam
 - [x] Action guidance tamam
 - [x] Warning system tamam
-- [ ] Response format tamam
+- [x] Response format tamam
 
 ---
 
