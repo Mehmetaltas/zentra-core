@@ -76,7 +76,52 @@ sağlar
 
 # 2. Legal / Compliance
 
-Durum: OPEN
+Durum: CLOSED
+
+ZENTRA hukuki uyum katmanı:
+
+✔ KVKK (Türkiye) uyumu
+✔ GDPR (Avrupa) uyumu
+✔ Veri işleme izinleri (consent management)
+✔ Kullanıcı rıza mekanizması
+✔ Terms of Service (ToS)
+✔ Privacy Policy
+✔ Data Processing Agreement (DPA)
+✔ Kurumsal sözleşme yapısı
+
+---
+
+## Uyum Kapsamı
+
+ZENTRA:
+
+- kullanıcıdan veri işleme izni alır
+- veriyi belirli amaçlarla işler
+- kullanıcıya veri kontrolü verir
+- veri transferlerini kayıt altına alır
+
+---
+
+## Kurumsal Satış Hazırlığı
+
+Bu katman:
+
+- enterprise satış
+- kurum içi kullanım
+- global müşteri kazanımı
+
+için zorunludur
+
+---
+
+## Hukuki Güç
+
+ZENTRA:
+
+→ sadece teknik sistem değildir  
+→ hukuki olarak tanımlı ve korunabilir sistemdir  
+
+
 
 - KVKK (Türkiye)
 - GDPR (Avrupa)
@@ -145,7 +190,7 @@ güvenli + uyumlu + kontrol edilebilir sistemdir.
 ## Checklist
 
 - [x] Data governance
-- [ ] Legal / compliance
+- [x] Legal / compliance
 - [ ] Cloud security
 - [ ] Cyber security
 - [ ] Access / token
