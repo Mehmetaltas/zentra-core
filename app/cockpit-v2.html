@@ -369,22 +369,47 @@ function zentraAssistant(data){
     action = "Monitor and proceed according to risk band.";
   }
 
-  let warning = "";
+  let warnings = [];
 
-  if(ctx.risk > 75) warning += "High risk environment. ";
-  if(ctx.confidence < 55) warning += "Low confidence. ";
-  if(ctx.product === "Financial Trade" && ctx.risk > 70 && ctx.decision === "BUY"){
-    warning += "Trade-risk tension detected. ";
+  if(ctx.risk >= 80){
+    warnings.push("CRITICAL RISK: exposure should be reduced before execution.");
+  } else if(ctx.risk >= 70){
+    warnings.push("HIGH RISK: proceed only with controlled exposure.");
   }
-  if(ctx.product === "Credit Intelligence" && ctx.risk > 70){
-    warning += "Approval risk is elevated. ";
+
+  if(ctx.confidence < 50){
+    warnings.push("LOW CONFIDENCE: decision reliability is weak.");
+  } else if(ctx.confidence < 65){
+    warnings.push("MODERATE CONFIDENCE: confirmation is recommended.");
   }
+
+  if(ctx.stress >= 70){
+    warnings.push("STRESS ALERT: system pressure is elevated.");
+  }
+
+  if(ctx.macro >= 70){
+    warnings.push("MACRO ALERT: external pressure may affect the decision.");
+  }
+
+  if(ctx.product === "Financial Trade" && ctx.decision === "BUY" && ctx.risk >= 70){
+    warnings.push("TRADE-RISK TENSION: signal is positive but risk is high.");
+  }
+
+  if(ctx.product === "Credit Intelligence" && ctx.risk >= 70){
+    warnings.push("APPROVAL RISK: additional evidence or restructuring may be required.");
+  }
+
+  if(ctx.product === "Risk Intelligence" && ctx.risk >= 70){
+    warnings.push("RISK REVIEW: identify exposure drivers before commitment.");
+  }
+
+  let warningText = warnings.length ? warnings.join(" ") : "No critical warning.";
 
   return (
     "PRODUCT: " + ctx.product +
     " | WHY: " + explain +
     " | ACTION: " + action +
-    (warning ? " | WARNING: " + warning : "")
+    " | WARNING: " + warningText
   );
 }
 

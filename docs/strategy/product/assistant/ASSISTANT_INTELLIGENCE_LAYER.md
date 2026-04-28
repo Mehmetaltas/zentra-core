@@ -87,7 +87,7 @@ Assistant ürün tipine göre konuşmalı:
 
 # 5. Warning Logic
 
-Durum: OPEN
+Durum: IN PROGRESS
 
 Assistant kritik durumda uyarı vermeli:
 
@@ -150,4 +150,17 @@ Durum: IN PROGRESS
 - Credit Intelligence için payment/approval dili
 - Financial Trade için signal/execution dili eklendi
 - Assistant ürün tipine göre farklı ACTION ve WARNING üretir
+
+
+
+---
+
+## Warning Strengthening
+Durum: IN PROGRESS
+
+- Warning sistemi tek mesajdan çoklu uyarı listesine taşındı
+- Critical risk / high risk / low confidence / stress / macro alert eklendi
+- Financial Trade için trade-risk tension uyarısı eklendi
+- Credit için approval risk uyarısı eklendi
+- Risk Intelligence için exposure review uyarısı eklendi
 
