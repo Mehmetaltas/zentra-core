@@ -178,3 +178,14 @@ ZENTRA:
 hukuki metin yazan sistem değil,  
 hukuki kuralları çalışan sistemdir.
 
+
+
+---
+
+# 16. Accessibility / Inclusive Use
+
+ZENTRA erişilebilirlik ve kapsayıcı kullanım prensiplerini destekler.
+
+Bağlantılı dosya:
+docs/strategy/accessibility/ACCESSIBILITY_INCLUSIVE_USE_LAYER.md
+

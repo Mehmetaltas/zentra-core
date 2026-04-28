@@ -127,3 +127,21 @@ ZENTRA:
 modüllerin toplamı değil,  
 kontrollü çalışan tek sistemdir.
 
+
+
+---
+
+# 8. Accessibility Everywhere
+
+Durum: ACTIVE
+İz: docs/strategy/accessibility/ACCESSIBILITY_INCLUSIVE_USE_LAYER.md
+
+ZENTRA'nın tüm yüzeyleri erişilebilirlik standardına bağlıdır:
+
+- cockpit
+- report
+- assistant
+- token / access
+- legal / governance
+- delivery outputs
+
