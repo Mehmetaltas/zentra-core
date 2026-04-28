@@ -6,11 +6,24 @@ ACTIVE — AUDIT STARTED
 ---
 
 # 1. Audit Log
-Durum: OPEN
+Durum: CLOSED
 
-- [ ] Decision kayıt
-- [ ] Timestamp
-- [ ] User / System
+✔ Decision kayıt var
+✔ Timestamp var
+✔ User / System bilgisi var
+
+Standard:
+- Decision ID
+- Timestamp
+- User/System
+- Output
+
+Kapanış Notu:
+Audit log tüm kredi kararlarını saklar.
+
+- [x] Decision kayıt
+- [x] Timestamp
+- [x] User / System
 
 ---
 
@@ -40,7 +53,7 @@ Durum: OPEN
 
 ## Checklist
 
-- [ ] Audit log
+- [x] Audit log
 - [ ] Trace
 - [ ] Data source
 - [ ] Explain
