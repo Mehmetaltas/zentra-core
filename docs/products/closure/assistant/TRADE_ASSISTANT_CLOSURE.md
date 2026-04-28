@@ -6,11 +6,23 @@ ACTIVE — ASSISTANT STARTED
 ---
 
 # 1. Explain
-Durum: OPEN
+Durum: CLOSED
 
-- [ ] Signal explain
-- [ ] Risk explain
-- [ ] Decision explain
+✔ Signal explain var
+✔ Risk explain var
+✔ Decision explain var
+
+Standard:
+- Signal → neden oluştu
+- Risk → risk seviyesi
+- Decision → neden BUY / SELL / WAIT
+
+Kapanış Notu:
+Explain trade kararının mantığını açıklar.
+
+- [x] Signal explain
+- [x] Risk explain
+- [x] Decision explain
 
 ---
 
@@ -42,7 +54,7 @@ Durum: OPEN
 
 ## Checklist
 
-- [ ] Explain
+- [x] Explain
 - [ ] Action
 - [ ] Warning
 - [ ] Format
