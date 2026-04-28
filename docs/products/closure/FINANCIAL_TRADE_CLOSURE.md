@@ -32,7 +32,8 @@ Durum: IN PROGRESS
 İz: docs/products/closure/assistant/TRADE_ASSISTANT_CLOSURE.md
 
 # 3. REPORT
-Durum: OPEN
+Durum: IN PROGRESS
+İz: docs/products/closure/report/TRADE_REPORT_CLOSURE.md
 
 # 4. AUDIT / EVIDENCE
 Durum: OPEN
