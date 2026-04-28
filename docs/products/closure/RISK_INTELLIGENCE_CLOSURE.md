@@ -50,7 +50,10 @@ Kullanıcı 5 saniyede risk + neden + karar görmeli
 
 # 2. ASSISTANT
 
-Durum: OPEN
+Durum: IN PROGRESS
+
+İz dosyası:
+docs/products/closure/assistant/RISK_ASSISTANT_CLOSURE.md
 
 ## Gerekli
 
