@@ -283,6 +283,8 @@ document.getElementById("macro").textContent=data.macro;
 document.getElementById("position").textContent=data.position;
 document.getElementById("scenario").textContent=data.scenario;
 
+document.getElementById("assistant").innerText = zentraAssistant(data);
+
 document.getElementById("drivers").innerHTML=
 data.drivers.map(x=>{
   return "<div class='driver'>"+
@@ -305,6 +307,60 @@ return "<tr>"+
 "<td style='opacity:.75'>"+r.comment+"</td>"+
 "</tr>";
 }).join("");
+
+
+function zentraAssistant(data){
+
+  let context = {
+    decision: data.decision,
+    confidence: data.confidence,
+    risk: data.risk,
+    stress: data.stress,
+    macro: data.macro,
+    position: data.position
+  };
+
+  let message = "";
+
+  // Decision explanation
+  if(context.decision === "BUY"){
+    message += "System suggests entering position. ";
+  } else if(context.decision === "SELL"){
+    message += "System suggests reducing exposure. ";
+  } else {
+    message += "System suggests waiting. ";
+  }
+
+  // Risk interpretation
+  if(context.risk > 70){
+    message += "Risk is elevated. ";
+  } else if(context.risk > 40){
+    message += "Risk is moderate. ";
+  } else {
+    message += "Risk is low. ";
+  }
+
+  // Confidence
+  if(context.confidence < 50){
+    message += "Confidence is weak. ";
+  } else if(context.confidence < 75){
+    message += "Confidence is acceptable. ";
+  } else {
+    message += "Confidence is strong. ";
+  }
+
+  // Final guidance
+  if(context.risk > 70 && context.confidence < 60){
+    message += "Recommendation: Proceed with caution.";
+  } else if(context.decision === "BUY" && context.confidence > 70){
+    message += "Recommendation: Controlled execution is reasonable.";
+  } else {
+    message += "Recommendation: Monitor closely.";
+  }
+
+  return message;
+}
+
 </script>
 
 </body>

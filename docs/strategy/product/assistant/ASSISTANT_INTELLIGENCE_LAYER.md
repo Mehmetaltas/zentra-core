@@ -115,3 +115,14 @@ Core değişmez.
 Engine değişmez.
 Assistant yüzeyi güçlenir.
 
+
+
+---
+
+## Context Binding
+Durum: IN PROGRESS
+
+- Assistant cockpit verisine bağlandı
+- Decision + Risk + Confidence birlikte yorumlanıyor
+- İlk context-aware çıktı üretildi
+
