@@ -106,3 +106,14 @@ Durum: IN PROGRESS
 - Print/PDF-ready yapı hazırlandı
 - Portfolio tablosu profesyonelleştirildi
 
+
+
+---
+
+## Report Visual Intelligence
+Durum: IN PROGRESS
+
+- Risk görselleştirme (canvas chart) eklendi
+- User-level explanation (simple/technical) eklendi
+- Report görsel + anlatım katmanına taşındı
+
