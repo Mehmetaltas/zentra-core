@@ -21,7 +21,17 @@ Risk Intelligence ürününü satışa hazır fiyatlandırma yapısına taşıma
 
 # 1. Free Tier
 
-Durum: OPEN
+Durum: CLOSED
+
+✔ Basic risk score var
+✔ Kısa karar var
+
+Free Tier Standard:
+- Risk Score
+- Basic Decision
+
+Kapanış Notu:
+Free tier kullanıcıyı sisteme çeker.
 
 ## İçerik
 
@@ -81,7 +91,7 @@ Durum: OPEN
 
 # Pricing Closure Checklist
 
-- [ ] Free tamam
+- [x] Free tamam
 - [ ] Pro tamam
 - [ ] Expert tamam
 - [ ] Institutional tamam
