@@ -153,3 +153,23 @@ ZENTRA'nın tüm yüzeyleri erişilebilirlik standardına bağlıdır:
 
 ZENTRA Academia, erişilebilirlik katmanının sürekli gelişimini sağlar.
 
+
+
+---
+
+# 10. Autonomous Operations Everywhere
+
+Durum: ACTIVE
+İz: docs/strategy/autonomous/AUTONOMOUS_OPERATIONS_LAYER.md
+
+ZENTRA tüm manuel işlemleri azaltır:
+
+- kontrol
+- repair
+- fallback
+- governance hold
+- log
+- launch link üretimi
+
+ana otomasyon katmanına bağlanır.
+
