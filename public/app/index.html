@@ -3,16 +3,27 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>ZENTRA — Matrix Entry</title>
+<title>ZENTRA Command Center V2</title>
 <link rel="stylesheet" href="./premium-surface.css">
+<style>
+.signal-line{height:180px;border:1px solid #203553;border-radius:18px;background:#050b18;padding:14px;position:relative;overflow:hidden}
+.signal-line svg{width:100%;height:100%}
+.node-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.node-card{background:#081326;border:1px solid #203553;border-radius:16px;padding:14px;min-height:105px}
+.node-card b{display:block;color:#eef6ff}
+.node-card span{display:block;color:#34f5a4;font-size:12px;margin-top:8px}
+.feed{max-height:260px;overflow:auto}
+.feed div{border-left:3px solid #34f5a4;background:#081326;margin:10px 0;padding:10px;border-radius:12px;color:#c8d5e8}
+@media(max-width:950px){.node-grid{grid-template-columns:1fr}}
+</style>
 </head>
 <body>
 <div class="shell">
 <aside class="sidebar">
   <div class="logo">ZENTRA</div>
-  <div class="sub">MATRIX ENTRY</div>
+  <div class="sub">COMMAND CENTER V2</div>
   <nav class="nav">
-    <a class="active" href="./index.html">Ana Kapı</a>
+    <a class="active" href="./index.html">Command Center</a>
     <a href="./matrix.html">Matrix Centrum</a>
     <a href="./intel/index.html">Intel AI</a>
     <a href="./market/index.html">Market</a>
@@ -25,76 +36,103 @@
 <main class="main">
   <div class="top">
     <div>
-      <span class="badge live">● LIVE SYSTEM</span>
+      <span class="badge live">● LIVE MATRIX</span>
+      <span class="badge">PALANTIR MAP</span>
+      <span class="badge">TRADING SIGNALS</span>
       <span class="badge">TR / EN / AR</span>
-      <span class="badge">GLOBAL CONTROL ACTIVE</span>
     </div>
-    <span class="badge">ZENTRA Matrix Ecosystem</span>
+    <span class="badge">Last update: 8s</span>
   </div>
 
   <section class="hero">
-    <div class="k">ZENTRA MATRIX ECOSYSTEM</div>
-    <h1 class="title">Tek platform içinde ekonomik zeka, ürün katalogları ve karar cockpitleri.</h1>
+    <div class="k">ZENTRA OPERATING INTELLIGENCE</div>
+    <h1 class="title">Ekonomik sistemi haritalayan, sinyali okuyan ve kararı yöneten merkez.</h1>
     <p class="desc">
-      ZENTRA; Intel AI ürün ailesi, General AI kullanım katmanı, Academia geliştirme aklı,
-      Market paketleri, cockpitler, raporlar, assistant guidance, audit ve self-healing kontrolüyle çalışan
-      bütünleşik karar işletim sistemidir.
+      ZENTRA; RiskLens, Credit, Trade, Financial Trade, Alternative Finance, Contract, Compliance,
+      Fraud ve Treasury katmanlarını tek matrix üzerinde izler. Her kategori kendi cockpit, report ve market pack akışına sahiptir.
     </p>
-    <a class="btn" href="./matrix.html">Matrix Centrum’a Gir</a>
-    <a class="btn2" href="./intel/index.html">Intel AI Kataloğu</a>
-    <a class="btn2" href="./market/index.html">Market Ürünleri</a>
-  </section>
-
-  <section class="grid g3">
-    <a class="card" href="./intel/index.html">
-      <div class="label">Ana Para Makinesi</div>
-      <div class="big">Intel AI</div>
-      <p>RiskLens, Credit, Trade, Financial Trade, Alternative Finance, Compliance, Contract, Fraud ve Treasury kategorileri.</p>
-    </a>
-
-    <a class="card" href="./general-ai.html">
-      <div class="label">Kullanım ve Rehberlik</div>
-      <div class="big">General AI</div>
-      <p>Kullanıcıyı sistem içinde doğru ürün, doğru rapor ve doğru aksiyona yönlendiren genel zeka katmanı.</p>
-    </a>
-
-    <a class="card" href="./academia/index.html">
-      <div class="label">Geliştirme Aklı</div>
-      <div class="big">Academia AI</div>
-      <p>Araştırma, yöntem, proje, ürünleşme fikri, standart, regülasyon ve iyileştirme paketleri.</p>
-    </a>
+    <a class="btn" href="./matrix.html">Matrix Haritası</a>
+    <a class="btn2" href="./intel/index.html">Intel Kataloğu</a>
+    <a class="btn2" href="./market/index.html">Market Pack’leri</a>
   </section>
 
   <section class="grid g2">
     <div class="card">
-      <div class="label">Matrix Flow</div>
-      <div class="map">
-        <a class="node" href="./modules/risk.html"><b>Risk → RiskLens</b><span class="status">Cockpit + Report</span></a>
-        <a class="node" href="./modules/trade.html"><b>Trade</b><span class="status">Cockpit + Report</span></a>
-        <a class="node" href="./modules/financial-trade.html"><b>Financial Trade</b><span class="status">Indicator + Signal</span></a>
-        <a class="node" href="./modules/credit.html"><b>Credit</b><span class="status">Approval + Stress</span></a>
-        <a class="node" href="./modules/alternative-finance.html"><b>Alternative Finance</b><span class="status">Tasarruf + Pool</span></a>
-        <a class="node" href="./market/index.html"><b>Market</b><span class="status">Packs + Bundles</span></a>
+      <div class="label">Palantir-Style System Graph</div>
+      <div class="node-grid">
+        <a class="node-card" href="./modules/risk.html"><b>RiskLens</b><p>Risk, stress, deviation</p><span>→ Cockpit / Report</span></a>
+        <a class="node-card" href="./modules/credit.html"><b>Credit</b><p>Capacity, approval, stress</p><span>→ Cockpit / Report</span></a>
+        <a class="node-card" href="./modules/trade.html"><b>Trade</b><p>Flow, delivery, operation</p><span>→ Cockpit / Report</span></a>
+        <a class="node-card" href="./modules/financial-trade.html"><b>Financial Trade</b><p>Indicator, signal, execution</p><span>→ Signal Engine</span></a>
+        <a class="node-card" href="./modules/alternative-finance.html"><b>Alternative Finance</b><p>Tasarruf, pool, fairness</p><span>→ Obligation Report</span></a>
+        <a class="node-card" href="./modules/contract.html"><b>Contract</b><p>Consent, obligation, protection</p><span>→ Legal-ready report</span></a>
       </div>
     </div>
 
     <div class="card">
-      <div class="label">Live Signal Overview</div>
-      <div class="chart"><div class="bars"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
-      <p class="muted">Risk, Credit, Trade ve Financial Trade sinyalleri ayrı rotalarda izlenir; ürün ve rapor akışlarına bağlanır.</p>
+      <div class="label">TradingView-Style Signal Chart</div>
+      <div class="signal-line">
+        <svg viewBox="0 0 600 180" preserveAspectRatio="none">
+          <polyline points="0,130 55,118 110,140 165,90 220,102 275,70 330,82 385,44 440,62 495,36 560,54 600,26"
+            fill="none" stroke="#34f5a4" stroke-width="4"/>
+          <polyline points="0,145 70,135 140,150 210,118 280,125 350,96 420,112 490,88 560,96 600,76"
+            fill="none" stroke="#7aa2ff" stroke-width="2" opacity=".65"/>
+        </svg>
+      </div>
+      <p class="muted">Signal stream: Risk pressure high, Financial Trade signal positive, liquidity stable.</p>
     </div>
   </section>
 
-  <section class="card" style="margin-top:16px">
-    <div class="label">Satılabilir Ürün Aileleri</div>
-    <table>
-      <tr><th>Ürün Ailesi</th><th>Kapsam</th><th>Çıktı</th><th>Market</th></tr>
-      <tr><td>Risk Pack</td><td>RiskLens</td><td>Cockpit + Report</td><td>Ready</td></tr>
-      <tr><td>Credit Pack</td><td>Credit Intelligence</td><td>Stress + Approval</td><td>Ready</td></tr>
-      <tr><td>Trade Pack</td><td>Trade Intelligence</td><td>Flow + Decision</td><td>Ready</td></tr>
-      <tr><td>Financial Trade Pack</td><td>Indicators + Signal</td><td>Scenario + Execution</td><td>Ready</td></tr>
-      <tr><td>Alternative Finance Pack</td><td>Tasarruf / Pool / Fairness</td><td>Obligation Report</td><td>Ready</td></tr>
-    </table>
+  <section class="grid g4">
+    <div class="card"><div class="label">RiskLens</div><div class="big">72</div><span class="pill warn">CAUTION</span></div>
+    <div class="card"><div class="label">Credit</div><div class="big">66</div><span class="pill warn">REVIEW</span></div>
+    <div class="card"><div class="label">Financial Trade</div><div class="big">BUY</div><span class="pill ok">SIGNAL</span></div>
+    <div class="card"><div class="label">System State</div><div class="big">READY</div><span class="pill ok">LIVE</span></div>
+  </section>
+
+  <section class="grid g2">
+    <div class="card">
+      <div class="label">Decision Pipeline</div>
+      <table>
+        <tr><th>Step</th><th>Layer</th><th>Status</th><th>Output</th></tr>
+        <tr><td>01</td><td>Input</td><td><span class="pill ok">Active</span></td><td>Scenario captured</td></tr>
+        <tr><td>02</td><td>RiskLens</td><td><span class="pill warn">Caution</span></td><td>Risk 72</td></tr>
+        <tr><td>03</td><td>Financial Trade</td><td><span class="pill ok">Buy</span></td><td>Signal positive</td></tr>
+        <tr><td>04</td><td>Assistant</td><td><span class="pill ok">Guiding</span></td><td>WHY / ACTION / WARNING</td></tr>
+        <tr><td>05</td><td>Report</td><td><span class="pill ok">Ready</span></td><td>Institutional output</td></tr>
+      </table>
+    </div>
+
+    <div class="card">
+      <div class="label">Live Event Feed</div>
+      <div class="feed">
+        <div><b>RiskLens:</b> Elevated risk detected. Monitoring recommended.</div>
+        <div><b>Financial Trade:</b> Signal strength positive. Controlled exposure only.</div>
+        <div><b>Credit:</b> Payment capacity requires review.</div>
+        <div><b>Assistant:</b> Report and next action guidance ready.</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="grid g3">
+    <div class="card">
+      <div class="label">Assistant Guidance</div>
+      <p><b>WHY:</b> Matrix signals show opportunity with elevated risk.</p>
+      <p><b>ACTION:</b> Open the relevant cockpit, review the report, then choose execution path.</p>
+      <p><b>WARNING:</b> Do not merge Risk, Trade and Financial Trade decisions.</p>
+    </div>
+
+    <div class="card">
+      <div class="label">Market Route</div>
+      <p>Only sellable packs go to Market: Risk Pack, Credit Pack, Trade Pack, FT Pack, Alternative Finance Pack, Contract Protection Pack.</p>
+      <a class="btn" href="./market/index.html">Open Market</a>
+    </div>
+
+    <div class="card">
+      <div class="label">System Control</div>
+      <p>Audit clean. Experience audit clean. Public language clean. Broken links clean.</p>
+      <a class="btn2" href="./reports/risk.html">Open Report Route</a>
+    </div>
   </section>
 </main>
 </div>
