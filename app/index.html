@@ -3,136 +3,100 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>ZENTRA Command Center</title>
-<style>
-:root{--bg:#020617;--panel:#07111f;--panel2:#0b1728;--line:#1f3554;--text:#eef6ff;--muted:#8fa3bd;--green:#32f29c;--yellow:#ffd166;--red:#ff5c7a;--blue:#7aa2ff}
-*{box-sizing:border-box}
-body{margin:0;background:linear-gradient(180deg,#020617,#07101f 55%,#020617);color:var(--text);font-family:Arial,sans-serif}
-.app{display:grid;grid-template-columns:250px 1fr 330px;min-height:100vh}
-.side{border-right:1px solid var(--line);background:#050b16;padding:20px}
-.logo{font-size:28px;font-weight:900;letter-spacing:.12em;margin-bottom:8px}
-.mode{font-size:12px;color:var(--green);margin-bottom:24px}
-.nav a{display:block;color:var(--text);text-decoration:none;border:1px solid var(--line);background:#081326;padding:12px 14px;border-radius:14px;margin-bottom:10px;font-size:14px}
-.nav a.active{border-color:var(--green);box-shadow:0 0 20px rgba(50,242,156,.12)}
-.main{padding:22px}
-.top{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-bottom:18px}
-.badge{display:inline-block;padding:7px 10px;border-radius:999px;border:1px solid var(--line);background:#081326;font-size:12px;color:#dbeafe}
-.live{color:var(--green)}
-.grid{display:grid;gap:14px}
-.g4{grid-template-columns:repeat(4,1fr)}
-.g2{grid-template-columns:1.2fr .8fr}
-.card{background:linear-gradient(180deg,var(--panel2),var(--panel));border:1px solid var(--line);border-radius:20px;padding:18px;box-shadow:0 18px 50px rgba(0,0,0,.22)}
-.label{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
-.decision{font-size:72px;font-weight:900;color:var(--green);line-height:1;margin-top:10px}
-.value{font-size:30px;font-weight:900;color:var(--green);margin-top:8px}
-p{color:#c9d6ea;line-height:1.55}
-.bars{height:130px;display:flex;align-items:end;gap:9px;margin-top:10px}
-.bars i{flex:1;border-radius:8px 8px 0 0;background:linear-gradient(180deg,var(--green),rgba(50,242,156,.18));animation:pulse 1.8s infinite alternate}
-.bars i:nth-child(1){height:40%}.bars i:nth-child(2){height:70%;animation-delay:.2s}.bars i:nth-child(3){height:55%;animation-delay:.4s}.bars i:nth-child(4){height:92%;animation-delay:.6s}.bars i:nth-child(5){height:62%;animation-delay:.8s}.bars i:nth-child(6){height:82%;animation-delay:1s}
-@keyframes pulse{to{filter:brightness(1.45);transform:translateY(-4px)}}
-.right{border-left:1px solid var(--line);background:#050b16;padding:20px}
-.alert{border-left:3px solid var(--yellow);padding:12px;background:#111827;border-radius:12px;margin-top:10px}
-.ok{border-left-color:var(--green)}
-.warn{border-left-color:var(--red)}
-table{width:100%;border-collapse:collapse;margin-top:12px}td,th{border-bottom:1px solid var(--line);padding:10px;text-align:left;font-size:13px}th{color:var(--muted)}
-.btn{display:inline-block;text-decoration:none;background:var(--green);color:#02100a;font-weight:900;padding:12px 16px;border-radius:12px;margin-top:10px}
-.btn2{display:inline-block;text-decoration:none;border:1px solid var(--line);color:var(--text);font-weight:800;padding:12px 16px;border-radius:12px;margin-top:10px;margin-left:8px}
-@media(max-width:1000px){.app{grid-template-columns:1fr}.side,.right{border:0}.g4,.g2{grid-template-columns:1fr}.decision{font-size:50px}}
-</style>
+<title>ZENTRA — Matrix Entry</title>
+<link rel="stylesheet" href="/app/premium-surface.css">
 </head>
 <body>
-<div class="app">
-
-<aside class="side">
+<div class="shell">
+<aside class="sidebar">
   <div class="logo">ZENTRA</div>
-  <div class="mode">LIVE OPERATING CONSOLE</div>
+  <div class="sub">MATRIX ENTRY</div>
   <nav class="nav">
-    <a class="active" href="/app/index.html">Command Center</a>
-    <a href="/app/cockpit-v2.html">Decision Cockpit</a>
-    <a href="/app/report-v3.html">Institutional Report</a>
+    <a class="active" href="/app/index.html">Ana Kapı</a>
+    <a href="/app/matrix.html">Matrix Centrum</a>
+    <a href="/app/intel/index.html">Intel AI</a>
+    <a href="/app/market/index.html">Market</a>
     <a href="/app/general-ai.html">General AI</a>
     <a href="/app/academia/index.html">Academia</a>
-    <a href="/app/investor-demo.html">Investor Surface</a>
+    <a href="/app/investor-demo.html">Investor</a>
   </nav>
 </aside>
 
 <main class="main">
   <div class="top">
     <div>
-      <span class="badge live">● SYSTEM LIVE</span>
+      <span class="badge live">● LIVE SYSTEM</span>
       <span class="badge">TR / EN / AR</span>
       <span class="badge">GLOBAL CONTROL ACTIVE</span>
     </div>
-    <div class="badge">Last update: 8s ago</div>
+    <span class="badge">ZENTRA Matrix Ecosystem</span>
   </div>
+
+  <section class="hero">
+    <div class="k">ZENTRA MATRIX ECOSYSTEM</div>
+    <h1 class="title">Tek platform içinde ekonomik zeka, ürün katalogları ve karar cockpitleri.</h1>
+    <p class="desc">
+      ZENTRA; Intel AI ürün ailesi, General AI kullanım katmanı, Academia geliştirme aklı,
+      Market paketleri, cockpitler, raporlar, assistant guidance, audit ve self-healing kontrolüyle çalışan
+      bütünleşik karar işletim sistemidir.
+    </p>
+    <a class="btn" href="/app/matrix.html">Matrix Centrum’a Gir</a>
+    <a class="btn2" href="/app/intel/index.html">Intel AI Kataloğu</a>
+    <a class="btn2" href="/app/market/index.html">Market Ürünleri</a>
+  </section>
+
+  <section class="grid g3">
+    <a class="card" href="/app/intel/index.html">
+      <div class="label">Ana Para Makinesi</div>
+      <div class="big">Intel AI</div>
+      <p>RiskLens, Credit, Trade, Financial Trade, Alternative Finance, Compliance, Contract, Fraud ve Treasury kategorileri.</p>
+    </a>
+
+    <a class="card" href="/app/general-ai.html">
+      <div class="label">Kullanım ve Rehberlik</div>
+      <div class="big">General AI</div>
+      <p>Kullanıcıyı sistem içinde doğru ürün, doğru rapor ve doğru aksiyona yönlendiren genel zeka katmanı.</p>
+    </a>
+
+    <a class="card" href="/app/academia/index.html">
+      <div class="label">Geliştirme Aklı</div>
+      <div class="big">Academia AI</div>
+      <p>Araştırma, yöntem, proje, ürünleşme fikri, standart, regülasyon ve iyileştirme paketleri.</p>
+    </a>
+  </section>
 
   <section class="grid g2">
     <div class="card">
-      <div class="label">Final Decision Surface</div>
-      <div class="decision">BUY</div>
-      <p>Controlled execution is recommended. Risk is elevated but still inside acceptable decision range.</p>
-      <a class="btn" href="/app/cockpit-v2.html">Open Decision Cockpit</a>
-      <a class="btn2" href="/app/report-v3.html">Generate Report</a>
+      <div class="label">Matrix Flow</div>
+      <div class="map">
+        <a class="node" href="/app/modules/risk.html"><b>Risk → RiskLens</b><span class="status">Cockpit + Report</span></a>
+        <a class="node" href="/app/modules/trade.html"><b>Trade</b><span class="status">Cockpit + Report</span></a>
+        <a class="node" href="/app/modules/financial-trade.html"><b>Financial Trade</b><span class="status">Indicator + Signal</span></a>
+        <a class="node" href="/app/modules/credit.html"><b>Credit</b><span class="status">Approval + Stress</span></a>
+        <a class="node" href="/app/modules/alternative-finance.html"><b>Alternative Finance</b><span class="status">Tasarruf + Pool</span></a>
+        <a class="node" href="/app/market/index.html"><b>Market</b><span class="status">Packs + Bundles</span></a>
+      </div>
     </div>
 
     <div class="card">
-      <div class="label">Live Signal Pressure</div>
-      <div class="bars"><i></i><i></i><i></i><i></i><i></i><i></i></div>
-      <p>Signal strength positive. Macro alignment stable. Liquidity condition acceptable.</p>
+      <div class="label">Live Signal Overview</div>
+      <div class="chart"><div class="bars"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
+      <p class="muted">Risk, Credit, Trade ve Financial Trade sinyalleri ayrı rotalarda izlenir; ürün ve rapor akışlarına bağlanır.</p>
     </div>
   </section>
 
-  <section class="grid g4" style="margin-top:14px">
-    <div class="card"><div class="label">Risk Score</div><div class="value">72</div></div>
-    <div class="card"><div class="label">Stress</div><div class="value">64</div></div>
-    <div class="card"><div class="label">Confidence</div><div class="value">78%</div></div>
-    <div class="card"><div class="label">System State</div><div class="value">READY</div></div>
-  </section>
-
-  <section class="grid g2" style="margin-top:14px">
-    <div class="card">
-      <div class="label">Product Intelligence Map</div>
-      <table>
-        <tr><th>Layer</th><th>Status</th><th>Output</th></tr>
-        <tr><td>RiskLens</td><td>Active</td><td>CAUTION / 72</td></tr>
-        <tr><td>Credit Intelligence</td><td>Active</td><td>REVIEW / 66</td></tr>
-        <tr><td>Financial Trade</td><td>Active</td><td>BUY / 78</td></tr>
-        <tr><td>Report Delivery</td><td>Active</td><td>Mail / Link fallback</td></tr>
-      </table>
-    </div>
-
-    <div class="card">
-      <div class="label">Audit & Evidence Trace</div>
-      <p>Input → Risk → Stress → Macro → Decision → Assistant → Report → Audit</p>
-      <p><b>Trace:</b> Available<br><b>Governance:</b> Active<br><b>Self-Healing:</b> Monitoring</p>
-    </div>
+  <section class="card" style="margin-top:16px">
+    <div class="label">Satılabilir Ürün Aileleri</div>
+    <table>
+      <tr><th>Ürün Ailesi</th><th>Kapsam</th><th>Çıktı</th><th>Market</th></tr>
+      <tr><td>Risk Pack</td><td>RiskLens</td><td>Cockpit + Report</td><td>Ready</td></tr>
+      <tr><td>Credit Pack</td><td>Credit Intelligence</td><td>Stress + Approval</td><td>Ready</td></tr>
+      <tr><td>Trade Pack</td><td>Trade Intelligence</td><td>Flow + Decision</td><td>Ready</td></tr>
+      <tr><td>Financial Trade Pack</td><td>Indicators + Signal</td><td>Scenario + Execution</td><td>Ready</td></tr>
+      <tr><td>Alternative Finance Pack</td><td>Tasarruf / Pool / Fairness</td><td>Obligation Report</td><td>Ready</td></tr>
+    </table>
   </section>
 </main>
-
-<aside class="right">
-  <div class="card">
-    <div class="label">Assistant Guidance</div>
-    <p><b>WHY:</b> BUY is supported by signal strength and macro alignment.</p>
-    <p><b>ACTION:</b> Proceed with controlled exposure.</p>
-    <p><b>WARNING:</b> Risk is elevated. Avoid full exposure.</p>
-  </div>
-
-  <div class="alert ok">
-    <b>System Health</b><br>
-    Public surfaces active. Domain connected. DNS valid.
-  </div>
-
-  <div class="alert">
-    <b>Next Action</b><br>
-    Open report, share output, or continue from Decision Cockpit.
-  </div>
-
-  <div class="alert warn">
-    <b>Risk Note</b><br>
-    High risk requires controlled sizing and monitoring.
-  </div>
-</aside>
-
 </div>
 </body>
 </html>
