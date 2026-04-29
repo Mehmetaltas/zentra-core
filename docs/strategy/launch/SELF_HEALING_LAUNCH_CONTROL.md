@@ -333,3 +333,12 @@ Self Healing sistemi:
 Bağlantı:
 docs/strategy/legal/GLOBAL_LEGAL_COMMERCIAL_FRAMEWORK.md
 
+
+---
+
+## Living Improvement Engine Binding
+
+Self Healing sisteminin yakaladığı arıza, kopuk akış, kullanıcı etkisi, fallback veya governance hold durumları Living Improvement Engine’e iyileştirme girdisi olarak aktarılır.
+
+Bağlantı:
+docs/strategy/living-system/LIVING_IMPROVEMENT_ENGINE.md

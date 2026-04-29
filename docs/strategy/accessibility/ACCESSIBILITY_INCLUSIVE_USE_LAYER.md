@@ -184,3 +184,12 @@ Academia:
 → sadece öğrenmez  
 → sistemi erişilebilir hale getirir  
 
+
+---
+
+## Living Improvement Engine Binding
+
+Accessibility ihtiyaçları ve kullanıcı erişim engelleri Academia tarafından araştırılır, Living Improvement Engine üzerinden sisteme iyileştirme olarak işlenir.
+
+Bağlantı:
+docs/strategy/living-system/LIVING_IMPROVEMENT_ENGINE.md

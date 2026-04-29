@@ -197,6 +197,18 @@ th{color:var(--muted);font-size:11px;text-transform:uppercase}
     </div>
   </section>
 
+  <section class="section">
+    <div class="card">
+      <div class="label">Go-To-Market Intelligence</div>
+      <div class="assistant-box" id="gtm"></div>
+    </div>
+
+    <div class="card">
+      <div class="label">Product Package Suggestion</div>
+      <div class="assistant-box" id="packageSuggestion"></div>
+    </div>
+  </section>
+
   <section class="card" style="margin-top:16px">
     <div class="label">Portfolio Intelligence</div>
     <table id="portfolio"></table>
@@ -221,6 +233,8 @@ const data = {
   recommendedAction:"Proceed with controlled exposure",
   decisionReason:"Signal strength is positive, risk is elevated but still acceptable, and liquidity remains stable.",
   executionReadiness:"READY",
+  gtmMessage:"High-value decision output detected. Offer report delivery and Expert package.",
+  packageSuggestion:"Expert Intelligence Pack — cockpit, assistant guidance, report delivery, audit trace and portfolio view.",
   drivers:[
     {title:"Macro trend positive",detail:"External pressure supports the decision direction.",impact:"HIGH"},
     {title:"Risk aligned",detail:"Risk level is elevated but still inside acceptable decision range.",impact:"MEDIUM"},
@@ -270,6 +284,14 @@ document.getElementById("drivers").innerHTML =
   `).join("");
 
 document.getElementById("assistant").innerHTML = assistantText(data);
+
+document.getElementById("gtm").innerHTML =
+  "<strong>MARKET SIGNAL:</strong> " + data.gtmMessage + "<br><br>" +
+  "<strong>NEXT COMMERCIAL STEP:</strong> Generate report, share token link, or upgrade package.";
+
+document.getElementById("packageSuggestion").innerHTML =
+  "<strong>PACKAGE:</strong> " + data.packageSuggestion + "<br><br>" +
+  "<strong>WHY:</strong> User needs decision + report + guidance, not just a metric.";
 
 document.getElementById("portfolio").innerHTML =
   "<tr><th>Product</th><th>Decision</th><th>Score</th><th>Risk</th><th>Confidence</th><th>Comment</th></tr>" +
