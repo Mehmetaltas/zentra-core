@@ -1,0 +1,48 @@
+#!/data/data/com.termux/files/usr/bin/bash
+
+cd /data/data/com.termux/files/home/ZENTRA_MASTER/zentra-final || exit 1
+
+mkdir -p logs tools app docs/strategy/launch
+
+LOG="logs/zentra-auto.log"
+echo "=== ZENTRA AUTO CONTROL $(date) ===" > "$LOG"
+
+say(){
+  echo "$1" | tee -a "$LOG"
+}
+
+fix_file(){
+  FILE="$1"
+  CONTENT="$2"
+
+  if [ ! -f "$FILE" ]; then
+    say "REPAIR: missing $FILE"
+    mkdir -p "$(dirname "$FILE")"
+    printf "%s\n" "$CONTENT" > "$FILE"
+  else
+    say "PASS: $FILE"
+  fi
+}
+
+say "ZENTRA self-healing launch control started."
+
+fix_file "app/cockpit-v2.html" "<!doctype html><html><body><h1>ZENTRA Cockpit V2</h1><p>Fallback cockpit active.</p></body></html>"
+fix_file "app/report-v3.html" "<!doctype html><html><body><h1>ZENTRA Report V3</h1><p>Fallback report active.</p></body></html>"
+fix_file "app/report-visual.html" "<!doctype html><html><body><h1>ZENTRA Visual Report</h1><p>Fallback visual report active.</p></body></html>"
+
+say ""
+say "System links:"
+say "Cockpit: http://127.0.0.1:8080/app/cockpit-v2.html"
+say "Report:  http://127.0.0.1:8080/app/report-v3.html"
+say "Visual:  http://127.0.0.1:8080/app/report-visual.html"
+
+say ""
+say "Git status:"
+git status --short | tee -a "$LOG"
+
+say ""
+say "Starting ZENTRA local server..."
+say "Open in browser:"
+say "http://127.0.0.1:8080/app/cockpit-v2.html"
+
+python3 -m http.server 8080
