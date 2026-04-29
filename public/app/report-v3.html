@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>ZENTRA Report</title>
+<style>
+body{background:#0b1220;color:#fff;font-family:Arial;margin:0}
+.wrap{max-width:900px;margin:20px auto;padding:20px}
+.hero{background:#101a2f;padding:22px;border-radius:14px}
+.big{font-size:52px;font-weight:900}
+.label{font-size:11px;color:#9aa3b2;text-transform:uppercase}
+.card{background:#111a2f;padding:14px;border-radius:10px;margin-top:12px}
+.line{margin-top:6px}
+strong{color:#2effa1}
+</style>
+</head>
+
+<body>
+<div class="wrap">
+
+<h2>ZENTRA Intelligence Report</h2>
+<div>Elite Decision Output | Export Ready</div>
+
+<div class="hero">
+<div class="label">Final Decision</div>
+<div class="big">BUY</div>
+<div style="margin-top:10px">
+High-confidence directional signal with controlled but elevated risk environment.
+</div>
+</div>
+
+<div class="card">
+<div class="label">Decision Positioning</div>
+<div class="line">Confidence: <strong>78%</strong></div>
+<div class="line">Risk Level: HIGH</div>
+<div class="line">Interpretation:</div>
+<div class="line">→ Opportunity exists, but requires controlled execution discipline.</div>
+</div>
+
+<div class="card">
+<div class="label">Scenario Outlook</div>
+<div class="line">UP Scenario: Active</div>
+<div class="line">DOWN Scenario: Limited but present</div>
+<div class="line">Conclusion: Risk/reward acceptable under controlled sizing</div>
+</div>
+
+<div class="card">
+<div class="label">Executive Insight</div>
+<div class="line">• Macro trend supports upward bias</div>
+<div class="line">• Risk remains elevated but manageable</div>
+<div class="line">• Liquidity conditions stable</div>
+</div>
+
+<div class="card">
+<div class="label">Assistant Guidance</div>
+<div class="line"><strong>WHY:</strong> Signal strength + macro alignment</div>
+<div class="line"><strong>ACTION:</strong> Enter position gradually</div>
+<div class="line"><strong>WARNING:</strong> Avoid aggressive exposure</div>
+</div>
+
+<div class="card">
+<div class="label">Evidence & Trace</div>
+<div class="line">Decision Flow: Input → Risk → Stress → Macro → Decision</div>
+<div class="line">Audit: Verified & Traceable</div>
+</div>
+
+<div class="card">
+<div class="label">Portfolio Overview</div>
+<div class="line">Risk Intelligence → CAUTION</div>
+<div class="line">Credit Intelligence → REVIEW</div>
+<div class="line">Financial Trade → BUY</div>
+</div>
+
+</div>
+
+<button onclick="sendReport()" style="position:fixed;bottom:20px;right:20px;padding:12px 18px;background:#2effa1;border:0;border-radius:8px;font-weight:bold;cursor:pointer">
+Send Report
+</button>
+
+<script>
+async function sendReport(){
+  const payload = {
+    email: "contact@zentrarisk.com",
+    subject: "ZENTRA Report",
+    report_text: JSON.stringify({
+      decision:"BUY",
+      risk:72,
+      confidence:78
+    })
+  };
+
+  const res = await fetch("/api/v1/send-report",{
+    method:"POST",
+    headers:{ "Content-Type":"application/json"},
+    body:JSON.stringify(payload)
+  });
+
+  const data = await res.json();
+
+  alert("Report link created:\n"+data.url);
+}
+</script>
+
+</body>
+
+</html>
