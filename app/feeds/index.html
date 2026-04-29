@@ -3,98 +3,139 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>ZENTRA Feed & Bulletin</title>
+<title>ZENTRA Free Intelligence</title>
 <link rel="stylesheet" href="../premium-surface.css">
+<style>
+.free-banner{border:1px solid #203553;background:linear-gradient(135deg,#07111f,#0b1728);border-radius:22px;padding:18px;margin-top:16px}
+.feed-chart{height:150px;border:1px solid #203553;border-radius:18px;background:#050b18;padding:14px;display:flex;align-items:end;gap:8px}
+.feed-chart i{flex:1;border-radius:8px 8px 0 0;background:linear-gradient(180deg,#34f5a4,rgba(52,245,164,.15));animation:pulse 1.8s infinite alternate}
+.feed-chart i:nth-child(1){height:35%}.feed-chart i:nth-child(2){height:64%;animation-delay:.2s}.feed-chart i:nth-child(3){height:48%;animation-delay:.4s}.feed-chart i:nth-child(4){height:88%;animation-delay:.6s}.feed-chart i:nth-child(5){height:72%;animation-delay:.8s}.feed-chart i:nth-child(6){height:54%;animation-delay:1s}.feed-chart i:nth-child(7){height:92%;animation-delay:1.2s}
+@keyframes pulse{to{filter:brightness(1.5);transform:translateY(-4px)}}
+.free-pill{display:inline-block;border:1px solid #203553;border-radius:999px;padding:6px 10px;margin:4px;background:#081326;font-size:12px;color:#dce8ff}
+</style>
 </head>
 <body>
 <div class="shell">
 <aside class="sidebar">
   <div class="logo">ZENTRA</div>
-  <div class="sub">FEED & BULLETIN</div>
+  <div class="sub">FREE INTELLIGENCE</div>
   <nav class="nav">
     <a href="../index.html">Command Center</a>
     <a href="../matrix.html">Matrix</a>
     <a href="../intel/index.html">Intel AI</a>
     <a href="../market/index.html">Market</a>
-    <a class="active" href="./index.html">Feed & Bulletin</a>
+    <a class="active" href="./index.html">Free Feed</a>
   </nav>
 </aside>
 
 <main class="main">
   <div class="top">
-    <span class="badge live">● FEED ACTIVE</span>
-    <span class="badge">TR / EN / AR</span>
-    <span class="badge">Disclosure Ready</span>
+    <div>
+      <span class="badge live">● FREE LAYER ACTIVE</span>
+      <span class="badge">Daily / Weekly / Monthly</span>
+      <span class="badge">TR / EN / AR Ready</span>
+    </div>
+    <span class="badge">Public Intelligence</span>
   </div>
 
   <section class="hero">
-    <div class="k">ZENTRA FEED & BULLETIN LAYER</div>
-    <h1 class="title">Haber, rapor, bülten, eğitim ve uyarı akışlarını tek merkezde toplar.</h1>
+    <div class="k">ZENTRA FREE INTELLIGENCE LAYER</div>
+    <h1 class="title">Ücretsiz piyasa, risk, kredi ve trade zeka akışı.</h1>
     <p class="desc">
-      Bu katman; piyasa bültenleri, ürün raporları, eğitim içerikleri, kullanıcı bilgilendirmeleri,
-      risk uyarıları, abonelik tercihleri ve kanal dağıtımını ZENTRA kontrol yapısına bağlar.
+      Bu katman ZENTRA’nın ücretsiz görünür alanıdır. Günlük, haftalık ve aylık bültenler;
+      RiskLens, Credit Intelligence, Trade, Financial Trade, Alternative Finance ve Academia akışlarından
+      gelen özetleri public-friendly dille sunar.
     </p>
+    <a class="btn" href="../matrix.html">Matrix’e Git</a>
+    <a class="btn2" href="../market/index.html">Ürün Paketlerini Gör</a>
   </section>
 
-  <section class="grid g3">
+  <section class="free-banner">
+    <span class="free-pill">Ücretsiz Katman</span>
+    <span class="free-pill">Yatırım Tavsiyesi Değildir</span>
+    <span class="free-pill">Assistant Guidance Dahil</span>
+    <span class="free-pill">Market’e Yumuşak Geçiş</span>
+  </section>
+
+  <section class="grid g3" id="live-feed"></section>
+
+  <section class="grid g2">
     <div class="card">
-      <div class="label">Daily Bulletin</div>
-      <div class="big">Market</div>
-      <p>Günlük piyasa, risk, kredi, trade ve makro özetleri.</p>
+      <div class="label">Live Free Signal Chart</div>
+      <div class="feed-chart"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <p class="muted">Ücretsiz sinyal görünümü: risk baskısı, kredi izleme ve finansal trade sinyal yönü.</p>
     </div>
 
-    <div class="card">
-      <div class="label">Research Feed</div>
-      <div class="big">Intel</div>
-      <p>Intel AI ürün ailelerine bağlanan rapor ve analiz akışı.</p>
-    </div>
-
-    <div class="card">
-      <div class="label">Education Feed</div>
-      <div class="big">Academia</div>
-      <p>Yöntem, eğitim, kullanım rehberi ve ürün öğrenme akışları.</p>
+    <div class="card" id="assistant-box">
+      <div class="label">Free Assistant Guidance</div>
     </div>
   </section>
 
   <section class="grid g2">
     <div class="card">
-      <div class="label">Feed Routes</div>
+      <div class="label">Free Feed Routes</div>
       <table>
-        <tr><th>Akış</th><th>Bağlandığı Katman</th><th>Çıktı</th></tr>
-        <tr><td>Risk Bulletin</td><td>RiskLens</td><td>Risk summary + warning</td></tr>
-        <tr><td>Financial Trade Brief</td><td>Financial Trade</td><td>Signal + scenario note</td></tr>
-        <tr><td>Credit Watch</td><td>Credit Intelligence</td><td>Stress + approval trend</td></tr>
-        <tr><td>Alternative Finance Note</td><td>Alternative Finance</td><td>Obligation + fairness note</td></tr>
-        <tr><td>Academia Brief</td><td>Academia AI</td><td>Method + learning route</td></tr>
+        <tr><th>Akış</th><th>Bağlı Katman</th><th>Ücretsiz Çıktı</th><th>Ürün Geçişi</th></tr>
+        <tr><td>Risk Bulletin</td><td>RiskLens</td><td>Risk özeti</td><td>Risk Pack</td></tr>
+        <tr><td>Credit Watch</td><td>Credit</td><td>Review sinyali</td><td>Credit Pack</td></tr>
+        <tr><td>Financial Trade Brief</td><td>Financial Trade</td><td>Sinyal özeti</td><td>FT Pack</td></tr>
+        <tr><td>Alternative Finance Note</td><td>Alternative Finance</td><td>Fairness notu</td><td>Alt Finance Pack</td></tr>
+        <tr><td>Academia Brief</td><td>Academia</td><td>Yöntem / eğitim özeti</td><td>Academia output</td></tr>
       </table>
     </div>
 
     <div class="card">
       <div class="label">Distribution Channels</div>
-      <p><b>Email:</b> report / bulletin / update</p>
-      <p><b>LinkedIn / X / Instagram:</b> public visibility</p>
-      <p><b>YouTube / Spotify:</b> education and market commentary</p>
-      <p><b>Assistant:</b> user-specific guidance and next step</p>
+      <p><b>Email:</b> günlük / haftalık / aylık bülten</p>
+      <p><b>LinkedIn / X / Instagram:</b> public görünürlük</p>
+      <p><b>YouTube / Spotify:</b> eğitim ve yorum akışı</p>
+      <p><b>Assistant:</b> kullanıcıya doğru modül ve raporu önerir</p>
     </div>
   </section>
 
-  <section class="grid g3">
-    <div class="card">
-      <div class="label">Compliance Note</div>
-      <p>Yayınlanan içerikler bilgilendirme amaçlıdır. Karar, kullanıcı profili ve risk tercihi dikkate alınmadan yatırım tavsiyesi olarak sunulmaz.</p>
-    </div>
-
-    <div class="card">
-      <div class="label">Subscription Control</div>
-      <p>Kullanıcı; bülten, rapor, eğitim ve ürün güncellemeleri için tercihlerini yönetebilir.</p>
-    </div>
-
-    <div class="card">
-      <div class="label">Assistant Follow-up</div>
-      <p>Assistant; kullanıcıya hangi bülteni, raporu veya ürünü incelemesi gerektiğini açıklar.</p>
-    </div>
+  <section class="card" style="margin-top:16px">
+    <div class="label">Compliance / Uyarı Notu</div>
+    <p>
+      Bu ücretsiz içerikler genel bilgilendirme amaçlıdır. Kullanıcının mali durumu, risk tercihi,
+      yatırım profili veya kurum özel koşulları dikkate alınmadan doğrudan yatırım tavsiyesi olarak sunulmaz.
+      Tam analiz, özel senaryo, cockpit, audit ve kurumsal rapor için ilgili ZENTRA ürün paketine geçilmelidir.
+    </p>
   </section>
 </main>
 </div>
+
+<script src="./feed-engine.js"></script>
+<script>
+const d = window.ZENTRA_FEED;
+const live = document.getElementById("live-feed");
+live.innerHTML = `
+  <div class="card">
+    <div class="label">${d.daily.title}</div>
+    <div class="big">${d.daily.decision}</div>
+    <p><b>Risk:</b> ${d.daily.risk} | <b>Stress:</b> ${d.daily.stress}</p>
+    <p><b>Financial Trade:</b> ${d.daily.financialTrade}</p>
+    <p>${d.daily.summary}</p>
+  </div>
+  <div class="card">
+    <div class="label">${d.weekly.title}</div>
+    <div class="big">${d.weekly.trend}</div>
+    <p><b>Risk Shift:</b> ${d.weekly.riskShift}</p>
+    <p><b>Liquidity:</b> ${d.weekly.liquidity}</p>
+    <p>${d.weekly.summary}</p>
+  </div>
+  <div class="card">
+    <div class="label">${d.monthly.title}</div>
+    <div class="big">${d.monthly.macro}</div>
+    <p><b>Credit:</b> ${d.monthly.creditCycle}</p>
+    <p><b>Risk:</b> ${d.monthly.riskCycle}</p>
+    <p>${d.monthly.summary}</p>
+  </div>
+`;
+document.getElementById("assistant-box").innerHTML += `
+  <p><b>WHY:</b> ${d.daily.assistant.why}</p>
+  <p><b>ACTION:</b> ${d.daily.assistant.action}</p>
+  <p><b>WARNING:</b> ${d.daily.assistant.warning}</p>
+`;
+</script>
 </body>
 </html>
