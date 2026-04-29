@@ -1,4 +1,7 @@
 api_disabled
 backend_disabled
+docs
+tools
+logs
 *.py
 __pycache__
