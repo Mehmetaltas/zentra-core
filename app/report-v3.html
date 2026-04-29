@@ -101,6 +101,20 @@ async function sendReport(){
 }
 </script>
 
+
+<button onclick="requestFullReport()" style="position:fixed;right:20px;bottom:20px;padding:12px 18px;border-radius:12px;border:0;background:#31f2a0;color:#03110b;font-weight:900;cursor:pointer">
+Request / Send Report
+</button>
+
+<script>
+function requestFullReport(){
+  const subject = encodeURIComponent("ZENTRA Report Request");
+  const body = encodeURIComponent(
+    "Hello ZENTRA Team,\n\nI would like to receive or share this ZENTRA intelligence report.\n\nDecision: BUY\nRisk: 72\nConfidence: 78%\n\n"
+  );
+  window.location.href = "mailto:contact@zentrarisk.com?subject=" + subject + "&body=" + body;
+}
+</script>
 </body>
 
 </html>

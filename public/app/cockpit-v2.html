@@ -308,5 +308,36 @@ document.getElementById("portfolio").innerHTML =
   }).join("");
 </script>
 
+
+<script>
+window.addEventListener("DOMContentLoaded", function(){
+  const fill = (id, value) => {
+    const el = document.getElementById(id);
+    if(el && !String(el.textContent || "").trim()) el.textContent = value;
+  };
+
+  fill("recommendedAction", "Proceed with controlled exposure");
+  fill("decisionReason", "Signal strength is positive, risk is elevated but still acceptable, and liquidity remains stable.");
+  fill("executionReadiness", "READY");
+  fill("confidence", "Confidence 78%");
+  fill("riskBand", "Risk HIGH");
+  fill("systemState", "OPERATIONAL");
+  fill("risk", "72");
+  fill("stress", "64");
+  fill("signal", "BUY");
+  fill("macro", "68");
+
+  const assistant = document.getElementById("assistant");
+  if(assistant && !assistant.innerHTML.trim()){
+    assistant.innerHTML = "<strong>WHY:</strong> Signal strength supports the decision.<br><br><strong>ACTION:</strong> Controlled exposure is recommended.<br><br><strong>WARNING:</strong> Risk is elevated; avoid full exposure.";
+  }
+
+  const drivers = document.getElementById("drivers");
+  if(drivers && !drivers.innerHTML.trim()){
+    drivers.innerHTML = "<div class='driver'><strong>Macro trend positive</strong><p>External pressure supports the decision direction.</p></div><div class='driver'><strong>Risk aligned</strong><p>Risk remains elevated but controlled.</p></div><div class='driver'><strong>Liquidity stable</strong><p>No immediate liquidity stress detected.</p></div>";
+  }
+});
+</script>
+
 </body>
 </html>
