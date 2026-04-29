@@ -6,13 +6,12 @@
 <style>
 body{background:#0b1220;color:#fff;font-family:Arial;margin:0}
 .wrap{max-width:900px;margin:20px auto;padding:20px}
-.card{background:#111a2f;padding:16px;border-radius:12px;margin-top:12px}
+.hero{background:#101a2f;padding:20px;border-radius:14px}
+.big{font-size:48px;font-weight:900}
 .label{font-size:11px;color:#9aa3b2;text-transform:uppercase}
-.big{font-size:40px;font-weight:900}
-.value{font-size:22px;font-weight:800}
-.line{margin-top:8px}
-table{width:100%;margin-top:10px}
-td{padding:6px}
+.card{background:#111a2f;padding:14px;border-radius:10px;margin-top:12px}
+.line{margin-top:6px}
+strong{color:#2effa1}
 </style>
 </head>
 
@@ -20,74 +19,50 @@ td{padding:6px}
 <div class="wrap">
 
 <h2>ZENTRA Intelligence Report</h2>
-<div>Report Type: Expert | Status: Export Ready</div>
+<div>Expert Level | Export Ready</div>
 
-<div class="card">
+<div class="hero">
 <div class="label">Final Decision</div>
-<div class="big" id="decision"></div>
-<div id="decisionExplain"></div>
+<div class="big">BUY</div>
+<div style="margin-top:8px">
+Strong signal detected. Controlled execution is justified despite elevated risk.
+</div>
 </div>
 
 <div class="card">
-<div class="label">Metrics</div>
-<div class="line">Risk: <span id="risk"></span></div>
-<div class="line">Stress: <span id="stress"></span></div>
-<div class="line">Confidence: <span id="confidence"></span></div>
+<div class="label">Decision Summary</div>
+<div class="line">Confidence: <strong>78%</strong></div>
+<div class="line">Risk Level: HIGH</div>
+<div class="line">Stress Level: MODERATE</div>
 </div>
 
 <div class="card">
 <div class="label">Executive Insight</div>
-<div id="insight"></div>
+<div class="line">• Macro trend supports upward bias</div>
+<div class="line">• Risk remains elevated but controlled</div>
+<div class="line">• Liquidity conditions stable</div>
 </div>
 
 <div class="card">
 <div class="label">Assistant Analysis</div>
-<div id="assistant"></div>
+<div class="line"><strong>WHY:</strong> Signal strength and macro alignment support decision</div>
+<div class="line"><strong>ACTION:</strong> Enter position with controlled sizing</div>
+<div class="line"><strong>WARNING:</strong> Avoid full exposure due to elevated risk</div>
 </div>
 
 <div class="card">
-<div class="label">Evidence / Trace</div>
-<div>Decision trace active</div>
-<div>Audit: available</div>
+<div class="label">Evidence & Trace</div>
+<div class="line">Decision pipeline: Input → Risk → Stress → Macro → Decision</div>
+<div class="line">Audit: Available</div>
 </div>
 
 <div class="card">
-<div class="label">Portfolio</div>
-<table id="portfolio"></table>
+<div class="label">Portfolio Overview</div>
+<div class="line">Risk Intelligence → CAUTION</div>
+<div class="line">Credit Intelligence → REVIEW</div>
+<div class="line">Financial Trade → BUY</div>
 </div>
 
 </div>
-
-<script>
-
-const d = {
-decision:"BUY",
-risk:72,
-stress:64,
-confidence:78,
-drivers:["Macro positive","Risk aligned","Liquidity stable"],
-portfolio:[
-["Risk Intelligence","CAUTION"],
-["Credit Intelligence","REVIEW"],
-["Financial Trade","BUY"]
-]
-};
-
-document.getElementById("decision").textContent=d.decision;
-document.getElementById("decisionExplain").textContent="Controlled execution recommended.";
-document.getElementById("risk").textContent=d.risk;
-document.getElementById("stress").textContent=d.stress;
-document.getElementById("confidence").textContent=d.confidence+"%";
-
-document.getElementById("insight").innerHTML=d.drivers.join("<br>");
-
-document.getElementById("assistant").innerHTML=
-"WHY: strong signal<br>ACTION: controlled entry<br>WARNING: high risk";
-
-document.getElementById("portfolio").innerHTML=
-d.portfolio.map(p=>"<tr><td>"+p[0]+"</td><td>"+p[1]+"</td></tr>").join("");
-
-</script>
-
 </body>
 </html>
