@@ -165,47 +165,60 @@ th{color:var(--muted);font-size:11px;text-transform:uppercase}
     <div class="command">
       <div class="mini">
         <div class="label">Recommended Action</div>
-        <div class="mini-value" id="recommendedAction"></div>
+        <div class="mini-value" id="recommendedAction">Proceed with controlled exposure</div>
       </div>
       <div class="mini">
         <div class="label">Decision Reason</div>
-        <div class="mini-text" id="decisionReason"></div>
+        <div class="mini-text" id="decisionReason">Signal strength is positive, risk is elevated but controlled, and liquidity remains stable.</div>
       </div>
       <div class="mini">
         <div class="label">Execution Readiness</div>
-        <div class="mini-value" id="executionReadiness"></div>
+        <div class="mini-value" id="executionReadiness">READY</div>
       </div>
     </div>
   </section>
 
   <section class="grid">
-    <div class="card"><div class="label">Risk Score</div><div class="value" id="risk"></div></div>
-    <div class="card"><div class="label">Stress</div><div class="value" id="stress"></div></div>
-    <div class="card"><div class="label">Trade Signal</div><div class="value" id="signal"></div></div>
-    <div class="card"><div class="label">Macro</div><div class="value" id="macro"></div></div>
+    <div class="card"><div class="label">Risk Score</div><div class="value" id="risk">72</div></div>
+    <div class="card"><div class="label">Stress</div><div class="value" id="stress">64</div></div>
+    <div class="card"><div class="label">Trade Signal</div><div class="value" id="signal">BUY</div></div>
+    <div class="card"><div class="label">Macro</div><div class="value" id="macro">68</div></div>
   </section>
 
   <section class="section">
     <div class="card">
       <div class="label">Insight Layer</div>
-      <div id="drivers"></div>
+      <div id="drivers">
+<div class="driver"><strong>Macro trend positive</strong><p>External pressure supports the decision direction.</p><span class="pill">Impact HIGH</span></div>
+<div class="driver"><strong>Risk aligned</strong><p>Risk is elevated but inside acceptable decision range.</p><span class="pill">Impact MEDIUM</span></div>
+<div class="driver"><strong>Liquidity stable</strong><p>No immediate liquidity stress detected.</p><span class="pill">Impact LOW</span></div>
+</div>
     </div>
 
     <div class="card">
       <div class="label">Assistant Guidance</div>
-      <div class="assistant-box" id="assistant"></div>
+      <div class="assistant-box" id="assistant">
+<strong>WHY:</strong> BUY is supported by signal strength and macro alignment.<br><br>
+<strong>ACTION:</strong> Proceed with controlled exposure.<br><br>
+<strong>WARNING:</strong> Risk is elevated. Avoid full exposure.
+</div>
     </div>
   </section>
 
   <section class="section">
     <div class="card">
       <div class="label">Go-To-Market Intelligence</div>
-      <div class="assistant-box" id="gtm"></div>
+      <div class="assistant-box" id="gtm">
+<strong>MARKET SIGNAL:</strong> High-value decision output detected.<br><br>
+<strong>NEXT COMMERCIAL STEP:</strong> Generate report, share token link, or upgrade package.
+</div>
     </div>
 
     <div class="card">
       <div class="label">Product Package Suggestion</div>
-      <div class="assistant-box" id="packageSuggestion"></div>
+      <div class="assistant-box" id="packageSuggestion">
+<strong>PACKAGE:</strong> Expert Intelligence Pack — cockpit, assistant guidance, report delivery, audit trace and portfolio view.
+</div>
     </div>
   </section>
 
