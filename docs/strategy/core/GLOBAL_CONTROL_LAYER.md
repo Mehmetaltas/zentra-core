@@ -173,3 +173,23 @@ ZENTRA tüm manuel işlemleri azaltır:
 
 ana otomasyon katmanına bağlanır.
 
+
+---
+
+# 12. Living Improvement Everywhere
+
+Durum: ACTIVE
+İz: docs/strategy/living-system/LIVING_IMPROVEMENT_ENGINE.md
+
+ZENTRA’daki tüm eksik tespitleri, müşteri operasyonları, rakip gapleri, accessibility, legal, security, report, delivery, assistant ve market ürün iyileştirmeleri Living Improvement Engine üzerinden işlenir.
+
+
+---
+
+# 14. Go To Market Everywhere
+
+Durum: ACTIVE
+İz: docs/strategy/go-to-market/GO_TO_MARKET_ENGINE.md
+
+ZENTRA’nın pazarlama, içerik, sosyal medya, kullanıcı kazanımı ve ürün tanıtımı tek Go To Market Engine altında birleşir.
+
