@@ -72,5 +72,35 @@ High-confidence directional signal with controlled but elevated risk environment
 </div>
 
 </div>
+
+<button onclick="sendReport()" style="position:fixed;bottom:20px;right:20px;padding:12px 18px;background:#2effa1;border:0;border-radius:8px;font-weight:bold;cursor:pointer">
+Send Report
+</button>
+
+<script>
+async function sendReport(){
+  const payload = {
+    email: "contact@zentrarisk.com",
+    subject: "ZENTRA Report",
+    report_text: JSON.stringify({
+      decision:"BUY",
+      risk:72,
+      confidence:78
+    })
+  };
+
+  const res = await fetch("/api/v1/send-report",{
+    method:"POST",
+    headers:{ "Content-Type":"application/json"},
+    body:JSON.stringify(payload)
+  });
+
+  const data = await res.json();
+
+  alert("Report link created:\n"+data.url);
+}
+</script>
+
 </body>
+
 </html>
