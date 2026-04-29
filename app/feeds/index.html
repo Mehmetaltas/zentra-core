@@ -3,22 +3,21 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>ZENTRA Free Intelligence</title>
+<title>ZENTRA Free Intelligence Dashboard</title>
 <link rel="stylesheet" href="../premium-surface.css">
 <style>
-.free-banner{border:1px solid #203553;background:linear-gradient(135deg,#07111f,#0b1728);border-radius:22px;padding:18px;margin-top:16px}
-.feed-chart{height:150px;border:1px solid #203553;border-radius:18px;background:#050b18;padding:14px;display:flex;align-items:end;gap:8px}
-.feed-chart i{flex:1;border-radius:8px 8px 0 0;background:linear-gradient(180deg,#34f5a4,rgba(52,245,164,.15));animation:pulse 1.8s infinite alternate}
-.feed-chart i:nth-child(1){height:35%}.feed-chart i:nth-child(2){height:64%;animation-delay:.2s}.feed-chart i:nth-child(3){height:48%;animation-delay:.4s}.feed-chart i:nth-child(4){height:88%;animation-delay:.6s}.feed-chart i:nth-child(5){height:72%;animation-delay:.8s}.feed-chart i:nth-child(6){height:54%;animation-delay:1s}.feed-chart i:nth-child(7){height:92%;animation-delay:1.2s}
-@keyframes pulse{to{filter:brightness(1.5);transform:translateY(-4px)}}
-.free-pill{display:inline-block;border:1px solid #203553;border-radius:999px;padding:6px 10px;margin:4px;background:#081326;font-size:12px;color:#dce8ff}
+.hero-metric{font-size:56px;font-weight:900;color:#34f5a4;line-height:1;margin:12px 0}
+.clean-chart{height:180px;border:1px solid #203553;border-radius:18px;background:#050b18;padding:14px}
+.clean-chart svg{width:100%;height:100%}
+.action-panel{border:1px solid #203553;border-radius:18px;background:#081326;padding:16px}
+.tab{display:inline-block;border:1px solid #203553;background:#07111f;border-radius:999px;padding:7px 11px;margin:4px;color:#dce8ff;font-size:12px}
 </style>
 </head>
 <body>
 <div class="shell">
 <aside class="sidebar">
   <div class="logo">ZENTRA</div>
-  <div class="sub">FREE INTELLIGENCE</div>
+  <div class="sub">FREE DASHBOARD</div>
   <nav class="nav">
     <a href="../index.html">Command Center</a>
     <a href="../matrix.html">Matrix</a>
@@ -31,111 +30,98 @@
 <main class="main">
   <div class="top">
     <div>
-      <span class="badge live">● FREE LAYER ACTIVE</span>
+      <span class="badge live">● FREE INTELLIGENCE LIVE</span>
       <span class="badge">Daily / Weekly / Monthly</span>
       <span class="badge">TR / EN / AR Ready</span>
     </div>
-    <span class="badge">Public Intelligence</span>
+    <span class="badge">Public Layer</span>
   </div>
 
   <section class="hero">
-    <div class="k">ZENTRA FREE INTELLIGENCE LAYER</div>
-    <h1 class="title">Ücretsiz piyasa, risk, kredi ve trade zeka akışı.</h1>
-    <p class="desc">
-      Bu katman ZENTRA’nın ücretsiz görünür alanıdır. Günlük, haftalık ve aylık bültenler;
-      RiskLens, Credit Intelligence, Trade, Financial Trade, Alternative Finance ve Academia akışlarından
-      gelen özetleri public-friendly dille sunar.
-    </p>
-    <a class="btn" href="../matrix.html">Matrix’e Git</a>
-    <a class="btn2" href="../market/index.html">Ürün Paketlerini Gör</a>
-  </section>
-
-  <section class="free-banner">
-    <span class="free-pill">Ücretsiz Katman</span>
-    <span class="free-pill">Yatırım Tavsiyesi Değildir</span>
-    <span class="free-pill">Assistant Guidance Dahil</span>
-    <span class="free-pill">Market’e Yumuşak Geçiş</span>
-  </section>
-
-  <section class="grid g3" id="live-feed"></section>
-
-  <section class="grid g2">
-    <div class="card">
-      <div class="label">Live Free Signal Chart</div>
-      <div class="feed-chart"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
-      <p class="muted">Ücretsiz sinyal görünümü: risk baskısı, kredi izleme ve finansal trade sinyal yönü.</p>
-    </div>
-
-    <div class="card" id="assistant-box">
-      <div class="label">Free Assistant Guidance</div>
-    </div>
+    <div class="k">TODAY’S FREE INTELLIGENCE</div>
+    <h1 class="title">Bugünün ücretsiz ZENTRA görünümü.</h1>
+    <p class="desc">Kısa, net ve yönlendiren public özet. Tam analiz için ilgili cockpit ve rapor paketine geçilir.</p>
+    <a class="btn" href="../market/index.html">Tam Paketleri Gör</a>
+    <a class="btn2" href="../matrix.html">Matrix’e Dön</a>
   </section>
 
   <section class="grid g2">
     <div class="card">
-      <div class="label">Free Feed Routes</div>
-      <table>
-        <tr><th>Akış</th><th>Bağlı Katman</th><th>Ücretsiz Çıktı</th><th>Ürün Geçişi</th></tr>
-        <tr><td>Risk Bulletin</td><td>RiskLens</td><td>Risk özeti</td><td>Risk Pack</td></tr>
-        <tr><td>Credit Watch</td><td>Credit</td><td>Review sinyali</td><td>Credit Pack</td></tr>
-        <tr><td>Financial Trade Brief</td><td>Financial Trade</td><td>Sinyal özeti</td><td>FT Pack</td></tr>
-        <tr><td>Alternative Finance Note</td><td>Alternative Finance</td><td>Fairness notu</td><td>Alt Finance Pack</td></tr>
-        <tr><td>Academia Brief</td><td>Academia</td><td>Yöntem / eğitim özeti</td><td>Academia output</td></tr>
-      </table>
+      <div class="label">Today Decision</div>
+      <div class="hero-metric">WATCH</div>
+      <p><b>Özet:</b> Risk yüksek fakat kontrollü. Financial Trade sinyali pozitif; kredi tarafı izleme istiyor.</p>
+      <div>
+        <span class="tab">Risk 72</span>
+        <span class="tab">Stress 64</span>
+        <span class="tab">FT: BUY SIGNAL</span>
+        <span class="tab">Credit: REVIEW</span>
+      </div>
     </div>
 
     <div class="card">
-      <div class="label">Distribution Channels</div>
-      <p><b>Email:</b> günlük / haftalık / aylık bülten</p>
-      <p><b>LinkedIn / X / Instagram:</b> public görünürlük</p>
-      <p><b>YouTube / Spotify:</b> eğitim ve yorum akışı</p>
-      <p><b>Assistant:</b> kullanıcıya doğru modül ve raporu önerir</p>
+      <div class="label">Signal Chart</div>
+      <div class="clean-chart">
+        <svg viewBox="0 0 600 180" preserveAspectRatio="none">
+          <polyline points="0,130 60,118 120,142 180,92 240,100 300,68 360,86 420,52 480,64 540,38 600,54"
+            fill="none" stroke="#34f5a4" stroke-width="4"/>
+          <polyline points="0,150 75,138 150,148 225,126 300,132 375,105 450,116 525,92 600,98"
+            fill="none" stroke="#7aa2ff" stroke-width="2" opacity=".65"/>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <section class="grid g3">
+    <div class="card">
+      <div class="label">Risk Signal</div>
+      <div class="big">CAUTION</div>
+      <p>Risk seviyesi yüksek. Tam exposure yerine kontrollü takip önerilir.</p>
+    </div>
+
+    <div class="card">
+      <div class="label">Financial Trade Signal</div>
+      <div class="big">BUY</div>
+      <p>Sinyal pozitif; ancak risk katmanı ile birlikte okunmalıdır.</p>
+    </div>
+
+    <div class="card">
+      <div class="label">Credit Signal</div>
+      <div class="big">REVIEW</div>
+      <p>Ödeme kapasitesi ve stres göstergeleri ek kontrol ister.</p>
+    </div>
+  </section>
+
+  <section class="grid g2">
+    <div class="action-panel">
+      <div class="label">Free Assistant</div>
+      <p><b>WHY:</b> Fırsat sinyali var ama risk hâlâ yüksek.</p>
+      <p><b>ACTION:</b> Önce ilgili cockpit’i aç, sonra raporla doğrula.</p>
+      <p><b>WARNING:</b> Bu ücretsiz özet yatırım tavsiyesi değildir.</p>
+    </div>
+
+    <div class="action-panel">
+      <div class="label">Next Step</div>
+      <p>Ücretsiz özet sana yön verir. Tam karar için ürün paketine geç.</p>
+      <a class="btn" href="../modules/risk.html">RiskLens’e Git</a>
+      <a class="btn2" href="../modules/financial-trade.html">Financial Trade’e Git</a>
     </div>
   </section>
 
   <section class="card" style="margin-top:16px">
-    <div class="label">Compliance / Uyarı Notu</div>
-    <p>
-      Bu ücretsiz içerikler genel bilgilendirme amaçlıdır. Kullanıcının mali durumu, risk tercihi,
-      yatırım profili veya kurum özel koşulları dikkate alınmadan doğrudan yatırım tavsiyesi olarak sunulmaz.
-      Tam analiz, özel senaryo, cockpit, audit ve kurumsal rapor için ilgili ZENTRA ürün paketine geçilmelidir.
-    </p>
+    <div class="label">Weekly / Monthly Outlook</div>
+    <table>
+      <tr><th>Periyot</th><th>Durum</th><th>Kısa Yorum</th><th>Geçiş</th></tr>
+      <tr><td>Daily</td><td>WATCH</td><td>Risk yüksek, sinyal pozitif.</td><td>Risk / FT cockpit</td></tr>
+      <tr><td>Weekly</td><td>CONTROLLED UPWARD BIAS</td><td>Risk baskısı artıyor ama likidite stabil.</td><td>Weekly report</td></tr>
+      <tr><td>Monthly</td><td>EXPANSION WITH RISK</td><td>Makro yön destekli, risk izleme aktif.</td><td>Monthly pack</td></tr>
+    </table>
+  </section>
+
+  <section class="card" style="margin-top:16px">
+    <div class="label">Disclosure</div>
+    <p>Bu ücretsiz içerik genel bilgilendirme amaçlıdır. Kullanıcının mali durumu, risk tercihi ve yatırım profili dikkate alınmadan yatırım tavsiyesi olarak sunulmaz.</p>
   </section>
 </main>
 </div>
-
-<script src="./feed-engine.js"></script>
-<script>
-const d = window.ZENTRA_FEED;
-const live = document.getElementById("live-feed");
-live.innerHTML = `
-  <div class="card">
-    <div class="label">${d.daily.title}</div>
-    <div class="big">${d.daily.decision}</div>
-    <p><b>Risk:</b> ${d.daily.risk} | <b>Stress:</b> ${d.daily.stress}</p>
-    <p><b>Financial Trade:</b> ${d.daily.financialTrade}</p>
-    <p>${d.daily.summary}</p>
-  </div>
-  <div class="card">
-    <div class="label">${d.weekly.title}</div>
-    <div class="big">${d.weekly.trend}</div>
-    <p><b>Risk Shift:</b> ${d.weekly.riskShift}</p>
-    <p><b>Liquidity:</b> ${d.weekly.liquidity}</p>
-    <p>${d.weekly.summary}</p>
-  </div>
-  <div class="card">
-    <div class="label">${d.monthly.title}</div>
-    <div class="big">${d.monthly.macro}</div>
-    <p><b>Credit:</b> ${d.monthly.creditCycle}</p>
-    <p><b>Risk:</b> ${d.monthly.riskCycle}</p>
-    <p>${d.monthly.summary}</p>
-  </div>
-`;
-document.getElementById("assistant-box").innerHTML += `
-  <p><b>WHY:</b> ${d.daily.assistant.why}</p>
-  <p><b>ACTION:</b> ${d.daily.assistant.action}</p>
-  <p><b>WARNING:</b> ${d.daily.assistant.warning}</p>
-`;
-</script>
 </body>
 </html>
