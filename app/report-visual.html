@@ -1,215 +1,76 @@
-<!DOCTYPE html>
-<html lang="tr">
+<!doctype html>
+<html>
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ZENTRA Visual Proof</title>
+<meta charset="utf-8">
+<title>ZENTRA Report View</title>
 <style>
-body{
-  font-family:Arial;
-  background:linear-gradient(180deg,#0b0f1a,#05070d);
-  color:#fff;
-  margin:0;
-  padding:0;
-}
-.header{
-  padding:15px 20px;
-  background:#121a2f;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  border-bottom:1px solid #1f2a45;
-}
-.logo{
-  font-weight:bold;
-  font-size:18px;
-  letter-spacing:1px;
-}
-.container{
-  padding:20px;
-}
-.card{
-  background:#121a2f;
-  padding:20px;
-  border-radius:14px;
-  margin-bottom:20px;
-  box-shadow:0 0 30px rgba(0,198,255,0.05);
-}
-.bar{
-  height:10px;
-  background:#333;
-  border-radius:10px;
-  overflow:hidden;
-  margin:8px 0 14px;
-}
-.fill{
-  height:10px;
-  background:linear-gradient(90deg,#00c6ff,#ff4d4d);
-  width:0%;
-  transition:width 1s ease;
-}
-.indicator{
-  display:flex;
-  justify-content:space-between;
-  margin:8px 0;
-}
-.badge{
-  padding:6px 12px;
-  border-radius:8px;
-  font-size:12px;
-}
-.green{background:#1f8f4e}
-.yellow{background:#d9a300}
-.red{background:#b30000}
-.trace{
-  margin-top:8px;
-  font-size:13px;
-  opacity:.9;
-}
-pre{
-  background:#0b1222;
-  padding:15px;
-  border-radius:12px;
-  color:#dce7ff;
-  overflow:auto;
-}
-.footer{
-  text-align:center;
-  font-size:12px;
-  opacity:.5;
-  margin-top:20px;
-}
+body{margin:0;background:#060b14;color:#fff;font-family:Arial}
+.wrap{max-width:1000px;margin:0 auto;padding:20px}
+.hero{background:#101a2f;padding:20px;border-radius:14px}
+.big{font-size:56px;font-weight:900;color:#2effa1}
+.card{background:#111a2f;padding:14px;border-radius:10px;margin-top:12px}
+.label{font-size:11px;color:#9aa3b2;text-transform:uppercase}
+.line{margin-top:6px}
+strong{color:#2effa1}
 </style>
 </head>
+
 <body>
+<div class="wrap">
 
-<div class="header">
-  <div class="logo">ZENTRA</div>
-  <div>Visual Proof Engine</div>
-</div>
+<h2>ZENTRA Intelligence Output</h2>
 
-<div class="container">
-
-<div class="card">
-<h3>Decision</h3>
-<div id="decisionBox"></div>
+<div class="hero">
+<div class="label">Final Decision</div>
+<div class="big" id="decision"></div>
+<div id="summary"></div>
 </div>
 
 <div class="card">
-<h3>Indicators</h3>
-<div class="indicator">Risk <span id="riskBadge"></span></div>
-<div class="indicator">Payment <span id="paymentBadge"></span></div>
-<div class="indicator">Limit <span id="limitBadge"></span></div>
-<div class="indicator">Policy <span id="policyBadge"></span></div>
+<div class="label">Decision Position</div>
+<div id="position"></div>
 </div>
 
 <div class="card">
-<h3>Metrics</h3>
-
-<div>DTI</div>
-<div class="bar"><div id="dtiBar" class="fill"></div></div>
-
-<div>Payment Load</div>
-<div class="bar"><div id="paymentBar" class="fill"></div></div>
-
-<div>Limit Ratio</div>
-<div class="bar"><div id="limitBar" class="fill"></div></div>
-
+<div class="label">Insight</div>
+<div id="insight"></div>
 </div>
 
 <div class="card">
-<h3>Decision Flow</h3>
-<div id="flow"></div>
+<div class="label">Assistant</div>
+<div id="assistant"></div>
 </div>
 
 <div class="card">
-<h3>Proof</h3>
-<pre id="raw"></pre>
-</div>
-
-<div class="footer">
-ZENTRA — Decision • Trace • Proof • Simulation
+<div class="label">Portfolio</div>
+<div id="portfolio"></div>
 </div>
 
 </div>
 
 <script>
-function getData(){
-  try{
-    if(window.parent && window.parent.ZENTRA_DATA){
-      return window.parent.ZENTRA_DATA;
-    }
-  }catch(e){}
-  return window.ZENTRA_DATA || null;
-}
+const d = window.ZENTRA_DATA || {
+decision:"BUY",
+risk:72,
+confidence:78,
+drivers:["Macro positive","Risk aligned","Liquidity stable"]
+};
 
-function setBar(id,value,max){
-  document.getElementById(id).style.width =
-    Math.min((Number(value||0)/max)*100,100)+"%";
-}
+document.getElementById("decision").textContent = d.decision;
+document.getElementById("summary").textContent =
+"High confidence signal with controlled risk environment.";
 
-function badge(id,text,color){
-  document.getElementById(id).innerHTML =
-    `<span class="badge ${color}">${text}</span>`;
-}
+document.getElementById("position").innerHTML =
+"Confidence: <strong>"+d.confidence+"%</strong><br>Risk: HIGH";
 
-function render(){
+document.getElementById("insight").innerHTML =
+d.drivers.join("<br>");
 
-  const data = getData();
-  if(!data){
-    decisionBox.innerHTML="Veri bulunamadı";
-    return;
-  }
+document.getElementById("assistant").innerHTML =
+"WHY: strong signal<br>ACTION: controlled entry<br>WARNING: high risk";
 
-  const r = data.result ? data.result : data;
-  const d = r.derived || {};
-  const p = r.policy || {};
-
-  decisionBox.innerHTML =
-    `<b>${r.decision}</b><br>Skor: ${r.score}<br><br>` +
-    (r.explain||[]).map(x=>"• "+x).join("<br>");
-
-  setBar("dtiBar",d.debt_to_income,10);
-  setBar("paymentBar",d.payment_load,1);
-  setBar("limitBar",d.limit_ratio,5);
-
-  badge("riskBadge",r.decision,
-    r.decision==="Reddet"?"red":(r.decision==="İncele"?"yellow":"green"));
-
-  badge("paymentBadge",
-    d.payment_load>0.5?"HIGH":"OK",
-    d.payment_load>0.5?"red":"green");
-
-  badge("limitBadge",
-    d.limit_ratio>4?"HIGH":"OK",
-    d.limit_ratio>4?"red":"green");
-
-  badge("policyBadge",p.mode||"OFF","yellow");
-
-  const steps=[
-    "Input",
-    "Derived",
-    "Rules",
-    "Policy",
-    "Decision",
-    "Proof"
-  ];
-
-  flow.innerHTML="";
-  let i=0;
-  const int=setInterval(()=>{
-    if(i>=steps.length){clearInterval(int);return;}
-    const div=document.createElement("div");
-    div.className="trace";
-    div.innerText="✔ "+steps[i];
-    flow.appendChild(div);
-    i++;
-  },300);
-
-  raw.innerText = JSON.stringify(r,null,2);
-}
-
-render();
+document.getElementById("portfolio").innerHTML =
+"Risk Intelligence → CAUTION<br>Credit → REVIEW<br>Trade → BUY";
 </script>
 
 </body>
