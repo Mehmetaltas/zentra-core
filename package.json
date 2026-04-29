@@ -1,27 +1,8 @@
 {
-  "name": "zentra-final",
+  "name": "zentra-static",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "directories": {
-    "doc": "docs"
-  },
+  "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Mehmetaltas/zentra-core.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "type": "commonjs",
-  "bugs": {
-    "url": "https://github.com/Mehmetaltas/zentra-core/issues"
-  },
-  "homepage": "https://github.com/Mehmetaltas/zentra-core#readme",
-  "dependencies": {
-    "pg": "^8.20.0"
+    "build": "mkdir -p public && cp -R app public/app"
   }
 }
