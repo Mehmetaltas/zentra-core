@@ -2,270 +2,56 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>ZENTRA — Decision Intelligence System</title>
-
-<style>
-:root{
---bg:#050914;
---panel:#0f172a;
---line:#243653;
---text:#eef5ff;
---muted:#9aa8bd;
---green:#31f2a0;
---blue:#8fb3ff;
-}
-
-*{box-sizing:border-box}
-body{
-margin:0;
-font-family:Arial, sans-serif;
-color:var(--text);
-background:
-radial-gradient(circle at 20% 0%,rgba(49,242,160,.12),transparent 30%),
-radial-gradient(circle at 80% 0%,rgba(143,179,255,.12),transparent 25%),
-var(--bg);
-}
-
-.wrap{max-width:1200px;margin:auto;padding:28px}
-
-.nav{
-display:flex;
-gap:10px;
-flex-wrap:wrap;
-align-items:center;
-margin-bottom:28px;
-}
-
-.logo{
-font-size:26px;
-font-weight:900;
-letter-spacing:.1em;
-margin-right:10px;
-}
-
-.nav a{
-color:var(--text);
-text-decoration:none;
-border:1px solid var(--line);
-padding:8px 12px;
-border-radius:999px;
-font-size:13px;
-background:#081225;
-}
-
-.lang{margin-left:auto;color:var(--muted)}
-
-.hero{
-background:linear-gradient(135deg,#13213b,#081225);
-border:1px solid var(--line);
-border-radius:28px;
-padding:42px;
-box-shadow:0 30px 90px rgba(0,0,0,.4);
-}
-
-.kicker{
-color:var(--green);
-font-weight:900;
-font-size:12px;
-text-transform:uppercase;
-}
-
-h1{
-font-size:52px;
-line-height:1.05;
-margin:12px 0;
-}
-
-.sub{
-color:#cbd6e8;
-max-width:720px;
-line-height:1.6;
-}
-
-.btn{
-display:inline-block;
-margin-top:18px;
-background:var(--green);
-color:#02100a;
-font-weight:900;
-padding:14px 18px;
-border-radius:12px;
-text-decoration:none;
-}
-
-.btn2{
-display:inline-block;
-margin-top:18px;
-margin-left:10px;
-border:1px solid var(--line);
-padding:14px 18px;
-border-radius:12px;
-text-decoration:none;
-color:var(--text);
-}
-
-.live{
-margin-top:22px;
-background:#081a14;
-border:1px solid #1b3d2f;
-border-radius:18px;
-padding:20px;
-}
-
-.dot{
-display:inline-block;
-width:8px;
-height:8px;
-background:var(--green);
-border-radius:50%;
-margin-right:6px;
-}
-
-.grid{
-display:grid;
-grid-template-columns:repeat(3,1fr);
-gap:14px;
-margin-top:20px;
-}
-
-.card{
-background:var(--panel);
-border:1px solid var(--line);
-border-radius:18px;
-padding:18px;
-}
-
-.big{
-font-size:32px;
-font-weight:900;
-color:var(--green);
-}
-
-.section-title{
-margin-top:32px;
-font-weight:900;
-font-size:20px;
-}
-
-.product{
-background:#0a1326;
-border:1px solid var(--line);
-border-radius:18px;
-padding:20px;
-margin-top:16px;
-}
-
-.footer{
-margin-top:40px;
-font-size:12px;
-color:var(--muted);
-text-align:center;
-}
-
-@media(max-width:800px){
-.grid{grid-template-columns:1fr}
-h1{font-size:34px}
-}
-</style>
+<link rel="stylesheet" href="/app/zentra-visual-system.css">
 </head>
-
 <body>
-
-<div class="wrap">
-
-<div class="nav">
-<div class="logo">ZENTRA</div>
+<main class="zx-wrap">
+<nav class="zx-nav">
+<div class="zx-logo">ZENTRA</div>
 <a href="/app/index.html">Home</a>
 <a href="/app/cockpit-v2.html">Cockpit</a>
 <a href="/app/report-v3.html">Report</a>
 <a href="/app/general-ai.html">General AI</a>
 <a href="/app/academia/index.html">Academia</a>
 <a href="/app/investor-demo.html">Investor</a>
-<div class="lang">TR / EN / AR</div>
+<div class="zx-lang"><button onclick="setLang('tr')">TR</button><button onclick="setLang('en')">EN</button><button onclick="setLang('ar')">AR</button></div>
+</nav>
+
+<section class="zx-hero">
+<div class="zx-kicker">LIVE DECISION INTELLIGENCE SYSTEM</div>
+<h1 class="zx-title" data-i18n="hero">The system that decides, proves and executes.</h1>
+<p class="zx-sub" data-i18n="sub">ZENTRA combines risk, credit, financial trade, assistant guidance, reporting, audit, governance and self-healing control in one live platform.</p>
+<div class="zx-actions">
+<a class="zx-btn" href="/app/cockpit-v2.html" data-i18n="enter">Enter Decision System</a>
+<a class="zx-btn2" href="/app/report-v3.html" data-i18n="report">View Institutional Report</a>
 </div>
-
-<div class="hero">
-<div class="kicker">Decision Intelligence System</div>
-
-<h1>
-The system that decides,<br>
-proves and executes.
-</h1>
-
-<div class="sub">
-ZENTRA transforms raw data into real decisions,
-explains them with evidence, and executes them
-with controlled intelligence.
+<div class="zx-live">
+<div>
+<div class="zx-kicker"><span class="zx-dot"></span><span data-i18n="live">Live Signal Stream</span> • 8s</div>
+<p><b data-i18n="decision">Decision</b>: BUY<br><b data-i18n="risk">Risk</b>: 72 — High<br><b data-i18n="confidence">Confidence</b>: 78%<br><b data-i18n="action">Action</b>: Controlled Entry</p>
 </div>
-
-<a class="btn" href="/app/cockpit-v2.html">Run Live Decision</a>
-<a class="btn2" href="/app/report-v3.html">View Report</a>
-
-<div class="live">
-<div><span class="dot"></span>Live Signal Stream • Last update: 8s ago</div>
-<div style="margin-top:8px">
-<b>Decision:</b> BUY<br>
-<b>Risk:</b> 72 — High<br>
-<b>Confidence:</b> 78%<br>
-<b>Action:</b> Controlled Entry
+<div class="zx-mini-chart"><div class="zx-label">Signal Pressure</div><div class="zx-bars"><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
 </div>
-</div>
-</div>
+</section>
 
-<div class="section-title">Core Capabilities</div>
+<div class="zx-section">Core Capabilities</div>
+<section class="zx-grid">
+<div class="zx-card"><div class="zx-big">Risk</div><p data-i18n="riskText">Risk detection, deviation tracking and decision pressure.</p></div>
+<div class="zx-card"><div class="zx-big">Credit</div><p data-i18n="creditText">Payment capacity, credit stress and approval intelligence.</p></div>
+<div class="zx-card"><div class="zx-big">Trade</div><p data-i18n="tradeText">Execution-aware financial trade decision system.</p></div>
+</section>
 
-<div class="grid">
-<div class="card">
-<div class="big">Risk</div>
-<p>Real-time deviation detection and pressure tracking.</p>
-</div>
+<div class="zx-section">Control Layer</div>
+<section class="zx-grid">
+<div class="zx-card"><b>Assistant Guidance</b><p>WHY / ACTION / WARNING</p></div>
+<div class="zx-card"><b>Audit & Evidence</b><p>Traceable and reviewable decisions.</p></div>
+<div class="zx-card"><b>Self-Healing</b><p>Fallback, repair and governance escalation.</p></div>
+</section>
 
-<div class="card">
-<div class="big">Credit</div>
-<p>Payment capacity and exposure intelligence.</p>
-</div>
-
-<div class="card">
-<div class="big">Trade</div>
-<p>Execution-aware financial decision system.</p>
-</div>
-</div>
-
-<div class="section-title">Product Layer</div>
-
-<div class="product">
-✔ Decision Intelligence<br>
-✔ Risk & Credit Engine<br>
-✔ Financial Trade System<br>
-✔ Institutional Reporting<br>
-✔ Audit & Evidence Layer
-</div>
-
-<div class="section-title">Why ZENTRA</div>
-
-<div class="grid">
-<div class="card">
-<b>Decides</b>
-<p>Turns signals into actionable decisions.</p>
-</div>
-
-<div class="card">
-<b>Proves</b>
-<p>Every output is explainable and traceable.</p>
-</div>
-
-<div class="card">
-<b>Executes</b>
-<p>Decisions are connected to real workflows.</p>
-</div>
-</div>
-
-<div class="footer">
-ZENTRA is not a dashboard. It is a decision intelligence system.
-</div>
-
-</div>
-
+<div class="zx-footer">ZENTRA is not a dashboard. It is a controlled decision intelligence system.</div>
+</main>
+<script src="/app/zentra-i18n.js"></script>
 </body>
 </html>
