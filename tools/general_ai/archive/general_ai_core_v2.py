@@ -1,12 +1,16 @@
 import json
-from datetime import datetime
+from datetime import datetime, timezone
 from pathlib import Path
 
-# ARCHIVE
+# ======================
+# STORAGE
+# ======================
 ARCHIVE = Path("data/general_ai_archive.jsonl")
 ARCHIVE.parent.mkdir(parents=True, exist_ok=True)
 
+# ======================
 # ASSISTANTS
+# ======================
 ASSISTANTS = {
     "writing": "Writing Assistant",
     "research": "Research Assistant",
@@ -18,8 +22,10 @@ ASSISTANTS = {
     "general": "General Assistant",
 }
 
+# ======================
 # INPUT CLASSIFICATION
-def classify(text):
+# ======================
+def classify(text: str) -> dict:
     t = text.lower().strip()
 
     if any(x in t for x in ["mail", "yaz", "metin", "teklif"]):
@@ -47,13 +53,12 @@ def classify(text):
         "assistant": ASSISTANTS[domain],
     }
 
-# REAL OUTPUT GENERATOR
-def generate_real_output(text, meta):
-    domain = meta["domain"]
-
-    if domain == "writing":
-        subject = "Profesyonel Bilgilendirme"
-        return f"""KONU: {subject}
+# ======================
+# GENERATORS
+# ======================
+def writing_output(text: str) -> str:
+    subject = "Profesyonel Bilgilendirme"
+    return f"""KONU: {subject}
 
 Merhaba,
 
@@ -64,84 +69,129 @@ Ana noktalar:
 - Süreç planlanmaktadır
 - Gelişmeler tarafınıza iletilecektir
 
-Gerektiğinde detaylı rapor veya teklif formatına dönüştürebilirim.
+İhtiyaç halinde detaylı rapor veya teklif hazırlayabilirim.
 
-Geri dönüşünüzü bekliyorum.
+Geri dönüşünüzü rica ederim.
 
 Saygılarımla"""
 
-    if domain == "research":
-        return f"""KONU:
+def research_output(text: str) -> str:
+    return f"""KONU:
 {text}
 
 ÖZET:
 - Konu analiz edildi
-- Temel yapı oluşturuldu
+- İlk yapı oluşturuldu
 
 BULGULAR:
 - Veri toplama gerekli
 - Rakip analizi yapılmalı
+- Trend incelemesi eksik
+
+RİSKLER:
+- Eksik veri
+- Yanlış yönlendirme ihtimali
 
 SONUÇ:
-- Genişletilmiş araştırma önerilir"""
+- Geniş araştırma önerilir
 
-    if domain == "document":
-        return f"""DOKÜMAN ANALİZİ:
+AKSİYON:
+- Kaynak topla
+- Karşılaştırma yap
+- Rapor hazırla"""
+
+def business_output(text: str) -> str:
+    return f"""İŞ ÇIKTISI:
 {text}
 
-ÇIKTI:
-- Özet
-- Kritik noktalar
-- Riskler
-- Aksiyonlar"""
-
-    if domain == "translation":
-        return f"""ÇEVİRİ:
-{text}
-
-MOD:
-- Anlam korundu
-- Ton korundu
-- Çok dilli uyum sağlandı"""
-
-    if domain == "code":
-        return """AMAÇ:
-Test kodu
-
-KOD:
-print("ZENTRA çalışıyor")
-
-ÇALIŞTIRMA:
-python3 dosya.py"""
-
-    if domain == "business":
-        return f"""İŞ ÇIKTISI:
-{text}
+ÖZET:
+- İş talebi alındı
+- Değerlendirme yapıldı
 
 AKSİYON:
 - Rapor oluştur
-- Göreve çevir
-- Mail hazırla"""
+- Mail hazırla
+- Göreve çevir"""
 
-    if domain == "workflow":
-        return f"""İŞ AKIŞI:
+def workflow_output(text: str) -> str:
+    return f"""İŞ AKIŞI:
 {text}
 
 ADIMLAR:
 1. Analiz
 2. Planlama
 3. Uygulama
-4. Kontrol"""
+4. Kontrol
 
+SONUÇ:
+- Süreç yönetilebilir"""
+
+def code_output() -> str:
+    return """AMAÇ:
+Test kodu
+
+KOD:
+print("ZENTRA çalışıyor")
+
+ÇALIŞTIR:
+python3 dosya.py"""
+
+def document_output(text: str) -> str:
+    return f"""DOKÜMAN:
+{text}
+
+ÇIKTI:
+- Özet
+- Kritik noktalar
+- Riskler"""
+
+def translation_output(text: str) -> str:
+    return f"""ÇEVİRİ:
+{text}
+
+MOD:
+- Anlam korundu
+- Ton korundu"""
+
+def general_output(text: str) -> str:
     return f"""İSTEK:
 {text}
 
 YORUM:
-General Assistant tarafından işlendi."""
+General Assistant tarafından işlendi.
 
+AKSİYON:
+- Genişlet
+- Rapor yap"""
+
+# ======================
+# DISPATCH
+# ======================
+def generate_output(text: str, meta: dict) -> str:
+    domain = meta["domain"]
+
+    if domain == "writing":
+        return writing_output(text)
+    if domain == "research":
+        return research_output(text)
+    if domain == "business":
+        return business_output(text)
+    if domain == "workflow":
+        return workflow_output(text)
+    if domain == "code":
+        return code_output()
+    if domain == "document":
+        return document_output(text)
+    if domain == "translation":
+        return translation_output(text)
+
+    return general_output(text)
+
+# ======================
 # OUTPUT FORMAT
-def build_output(text, meta):
-    real = generate_real_output(text, meta)
+# ======================
+def build_output(text: str, meta: dict) -> str:
+    content = generate_output(text, meta)
 
     return f"""ZENTRA GENERAL AI OUTPUT
 
@@ -158,7 +208,7 @@ AÇIKLAMA:
 İstek sınıflandırıldı ve uygun assistant tarafından işlendi.
 
 KULLANILABİLİR ÇIKTI:
-{real}
+{content}
 
 AKSİYONLAR:
 - Düzenle
@@ -166,10 +216,12 @@ AKSİYONLAR:
 - Göreve çevir
 - Kaydet"""
 
+# ======================
 # ARCHIVE
-def archive(input_text, output, meta):
+# ======================
+def archive(input_text: str, output: str, meta: dict):
     record = {
-        "timestamp": datetime.now().isoformat(),
+        "timestamp": datetime.now(timezone.utc).isoformat(),
         "input": input_text,
         "meta": meta,
         "output": output,
@@ -177,16 +229,20 @@ def archive(input_text, output, meta):
     with ARCHIVE.open("a", encoding="utf-8") as f:
         f.write(json.dumps(record, ensure_ascii=False) + "\n")
 
-# RUN
-def run(text):
+# ======================
+# CORE RUN
+# ======================
+def run(text: str) -> str:
     meta = classify(text)
     out = build_output(text, meta)
     archive(text, out, meta)
     return out
 
-# MAIN LOOP
+# ======================
+# CLI LOOP
+# ======================
 if __name__ == "__main__":
-    print("ZENTRA General AI Core")
+    print("ZENTRA General AI Core v2")
     print("Çıkmak için: exit")
 
     while True:
