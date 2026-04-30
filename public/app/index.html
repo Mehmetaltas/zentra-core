@@ -27,7 +27,15 @@
   <div class="logo">ZENTRA</div>
   <div class="sub">COMMAND CENTER V3</div>
   
+
 <nav class="nav">
+  <a href="./index.html">HOME</a>
+  <a href="#run">RUN</a>
+  <a href="#results">RESULTS</a>
+  <a href="./pricing/index.html">UPGRADE</a>
+  <a href="./account/index.html">ACCOUNT</a>
+</nav>
+
 
 <div class="nav-group">
 <div class="nav-title">CORE</div>
@@ -38,14 +46,14 @@
 </div>
 
 <div class="nav-group">
-<div class="nav-title">INTELLIGENCE</div>
+<div class="nav-title"></div>
 <a href="./intel/index.html">Intel AI</a>
 <a href="./general-ai.html">General AI</a>
 <a href="./academia/index.html">Academia</a>
 </div>
 
 <div class="nav-group">
-<div class="nav-title">COMMERCIAL</div>
+<div class="nav-title"></div>
 <a href="./market/index.html">Market Packs</a>
 <a href="./packages/index.html">Packages</a>
 <a href="./pricing/index.html">Pricing</a>
@@ -53,7 +61,7 @@
 </div>
 
 <div class="nav-group">
-<div class="nav-title">SYSTEM</div>
+<div class="nav-title"></div>
 <a href="./account/index.html">Login</a>
 <a href="./support/index.html">Support</a>
 <a href="./legal/index.html">Legal</a>
@@ -83,7 +91,7 @@
   <div class="zc-state-item">Action<b>LIMITED ENTRY</b></div>
 </div>
 
-ZENTRA OPERATING INTELLIGENCE</div>
+ZENTRA OPERATING </div>
     <h1 class="title">Ekonomik sistemi izleyen, riski tartan ve aksiyonu yöneten karar merkezi.</h1>
     <p class="desc">ZENTRA; Intel AI ürünlerini, piyasa sinyallerini, assistant guidance’ı, audit trace’i ve market route’u tek karar işletim yüzünde birleştirir.</p>
   </section>
@@ -174,7 +182,7 @@ async function runCommercialAction(product){
   const box = document.getElementById("commercial-output");
   box.innerText = "Running " + product + "...";
   try{
-    const out = await window.ZENTRA_COMMERCIAL_CORE.action(product, {asset:"THY", case:"live-user-flow"});
+    const out = await window.ZENTRA__CORE.action(product, {asset:"THY", case:"live-user-flow"});
     box.innerText = JSON.stringify(out, null, 2);
   }catch(e){
     box.innerText = "ERROR: " + e;
@@ -206,14 +214,14 @@ async function runCommercialAction(product){
 async function zLiveData(){
   const box = document.getElementById("z-live-output");
   box.innerText = "Loading live data...";
-  const data = await window.ZENTRA_COMMERCIAL_CORE.liveData();
+  const data = await window.ZENTRA__CORE.liveData();
   box.innerText = JSON.stringify(data, null, 2);
 }
 
 async function zRunProduct(product){
   const box = document.getElementById("z-live-output");
   box.innerText = "Running " + product + "...";
-  const data = await window.ZENTRA_COMMERCIAL_CORE.action(product, {
+  const data = await window.ZENTRA__CORE.action(product, {
     asset:"THY",
     case:"live-product-flow"
   });
@@ -223,13 +231,13 @@ async function zRunProduct(product){
 async function zLoadLastReport(){
   const box = document.getElementById("z-live-output");
   box.innerText = "Loading last report...";
-  const ws = await window.ZENTRA_COMMERCIAL_CORE.workspace();
+  const ws = await window.ZENTRA__CORE.workspace();
   const last = ws.workspace && ws.workspace.history && ws.workspace.history[0];
   if(!last){
     box.innerText = "No report/action history yet.";
     return;
   }
-  const data = await window.ZENTRA_COMMERCIAL_CORE.report(last.id);
+  const data = await window.ZENTRA__CORE.report(last.id);
   box.innerText = JSON.stringify(data, null, 2);
 }
 </script>
@@ -244,6 +252,26 @@ async function zLoadLastReport(){
     <div id="z-action" style="font-size:14px;margin-bottom:8px;"></div>
     <div id="z-warning" style="font-size:12px;color:#ffb3b3;"></div>
   </div>
+</section>
+
+
+<section id="run" class="card" style="margin-top:16px">
+  <div class="label">RUN PRODUCTS</div>
+  <h2>Ürünü çalıştır</h2>
+
+  <button class="btn" onclick="zRunProduct('trade')">Financial Trade</button>
+  <button class="btn2" onclick="zRunProduct('risk')">Risk</button>
+  <button class="btn2" onclick="zRunProduct('credit')">Credit</button>
+  <button class="btn2" onclick="zRunProduct('portfolio')">Portfolio</button>
+</section>
+
+
+<section id="results" class="card" style="margin-top:16px">
+  <div class="label">RESULTS</div>
+  <h2>Rapor ve geçmiş</h2>
+
+  <button class="btn2" onclick="zLoadLastReport()">Last Report</button>
+  <button class="btn2" onclick="zLiveData()">Live Data</button>
 </section>
 
 </main>
@@ -313,20 +341,20 @@ function renderCard(data){
 }
 
 async function zRunProduct(product){
-  const data = await window.ZENTRA_COMMERCIAL_CORE.action(product, {asset:"THY"});
+  const data = await window.ZENTRA__CORE.action(product, {asset:"THY"});
   renderCard(data);
 }
 
 async function zLoadLastReport(){
-  const ws = await window.ZENTRA_COMMERCIAL_CORE.workspace();
+  const ws = await window.ZENTRA__CORE.workspace();
   const last = ws.workspace && ws.workspace.history && ws.workspace.history[0];
   if(!last){ alert("no action"); return; }
-  const data = await window.ZENTRA_COMMERCIAL_CORE.report(last.id);
+  const data = await window.ZENTRA__CORE.report(last.id);
   renderCard(data);
 }
 
 async function zLiveData(){
-  const data = await window.ZENTRA_COMMERCIAL_CORE.liveData();
+  const data = await window.ZENTRA__CORE.liveData();
   document.getElementById("z-title").innerText = "LIVE DATA";
   document.getElementById("z-meta").innerText = data.data.source || "";
   document.getElementById("z-decision").innerText =
