@@ -71,3 +71,7 @@ Completeness report generated.
 Completeness report generated.
 ## 2026-04-30_12-05 — COMPLETENESS CHECK
 Completeness report generated.
+
+## 2026-04-30_12-35 — Assistant Intelligence Upgrade
+Assistant now detects intent and starts the correct ZENTRA flow:
+Intel, Portfolio, Proof, Pricing, Support and Legal.

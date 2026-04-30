@@ -96,3 +96,7 @@ Both were restored and linked to the correct system meaning.
 System self-evaluated.
 ### 2026-04-30_12-05 — COMPLETENESS
 System self-evaluated.
+
+### 2026-04-30_12-35 — Assistant Operator Upgrade
+Assistant moved from visible button to operator layer.
+It detects user intent and starts the correct cockpit/report/pack/support/legal flow.

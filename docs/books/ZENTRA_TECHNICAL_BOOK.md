@@ -129,3 +129,11 @@ Completeness check must report SYSTEM READY after this patch.
 Completeness engine executed.
 ## 2026-04-30_12-05 — COMPLETENESS ENGINE
 Completeness engine executed.
+
+## 2026-04-30_12-35 — Assistant Intelligence Technical Layer
+File: app/assistant-intelligence.js
+Functions:
+- classify(input)
+- renderAnswer(input)
+- route-aware flow start
+Rule: Assistant routes; General AI produces.
