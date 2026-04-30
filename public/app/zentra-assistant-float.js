@@ -35,3 +35,15 @@
     document.body.appendChild(btn);
   });
 })();
+
+setTimeout(()=>{
+  const box = document.getElementById("assistant-box");
+  if(box){
+    box.innerHTML = `
+      <div class="label">Recommended Action</div>
+      <p><b>1.</b> Open Financial Trade cockpit</p>
+      <p><b>2.</b> Hedge exposure with RiskLens</p>
+      <p><b>3.</b> Confirm with Report</p>
+    `;
+  }
+},1200);
