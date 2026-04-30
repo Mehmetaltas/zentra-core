@@ -124,3 +124,28 @@ setTimeout(()=>{
     txt.innerHTML += "<br><b>Next:</b> Allocation ve rebalance için Portfolio Pack önerilir.";
   }
 },1600);
+
+
+/* LEGAL_SUPPORT_ROUTE */
+document.addEventListener("DOMContentLoaded", ()=>{
+  setTimeout(()=>{
+    const input = document.querySelector("#za-input");
+    if(!input) return;
+    input.addEventListener("keydown", function(e){
+      if(e.key !== "Enter") return;
+      const v = (this.value || "").toLowerCase();
+      const depth = location.pathname.split("/app/")[1]?.split("/").length - 1 || 0;
+      const prefix = depth <= 0 ? "./" : "../".repeat(depth);
+
+      if(v.includes("iade") || v.includes("iptal") || v.includes("abonelik") || v.includes("fatura") || v.includes("support") || v.includes("destek")){
+        e.preventDefault();
+        location.href = prefix + "support/index.html";
+      }
+
+      if(v.includes("gizlilik") || v.includes("hukuk") || v.includes("sözleşme") || v.includes("guvenlik") || v.includes("güvenlik") || v.includes("privacy") || v.includes("legal")){
+        e.preventDefault();
+        location.href = prefix + "legal/index.html";
+      }
+    });
+  },500);
+});

@@ -72,3 +72,7 @@ Next: individual commercial pages for Risk, FT, Credit and Portfolio packs.
 ### 2026-04-30_10-43 — First Pack Set Integrated
 Risk Pack, Credit Pack, FT Pack and Portfolio Pack now share the same commercial route:
 Assistant → Cockpit → Report → Pack → Pricing.
+
+### 2026-04-30_10-49 — Legal / Security / Support Layer
+ZENTRA now includes professional account, legal, privacy, security, subscription, refund and support entry points.
+Final legal review remains required before paid launch.

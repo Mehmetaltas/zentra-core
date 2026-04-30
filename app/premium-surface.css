@@ -119,3 +119,18 @@ th{color:var(--muted)}
   color:#fff;
   padding:12px;
 }
+
+.zentra-legal-footer{
+  margin:28px auto 18px;
+  padding:14px 18px;
+  max-width:1180px;
+  border-top:1px solid #203553;
+  display:flex;
+  flex-wrap:wrap;
+  gap:14px;
+  justify-content:center;
+  color:#8fa3bd;
+  font-size:12px;
+}
+.zentra-legal-footer a{color:#dce8ff;text-decoration:none}
+.zentra-legal-footer a:hover{color:#34f5a4}

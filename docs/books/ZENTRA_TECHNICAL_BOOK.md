@@ -90,3 +90,11 @@ Updated:
 - app/zentra-assistant-float.js
 
 Rule: packs are not detached demos; they are embedded in the decision flow.
+
+## 2026-04-30_10-49 — Legal / Account / Support Technical Layer
+Files:
+- app/account/index.html
+- app/legal/index.html
+- app/support/index.html
+- app/legal-footer.js
+Assistant routing updated for legal/support/subscription/refund/security terms.

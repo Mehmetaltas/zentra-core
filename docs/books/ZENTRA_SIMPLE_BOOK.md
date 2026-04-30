@@ -48,3 +48,6 @@ Pricing is based on market references, product depth, report/audit value, data c
 Risk, Credit and Portfolio packs were integrated into cockpit/report/assistant flows.
 All first commercial packs now follow:
 Cockpit → Report → Pack → Pricing.
+
+## 2026-04-30_10-49 — Legal / Account / Support Layer
+Professional login, legal center, support center, subscription/refund/privacy/security routes and footer links were added.
