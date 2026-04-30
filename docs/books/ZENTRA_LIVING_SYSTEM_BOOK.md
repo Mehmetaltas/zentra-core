@@ -37,3 +37,7 @@ Keep unresolved or future-stage decisions visible, dated and traceable without d
 - ZENTRA now tests decisions under stress.
 - Stability tracking added.
 - Next: Exposure Optimization Engine.
+
+### Exposure Engine V1
+- ZENTRA now calculates position size.
+- Full decision pipeline completed.

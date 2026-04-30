@@ -41,3 +41,8 @@ No active implementation until current core/productization priorities are closed
 - File: app/intelligence/simulation-engine-v1.js
 - Purpose: stress test decision logic
 - Output: stability + scenario variation
+
+## Exposure Engine V1
+- File: app/intelligence/exposure-engine-v1.js
+- Purpose: position sizing logic
+- Output: exposure + action
