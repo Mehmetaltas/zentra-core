@@ -201,3 +201,50 @@ th{color:var(--muted)}
 .nav:hover{
   opacity:1;
 }
+
+/* REPORT HEADER */
+.zr-header{
+  border:1px solid #2a5b8f;
+  background:linear-gradient(180deg,#0f2138,#0b1727);
+  padding:18px;
+  border-radius:16px;
+  margin-bottom:14px;
+}
+.zr-header .title{
+  font-size:18px;
+  margin-bottom:6px;
+}
+.zr-header .decision{
+  font-size:20px;
+  color:#34f5a4;
+}
+
+/* REPORT GRID */
+.zr-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+}
+
+/* METRIC BOX */
+.zr-metric{
+  background:#0b1727;
+  border:1px solid #1e3c5a;
+  border-radius:12px;
+  padding:12px;
+  font-size:13px;
+}
+
+/* ACTION PANEL */
+.zr-actions{
+  display:flex;
+  gap:10px;
+  margin-top:12px;
+}
+
+/* DISCLAIMER */
+.zr-disclaimer{
+  font-size:11px;
+  opacity:0.7;
+  margin-top:14px;
+}
