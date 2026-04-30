@@ -98,3 +98,5 @@ Files:
 - app/support/index.html
 - app/legal-footer.js
 Assistant routing updated for legal/support/subscription/refund/security terms.
+## 2026-04-30_10-57 — AUTO BUILD SYNC
+Public sync + cleanup + audit.
