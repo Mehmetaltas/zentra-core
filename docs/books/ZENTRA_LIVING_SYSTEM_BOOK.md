@@ -11,3 +11,9 @@ docs/logs/UNPROCESSED_GENERAL_AI_TRACKING.md
 Purpose:
 Keep unresolved or future-stage decisions visible, dated and traceable without disrupting current development flow.
 
+
+### 2026-04-30_08-53 — Living Public Data Cleanup
+- Public system tek state mantığına sabitlendi.
+- Assistant output ve update alanı tekleşti.
+- Real data katmanı static deploy sınırlarını bozmadan eklendi.
+- Sonraki blok: live visual göz kontrol + gerekirse polish.
