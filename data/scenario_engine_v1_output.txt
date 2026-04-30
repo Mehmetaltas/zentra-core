@@ -1,0 +1,50 @@
+{
+  "timestamp": "2026-04-30T06:02:48.463653Z",
+  "input": {
+    "risk": 72,
+    "credit": "REVIEW",
+    "ftSignal": "BUY",
+    "fxPressure": 64,
+    "liquidity": 70
+  },
+  "scenarios": [
+    {
+      "id": "A",
+      "name": "Controlled Entry",
+      "decision": "LIMITED ENTRY",
+      "confidence": 78,
+      "risk": 72,
+      "action": "Use Financial Trade for timing; cap exposure through RiskLens.",
+      "warning": "Do not enter with full exposure."
+    },
+    {
+      "id": "B",
+      "name": "Risk-First Protection",
+      "decision": "HEDGE / REDUCE",
+      "confidence": 72,
+      "risk": 78,
+      "action": "Reduce vulnerable exposure and open RiskLens report.",
+      "warning": "Risk layer is active."
+    },
+    {
+      "id": "C",
+      "name": "FX / Credit Pressure",
+      "decision": "CREDIT REVIEW",
+      "confidence": 72,
+      "risk": 68.0,
+      "action": "Check Credit Intelligence before execution.",
+      "warning": "FX and credit pressure may change the final action."
+    }
+  ],
+  "recommended": {
+    "id": "A",
+    "name": "Controlled Entry",
+    "decision": "LIMITED ENTRY",
+    "confidence": 78,
+    "risk": 72,
+    "action": "Use Financial Trade for timing; cap exposure through RiskLens.",
+    "warning": "Do not enter with full exposure."
+  },
+  "conflict": true,
+  "summary": "Multiple scenario outputs detected. Use controlled decision route."
+}

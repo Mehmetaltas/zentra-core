@@ -18,3 +18,10 @@ No active implementation until current core/productization priorities are closed
 - Kaynaklar: CoinGecko public API, Frankfurter public FX API
 - Fallback: API başarısız olursa mevcut ZENTRA state korunur.
 - Vercel serverless function eklenmedi.
+
+## Scenario Engine V1
+- File: app/intelligence/scenario-engine-v1.js
+- Snapshot tool: tools/scenario_engine_v1_snapshot.py
+- Output: data/scenario_engine_v1_snapshot.json
+- Purpose: one input state → multiple decision scenarios
+- Rule: intelligence only, no new UI.

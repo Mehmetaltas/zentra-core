@@ -17,3 +17,8 @@ Keep unresolved or future-stage decisions visible, dated and traceable without d
 - Assistant output ve update alanı tekleşti.
 - Real data katmanı static deploy sınırlarını bozmadan eklendi.
 - Sonraki blok: live visual göz kontrol + gerekirse polish.
+
+### Scenario Engine V1
+- ZENTRA now supports multi-scenario decision logic.
+- One input can produce Controlled Entry, Risk-First Protection, and FX/Credit Pressure scenarios.
+- Next block: Cross-Lens Conflict Resolver.
