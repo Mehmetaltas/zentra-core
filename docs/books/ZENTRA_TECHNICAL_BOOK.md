@@ -62,3 +62,8 @@ Rules:
 - Single state enforced
 - Single assistant enforced
 - UI independent intelligence layer
+
+## 2026-04-30_09-41 — Product Packaging Technical Layer
+- Public package page: app/packages/index.html
+- Product package doc: docs/packages/PRODUCT_PACKAGING_V1.md
+- Rule: package = cockpit + report + assistant + audit + intelligence engines

@@ -21,3 +21,10 @@ ZENTRA artık:
 - Pozisyon hesaplar
 
 Bu sistem artık “çalışır ürün” seviyesindedir.
+
+## 2026-04-30_09-41 — Product Packaging Mode Started
+ZENTRA artık core sistemden ürün paketlerine geçmiştir:
+- Risk Intelligence Pack
+- Financial Trade Pack
+- Credit Intelligence Pack
+- Portfolio Intelligence Pack
