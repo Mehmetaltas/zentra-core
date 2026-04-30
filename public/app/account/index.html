@@ -3,14 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>ZENTRA Account</title>
+<title>ZENTRA Access Center</title>
 <link rel="stylesheet" href="../premium-surface.css">
 </head>
 <body>
 <div class="shell">
 <aside class="sidebar">
   <div class="logo">ZENTRA</div>
-  <div class="sub">REAL ACCOUNT</div>
+  <div class="sub">ACCESS CENTER</div>
   <nav class="nav">
     <a href="../index.html">Command Center</a>
     <a href="../packages/index.html">Packages</a>
@@ -22,64 +22,60 @@
 
 <main class="main">
   <div class="top">
-    <span class="badge live">● REAL LOGIN ACTIVE</span>
-    <span class="badge">User / Plan / History</span>
-    <span class="badge">Test Subscription</span>
+    <span class="badge live">● REAL LOGIN CORE</span>
+    <span class="badge">User / Workspace / Plan</span>
+    <span class="badge">Payment request ready</span>
   </div>
 
   <section class="hero">
-    <div class="k">ZENTRA ACCOUNT CENTER</div>
-    <h1 class="title">Kullanıcı girişi, plan ve action geçmişi.</h1>
-    <p class="desc">Bu sayfa mevcut ZENTRA Core API’ye bağlanır. Kullanıcı oluşturur, plan test eder, action çalıştırır ve geçmişi gösterir.</p>
+    <div class="k">ZENTRA PROFESSIONAL ACCESS</div>
+    <h1 class="title">Kullanıcı hesabı, workspace ve ürün erişimi.</h1>
+    <p class="desc">Bu alan canlı ZENTRA Core API’ye bağlanır. Kullanıcı oluşturur, token saklar, workspace geçmişini çeker ve ödeme/abonelik talebi açar.</p>
   </section>
 
   <section class="grid g2">
     <div class="card">
       <div class="label">Login / Register</div>
       <input id="email" placeholder="email@example.com" style="width:100%;padding:12px;border-radius:12px;background:#07111f;color:white;border:1px solid #203553">
-      <button class="btn" style="margin-top:10px" onclick="loginUser()">Login / Create Account</button>
-      <pre id="loginOut" style="white-space:pre-wrap">Bekliyor...</pre>
+      <button class="btn" style="margin-top:10px" onclick="loginZentra()">Login / Create Account</button>
     </div>
 
     <div class="card">
-      <div class="label">Plan Test</div>
-      <p>Ödeme entegrasyonu yerine test plan kapısıdır. Gerçek ödeme sonra Stripe/iyzico ile bağlanır.</p>
-      <button class="btn2" onclick="setPlan('core')">Core</button>
-      <button class="btn2" onclick="setPlan('expert')">Expert</button>
-      <button class="btn2" onclick="setPlan('institutional')">Institutional</button>
-      <pre id="planOut" style="white-space:pre-wrap">Plan bekliyor...</pre>
+      <div class="label">Subscription Request</div>
+      <p>Gerçek ödeme sağlayıcı bağlanana kadar ödeme talebi ve plan erişim kaydı oluşturulur.</p>
+      <button class="btn" onclick="requestPlan('core')">Request Core</button>
+      <button class="btn2" onclick="requestPlan('expert')">Request Expert</button>
     </div>
   </section>
 
   <section class="card" style="margin-top:16px">
-    <div class="label">Live Action</div>
-    <button class="btn" onclick="runAction('risk')">Risk Action</button>
-    <button class="btn2" onclick="runAction('trade')">Trade Action</button>
-    <button class="btn2" onclick="runAction('credit')">Credit Action</button>
-    <button class="btn2" onclick="loadHistory()">Load History</button>
-    <pre id="actionOut" style="white-space:pre-wrap;margin-top:12px;background:#07111f;border:1px solid #203553;border-radius:14px;padding:12px;min-height:160px;">Action bekliyor...</pre>
+    <div class="label">Workspace</div>
+    <button class="btn2" onclick="loadWorkspace()">Load Workspace</button>
+    <pre id="account-output" style="white-space:pre-wrap;margin-top:12px;background:#07111f;border:1px solid #203553;border-radius:14px;padding:12px;min-height:160px;">Ready.</pre>
   </section>
 </main>
 </div>
 
-<script src="../zentra-core-api.js"></script>
+<script src="../zentra-commercial-core.js"></script>
 <script>
-async function loginUser(){
+async function loginZentra(){
   const email = document.getElementById("email").value;
-  const data = await ZENTRA_CORE_API.login(email);
-  document.getElementById("loginOut").innerText = JSON.stringify(data,null,2);
+  const out = document.getElementById("account-output");
+  out.innerText = "Logging in...";
+  const data = await window.ZENTRA_COMMERCIAL_CORE.login(email);
+  out.innerText = JSON.stringify(data, null, 2);
 }
-async function setPlan(plan){
-  const data = await ZENTRA_CORE_API.activatePlan(plan);
-  document.getElementById("planOut").innerText = JSON.stringify(data,null,2);
+async function loadWorkspace(){
+  const out = document.getElementById("account-output");
+  out.innerText = "Loading workspace...";
+  const data = await window.ZENTRA_COMMERCIAL_CORE.workspace();
+  out.innerText = JSON.stringify(data, null, 2);
 }
-async function runAction(type){
-  const data = await ZENTRA_CORE_API.runAction(type,{asset:"THY"});
-  document.getElementById("actionOut").innerText = JSON.stringify(data,null,2);
-}
-async function loadHistory(){
-  const data = await ZENTRA_CORE_API.getHistory();
-  document.getElementById("actionOut").innerText = JSON.stringify(data,null,2);
+async function requestPlan(plan){
+  const out = document.getElementById("account-output");
+  out.innerText = "Creating payment request...";
+  const data = await window.ZENTRA_COMMERCIAL_CORE.paymentRequest(plan);
+  out.innerText = JSON.stringify(data, null, 2);
 }
 </script>
 <script src="../zentra-assistant-float.js"></script>

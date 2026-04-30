@@ -1,8 +1,7 @@
 const express = require("express");
 const fs = require("fs");
-const { v4: uuidv4 } = require("uuid");
+const crypto = require("crypto");
 const cors = require("cors");
-const { buildDecision } = require("./engine");
 
 const app = express();
 app.use(cors());
@@ -10,152 +9,256 @@ app.use(express.json());
 
 const DB_FILE = "./data.json";
 
-function loadDB() {
-  try {
-    const db = JSON.parse(fs.readFileSync(DB_FILE));
-    db.users ||= [];
-    db.sessions ||= [];
-    db.actions ||= [];
-    db.subscriptions ||= [];
-    return db;
-  } catch {
-    return { users: [], sessions: [], actions: [], subscriptions: [] };
-  }
+function loadDB(){
+  try { return JSON.parse(fs.readFileSync(DB_FILE)); }
+  catch { return { users: [], sessions: [], actions: [], payments: [] }; }
 }
+function saveDB(db){ fs.writeFileSync(DB_FILE, JSON.stringify(db, null, 2)); }
+function id(){ return crypto.randomUUID(); }
+function token(){ return crypto.randomBytes(24).toString("hex"); }
 
-function saveDB(db) {
-  fs.writeFileSync(DB_FILE, JSON.stringify(db, null, 2));
-}
-
-function getPlan(user_id) {
+function ensureDB(){
   const db = loadDB();
-  const sub = db.subscriptions.find(s => s.user_id === user_id && s.status === "active");
-  return sub ? sub.plan : "free";
-}
-
-function canUse(user_id, type) {
-  const plan = getPlan(user_id);
-  if (plan === "enterprise") return true;
-  if (plan === "institutional") return true;
-  if (plan === "expert") return ["trade", "risk", "credit", "portfolio"].includes(type);
-  if (plan === "core") return ["risk", "credit"].includes(type);
-  return ["risk"].includes(type);
-}
-
-// REGISTER / LOGIN
-app.post("/auth/login", (req, res) => {
-  const db = loadDB();
-  const email = (req.body.email || "").trim().toLowerCase();
-  const name = req.body.name || email.split("@")[0] || "user";
-
-  if (!email || !email.includes("@")) {
-    return res.status(400).json({ ok:false, error:"Valid email required" });
-  }
-
-  let user = db.users.find(u => u.email === email);
-  if (!user) {
-    user = { id: uuidv4(), email, name, created_at: new Date().toISOString() };
-    db.users.push(user);
-    db.subscriptions.push({
-      id: uuidv4(),
-      user_id: user.id,
-      plan: "free",
-      status: "active",
-      created_at: new Date().toISOString()
+  db.users ||= [];
+  db.sessions ||= [];
+  db.actions ||= [];
+  db.payments ||= [];
+  if(!db.users.find(u => u.id === "agent-001")){
+    db.users.push({
+      id:"agent-001",
+      email:"agent@zentra.local",
+      name:"ZENTRA_AGENT",
+      plan:"expert",
+      role:"agent",
+      created_at:new Date().toISOString()
     });
   }
-
-  const session = {
-    token: uuidv4(),
-    user_id: user.id,
-    created_at: new Date().toISOString()
-  };
-  db.sessions.push(session);
   saveDB(db);
+}
+ensureDB();
 
-  res.json({ ok:true, user, token: session.token, plan: getPlan(user.id) });
-});
-
-// CURRENT USER
-app.get("/auth/me", (req, res) => {
-  const token = req.headers.authorization?.replace("Bearer ", "");
+function userFromToken(req){
+  const auth = req.headers.authorization || "";
+  const t = auth.replace("Bearer ","").trim();
   const db = loadDB();
-  const session = db.sessions.find(s => s.token === token);
-  if (!session) return res.status(401).json({ ok:false, error:"Unauthorized" });
+  const s = db.sessions.find(x => x.token === t);
+  if(!s) return null;
+  return db.users.find(u => u.id === s.user_id) || null;
+}
 
-  const user = db.users.find(u => u.id === session.user_id);
-  res.json({ ok:true, user, plan: getPlan(user.id) });
-});
+const PRODUCTS = {
+  trade: { name:"Financial Trade", minPlan:"core" },
+  risk: { name:"Risk Intelligence", minPlan:"core" },
+  credit: { name:"Credit Intelligence", minPlan:"core" },
+  portfolio: { name:"Portfolio Intelligence", minPlan:"expert" },
+  contract: { name:"Contract Protection", minPlan:"core" },
+  sme: { name:"SME Risk / Cash Stress", minPlan:"core" }
+};
 
-// PLAN CHANGE — payment yerine test abonelik kapısı
-app.post("/subscription/test-activate", (req, res) => {
+const PLAN_RANK = { free:0, core:1, expert:2, institutional:3 };
+function allowed(user, product){
+  const p = PRODUCTS[product] || PRODUCTS.trade;
+  return (PLAN_RANK[user.plan] || 0) >= (PLAN_RANK[p.minPlan] || 0);
+}
+
+app.post("/login", (req,res)=>{
+  const { email, name } = req.body || {};
+  if(!email) return res.status(400).json({ ok:false, error:"email_required" });
+
   const db = loadDB();
-  const { user_id, plan } = req.body;
-
-  if (!["free","core","expert","institutional","enterprise"].includes(plan)) {
-    return res.status(400).json({ ok:false, error:"Invalid plan" });
+  let user = db.users.find(u => u.email === email);
+  if(!user){
+    user = {
+      id:id(),
+      email,
+      name:name || email.split("@")[0],
+      plan:"free",
+      role:"user",
+      created_at:new Date().toISOString()
+    };
+    db.users.push(user);
   }
 
-  db.subscriptions = db.subscriptions.filter(s => s.user_id !== user_id);
-  db.subscriptions.push({
-    id: uuidv4(),
-    user_id,
-    plan,
-    status: "active",
-    mode: "test",
-    created_at: new Date().toISOString()
-  });
-
+  const s = { token:token(), user_id:user.id, created_at:new Date().toISOString() };
+  db.sessions.push(s);
   saveDB(db);
-  res.json({ ok:true, user_id, plan, status:"active", mode:"test" });
+
+  res.json({ ok:true, user, token:s.token });
 });
 
-// ACTION
-app.post("/action", (req, res) => {
+app.get("/me", (req,res)=>{
+  const user = userFromToken(req);
+  if(!user) return res.status(401).json({ ok:false, error:"not_logged_in" });
+  res.json({ ok:true, user });
+});
+
+app.get("/products", (req,res)=>{
+  res.json({ ok:true, products:PRODUCTS });
+});
+
+app.post("/payment/request", (req,res)=>{
+  const user = userFromToken(req);
+  if(!user) return res.status(401).json({ ok:false, error:"not_logged_in" });
+
+  const { plan="core" } = req.body || {};
   const db = loadDB();
-  const token = req.headers.authorization?.replace("Bearer ", "");
-  const session = db.sessions.find(s => s.token === token);
 
-  const user_id = req.body.user_id || session?.user_id || "agent-001";
-  const type = req.body.type || "risk";
-  const input = req.body.input || {};
+  const payment = {
+    id:id(),
+    user_id:user.id,
+    plan,
+    status:"pending_manual_payment",
+    note:"Payment provider not connected yet. Manual/Stripe/iyzico/PayTR integration required.",
+    created_at:new Date().toISOString()
+  };
 
-  if (!canUse(user_id, type)) {
+  db.payments.push(payment);
+  saveDB(db);
+  res.json({ ok:true, payment });
+});
+
+app.post("/admin/activate-plan", (req,res)=>{
+  const { email, plan="core", admin_key } = req.body || {};
+  if(admin_key !== "ZENTRA_ADMIN_LOCAL") return res.status(403).json({ ok:false, error:"forbidden" });
+
+  const db = loadDB();
+  const user = db.users.find(u => u.email === email);
+  if(!user) return res.status(404).json({ ok:false, error:"user_not_found" });
+
+  user.plan = plan;
+  saveDB(db);
+  res.json({ ok:true, user });
+});
+
+function buildDecision(product, input, live){
+  const asset = input?.asset || input?.company || "ZENTRA_CASE";
+  const marketRisk = live?.marketRisk ?? 64;
+  const fxPressure = live?.fxPressure ?? 55;
+  const risk = Math.min(95, Math.max(35, marketRisk + (product === "credit" ? 8 : 0)));
+
+  const base = {
+    product,
+    asset,
+    risk,
+    signal: risk > 80 ? "PROTECT" : risk > 68 ? "WATCH" : "CONTROLLED",
+    confidence: risk > 80 ? 72 : 78,
+    data_source: live?.source || "fallback"
+  };
+
+  const packs = {
+    trade: {
+      decision: risk > 80 ? "NO FULL ENTRY / HEDGE FIRST" : "LIMITED ENTRY / CONFIRMATION REQUIRED",
+      scenario: {
+        base:"controlled follow-through",
+        risk:"risk spike → hedge/reduce",
+        weak:"signal downgrade → hold"
+      },
+      action:{
+        entry:risk > 80 ? "0–15%" : "max 30%",
+        stop:"risk > 80 OR signal downgrade",
+        review:"before increasing exposure"
+      },
+      warning:["not investment advice","avoid full exposure","confirm with RiskLens"]
+    },
+    risk: {
+      decision: risk > 75 ? "REDUCE / PROTECT" : "MONITOR / CONTROL",
+      scenario:{ base:"risk controlled", risk:"stress rises", weak:"liquidity tightens" },
+      action:{ reduce:"exposure if risk rises", hedge:"recommended when risk>70", monitor:"daily" },
+      warning:["single metric is not enough","use report + audit"]
+    },
+    credit: {
+      decision: fxPressure > 60 ? "CREDIT REVIEW / FX PRESSURE ACTIVE" : "CREDIT WATCH",
+      scenario:{ base:"payment capacity stable", risk:"FX pressure rises", weak:"cash stress increases" },
+      action:{ review:"payment plan", reduce:"unnecessary commitments", monitor:"FX/credit stress" },
+      warning:["not credit advice","requires customer-specific data"]
+    },
+    portfolio: {
+      decision: risk > 75 ? "DEFENSIVE REBALANCE" : "BALANCED WATCH",
+      scenario:{ base:"balanced allocation", risk:"defensive shift", weak:"reduce volatile buckets" },
+      action:{ allocation:"cap high-risk buckets", rebalance:"weekly", liquidity:"keep buffer" },
+      warning:["portfolio profile required","not personal investment advice"]
+    },
+    contract: {
+      decision:"DOCUMENT RISK REVIEW REQUIRED",
+      scenario:{ base:"obligation scan", risk:"hidden cost/forced bundle", weak:"unclear consent" },
+      action:{ check:"fees, termination, consent, bundled products", prepare:"questions/objection notes" },
+      warning:["not legal advice","lawyer review may be required"]
+    },
+    sme: {
+      decision:"CASH STRESS MAP REQUIRED",
+      scenario:{ base:"30-day cash view", risk:"receivable delay / FX / credit pressure", weak:"liquidity gap" },
+      action:{ list:"payables/receivables", prioritize:"critical payments", monitor:"cash buffer" },
+      warning:["requires real business data","not accounting advice"]
+    }
+  };
+
+  return { ...base, ...(packs[product] || packs.trade) };
+}
+
+async function liveData(){
+  // Safe fallback; later real licensed feeds can replace this.
+  try{
+    const btc = await fetch("https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd&include_24hr_change=true", { timeout: 4000 });
+    const b = await btc.json();
+    const ch = b?.bitcoin?.usd_24h_change || 0;
+    return {
+      source:"coingecko_public_plus_fallback",
+      btc_change: ch,
+      marketRisk: ch < -3 ? 78 : ch > 3 ? 58 : 64,
+      fxPressure:55
+    };
+  }catch(e){
+    return { source:"fallback", marketRisk:64, fxPressure:55 };
+  }
+}
+
+app.get("/live-data", async (req,res)=>{
+  res.json({ ok:true, data: await liveData() });
+});
+
+app.post("/action", async (req,res)=>{
+  const db = loadDB();
+  const user = userFromToken(req) || db.users.find(u => u.id === (req.body?.user_id || "agent-001")) || db.users.find(u=>u.id==="agent-001");
+
+  const product = req.body?.type || req.body?.product || "trade";
+  if(!allowed(user, product)){
     return res.status(403).json({
       ok:false,
-      error:"PLAN_ACCESS_REQUIRED",
-      required:"upgrade",
-      current_plan:getPlan(user_id),
-      requested:type
+      error:"plan_required",
+      user_plan:user.plan,
+      required:PRODUCTS[product]?.minPlan || "core",
+      product
     });
   }
 
-  const decision = buildDecision(type, input);
+  const live = await liveData();
+  const decision = buildDecision(product, req.body?.input || {}, live);
 
   const action = {
-    id: uuidv4(),
-    user_id,
-    type,
-    input,
+    id:id(),
+    user_id:user.id,
+    product,
+    input:req.body?.input || {},
     decision,
-    created_at: new Date().toISOString()
+    created_at:new Date().toISOString()
   };
 
   db.actions.push(action);
   saveDB(db);
-
-  res.json({ ok:true, ...action, plan:getPlan(user_id) });
+  res.json({ ok:true, action });
 });
 
-// HISTORY
-app.get("/history/:user_id", (req, res) => {
+app.get("/history/:user_id", (req,res)=>{
   const db = loadDB();
-  res.json(db.actions.filter(a => a.user_id === req.params.user_id));
+  res.json({ ok:true, history: db.actions.filter(a => a.user_id === req.params.user_id).reverse() });
 });
 
-// HEALTH
-app.get("/health", (req,res)=>res.json({ok:true, service:"zentra-core", db:"json"}));
-
-app.listen(4000, "0.0.0.0", () => {
-  console.log("ZENTRA CORE REAL USER LOGIN ACTIVE ON 4000");
+app.get("/workspace", (req,res)=>{
+  const user = userFromToken(req);
+  if(!user) return res.status(401).json({ ok:false, error:"not_logged_in" });
+  const db = loadDB();
+  const history = db.actions.filter(a => a.user_id === user.id).reverse();
+  res.json({ ok:true, user, workspace:{ history, plan:user.plan, actions_count:history.length } });
 });
+
+app.listen(4000, "0.0.0.0", ()=>console.log("ZENTRA COMMERCIAL CORE RUNNING ON 4000"));

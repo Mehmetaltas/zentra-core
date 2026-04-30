@@ -156,6 +156,32 @@ Market Route</div><p>Only sellable packs go to Market.</p><a class="btn" href=".
     <div class="card"><div class="label">Markets</div><p>Local/global market, FX, crypto and commodities view.</p><a class="btn2" href="./markets/index.html">Open Markets</a></div>
   </section>
 
+
+<section class="card" style="margin-top:16px">
+  <div class="label">ZENTRA Commercial Core Panel</div>
+  <h2>Canlı ürün action sistemi</h2>
+  <p>Kullanıcı hesabı varsa token ile, yoksa agent ile action üretir. Sonuç backend'e yazılır ve history'de görünür.</p>
+  <div class="zc-actions">
+    <button class="btn" onclick="runCommercialAction('trade')">Trade</button>
+    <button class="btn2" onclick="runCommercialAction('risk')">Risk</button>
+    <button class="btn2" onclick="runCommercialAction('credit')">Credit</button>
+    <button class="btn2" onclick="runCommercialAction('portfolio')">Portfolio</button>
+  </div>
+  <pre id="commercial-output" style="white-space:pre-wrap;margin-top:12px;background:#07111f;border:1px solid #203553;border-radius:14px;padding:12px;min-height:160px;">Commercial core ready.</pre>
+</section>
+<script>
+async function runCommercialAction(product){
+  const box = document.getElementById("commercial-output");
+  box.innerText = "Running " + product + "...";
+  try{
+    const out = await window.ZENTRA_COMMERCIAL_CORE.action(product, {asset:"THY", case:"live-user-flow"});
+    box.innerText = JSON.stringify(out, null, 2);
+  }catch(e){
+    box.innerText = "ERROR: " + e;
+  }
+}
+</script>
+
 </main>
 </div>
 
@@ -197,5 +223,7 @@ Market Route</div><p>Only sellable packs go to Market.</p><a class="btn" href=".
 <script src="./intelligence/engine-binding-v1.js"></script>
 
 <script src="./quality/quality-engine-v1.js"></script>
+
+<script src="./zentra-commercial-core.js"></script>
 </body>
 </html>
