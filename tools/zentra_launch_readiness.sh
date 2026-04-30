@@ -33,7 +33,14 @@ check "Proof Standard" docs/proof/PROOF_FLOW_STANDARD.md
 if grep -q "MISSING" "$R"; then
   echo "FINAL STATUS: FIX REQUIRED" >> "$R"
 else
-  echo "FINAL STATUS: LAUNCH READY BASELINE" >> "$R"
+  echo "FINAL STATUS: COMMERCIAL FIX REQUIRED" >> "$R"
+echo "" >> "$R"
+echo "## Required for full commercial launch" >> "$R"
+echo "- Auth / login backend" >> "$R"
+echo "- Payment / subscription backend" >> "$R"
+echo "- Account management backend" >> "$R"
+echo "- Real report delivery backend" >> "$R"
+echo "# COMMERCIAL_BACKEND_CHECK" >> "$R"
 fi
 
 cat "$R"

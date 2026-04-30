@@ -51,8 +51,8 @@
       <h3>Size nasıl yardımcı olayım?</h3>
       <p id="za-detected"><b>Algılanan:</b> Henüz komut girilmedi.</p>
       <textarea id="za-input" placeholder="Örn: THY hisse analizi, risk raporu, portföy kontrolü..."></textarea>
-      <p style="font-size:12px;opacity:.72">Enter’a basınca ilgili cockpit açılır. Yatırım tavsiyesi vermez.</p>
-      <a class="btn" id="za-action" href="${r.target}">İlgili Cockpit’i Aç</a>
+      <p style="font-size:12px;opacity:.72">Komutu algılar, ilgili ZENTRA akışını açar. Yatırım tavsiyesi vermez.</p>
+      <a class="btn" id="za-action" href="${r.target}">Akışı Başlat</a>
     `;
 
     const btn = document.createElement("button");
