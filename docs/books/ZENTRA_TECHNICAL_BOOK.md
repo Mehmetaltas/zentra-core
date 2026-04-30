@@ -67,3 +67,8 @@ Rules:
 - Public package page: app/packages/index.html
 - Product package doc: docs/packages/PRODUCT_PACKAGING_V1.md
 - Rule: package = cockpit + report + assistant + audit + intelligence engines
+
+## 2026-04-30_09-54 — Pricing Logic Technical Record
+- Pricing page: app/pricing/index.html
+- Pricing doc: docs/pricing/PRICING_PLAN_LOGIC_V1.md
+- Rule: pricing is market-adjusted and package-based.

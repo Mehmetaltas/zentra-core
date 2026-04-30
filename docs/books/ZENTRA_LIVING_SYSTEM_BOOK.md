@@ -60,3 +60,7 @@ Sonraki faz:
 ZENTRA artık satılabilir paketleme fazına geçti.
 Core tamamlandı; ürünleştirme başladı.
 Next: Pricing / Plan Logic.
+
+### 2026-04-30_09-54 — Pricing Logic
+ZENTRA moved from product packaging to pricing logic.
+Next: individual commercial pages for Risk, FT, Credit and Portfolio packs.

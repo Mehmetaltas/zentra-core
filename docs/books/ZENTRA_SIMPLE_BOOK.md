@@ -28,3 +28,13 @@ ZENTRA artık core sistemden ürün paketlerine geçmiştir:
 - Financial Trade Pack
 - Credit Intelligence Pack
 - Portfolio Intelligence Pack
+
+## 2026-04-30_09-54 — Pricing / Plan Logic Started
+ZENTRA pricing is now structured as:
+- Free
+- Core
+- Expert
+- Institutional
+- Enterprise / Custom
+
+Pricing is based on market references, product depth, report/audit value, data cost and institutional use.
