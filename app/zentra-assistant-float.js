@@ -107,3 +107,20 @@ setTimeout(()=>{
     txt.innerHTML += "<br><b>Next:</b> Full execution için FT Pack önerilir.";
   }
 },1500);
+
+/* PACK PUSH — Risk / Credit / Portfolio */
+setTimeout(()=>{
+  const txt = document.querySelector("#za-detected");
+  if(!txt) return;
+  const s = txt.innerText || "";
+
+  if(s.includes("Risk")) {
+    txt.innerHTML += "<br><b>Next:</b> Full stress, scenario ve exposure için Risk Pack önerilir.";
+  }
+  if(s.includes("Kredi") || s.includes("Credit")) {
+    txt.innerHTML += "<br><b>Next:</b> Full credit stress ve FX pressure için Credit Pack önerilir.";
+  }
+  if(s.includes("Portföy")) {
+    txt.innerHTML += "<br><b>Next:</b> Allocation ve rebalance için Portfolio Pack önerilir.";
+  }
+},1600);

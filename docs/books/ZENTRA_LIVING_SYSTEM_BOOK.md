@@ -68,3 +68,7 @@ Next: individual commercial pages for Risk, FT, Credit and Portfolio packs.
 ### 2026-04-30_10-15 — Assistant Public Presence
 - ZENTRA Assistant is now visible, route-aware and cockpit-oriented.
 - Public pricing language cleaned for professional positioning.
+
+### 2026-04-30_10-43 — First Pack Set Integrated
+Risk Pack, Credit Pack, FT Pack and Portfolio Pack now share the same commercial route:
+Assistant → Cockpit → Report → Pack → Pricing.

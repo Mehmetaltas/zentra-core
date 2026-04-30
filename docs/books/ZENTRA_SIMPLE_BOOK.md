@@ -43,3 +43,8 @@ Pricing is based on market references, product depth, report/audit value, data c
 - Asistan butonu tüm public sayfalarda görünür hale getirildi.
 - Asistan ilgili sayfaya göre cockpit/report görev yönlendirmesi yapar.
 - Zayıf fiyatlandırma ifadeleri profesyonel dille değiştirildi.
+
+## 2026-04-30_10-43 — Pack Flow Integration
+Risk, Credit and Portfolio packs were integrated into cockpit/report/assistant flows.
+All first commercial packs now follow:
+Cockpit → Report → Pack → Pricing.

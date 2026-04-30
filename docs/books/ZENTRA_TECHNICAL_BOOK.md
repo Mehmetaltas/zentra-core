@@ -77,3 +77,16 @@ Rules:
 - File: app/zentra-assistant-float.js
 - Global assistant button bound to all app HTML pages.
 - Route-aware cockpit/task guidance added.
+
+## 2026-04-30_10-43 — Pack Integration Technical Record
+Updated:
+- app/cockpits/risk.html
+- app/reports/risk.html
+- app/cockpits/credit.html
+- app/reports/credit.html
+- app/portfolio/index.html
+- app/packages/index.html
+- app/pricing/index.html
+- app/zentra-assistant-float.js
+
+Rule: packs are not detached demos; they are embedded in the decision flow.
