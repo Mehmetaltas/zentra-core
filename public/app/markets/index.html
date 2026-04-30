@@ -51,6 +51,7 @@
       <span class="badge">FX / Crypto / Commodities</span>
       <span class="badge">Portfolio Watch</span>
     </div>
+    <span class="badge" id="data-status">Public data initializing</span>
     <span class="badge">Updated: <span id="z-timestamp">0s</span>
   <div class="market-tape">
     <span>BIST100 <b class="up">72 ▲ +0.8%</b></span>
@@ -155,10 +156,16 @@
       <p><b>ACTION:</b> Use FT cockpit for market timing, RiskLens for exposure, Credit for FX pressure.</p>
       <p><b>WARNING:</b> Public signals are not investment advice. Scenario, profile and risk limits are required.</p>
   <section class="card" style="margin-top:16px">
+    <div class="label">Data Source</div>
+    <p id="data-source">ZENTRA data source loading...</p>
+  </section>
+
+  <section class="card" style="margin-top:16px">
     <div class="label">Disclosure</div>
     <p>Bu piyasa paneli genel bilgilendirme amaçlıdır. Buradaki sinyal, skor ve yorumlar yatırım tavsiyesi değildir. Tam analiz için ilgili ZENTRA cockpit ve report paketi gerekir.</p>
 </main>
 <script src="../data/zentra-public-data.js"></script>
+<script src="../real-data-engine-v3.js"></script>
 <script src="./markets-binding.js"></script>
 <script src="../assistant-binding.js"></script>
 <script src="../live-engine.js"></script>
