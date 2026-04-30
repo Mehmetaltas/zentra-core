@@ -75,9 +75,9 @@
       <p><b>Risk:</b> HIGH / <b>Confidence:</b> 78% / <b>Action:</b> LIMITED ENTRY</p>
 
       <div class="grid g3">
-        <div class="card"><div class="label">RiskLens</div><div class="big">72</div><span class="pill warn">CAUTION</span></div>
-        <div class="card"><div class="label">FT Signal</div><div class="big">BUY</div><span class="pill ok">ACTIVE</span></div>
-        <div class="card"><div class="label">Credit</div><div class="big">66</div><span class="pill warn">REVIEW</span></div>
+        <div class="card"><div class="label">RiskLens</div><div class="big" id="z-risk">72</div><span class="pill warn">CAUTION</span></div>
+        <div class="card"><div class="label">FT Signal</div><div class="big" id="z-ft-signal">BUY</div><span class="pill ok">ACTIVE</span></div>
+        <div class="card"><div class="label">Credit</div><div class="big" id="z-credit">66</div><span class="pill warn">REVIEW</span></div>
       </div>
 
       <div class="chartbox" data-pro-chart style="margin-top:14px">
@@ -135,5 +135,9 @@
 <script src="./zentra-intelligence.js"></script>
 
 <script src="./pro-chart-engine.js"></script>
+
+<script src="./data/zentra-state.js"></script>
+<script src="./state-binding.js"></script>
+
 </body>
 </html>
