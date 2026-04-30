@@ -36,3 +36,8 @@ No active implementation until current core/productization priorities are closed
 - File: app/intelligence/simulation-engine-v1.js
 - Purpose: stress test decision logic
 - Output: stability + scenario variation
+
+## Simulation Engine V1
+- File: app/intelligence/simulation-engine-v1.js
+- Purpose: stress test decision logic
+- Output: stability + scenario variation

@@ -32,3 +32,8 @@ Keep unresolved or future-stage decisions visible, dated and traceable without d
 - ZENTRA now tests decisions under stress.
 - Stability tracking added.
 - Next: Exposure Optimization Engine.
+
+### Simulation Engine V1
+- ZENTRA now tests decisions under stress.
+- Stability tracking added.
+- Next: Exposure Optimization Engine.
