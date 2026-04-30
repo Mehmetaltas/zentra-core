@@ -16,7 +16,7 @@ check_block () {
   MISSING=0
   echo "## $NAME" >> $REPORT
   for f in "$@"; do
-    if [ -f "$f" ]; then
+    if [ -e "$f" ]; then
       echo "✔ $f" >> $REPORT
     else
       echo "❗ MISSING: $f" >> $REPORT
