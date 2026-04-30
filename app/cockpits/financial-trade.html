@@ -1,78 +1,116 @@
-<!doctype html><html><head><meta charset="utf-8"><title>financial-trade Cockpit</title>
-<link rel="stylesheet" href="../zui.css"></head>
-<body><main class="wrap">
-<nav class="nav"><div class="logo">ZENTRA</div><a href="../modules/financial-trade.html">Back</a><a href="../account/index.html">Login</a>
-<a href="../support/index.html">Support</a>
-<a href="../legal/index.html">Legal</a>
-</nav>
-<section class="hero"><div class="k">FINANCIAL-TRADE COCKPIT</div>
-<h1 class="title">Canlı karar yüzü</h1>
-<p class="sub">Bu modülün kendi verisi ve çıktısı burada.</p>
-<a class="btn" href="../reports/financial-trade.html">Generate Report</a>
-</section>
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ZENTRA Financial Trade Cockpit</title>
+<link rel="stylesheet" href="../premium-surface.css">
+</head>
+<body>
+<div class="shell">
+<aside class="sidebar">
+  <div class="logo">ZENTRA</div>
+  <div class="sub">FINANCIAL TRADE</div>
+  <nav class="nav">
+    <a href="../index.html">Command Center</a>
+    <a href="../markets/index.html">Markets</a>
+    <a href="../modules/financial-trade.html">FT Product</a>
+    <a href="../reports/financial-trade.html">FT Report</a>
+    <a href="../pricing/index.html">Pricing</a>
+    <a href="../support/index.html">Support</a>
+  </nav>
+</aside>
 
-<section class="grid" style="margin-top:16px">
-  <div class="card">
+<main class="main">
+  <div class="top">
+    <span class="badge live">● FT COCKPIT LIVE</span>
+    <span class="badge">Signal / Risk / Exposure</span>
+    <span class="badge">TR / EN / AR Ready</span>
+  </div>
+
+  <section class="hero">
+    <div class="k">ZENTRA FINANCIAL TRADE COCKPIT</div>
+    <h1 class="title">Sinyali tek başına değil; risk, senaryo ve exposure ile birlikte okur.</h1>
+    <p class="desc">Bu cockpit; Financial Trade sinyalini RiskLens, scenario, conflict, simulation ve exposure katmanlarıyla birlikte değerlendirir.</p>
+  </section>
+
+  <section class="grid g4">
+    <div class="card">
+      <div class="label">Asset Input</div>
+      <div class="big">THY</div>
+      <p>BIST equity use-case</p>
+    </div>
+    <div class="card">
+      <div class="label">Signal</div>
+      <div class="big">WATCH</div>
+      <p>Momentum present, confirmation required.</p>
+    </div>
+    <div class="card">
+      <div class="label">Risk</div>
+      <div class="big">70</div>
+      <p>Risk elevated. Hedge required.</p>
+    </div>
+    <div class="card">
+      <div class="label">Exposure</div>
+      <div class="big">30–40%</div>
+      <p>Limited allocation only.</p>
+    </div>
+  </section>
+
+  <section class="grid g2" style="margin-top:16px">
+    <div class="card">
+      <div class="label">Decision Core</div>
+      <h2>LIMITED ENTRY + HEDGE</h2>
+      <p><b>IF</b> risk &gt; 80 → exit / reduce</p>
+      <p><b>IF</b> signal downgrades → hold</p>
+      <p><b>IF</b> credit pressure rises → review before execution</p>
+    </div>
+
+    <div class="card">
+      <div class="label">Scenario Read</div>
+      <p><b>Base:</b> controlled follow-through.</p>
+      <p><b>Risk spike:</b> hedge dominates.</p>
+      <p><b>Weak signal:</b> no full exposure.</p>
+    </div>
+  </section>
+
+  <section class="card" style="margin-top:16px">
     <div class="label">Signal Indicator Panel</div>
-    <div class="bars"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
-    <p>Canlı sinyal, baskı, risk ve karar yönü bu panelde izlenir.</p>
-  </div>
+    <div data-pro-chart style="height:260px"></div>
+    <p>Signal, liquidity and risk pressure are evaluated together. This is not a price board.</p>
+  </section>
 
-  <div class="card">
-    <div class="label">Assistant Guidance</div>
-    <p><b>WHY:</b> Bu cockpit ilgili ürün hattının karar sinyallerini toplar.</p>
-    <p><b>ACTION:</b> Sinyal, risk ve rapor çıktısını birlikte değerlendir.</p>
-    <p><b>WARNING:</b> Tek metrikle karar verme; cockpit + report + audit birlikte okunur.</p>
-  </div>
+  <section class="grid g2" style="margin-top:16px">
+    <div class="card">
+      <div class="label">Assistant Guidance</div>
+      <div id="assistant-box">
+        <p><b>WHY:</b> Signal exists, but risk is elevated.</p>
+        <p><b>ACTION:</b> Use limited entry, confirm with RiskLens, then open report.</p>
+        <p><b>WARNING:</b> Do not use full exposure.</p>
+      </div>
+    </div>
 
-  <div class="card">
-    <div class="label">Output Route</div>
-    <p>Cockpit → Report → Market Pack → Assistant Follow-up</p>
-  </div>
-</section>
-
-
-<section class="card" style="margin-top:16px">
-  <div class="label">FT Pack Upgrade</div>
-  <p>Full signal, scenario, simulation ve execution için Financial Trade Pack’e geç.</p>
-  <a class="btn" href="../pricing/index.html">Upgrade to FT Pack</a>
-</section>
-
-</main><script src="../zui-surfaces.js"></script>
-
-<script src="../zui-surfaces-v3.js"></script>
-
-<script src="../chart-engine.js"></script>
-
-<script src="../zentra-intelligence.js"></script>
-
-<script src="../pro-chart-engine.js"></script>
+    <div class="card">
+      <div class="label">Output Route</div>
+      <p>FT Cockpit → RiskLens Check → FT Report → FT Pack</p>
+      <a class="btn" href="../reports/financial-trade.html">Generate FT Report</a>
+      <a class="btn2" href="../cockpits/risk.html">Check RiskLens</a>
+      <a class="btn2" href="../pricing/index.html">Upgrade to FT Pack</a>
+    </div>
+  </section>
+</main>
+</div>
 
 <script src="../data/zentra-state.js"></script>
 <script src="../state-binding.js"></script>
-<script src="../intelligence/scenario-engine-v1.js"></script>
-<script src="../intelligence/conflict-resolver-v1.js"></script>
-<script src="../intelligence/simulation-engine-v1.js"></script>
-<script src="../intelligence/exposure-engine-v1.js"></script>
 <script src="../real-data-api-v3.js"></script>
-
-
-<script src="../zentra-assistant-float.js"></script>
-<script src="../assistant-intelligence.js"></script>
-
-<script src="../legal-footer.js"></script>
-
-<script src="../intelligence/depth-engine-v2.js"></script>
-
-<script src="../intelligence/report-intelligence-v2.js"></script>
-
-<script src="../assistant-operator-v2.js"></script>
-
-<script src="../quality/product-maturity.js"></script>
-
+<script src="../pro-chart-engine.js"></script>
 <script src="../intelligence/decision-core-v3.js"></script>
-
 <script src="../intelligence/engine-binding-v1.js"></script>
-
 <script src="../quality/quality-engine-v1.js"></script>
-</body></html>
+<script src="../zentra-assistant-float.js"></script>
+<script src="../assistant-operator-v2.js"></script>
+<script src="../assistant-intelligence.js"></script>
+<script src="../legal-footer.js"></script>
+</body>
+</html>
