@@ -19,6 +19,14 @@
     return data;
   }
 
+  async function liveData(){
+    return await request("/live-data");
+  }
+
+  async function report(id){
+    return await request("/report/" + id);
+  }
+
   async function action(product="trade", input={asset:"THY"}){
     const r = await fetch(`${API}/action`, {
       method:"POST",
@@ -50,5 +58,5 @@
     return await r.json();
   }
 
-  window.ZENTRA_COMMERCIAL_CORE = { login, action, workspace, paymentRequest };
+  window.ZENTRA_COMMERCIAL_CORE = { login, action, workspace, paymentRequest, liveData, report };
 })();

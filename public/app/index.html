@@ -182,6 +182,58 @@ async function runCommercialAction(product){
 }
 </script>
 
+
+<section class="card" style="margin-top:16px">
+  <div class="label">ZENTRA Live Product Engine</div>
+  <h2>Canlı veri + ürün action + rapor akışı</h2>
+  <p>Mevcut ürün paketleri canlı core'a bağlandı: Risk, Financial Trade, Credit, Portfolio, Contract, SME.</p>
+
+  <div class="zc-actions">
+    <button class="btn" onclick="zLiveData()">Live Data</button>
+    <button class="btn2" onclick="zRunProduct('trade')">Financial Trade</button>
+    <button class="btn2" onclick="zRunProduct('risk')">Risk</button>
+    <button class="btn2" onclick="zRunProduct('credit')">Credit</button>
+    <button class="btn2" onclick="zRunProduct('portfolio')">Portfolio</button>
+    <button class="btn2" onclick="zRunProduct('contract')">Contract</button>
+    <button class="btn2" onclick="zRunProduct('sme')">SME</button>
+    <button class="btn2" onclick="zLoadLastReport()">Last Report</button>
+  </div>
+
+  <pre id="z-live-output" style="white-space:pre-wrap;margin-top:12px;background:#07111f;border:1px solid #203553;border-radius:14px;padding:12px;min-height:180px;">Live product engine ready.</pre>
+</section>
+
+<script>
+async function zLiveData(){
+  const box = document.getElementById("z-live-output");
+  box.innerText = "Loading live data...";
+  const data = await window.ZENTRA_COMMERCIAL_CORE.liveData();
+  box.innerText = JSON.stringify(data, null, 2);
+}
+
+async function zRunProduct(product){
+  const box = document.getElementById("z-live-output");
+  box.innerText = "Running " + product + "...";
+  const data = await window.ZENTRA_COMMERCIAL_CORE.action(product, {
+    asset:"THY",
+    case:"live-product-flow"
+  });
+  box.innerText = JSON.stringify(data, null, 2);
+}
+
+async function zLoadLastReport(){
+  const box = document.getElementById("z-live-output");
+  box.innerText = "Loading last report...";
+  const ws = await window.ZENTRA_COMMERCIAL_CORE.workspace();
+  const last = ws.workspace && ws.workspace.history && ws.workspace.history[0];
+  if(!last){
+    box.innerText = "No report/action history yet.";
+    return;
+  }
+  const data = await window.ZENTRA_COMMERCIAL_CORE.report(last.id);
+  box.innerText = JSON.stringify(data, null, 2);
+}
+</script>
+
 </main>
 </div>
 
