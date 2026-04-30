@@ -3,141 +3,129 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>ZENTRA Command Center V2</title>
+<title>ZENTRA Command Center V3</title>
 <link rel="stylesheet" href="./premium-surface.css">
 <style>
-.signal-line{height:180px;border:1px solid #203553;border-radius:18px;background:#050b18;padding:14px;position:relative;overflow:hidden}
-.signal-line svg{width:100%;height:100%}
-.node-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
-.node-card{background:#081326;border:1px solid #203553;border-radius:16px;padding:14px;min-height:105px}
-.node-card b{display:block;color:#eef6ff}
-.node-card span{display:block;color:#34f5a4;font-size:12px;margin-top:8px}
-.feed{max-height:260px;overflow:auto}
-.feed div{border-left:3px solid #34f5a4;background:#081326;margin:10px 0;padding:10px;border-radius:12px;color:#c8d5e8}
-@media(max-width:950px){.node-grid{grid-template-columns:1fr}}
+.command-layout{display:grid;grid-template-columns:1fr 1.25fr .9fr;gap:14px;margin-top:16px}
+.decision-core{border:1px solid #34f5a4;background:radial-gradient(circle at 50% 0%,rgba(52,245,164,.22),transparent 45%),linear-gradient(180deg,#0b1728,#050b18);border-radius:24px;padding:22px;box-shadow:0 0 42px rgba(52,245,164,.12)}
+.decision-main{font-size:54px;font-weight:900;color:#34f5a4;line-height:1;margin:12px 0}
+.node-flow{display:grid;gap:10px}
+.node-flow a{border:1px solid #203553;background:#081326;border-radius:16px;padding:14px;position:relative}
+.node-flow a:after{content:"↓";display:block;color:#34f5a4;margin-top:8px}
+.node-flow a:last-child:after{content:""}
+.live-log{max-height:330px;overflow:auto}
+.live-log div{border-left:3px solid #34f5a4;background:#081326;margin:8px 0;padding:10px;border-radius:12px;color:#c8d5e8;font-size:13px}
+.chartbox{height:190px;border:1px solid #203553;border-radius:18px;background:#050b18;padding:12px;overflow:hidden}
+.chartbox svg{width:100%;height:100%}
+.assistant-thinking{border:1px solid #203553;background:#081326;border-radius:18px;padding:14px;margin-top:12px}
+@media(max-width:1100px){.command-layout{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
 <div class="shell">
 <aside class="sidebar">
   <div class="logo">ZENTRA</div>
-  <div class="sub">COMMAND CENTER V2</div>
+  <div class="sub">COMMAND CENTER V3</div>
   <nav class="nav">
     <a class="active" href="./index.html">Command Center</a>
-    <a href="./matrix.html">Matrix Centrum</a>
+    <a href="./matrix.html">Matrix</a>
     <a href="./intel/index.html">Intel AI</a>
-    <a href="./market/index.html">Market</a>
+    <a href="./markets/index.html">Markets</a>
+    <a href="./feeds/index.html">Free Feed</a>
+    <a href="./market/index.html">Market Packs</a>
     <a href="./general-ai.html">General AI</a>
     <a href="./academia/index.html">Academia</a>
-    <a href="./investor-demo.html">Investor</a>
-  <a href="./feeds/index.html">Feed</a>
-</nav>
+  </nav>
 </aside>
 
 <main class="main">
   <div class="top">
     <div>
-      <span class="badge live">● LIVE MATRIX</span>
-      <span class="badge">PALANTIR MAP</span>
+      <span class="badge live">● LIVE DECISION OS</span>
+      <span class="badge">PALANTIR GRAPH</span>
       <span class="badge">TRADING SIGNALS</span>
       <span class="badge">TR / EN / AR</span>
     </div>
-    <span class="badge">Last update: 8s</span>
+    <span class="badge">Updated: <span id="z-timestamp">0s</span></span>
   </div>
 
   <section class="hero">
     <div class="k">ZENTRA OPERATING INTELLIGENCE</div>
-    <h1 class="title">Ekonomik sistemi haritalayan, sinyali okuyan ve kararı yöneten merkez.</h1>
-    <p class="desc">
-      ZENTRA; RiskLens, Credit, Trade, Financial Trade, Alternative Finance, Contract, Compliance,
-      Fraud ve Treasury katmanlarını tek matrix üzerinde izler. Her kategori kendi cockpit, report ve market pack akışına sahiptir.
-    </p>
-    <a class="btn" href="./matrix.html">Matrix Haritası</a>
-    <a class="btn2" href="./intel/index.html">Intel Kataloğu</a>
-    <a class="btn2" href="./market/index.html">Market Pack’leri</a>
+    <h1 class="title">Ekonomik sistemi izleyen, riski tartan ve aksiyonu yöneten karar merkezi.</h1>
+    <p class="desc">ZENTRA; Intel AI ürünlerini, piyasa sinyallerini, assistant guidance’ı, audit trace’i ve market route’u tek karar işletim yüzünde birleştirir.</p>
   </section>
 
-  <section class="grid g2">
+  <section class="command-layout">
+
     <div class="card">
-      <div class="label">Palantir-Style System Graph</div>
-      <div class="node-grid">
-        <a class="node-card" href="./modules/risk.html"><b>RiskLens</b><p>Risk, stress, deviation</p><span>→ Cockpit / Report</span></a>
-        <a class="node-card" href="./modules/credit.html"><b>Credit</b><p>Capacity, approval, stress</p><span>→ Cockpit / Report</span></a>
-        <a class="node-card" href="./modules/trade.html"><b>Trade</b><p>Flow, delivery, operation</p><span>→ Cockpit / Report</span></a>
-        <a class="node-card" href="./modules/financial-trade.html"><b>Financial Trade</b><p>Indicator, signal, execution</p><span>→ Signal Engine</span></a>
-        <a class="node-card" href="./modules/alternative-finance.html"><b>Alternative Finance</b><p>Tasarruf, pool, fairness</p><span>→ Obligation Report</span></a>
-        <a class="node-card" href="./modules/contract.html"><b>Contract</b><p>Consent, obligation, protection</p><span>→ Legal-ready report</span></a>
+      <div class="label">System Flow Map</div>
+      <div class="node-flow">
+        <a href="./modules/risk.html"><b>RiskLens</b><br><span class="muted">Risk / stress / deviation</span></a>
+        <a href="./modules/credit.html"><b>Credit</b><br><span class="muted">Capacity / pressure / review</span></a>
+        <a href="./modules/financial-trade.html"><b>Financial Trade</b><br><span class="muted">Indicator / signal / execution</span></a>
+        <a href="./modules/trade.html"><b>Trade</b><br><span class="muted">Flow / delivery / operation</span></a>
+        <a href="./market/index.html"><b>Market Pack</b><br><span class="muted">Product route / offer</span></a>
       </div>
     </div>
 
-    <div class="card">
-      <div class="label">TradingView-Style Signal Chart</div>
-      <div class="signal-line">
-        <svg viewBox="0 0 600 180" preserveAspectRatio="none">
-          <polyline points="0,130 55,118 110,140 165,90 220,102 275,70 330,82 385,44 440,62 495,36 560,54 600,26"
-            fill="none" stroke="#34f5a4" stroke-width="4"/>
-          <polyline points="0,145 70,135 140,150 210,118 280,125 350,96 420,112 490,88 560,96 600,76"
-            fill="none" stroke="#7aa2ff" stroke-width="2" opacity=".65"/>
+    <div class="decision-core">
+      <div class="label">Final Decision Core</div>
+      <div class="decision-main">CONTROLLED OPPORTUNITY</div>
+      <p><b>Risk:</b> HIGH / <b>Confidence:</b> 78% / <b>Action:</b> LIMITED ENTRY</p>
+
+      <div class="grid g3">
+        <div class="card"><div class="label">RiskLens</div><div class="big">72</div><span class="pill warn">CAUTION</span></div>
+        <div class="card"><div class="label">FT Signal</div><div class="big">BUY</div><span class="pill ok">ACTIVE</span></div>
+        <div class="card"><div class="label">Credit</div><div class="big">66</div><span class="pill warn">REVIEW</span></div>
+      </div>
+
+      <div class="chartbox" style="margin-top:14px">
+        <svg viewBox="0 0 700 200" preserveAspectRatio="none">
+          <defs><linearGradient id="zg" x1="0" x2="0" y1="0" y2="1"><stop offset="0%" stop-color="#34f5a4" stop-opacity=".38"/><stop offset="100%" stop-color="#34f5a4" stop-opacity="0"/></linearGradient></defs>
+          <polygon points="0,180 0,135 70,126 140,150 210,92 280,104 350,68 420,84 490,44 560,62 630,34 700,50 700,180" fill="url(#zg)"/>
+          <polyline points="0,135 70,126 140,150 210,92 280,104 350,68 420,84 490,44 560,62 630,34 700,50" fill="none" stroke="#34f5a4" stroke-width="4"/>
+          <polyline points="0,160 80,150 160,166 240,132 320,144 400,114 480,126 560,98 640,110 700,92" fill="none" stroke="#7aa2ff" stroke-width="2" opacity=".75"/>
+          <polyline points="0,88 80,100 160,94 240,118 320,112 400,132 480,124 560,144 640,136 700,156" fill="none" stroke="#ff5c7a" stroke-width="2" opacity=".58"/>
         </svg>
       </div>
-      <p class="muted">Signal stream: Risk pressure high, Financial Trade signal positive, liquidity stable.</p>
-    </div>
-  </section>
 
-  <section class="grid g4">
-    <div class="card"><div class="label">RiskLens</div><div class="big">72</div><span class="pill warn">CAUTION</span></div>
-    <div class="card"><div class="label">Credit</div><div class="big">66</div><span class="pill warn">REVIEW</span></div>
-    <div class="card"><div class="label">Financial Trade</div><div class="big">BUY</div><span class="pill ok">SIGNAL</span></div>
-    <div class="card"><div class="label">System State</div><div class="big">READY</div><span class="pill ok">LIVE</span></div>
-  </section>
-
-  <section class="grid g2">
-    <div class="card">
-      <div class="label">Decision Pipeline</div>
-      <table>
-        <tr><th>Step</th><th>Layer</th><th>Status</th><th>Output</th></tr>
-        <tr><td>01</td><td>Input</td><td><span class="pill ok">Active</span></td><td>Scenario captured</td></tr>
-        <tr><td>02</td><td>RiskLens</td><td><span class="pill warn">Caution</span></td><td>Risk 72</td></tr>
-        <tr><td>03</td><td>Financial Trade</td><td><span class="pill ok">Buy</span></td><td>Signal positive</td></tr>
-        <tr><td>04</td><td>Assistant</td><td><span class="pill ok">Guiding</span></td><td>WHY / ACTION / WARNING</td></tr>
-        <tr><td>05</td><td>Report</td><td><span class="pill ok">Ready</span></td><td>Institutional output</td></tr>
-      </table>
+      <a class="btn" href="./modules/financial-trade.html">Execute via Financial Trade</a>
+      <a class="btn2" href="./modules/risk.html">Hedge via RiskLens</a>
+      <a class="btn2" href="./reports/risk.html">Open Report</a>
     </div>
 
     <div class="card">
-      <div class="label">Live Event Feed</div>
-      <div class="feed">
-        <div><b>RiskLens:</b> Elevated risk detected. Monitoring recommended.</div>
-        <div><b>Financial Trade:</b> Signal strength positive. Controlled exposure only.</div>
-        <div><b>Credit:</b> Payment capacity requires review.</div>
-        <div><b>Assistant:</b> Report and next action guidance ready.</div>
+      <div class="label">Live System Log</div>
+      <div class="live-log">
+        <div>[08:21:03] RiskLens ↑ stress spike detected</div>
+        <div>[08:21:05] Financial Trade → signal upgraded to BUY</div>
+        <div>[08:21:07] Credit → review flag active</div>
+        <div>[08:21:09] Assistant → action prepared</div>
+        <div>[08:21:12] Report route → ready</div>
+      </div>
+
+      <div class="assistant-thinking" id="assistant-box">
+        <div class="label">Assistant Thinking</div>
+        <p><b>WHY:</b> Signal is positive but risk remains elevated.</p>
+        <p><b>ACTION:</b> Limited entry, report verification, risk hedge.</p>
+        <p><b>WARNING:</b> Do not merge Risk, Trade and Financial Trade decisions.</p>
       </div>
     </div>
+
   </section>
 
   <section class="grid g3">
-    <div class="card">
-      <div class="label">Assistant Guidance</div>
-      <p><b>WHY:</b> Matrix signals show opportunity with elevated risk.</p>
-      <p><b>ACTION:</b> Open the relevant cockpit, review the report, then choose execution path.</p>
-      <p><b>WARNING:</b> Do not merge Risk, Trade and Financial Trade decisions.</p>
-    </div>
-
-    <div class="card">
-      <div class="label">Market Route</div>
-      <p>Only sellable packs go to Market: Risk Pack, Credit Pack, Trade Pack, FT Pack, Alternative Finance Pack, Contract Protection Pack.</p>
-      <a class="btn" href="./market/index.html">Open Market</a>
-    </div>
-
-    <div class="card">
-      <div class="label">System Control</div>
-      <p>Audit clean. Experience audit clean. Public language clean. Broken links clean.</p>
-      <a class="btn2" href="./reports/risk.html">Open Report Route</a>
-    </div>
+    <div class="card"><div class="label">Market Route</div><p>Only sellable packs go to Market.</p><a class="btn" href="./market/index.html">Open Packs</a></div>
+    <div class="card"><div class="label">Free Layer</div><p>Public daily / weekly / monthly intelligence feed.</p><a class="btn2" href="./feeds/index.html">Open Free Feed</a></div>
+    <div class="card"><div class="label">Markets</div><p>Local/global market, FX, crypto and commodities view.</p><a class="btn2" href="./markets/index.html">Open Markets</a></div>
   </section>
+
 </main>
 </div>
 
+<script src="./data/zentra-public-data.js"></script>
+<script src="./live-engine.js"></script>
+<script src="./assistant-binding.js"></script>
 <script src="./zui-surfaces-v3.js"></script>
 </body>
 </html>
