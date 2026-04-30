@@ -1,0 +1,69 @@
+{
+  "users": [
+    {
+      "id": "agent-001",
+      "name": "ZENTRA_AGENT"
+    }
+  ],
+  "actions": [
+    {
+      "id": "72b041ad-f397-4e4b-8e29-8aba923e6560",
+      "user_id": "agent-001",
+      "type": "trade",
+      "result": "LIMITED ENTRY (30%)",
+      "created_at": "2026-04-30T14:02:30.134Z"
+    },
+    {
+      "id": "083271b3-dabf-4bff-bd8b-0b7a9a0c00d7",
+      "user_id": "agent-001",
+      "type": "trade",
+      "decision": {
+        "asset": "THY",
+        "signal": "WATCH",
+        "risk": 85,
+        "scenario": {
+          "base": "controlled move",
+          "risk": "spike → hedge",
+          "weak": "no full exposure"
+        },
+        "action": {
+          "entry": "max 30%",
+          "stop": "risk > 80",
+          "review": "if signal drops or credit rises"
+        },
+        "warning": [
+          "do not go full size",
+          "wait for confirmation",
+          "monitor risk spikes"
+        ]
+      },
+      "created_at": "2026-04-30T14:07:41.194Z"
+    },
+    {
+      "id": "c5597b51-bf41-4f6d-bc3f-13e5bafba28e",
+      "user_id": "agent-001",
+      "type": "trade",
+      "decision": {
+        "asset": "THY",
+        "signal": "WATCH",
+        "risk": 64,
+        "scenario": {
+          "base": "controlled move",
+          "risk": "spike → hedge",
+          "weak": "no full exposure"
+        },
+        "action": {
+          "entry": "max 30%",
+          "stop": "risk > 80",
+          "review": "if signal drops or credit rises"
+        },
+        "warning": [
+          "do not go full size",
+          "wait for confirmation",
+          "monitor risk spikes"
+        ]
+      },
+      "created_at": "2026-04-30T14:20:01.673Z"
+    }
+  ]
+}

@@ -1,0 +1,2 @@
+nohup: ignoring input
+ZENTRA CORE (ENGINE ACTIVE)

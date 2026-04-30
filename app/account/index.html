@@ -3,14 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>ZENTRA Access Center</title>
+<title>ZENTRA Account</title>
 <link rel="stylesheet" href="../premium-surface.css">
 </head>
 <body>
 <div class="shell">
 <aside class="sidebar">
   <div class="logo">ZENTRA</div>
-  <div class="sub">ACCESS CENTER</div>
+  <div class="sub">REAL ACCOUNT</div>
   <nav class="nav">
     <a href="../index.html">Command Center</a>
     <a href="../packages/index.html">Packages</a>
@@ -22,43 +22,66 @@
 
 <main class="main">
   <div class="top">
-    <span class="badge live">● ACCESS CENTER</span>
-    <span class="badge">Professional / Institutional</span>
-    <span class="badge">Auth backend required</span>
+    <span class="badge live">● REAL LOGIN ACTIVE</span>
+    <span class="badge">User / Plan / History</span>
+    <span class="badge">Test Subscription</span>
   </div>
 
   <section class="hero">
-    <div class="k">ZENTRA PROFESSIONAL ACCESS</div>
-    <h1 class="title">Profesyonel erişim, abonelik ve kurum hesabı merkezi.</h1>
-    <p class="desc">Bu alan kullanıcı erişimi, plan talebi, fatura, destek, iptal/iade ve güvenlik başvurularını tek merkezde toplar. Tam aktif giriş için backend auth ve subscription altyapısı bağlanacaktır.</p>
+    <div class="k">ZENTRA ACCOUNT CENTER</div>
+    <h1 class="title">Kullanıcı girişi, plan ve action geçmişi.</h1>
+    <p class="desc">Bu sayfa mevcut ZENTRA Core API’ye bağlanır. Kullanıcı oluşturur, plan test eder, action çalıştırır ve geçmişi gösterir.</p>
   </section>
 
   <section class="grid g2">
     <div class="card">
-      <div class="label">Access Request</div>
-      <p><b>Durum:</b> Frontend hazır, backend auth bağlantısı gerekli.</p>
-      <p><b>Akış:</b> kullanıcı talep verir → plan seçilir → hesap açılır → rapor erişimi atanır.</p>
-      <a class="btn" href="../pricing/index.html">Plan Seç</a>
-      <a class="btn2" href="../support/index.html">Erişim Talebi Aç</a>
+      <div class="label">Login / Register</div>
+      <input id="email" placeholder="email@example.com" style="width:100%;padding:12px;border-radius:12px;background:#07111f;color:white;border:1px solid #203553">
+      <button class="btn" style="margin-top:10px" onclick="loginUser()">Login / Create Account</button>
+      <pre id="loginOut" style="white-space:pre-wrap">Bekliyor...</pre>
     </div>
 
     <div class="card">
-      <div class="label">Subscription Operations</div>
-      <p>Plan yükseltme, fatura, iptal, iade, kurum kullanıcıları ve rapor erişimi burada yönetilir.</p>
-      <p><b>Commercial Status:</b> payment/subscription backend required.</p>
+      <div class="label">Plan Test</div>
+      <p>Ödeme entegrasyonu yerine test plan kapısıdır. Gerçek ödeme sonra Stripe/iyzico ile bağlanır.</p>
+      <button class="btn2" onclick="setPlan('core')">Core</button>
+      <button class="btn2" onclick="setPlan('expert')">Expert</button>
+      <button class="btn2" onclick="setPlan('institutional')">Institutional</button>
+      <pre id="planOut" style="white-space:pre-wrap">Plan bekliyor...</pre>
     </div>
   </section>
 
   <section class="card" style="margin-top:16px">
-    <div class="label">Account Rights</div>
-    <p>→ Abonelik ve fatura talebi</p>
-    <p>→ Plan yükseltme / düşürme</p>
-    <p>→ İptal / iade başvurusu</p>
-    <p>→ Gizlilik / veri talebi</p>
-    <p>→ Güvenlik / incident bildirimi</p>
+    <div class="label">Live Action</div>
+    <button class="btn" onclick="runAction('risk')">Risk Action</button>
+    <button class="btn2" onclick="runAction('trade')">Trade Action</button>
+    <button class="btn2" onclick="runAction('credit')">Credit Action</button>
+    <button class="btn2" onclick="loadHistory()">Load History</button>
+    <pre id="actionOut" style="white-space:pre-wrap;margin-top:12px;background:#07111f;border:1px solid #203553;border-radius:14px;padding:12px;min-height:160px;">Action bekliyor...</pre>
   </section>
 </main>
 </div>
+
+<script src="../zentra-core-api.js"></script>
+<script>
+async function loginUser(){
+  const email = document.getElementById("email").value;
+  const data = await ZENTRA_CORE_API.login(email);
+  document.getElementById("loginOut").innerText = JSON.stringify(data,null,2);
+}
+async function setPlan(plan){
+  const data = await ZENTRA_CORE_API.activatePlan(plan);
+  document.getElementById("planOut").innerText = JSON.stringify(data,null,2);
+}
+async function runAction(type){
+  const data = await ZENTRA_CORE_API.runAction(type,{asset:"THY"});
+  document.getElementById("actionOut").innerText = JSON.stringify(data,null,2);
+}
+async function loadHistory(){
+  const data = await ZENTRA_CORE_API.getHistory();
+  document.getElementById("actionOut").innerText = JSON.stringify(data,null,2);
+}
+</script>
 <script src="../zentra-assistant-float.js"></script>
 <script src="../assistant-operator-v2.js"></script>
 <script src="../legal-footer.js"></script>

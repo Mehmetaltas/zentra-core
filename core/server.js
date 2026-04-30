@@ -1,199 +1,161 @@
-const http = require("http");
+const express = require("express");
 const fs = require("fs");
-const path = require("path");
-const { URL } = require("url");
+const { v4: uuidv4 } = require("uuid");
+const cors = require("cors");
+const { buildDecision } = require("./engine");
 
-const intel = require("./intelligence");
-const audit = require("./audit");
-const payment = require("./payment");
+const app = express();
+app.use(cors());
+app.use(express.json());
 
-const PORT = 3000;
+const DB_FILE = "./data.json";
 
-const users = {
-  admin:{password:"1234",plan:"institutional"},
-  user:{password:"1234",plan:"free"}
-};
-
-const sessions = {};
-
-function send(res,data){
-  res.setHeader("Content-Type","application/json");
-  res.end(JSON.stringify(data));
+function loadDB() {
+  try {
+    const db = JSON.parse(fs.readFileSync(DB_FILE));
+    db.users ||= [];
+    db.sessions ||= [];
+    db.actions ||= [];
+    db.subscriptions ||= [];
+    return db;
+  } catch {
+    return { users: [], sessions: [], actions: [], subscriptions: [] };
+  }
 }
 
-function base(symbol){
-  const map={
-    BTCUSDT:{price:65000,change:0.012,trend:0.004},
-    ETHUSDT:{price:3200,change:0.009,trend:0.003},
-    XAU:{price:2300,change:0.002,trend:0.001},
-    USDTRY:{price:32,change:0.001,trend:0.0005}
-  };
-  return map[symbol] || map.BTCUSDT;
+function saveDB(db) {
+  fs.writeFileSync(DB_FILE, JSON.stringify(db, null, 2));
 }
 
-function assetResult(symbol){
-  const b=base(symbol);
-  const scores=intel.computeScores(b.change,b.trend);
-  const decision=intel.decision(scores.risk,scores.mom);
-  const exp=intel.explain(scores.risk,scores.vol,scores.mom);
-
-  return {
-    symbol,
-    price:b.price,
-    change:b.change,
-    trend:b.trend,
-    risk:scores.risk,
-    volatility:scores.vol,
-    momentum:scores.mom,
-    decision,
-    explain:exp.human || exp,
-    explain_human:exp.human || exp,
-    explain_technical:exp.technical || "",
-    decision_i18n:{
-      tr: decision,
-      en: decision,
-      ar: decision==="ACCUMULATE" ? "تجميع" : decision
-    },
-    explain_i18n:{
-      tr: exp.human || exp,
-      en: "Risk appears low. Gradual and controlled action may be considered.",
-      ar: "تبدو المخاطر منخفضة. يمكن التفكير في تقدم تدريجي ومنضبط."
-    },
-    source:"backend"
-  };
+function getPlan(user_id) {
+  const db = loadDB();
+  const sub = db.subscriptions.find(s => s.user_id === user_id && s.status === "active");
+  return sub ? sub.plan : "free";
 }
 
-const server = http.createServer((req,res)=>{
-  try{
-    const u = new URL(req.url,"http://127.0.0.1");
+function canUse(user_id, type) {
+  const plan = getPlan(user_id);
+  if (plan === "enterprise") return true;
+  if (plan === "institutional") return true;
+  if (plan === "expert") return ["trade", "risk", "credit", "portfolio"].includes(type);
+  if (plan === "core") return ["risk", "credit"].includes(type);
+  return ["risk"].includes(type);
+}
 
-    if(u.pathname==="/api/test"){
-      return send(res,{status:"ok",version:"v10-audit-stable"});
-    }
+// REGISTER / LOGIN
+app.post("/auth/login", (req, res) => {
+  const db = loadDB();
+  const email = (req.body.email || "").trim().toLowerCase();
+  const name = req.body.name || email.split("@")[0] || "user";
 
-    if(u.pathname==="/api/login" && req.method==="POST"){
-      let body="";
-      req.on("data",c=>body+=c);
-      req.on("end",()=>{
-        let p={}; try{p=JSON.parse(body||"{}");}catch{}
-        const found=users[p.user];
-
-        if(!found || found.password!==p.password){
-          return send(res,{ok:false,error:"invalid_login"});
-        }
-
-        const token=Math.random().toString(36).slice(2);
-        sessions[token]=p.user;
-        return send(res,{ok:true,token,plan:found.plan,user:p.user});
-      });
-      return;
-    }
-
-    if(u.pathname==="/api/risk"){
-      const symbol=(u.searchParams.get("symbol")||"BTCUSDT").toUpperCase();
-      const result=assetResult(symbol);
-
-      audit.logDecision({
-        type:"risk",
-        symbol:result.symbol,
-        risk:result.risk,
-        decision:result.decision,
-        source:result.source,
-        explain:result.explain_human
-      });
-
-      return send(res,result);
-    }
-
-    if(u.pathname==="/api/portfolio"){
-      const weights={BTCUSDT:40,ETHUSDT:30,XAU:20,USDTRY:10};
-      const symbols=Object.keys(weights);
-
-      const assets=symbols.map(s=>{
-        const r=assetResult(s);
-        return {...r,weight:weights[s]};
-      });
-
-      const totalW=assets.reduce((s,a)=>s+a.weight,0)||1;
-      const portfolioRisk=Math.floor(
-        assets.reduce((s,a)=>s+(a.risk*(a.weight/totalW)),0)
-      );
-
-      const decision=portfolioRisk>70?"RISK OFF":portfolioRisk>50?"HEDGE":portfolioRisk>30?"HOLD":"ACCUMULATE";
-
-      const analysis={
-        human:`Portföy genel olarak ${portfolioRisk<30?"düşük riskli":"risk içeriyor"}. BTCUSDT portföyde dominant. Dikkat edilmeli.`,
-        technical:`Total Risk:${portfolioRisk} Max Asset:BTCUSDT (40%) Assets:4`,
-        recommendation:portfolioRisk<30?"Mevcut yapı korunabilir.":"Risk azaltma değerlendirilmeli."
-      };
-
-      audit.logDecision({
-        type:"portfolio",
-        portfolioRisk,
-        decision,
-        source:"backend"
-      });
-
-      return send(res,{assets,portfolioRisk,decision,analysis,source:"backend"});
-    }
-
-    
-  if(u.pathname==="/api/upgrade"){
-    const token=u.searchParams.get("token");
-    const plan=u.searchParams.get("plan")||"pro";
-    const username=sessions[token];
-
-    if(!username){
-      return send(res,{ok:false,error:"unauthorized"});
-    }
-
-    const pay = payment.simulatePayment(username, plan);
-
-    if(pay.ok){
-      // plan güncelle
-      users[username].plan = plan;
-
-      // audit
-      audit.logDecision({
-        type:"payment",
-        user: username,
-        plan: plan,
-        payment_id: pay.payment_id
-      });
-
-      return send(res,{ok:true,plan,paid:true});
-    }
-
-    return send(res,{ok:false});
+  if (!email || !email.includes("@")) {
+    return res.status(400).json({ ok:false, error:"Valid email required" });
   }
 
-  if(u.pathname==="/api/audit"){
-      return send(res,{logs:audit.getLogs()});
-    }
-
-    
-if(u.pathname==="/" || u.pathname==="/index.html"){
-  const file=path.join(process.cwd(),"public/index.html");
-  res.setHeader("Content-Type","text/html; charset=utf-8");
-  return fs.createReadStream(file).pipe(res);
-}
-
-if(u.pathname==="/cockpit.html"){
-
-      const file=path.join(process.cwd(),"cockpit.html");
-      res.setHeader("Content-Type","text/html; charset=utf-8");
-      return fs.createReadStream(file).pipe(res);
-    }
-
-    res.statusCode=404;
-    res.end("Not found");
-
-  }catch(e){
-    res.statusCode=500;
-    return send(res,{error:e.message});
+  let user = db.users.find(u => u.email === email);
+  if (!user) {
+    user = { id: uuidv4(), email, name, created_at: new Date().toISOString() };
+    db.users.push(user);
+    db.subscriptions.push({
+      id: uuidv4(),
+      user_id: user.id,
+      plan: "free",
+      status: "active",
+      created_at: new Date().toISOString()
+    });
   }
+
+  const session = {
+    token: uuidv4(),
+    user_id: user.id,
+    created_at: new Date().toISOString()
+  };
+  db.sessions.push(session);
+  saveDB(db);
+
+  res.json({ ok:true, user, token: session.token, plan: getPlan(user.id) });
 });
 
-server.listen(PORT,"0.0.0.0",()=>{
-  console.log("ZENTRA v10 audit stable running: http://127.0.0.1:"+PORT);
+// CURRENT USER
+app.get("/auth/me", (req, res) => {
+  const token = req.headers.authorization?.replace("Bearer ", "");
+  const db = loadDB();
+  const session = db.sessions.find(s => s.token === token);
+  if (!session) return res.status(401).json({ ok:false, error:"Unauthorized" });
+
+  const user = db.users.find(u => u.id === session.user_id);
+  res.json({ ok:true, user, plan: getPlan(user.id) });
+});
+
+// PLAN CHANGE — payment yerine test abonelik kapısı
+app.post("/subscription/test-activate", (req, res) => {
+  const db = loadDB();
+  const { user_id, plan } = req.body;
+
+  if (!["free","core","expert","institutional","enterprise"].includes(plan)) {
+    return res.status(400).json({ ok:false, error:"Invalid plan" });
+  }
+
+  db.subscriptions = db.subscriptions.filter(s => s.user_id !== user_id);
+  db.subscriptions.push({
+    id: uuidv4(),
+    user_id,
+    plan,
+    status: "active",
+    mode: "test",
+    created_at: new Date().toISOString()
+  });
+
+  saveDB(db);
+  res.json({ ok:true, user_id, plan, status:"active", mode:"test" });
+});
+
+// ACTION
+app.post("/action", (req, res) => {
+  const db = loadDB();
+  const token = req.headers.authorization?.replace("Bearer ", "");
+  const session = db.sessions.find(s => s.token === token);
+
+  const user_id = req.body.user_id || session?.user_id || "agent-001";
+  const type = req.body.type || "risk";
+  const input = req.body.input || {};
+
+  if (!canUse(user_id, type)) {
+    return res.status(403).json({
+      ok:false,
+      error:"PLAN_ACCESS_REQUIRED",
+      required:"upgrade",
+      current_plan:getPlan(user_id),
+      requested:type
+    });
+  }
+
+  const decision = buildDecision(type, input);
+
+  const action = {
+    id: uuidv4(),
+    user_id,
+    type,
+    input,
+    decision,
+    created_at: new Date().toISOString()
+  };
+
+  db.actions.push(action);
+  saveDB(db);
+
+  res.json({ ok:true, ...action, plan:getPlan(user_id) });
+});
+
+// HISTORY
+app.get("/history/:user_id", (req, res) => {
+  const db = loadDB();
+  res.json(db.actions.filter(a => a.user_id === req.params.user_id));
+});
+
+// HEALTH
+app.get("/health", (req,res)=>res.json({ok:true, service:"zentra-core", db:"json"}));
+
+app.listen(4000, "0.0.0.0", () => {
+  console.log("ZENTRA CORE REAL USER LOGIN ACTIVE ON 4000");
 });
