@@ -25,3 +25,9 @@ No active implementation until current core/productization priorities are closed
 - Output: data/scenario_engine_v1_snapshot.json
 - Purpose: one input state → multiple decision scenarios
 - Rule: intelligence only, no new UI.
+
+## Conflict Resolver V1
+- File: app/intelligence/conflict-resolver-v1.js
+- Input: Scenario Engine output
+- Output: final decision override
+- Rule: priority-based override system

@@ -22,3 +22,8 @@ Keep unresolved or future-stage decisions visible, dated and traceable without d
 - ZENTRA now supports multi-scenario decision logic.
 - One input can produce Controlled Entry, Risk-First Protection, and FX/Credit Pressure scenarios.
 - Next block: Cross-Lens Conflict Resolver.
+
+### Conflict Resolver V1
+- ZENTRA now resolves scenario conflicts.
+- Risk > Credit/FX > Scenario recommendation hierarchy.
+- Next: Scenario Simulation Engine.
