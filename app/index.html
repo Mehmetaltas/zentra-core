@@ -158,7 +158,7 @@ Market Route</div><p>Only sellable packs go to Market.</p><a class="btn" href=".
 
 
 <section class="card" style="margin-top:16px">
-  <div class="label">ZENTRA Commercial Core Panel</div>
+  <div class="label">ZENTRA Product Engine</div>
   <h2>Canlı ürün action sistemi</h2>
   <p>Kullanıcı hesabı varsa token ile, yoksa agent ile action üretir. Sonuç backend'e yazılır ve history'de görünür.</p>
   <div class="zc-actions">
@@ -167,7 +167,7 @@ Market Route</div><p>Only sellable packs go to Market.</p><a class="btn" href=".
     <button class="btn2" onclick="runCommercialAction('credit')">Credit</button>
     <button class="btn2" onclick="runCommercialAction('portfolio')">Portfolio</button>
   </div>
-  <pre id="commercial-output" style="white-space:pre-wrap;margin-top:12px;background:#07111f;border:1px solid #203553;border-radius:14px;padding:12px;min-height:160px;">Commercial core ready.</pre>
+  <pre id="z-out" style="white-space:pre-wrap;margin-top:12px;background:#07111f;border:1px solid #203553;border-radius:14px;padding:12px;min-height:160px;">Commercial core ready.</pre>
 </section>
 <script>
 async function runCommercialAction(product){
@@ -184,7 +184,7 @@ async function runCommercialAction(product){
 
 
 <section class="card" style="margin-top:16px">
-  <div class="label">ZENTRA Live Product Engine</div>
+  <div class="label">ZENTRA Product Engine</div>
   <h2>Canlı veri + ürün action + rapor akışı</h2>
   <p>Mevcut ürün paketleri canlı core'a bağlandı: Risk, Financial Trade, Credit, Portfolio, Contract, SME.</p>
 
@@ -199,7 +199,7 @@ async function runCommercialAction(product){
     <button class="btn2" onclick="zLoadLastReport()">Last Report</button>
   </div>
 
-  <pre id="z-live-output" style="white-space:pre-wrap;margin-top:12px;background:#07111f;border:1px solid #203553;border-radius:14px;padding:12px;min-height:180px;">Live product engine ready.</pre>
+  <pre id="z-out" style="white-space:pre-wrap;margin-top:12px;background:#07111f;border:1px solid #203553;border-radius:14px;padding:12px;min-height:180px;">Live product engine ready.</pre>
 </section>
 
 <script>
@@ -233,6 +233,18 @@ async function zLoadLastReport(){
   box.innerText = JSON.stringify(data, null, 2);
 }
 </script>
+
+
+<section class="card" style="margin-top:16px">
+  <div class="label">ZENTRA PRODUCT RESULT</div>
+  <div id="z-card" style="margin-top:10px;padding:16px;border-radius:16px;background:#07111f;border:1px solid #203553;">
+    <div id="z-title" style="font-size:18px;font-weight:700;margin-bottom:6px;">No result</div>
+    <div id="z-meta" style="opacity:.8;margin-bottom:10px;"></div>
+    <div id="z-decision" style="font-size:16px;margin-bottom:8px;"></div>
+    <div id="z-action" style="font-size:14px;margin-bottom:8px;"></div>
+    <div id="z-warning" style="font-size:12px;color:#ffb3b3;"></div>
+  </div>
+</section>
 
 </main>
 </div>
@@ -277,5 +289,52 @@ async function zLoadLastReport(){
 <script src="./quality/quality-engine-v1.js"></script>
 
 <script src="./zentra-commercial-core.js"></script>
+
+<script>
+function renderCard(data){
+  const d = data.action ? data.action.decision : data.decision;
+  if(!d) return;
+
+  document.getElementById("z-title").innerText =
+    (d.product || "").toUpperCase() + " — " + (d.asset || "");
+
+  document.getElementById("z-meta").innerText =
+    "Risk: " + d.risk + " | Signal: " + d.signal + " | Confidence: " + d.confidence + "%";
+
+  document.getElementById("z-decision").innerText =
+    "Decision: " + (d.decision || "-");
+
+  let act = d.action || {};
+  document.getElementById("z-action").innerText =
+    "Action: " + Object.values(act).join(" | ");
+
+  document.getElementById("z-warning").innerText =
+    (d.warning || []).join(" | ");
+}
+
+async function zRunProduct(product){
+  const data = await window.ZENTRA_COMMERCIAL_CORE.action(product, {asset:"THY"});
+  renderCard(data);
+}
+
+async function zLoadLastReport(){
+  const ws = await window.ZENTRA_COMMERCIAL_CORE.workspace();
+  const last = ws.workspace && ws.workspace.history && ws.workspace.history[0];
+  if(!last){ alert("no action"); return; }
+  const data = await window.ZENTRA_COMMERCIAL_CORE.report(last.id);
+  renderCard(data);
+}
+
+async function zLiveData(){
+  const data = await window.ZENTRA_COMMERCIAL_CORE.liveData();
+  document.getElementById("z-title").innerText = "LIVE DATA";
+  document.getElementById("z-meta").innerText = data.data.source || "";
+  document.getElementById("z-decision").innerText =
+    "Market Risk: " + data.data.marketRisk + " | FX: " + data.data.fxPressure;
+  document.getElementById("z-action").innerText = "";
+  document.getElementById("z-warning").innerText = "";
+}
+</script>
+
 </body>
 </html>
