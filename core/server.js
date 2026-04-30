@@ -261,4 +261,30 @@ app.get("/workspace", (req,res)=>{
   res.json({ ok:true, user, workspace:{ history, plan:user.plan, actions_count:history.length } });
 });
 
+
+
+app.get("/report/:id", (req,res)=>{
+  const db = loadDB();
+  const a = db.actions.find(x => x.id === req.params.id);
+  if(!a) return res.status(404).json({ok:false,error:"not_found"});
+
+  const d = a.decision;
+
+  const report = {
+    title: "ZENTRA INTELLIGENCE REPORT",
+    product: a.product,
+    asset: d.asset,
+    decision: d.decision,
+    risk: d.risk,
+    signal: d.signal,
+    confidence: d.confidence,
+    scenario: d.scenario,
+    action: d.action,
+    warning: d.warning,
+    created_at: a.created_at
+  };
+
+  res.json({ok:true, report});
+});
+
 app.listen(4000, "0.0.0.0", ()=>console.log("ZENTRA COMMERCIAL CORE RUNNING ON 4000"));

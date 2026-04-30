@@ -27,6 +27,14 @@
       "plan": "free",
       "role": "user",
       "created_at": "2026-04-30T15:14:34.625Z"
+    },
+    {
+      "id": "05dc4e21-b3a5-4a32-af82-dc8b80c76a01",
+      "email": "reality_2026-04-30_21-07@zentra.local",
+      "name": "Reality Test",
+      "plan": "free",
+      "role": "user",
+      "created_at": "2026-04-30T18:07:54.997Z"
     }
   ],
   "actions": [
@@ -88,6 +96,239 @@
         ]
       },
       "created_at": "2026-04-30T14:20:01.673Z"
+    },
+    {
+      "id": "9d8b041e-6bb5-4cb3-a0bd-05a0d9c79fb8",
+      "user_id": "a18f8055-c424-4993-b0e1-ed66c6be1db5",
+      "product": "trade",
+      "input": {
+        "asset": "THY",
+        "case": "live-product-flow"
+      },
+      "decision": {
+        "product": "trade",
+        "asset": "THY",
+        "risk": 64,
+        "signal": "CONTROLLED",
+        "confidence": 78,
+        "data_source": "fallback",
+        "decision": "LIMITED ENTRY / CONFIRMATION REQUIRED",
+        "scenario": {
+          "base": "controlled follow-through",
+          "risk": "risk spike → hedge/reduce",
+          "weak": "signal downgrade → hold"
+        },
+        "action": {
+          "entry": "max 30%",
+          "stop": "risk > 80 OR signal downgrade",
+          "review": "before increasing exposure"
+        },
+        "warning": [
+          "not investment advice",
+          "avoid full exposure",
+          "confirm with RiskLens"
+        ]
+      },
+      "created_at": "2026-04-30T15:49:48.547Z"
+    },
+    {
+      "id": "f8b86a27-2f14-48cd-b250-87f4b2ba173b",
+      "user_id": "a18f8055-c424-4993-b0e1-ed66c6be1db5",
+      "product": "trade",
+      "input": {
+        "asset": "THY",
+        "case": "live-product-flow"
+      },
+      "decision": {
+        "product": "trade",
+        "asset": "THY",
+        "risk": 64,
+        "signal": "CONTROLLED",
+        "confidence": 78,
+        "data_source": "fallback",
+        "decision": "LIMITED ENTRY / CONFIRMATION REQUIRED",
+        "scenario": {
+          "base": "controlled follow-through",
+          "risk": "risk spike → hedge/reduce",
+          "weak": "signal downgrade → hold"
+        },
+        "action": {
+          "entry": "max 30%",
+          "stop": "risk > 80 OR signal downgrade",
+          "review": "before increasing exposure"
+        },
+        "warning": [
+          "not investment advice",
+          "avoid full exposure",
+          "confirm with RiskLens"
+        ]
+      },
+      "created_at": "2026-04-30T15:50:33.243Z"
+    },
+    {
+      "id": "aaf8af83-e992-4e09-96b5-e43f90b6e100",
+      "user_id": "a18f8055-c424-4993-b0e1-ed66c6be1db5",
+      "product": "risk",
+      "input": {
+        "asset": "THY",
+        "case": "live-product-flow"
+      },
+      "decision": {
+        "product": "risk",
+        "asset": "THY",
+        "risk": 64,
+        "signal": "CONTROLLED",
+        "confidence": 78,
+        "data_source": "fallback",
+        "decision": "MONITOR / CONTROL",
+        "scenario": {
+          "base": "risk controlled",
+          "risk": "stress rises",
+          "weak": "liquidity tightens"
+        },
+        "action": {
+          "reduce": "exposure if risk rises",
+          "hedge": "recommended when risk>70",
+          "monitor": "daily"
+        },
+        "warning": [
+          "single metric is not enough",
+          "use report + audit"
+        ]
+      },
+      "created_at": "2026-04-30T15:51:26.142Z"
+    },
+    {
+      "id": "c3020da5-863e-4c32-adb2-688d9de83ae5",
+      "user_id": "a18f8055-c424-4993-b0e1-ed66c6be1db5",
+      "product": "portfolio",
+      "input": {
+        "asset": "THY",
+        "case": "live-product-flow"
+      },
+      "decision": {
+        "product": "portfolio",
+        "asset": "THY",
+        "risk": 64,
+        "signal": "CONTROLLED",
+        "confidence": 78,
+        "data_source": "fallback",
+        "decision": "BALANCED WATCH",
+        "scenario": {
+          "base": "balanced allocation",
+          "risk": "defensive shift",
+          "weak": "reduce volatile buckets"
+        },
+        "action": {
+          "allocation": "cap high-risk buckets",
+          "rebalance": "weekly",
+          "liquidity": "keep buffer"
+        },
+        "warning": [
+          "portfolio profile required",
+          "not personal investment advice"
+        ]
+      },
+      "created_at": "2026-04-30T15:51:58.597Z"
+    },
+    {
+      "id": "4dc6b57b-72b6-4293-b4e2-3cc91b571c08",
+      "user_id": "a18f8055-c424-4993-b0e1-ed66c6be1db5",
+      "product": "portfolio",
+      "input": {
+        "asset": "THY",
+        "case": "live-user-flow"
+      },
+      "decision": {
+        "product": "portfolio",
+        "asset": "THY",
+        "risk": 64,
+        "signal": "CONTROLLED",
+        "confidence": 78,
+        "data_source": "fallback",
+        "decision": "BALANCED WATCH",
+        "scenario": {
+          "base": "balanced allocation",
+          "risk": "defensive shift",
+          "weak": "reduce volatile buckets"
+        },
+        "action": {
+          "allocation": "cap high-risk buckets",
+          "rebalance": "weekly",
+          "liquidity": "keep buffer"
+        },
+        "warning": [
+          "portfolio profile required",
+          "not personal investment advice"
+        ]
+      },
+      "created_at": "2026-04-30T15:53:58.804Z"
+    },
+    {
+      "id": "f0483319-5c5d-43d5-b433-901898e21854",
+      "user_id": "a18f8055-c424-4993-b0e1-ed66c6be1db5",
+      "product": "sme",
+      "input": {
+        "asset": "THY",
+        "case": "live-product-flow"
+      },
+      "decision": {
+        "product": "sme",
+        "asset": "THY",
+        "risk": 64,
+        "signal": "CONTROLLED",
+        "confidence": 78,
+        "data_source": "fallback",
+        "decision": "CASH STRESS MAP REQUIRED",
+        "scenario": {
+          "base": "30-day cash view",
+          "risk": "receivable delay / FX / credit pressure",
+          "weak": "liquidity gap"
+        },
+        "action": {
+          "list": "payables/receivables",
+          "prioritize": "critical payments",
+          "monitor": "cash buffer"
+        },
+        "warning": [
+          "requires real business data",
+          "not accounting advice"
+        ]
+      },
+      "created_at": "2026-04-30T15:54:54.054Z"
+    },
+    {
+      "id": "aec28fee-dac6-4080-929f-94fa58092014",
+      "user_id": "a18f8055-c424-4993-b0e1-ed66c6be1db5",
+      "product": "trade",
+      "input": {
+        "asset": "THY"
+      },
+      "decision": {
+        "product": "trade",
+        "asset": "THY",
+        "risk": 64,
+        "signal": "CONTROLLED",
+        "confidence": 78,
+        "data_source": "fallback",
+        "decision": "LIMITED ENTRY / CONFIRMATION REQUIRED",
+        "scenario": {
+          "base": "controlled follow-through",
+          "risk": "risk spike → hedge/reduce",
+          "weak": "signal downgrade → hold"
+        },
+        "action": {
+          "entry": "max 30%",
+          "stop": "risk > 80 OR signal downgrade",
+          "review": "before increasing exposure"
+        },
+        "warning": [
+          "not investment advice",
+          "avoid full exposure",
+          "confirm with RiskLens"
+        ]
+      },
+      "created_at": "2026-04-30T16:23:25.164Z"
     }
   ],
   "sessions": [
@@ -110,6 +351,46 @@
       "token": "635133c8d70ff6c726bc4ef098de93af71a2a4cdb36c18a4",
       "user_id": "83d51947-eaf5-475b-ab1a-bfdb291efd78",
       "created_at": "2026-04-30T15:14:34.629Z"
+    },
+    {
+      "token": "9f86d691b6e27500205c89317b25ec93cebb3cfaddfbb484",
+      "user_id": "a18f8055-c424-4993-b0e1-ed66c6be1db5",
+      "created_at": "2026-04-30T15:21:50.851Z"
+    },
+    {
+      "token": "b1d3b1843be81ff84e16c7085189f63aeade9b19b226b47b",
+      "user_id": "a18f8055-c424-4993-b0e1-ed66c6be1db5",
+      "created_at": "2026-04-30T15:21:50.886Z"
+    },
+    {
+      "token": "cf4fedf65bdad46ed6093007b8e6040423e923e95a1e3888",
+      "user_id": "a18f8055-c424-4993-b0e1-ed66c6be1db5",
+      "created_at": "2026-04-30T15:21:50.891Z"
+    },
+    {
+      "token": "c1c8bd3793b68a824b0755a6a336575e46d95bc04436a132",
+      "user_id": "a18f8055-c424-4993-b0e1-ed66c6be1db5",
+      "created_at": "2026-04-30T15:21:50.920Z"
+    },
+    {
+      "token": "5361456d171ba2f85d6d9a7635017874968cc2ade0763d29",
+      "user_id": "a18f8055-c424-4993-b0e1-ed66c6be1db5",
+      "created_at": "2026-04-30T15:21:50.936Z"
+    },
+    {
+      "token": "2c292c2d2ac6ae14465439f96eebaf6405a2c740f45a2c80",
+      "user_id": "a18f8055-c424-4993-b0e1-ed66c6be1db5",
+      "created_at": "2026-04-30T15:39:51.416Z"
+    },
+    {
+      "token": "b6664d97164e45f94cbffdc44d167bd364b8944f176cd073",
+      "user_id": "a18f8055-c424-4993-b0e1-ed66c6be1db5",
+      "created_at": "2026-04-30T16:28:15.394Z"
+    },
+    {
+      "token": "0d66a153525037d22d4c4441f3fea5e65258a65b732e929f",
+      "user_id": "05dc4e21-b3a5-4a32-af82-dc8b80c76a01",
+      "created_at": "2026-04-30T18:07:54.997Z"
     }
   ],
   "payments": [
@@ -128,6 +409,30 @@
       "status": "pending_manual_payment",
       "note": "Payment provider not connected yet. Manual/Stripe/iyzico/PayTR integration required.",
       "created_at": "2026-04-30T15:14:35.141Z"
+    },
+    {
+      "id": "ad9ad086-2845-4560-8bdc-dd38087e8027",
+      "user_id": "a18f8055-c424-4993-b0e1-ed66c6be1db5",
+      "plan": "core",
+      "status": "pending_manual_payment",
+      "note": "Payment provider not connected yet. Manual/Stripe/iyzico/PayTR integration required.",
+      "created_at": "2026-04-30T15:39:58.378Z"
+    },
+    {
+      "id": "83cf877f-ba74-4d15-9691-647af666b7a7",
+      "user_id": "a18f8055-c424-4993-b0e1-ed66c6be1db5",
+      "plan": "core",
+      "status": "pending_manual_payment",
+      "note": "Payment provider not connected yet. Manual/Stripe/iyzico/PayTR integration required.",
+      "created_at": "2026-04-30T16:28:18.778Z"
+    },
+    {
+      "id": "69861520-7b6e-43b2-af8b-e6882bacde81",
+      "user_id": "05dc4e21-b3a5-4a32-af82-dc8b80c76a01",
+      "plan": "core",
+      "status": "pending_manual_payment",
+      "note": "Payment provider not connected yet. Manual/Stripe/iyzico/PayTR integration required.",
+      "created_at": "2026-04-30T18:07:55.531Z"
     }
   ]
 }
