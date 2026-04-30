@@ -149,3 +149,39 @@ document.addEventListener("DOMContentLoaded", ()=>{
     });
   },500);
 });
+
+/* PROOF_PACK_FLOW_V1 */
+document.addEventListener("DOMContentLoaded", ()=>{
+  setTimeout(()=>{
+    const input = document.querySelector("#za-input");
+    const detected = document.querySelector("#za-detected");
+    const action = document.querySelector("#za-action");
+    if(!input || !detected || !action) return;
+
+    input.addEventListener("input", function(){
+      const v = (this.value || "").toLowerCase();
+      const depth = location.pathname.split("/app/")[1]?.split("/").length - 1 || 0;
+      const prefix = depth <= 0 ? "./" : "../".repeat(depth);
+
+      if(v.includes("proof") || v.includes("kanıt") || v.includes("use case") || v.includes("senaryo")){
+        detected.innerHTML = `
+          <b>Algılanan:</b> Proof Pack / satış senaryosu<br>
+          <b>Akış:</b> Scenario → Conflict → Simulation → Exposure → Report<br>
+          <b>Öneri:</b> Önce Financial Trade cockpit, sonra RiskLens report.
+        `;
+        action.href = prefix + "cockpits/financial-trade.html";
+        action.innerText = "Proof Akışını Başlat";
+      }
+
+      if(v.includes("thy") || v.includes("hisse")){
+        detected.innerHTML = `
+          <b>Algılanan:</b> THY / BIST equity use-case<br>
+          <b>Decision Flow:</b> FT Signal → RiskLens → Scenario → Exposure<br>
+          <b>Proof Output:</b> Limited entry + hedge + report route.
+        `;
+        action.href = prefix + "cockpits/financial-trade.html";
+        action.innerText = "THY Proof Akışını Aç";
+      }
+    });
+  },700);
+});

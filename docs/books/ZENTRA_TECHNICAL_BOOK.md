@@ -100,3 +100,7 @@ Files:
 Assistant routing updated for legal/support/subscription/refund/security terms.
 ## 2026-04-30_10-57 — AUTO BUILD SYNC
 Public sync + cleanup + audit.
+
+## 2026-04-30_11-11 — Assistant Proof Pack Flow
+Updated: app/zentra-assistant-float.js
+Proof keywords route users into the real cockpit/report decision flow.

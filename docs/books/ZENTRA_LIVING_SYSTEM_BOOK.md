@@ -78,3 +78,7 @@ ZENTRA now includes professional account, legal, privacy, security, subscription
 Final legal review remains required before paid launch.
 ### 2026-04-30_10-57 — AUTO BUILD
 System synchronized automatically.
+
+### 2026-04-30_11-11 — Proof Pack Rule
+Proof Pack must not be a detached demo.
+It must be produced through Assistant → Cockpit → Intelligence Engines → Report → Pack.
