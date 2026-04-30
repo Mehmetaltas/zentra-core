@@ -98,3 +98,12 @@
     });
   });
 })();
+
+
+/* FT PACK PUSH */
+setTimeout(()=>{
+  const txt = document.querySelector("#za-detected");
+  if(txt && txt.innerText.includes("Financial Trade")){
+    txt.innerHTML += "<br><b>Next:</b> Full execution için FT Pack önerilir.";
+  }
+},1500);
