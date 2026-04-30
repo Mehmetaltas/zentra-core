@@ -59,10 +59,10 @@
 
     <div class="card">
       <div class="label">System Flow Map</div>
-      <div class="node-flow">
-        <a href="./modules/risk.html"><b>RiskLens</b><br><span class="muted">Risk / stress / deviation</span></a>
+      <div class="node-flow" style="gap:14px">
+        <a href="./modules/risk.html" style="box-shadow:0 0 18px rgba(255,80,80,.25)"><b>RiskLens</b><br><span class="muted">Risk / stress / deviation</span></a>
         <a href="./modules/credit.html"><b>Credit</b><br><span class="muted">Capacity / pressure / review</span></a>
-        <a href="./modules/financial-trade.html"><b>Financial Trade</b><br><span class="muted">Indicator / signal / execution</span></a>
+        <a href="./modules/financial-trade.html" style="box-shadow:0 0 18px rgba(60,255,120,.25)"><b>Financial Trade</b><br><span class="muted">Indicator / signal / execution</span></a>
         <a href="./modules/trade.html"><b>Trade</b><br><span class="muted">Flow / delivery / operation</span></a>
         <a href="./market/index.html"><b>Market Pack</b><br><span class="muted">Product route / offer</span></a>
       </div>
@@ -70,7 +70,7 @@
 
     <div class="decision-core">
       <div class="label">Final Decision Core</div>
-      <div class="decision-main">CONTROLLED OPPORTUNITY</div>
+      <div class="decision-main">CONTROLLED OPPORTUNITY • ACTIVE DECISION</div>
       <p><b>Risk:</b> HIGH / <b>Confidence:</b> 78% / <b>Action:</b> LIMITED ENTRY</p>
 
       <div class="grid g3">
@@ -89,15 +89,15 @@
         </svg>
       </div>
 
-      <a class="btn" href="./modules/financial-trade.html">Execute via Financial Trade</a>
-      <a class="btn2" href="./modules/risk.html">Hedge via RiskLens</a>
-      <a class="btn2" href="./reports/risk.html">Open Report</a>
+      <a class="btn" href="./modules/financial-trade.html">Financial Trade ile Uygula</a>
+      <a class="btn2" href="./modules/risk.html">RiskLens ile Koruma</a>
+      <a class="btn2" href="./reports/risk.html">Rapor Aç</a>
     </div>
 
     <div class="card">
       <div class="label">Live System Log</div>
       <div class="live-log">
-        <div>[08:21:03] RiskLens ↑ stress spike detected</div>
+        <div><span style='color:#34f5a4'>[08:21:03]</span> RiskLens ↑ stress spike detected</div>
         <div>[08:21:05] Financial Trade → signal upgraded to BUY</div>
         <div>[08:21:07] Credit → review flag active</div>
         <div>[08:21:09] Assistant → action prepared</div>
@@ -105,6 +105,7 @@
       </div>
 
       <div class="assistant-thinking" id="assistant-box">
+<div class="label">Assistant Guidance</div>
         <div class="label">Assistant Thinking</div>
         <p><b>WHY:</b> Signal is positive but risk remains elevated.</p>
         <p><b>ACTION:</b> Limited entry, report verification, risk hedge.</p>
