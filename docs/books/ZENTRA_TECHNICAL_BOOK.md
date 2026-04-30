@@ -46,3 +46,19 @@ No active implementation until current core/productization priorities are closed
 - File: app/intelligence/exposure-engine-v1.js
 - Purpose: position sizing logic
 - Output: exposure + action
+
+## 2026-04-30_09-22 — FULL DECISION PIPELINE LOCKED
+
+Pipeline:
+Data → State → Scenario → Conflict → Simulation → Exposure → Decision
+
+Engines:
+- scenario-engine-v1.js
+- conflict-resolver-v1.js
+- simulation-engine-v1.js
+- exposure-engine-v1.js
+
+Rules:
+- Single state enforced
+- Single assistant enforced
+- UI independent intelligence layer
