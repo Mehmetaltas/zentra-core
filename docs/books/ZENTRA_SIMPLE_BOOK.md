@@ -38,3 +38,8 @@ ZENTRA pricing is now structured as:
 - Enterprise / Custom
 
 Pricing is based on market references, product depth, report/audit value, data cost and institutional use.
+
+## 2026-04-30_10-15 — Assistant Visibility + Pricing Language Fix
+- Asistan butonu tüm public sayfalarda görünür hale getirildi.
+- Asistan ilgili sayfaya göre cockpit/report görev yönlendirmesi yapar.
+- Zayıf fiyatlandırma ifadeleri profesyonel dille değiştirildi.

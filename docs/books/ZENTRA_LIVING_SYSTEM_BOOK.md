@@ -64,3 +64,7 @@ Next: Pricing / Plan Logic.
 ### 2026-04-30_09-54 — Pricing Logic
 ZENTRA moved from product packaging to pricing logic.
 Next: individual commercial pages for Risk, FT, Credit and Portfolio packs.
+
+### 2026-04-30_10-15 — Assistant Public Presence
+- ZENTRA Assistant is now visible, route-aware and cockpit-oriented.
+- Public pricing language cleaned for professional positioning.

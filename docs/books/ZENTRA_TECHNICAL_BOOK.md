@@ -72,3 +72,8 @@ Rules:
 - Pricing page: app/pricing/index.html
 - Pricing doc: docs/pricing/PRICING_PLAN_LOGIC_V1.md
 - Rule: pricing is market-adjusted and package-based.
+
+## 2026-04-30_10-15 — Assistant Float Binding
+- File: app/zentra-assistant-float.js
+- Global assistant button bound to all app HTML pages.
+- Route-aware cockpit/task guidance added.
