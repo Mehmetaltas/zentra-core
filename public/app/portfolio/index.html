@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ZENTRA Portfolio Cockpit</title>
+<link rel="stylesheet" href="../premium-surface.css">
+</head>
+<body>
+<div class="shell">
+<aside class="sidebar">
+  <div class="logo">ZENTRA</div>
+  <div class="sub">PORTFOLIO COCKPIT</div>
+  <nav class="nav">
+    <a href="../index.html">Command Center</a>
+    <a href="../markets/index.html">Markets</a>
+    <a href="../intel/index.html">Intel AI</a>
+    <a href="../market/index.html">Market Packs</a>
+    <a class="active" href="./index.html">Portfolio</a>
+  </nav>
+</aside>
+
+<main class="main">
+  <div class="top">
+    <span class="badge live">● PORTFOLIO LIVE</span>
+    <span class="badge">Risk / Return / Exposure</span>
+    <span class="badge">TR / EN / AR Ready</span>
+  </div>
+
+  <section class="hero">
+    <div class="k">ZENTRA PORTFOLIO INTELLIGENCE</div>
+    <h1 class="title">Portföyü risk, piyasa sinyali ve ürün akışıyla birlikte izler.</h1>
+    <p class="desc">Portfolio Cockpit; yerel/global hisse, FX, emtia, kripto ve likidite bucketlarını tek kurumsal görünümde toplar.</p>
+  </section>
+
+  <section class="grid g4">
+    <div class="card"><div class="label">Portfolio State</div><div class="big">BAL</div><span class="pill ok">BALANCED</span></div>
+    <div class="card"><div class="label">Risk</div><div class="big">68</div><span class="pill warn">WATCH</span></div>
+    <div class="card"><div class="label">Exposure</div><div class="big">42%</div><span class="pill warn">LIMITED</span></div>
+    <div class="card"><div class="label">Liquidity</div><div class="big">OK</div><span class="pill ok">STABLE</span></div>
+  </section>
+
+  <section class="grid g2">
+    <div class="card">
+      <div class="label">Portfolio Signal Chart</div>
+      <div data-pro-chart style="height:260px"></div>
+    </div>
+    <div class="card">
+      <div class="label">Assistant Guidance</div>
+      <div id="assistant-box">
+        <p><b>WHY:</b> Global momentum pozitif, fakat FX/crypto riskleri portföy sınırı gerektiriyor.</p>
+        <p><b>ACTION:</b> Exposure sınırlı tut, RiskLens ve Financial Trade cockpit ile doğrula.</p>
+        <p><b>WARNING:</b> Public portföy görünümü yatırım tavsiyesi değildir.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="card" style="margin-top:16px">
+    <div class="label">Portfolio Buckets</div>
+    <table>
+      <tr><th>Bucket</th><th>Signal</th><th>Risk</th><th>Route</th></tr>
+      <tr><td>Local Equity</td><td>WATCH</td><td>Medium</td><td>RiskLens</td></tr>
+      <tr><td>Global Equity</td><td>RISK-ON</td><td>Medium</td><td>Financial Trade</td></tr>
+      <tr><td>FX</td><td>PRESSURE</td><td>High</td><td>Credit / Macro</td></tr>
+      <tr><td>Commodities</td><td>SAFE WATCH</td><td>Medium</td><td>RiskLens</td></tr>
+      <tr><td>Crypto</td><td>VOLATILE</td><td>High</td><td>Financial Trade</td></tr>
+    </table>
+  </section>
+</main>
+</div>
+<script src="../pro-chart-engine.js"></script>
+<script src="../zentra-intelligence.js"></script>
+</body>
+</html>
