@@ -27,3 +27,8 @@ Keep unresolved or future-stage decisions visible, dated and traceable without d
 - ZENTRA now resolves scenario conflicts.
 - Risk > Credit/FX > Scenario recommendation hierarchy.
 - Next: Scenario Simulation Engine.
+
+### Simulation Engine V1
+- ZENTRA now tests decisions under stress.
+- Stability tracking added.
+- Next: Exposure Optimization Engine.

@@ -1,0 +1,18 @@
+{
+  "timestamp": "2026-04-30T06:07:59.695253Z",
+  "stable": false,
+  "results": [
+    {
+      "scenario": "Base",
+      "decision": "ENTRY"
+    },
+    {
+      "scenario": "High Risk",
+      "decision": "PROTECT"
+    },
+    {
+      "scenario": "FX Stress",
+      "decision": "ENTRY"
+    }
+  ]
+}

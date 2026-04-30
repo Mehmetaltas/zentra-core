@@ -31,3 +31,8 @@ No active implementation until current core/productization priorities are closed
 - Input: Scenario Engine output
 - Output: final decision override
 - Rule: priority-based override system
+
+## Simulation Engine V1
+- File: app/intelligence/simulation-engine-v1.js
+- Purpose: stress test decision logic
+- Output: stability + scenario variation
