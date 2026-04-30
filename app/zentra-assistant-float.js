@@ -185,3 +185,12 @@ document.addEventListener("DOMContentLoaded", ()=>{
     });
   },700);
 });
+
+
+/* DEPTH ENGINE ASSISTANT EXT */
+setTimeout(()=>{
+  if(window.ZENTRA_DEPTH_ENGINE){
+    console.log("Depth engine active")
+  }
+},500)
+

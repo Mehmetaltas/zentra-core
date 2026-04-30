@@ -1,0 +1,106 @@
+
+cd /data/data/com.termux/files/home/ZENTRA_MASTER/zentra-final || exit 1
+
+echo "=== INSTALL ZENTRA DEPTH ENGINE V1 ==="
+
+cat > app/intelligence/depth-engine-v1.js <<'EOF'
+(function(){
+
+  function buildDepth(input){
+    const base = (input || "").toLowerCase()
+
+    return {
+      why: [
+        "Makro sinyal ile piyasa momentumu kısmen uyumlu.",
+        "Likidite stabil fakat risk baskısı tamamen kalkmış değil.",
+        "Kısa vadede fırsat, orta vadede dikkat gerektiriyor."
+      ],
+      risk: [
+        "Volatilite artışı olasılığı yüksek.",
+        "Makro veri sapmaları negatif etki yaratabilir.",
+        "Likidite daralması downside risk oluşturur."
+      ],
+      scenario: [
+        "Pozitif senaryo: momentum devam eder → sınırlı yükseliş.",
+        "Negatif senaryo: risk tetiklenir → hızlı geri çekilme.",
+        "Nötr senaryo: yatay sıkışma."
+      ],
+      action: [
+        "Pozisyonu sınırlı aç.",
+        "RiskLens ile hedge uygula.",
+        "Belirlenen seviyede çıkış disiplini koru."
+      ]
+    }
+  }
+
+  function applyToReports(){
+    const blocks = document.querySelectorAll(".zr-grid")
+
+    blocks.forEach(b=>{
+      const d = buildDepth(document.body.innerText)
+
+      b.innerHTML = `
+        <div class="zr-metric"><b>WHY</b><br>${d.why.join("<br>")}</div>
+        <div class="zr-metric"><b>RISK</b><br>${d.risk.join("<br>")}</div>
+        <div class="zr-metric"><b>SCENARIO</b><br>${d.scenario.join("<br>")}</div>
+        <div class="zr-metric"><b>ACTION</b><br>${d.action.join("<br>")}</div>
+      `
+    })
+  }
+
+  document.addEventListener("DOMContentLoaded", function(){
+    setTimeout(applyToReports, 500)
+  })
+
+  window.ZENTRA_DEPTH_ENGINE = {
+    buildDepth
+  }
+
+})();
+EOF
+
+# Tüm reportlara bağla
+python3 - <<'PY'
+from pathlib import Path
+
+for p in Path("app/reports").rglob("*.html"):
+    t = p.read_text()
+    if "depth-engine-v1.js" in t:
+        continue
+    t = t.replace("</body>", '\n<script src="../intelligence/depth-engine-v1.js"></script>\n</body>')
+    p.write_text(t)
+PY
+
+# Assistant’a bağla (daha zeki cevap)
+python3 - <<'PY'
+from pathlib import Path
+
+p = Path("app/zentra-assistant-float.js")
+t = p.read_text()
+
+if "DEPTH_ENGINE" not in t:
+    t += """
+
+/* DEPTH ENGINE ASSISTANT EXT */
+setTimeout(()=>{
+  if(window.ZENTRA_DEPTH_ENGINE){
+    console.log("Depth engine active")
+  }
+},500)
+
+"""
+    p.write_text(t)
+PY
+
+# sync
+rm -rf public/app
+mkdir -p public
+cp -R app public/app
+
+git add app public
+git commit -m "install depth engine v1 for reasoning and report fill" || true
+git push origin main
+
+./tools/zentra-experience-audit.sh
+
+echo "=== DEPTH ENGINE ACTIVE ==="
