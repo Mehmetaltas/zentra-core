@@ -104,3 +104,13 @@ Public sync + cleanup + audit.
 ## 2026-04-30_11-11 — Assistant Proof Pack Flow
 Updated: app/zentra-assistant-float.js
 Proof keywords route users into the real cockpit/report decision flow.
+
+## 2026-04-30_11-18 — Auto Builder V2 Technical Sync
+Tool: tools/zentra_auto_build.sh
+Checks:
+- required pages
+- assistant route
+- footer binding
+- language cleanup
+- public sync
+- audit
