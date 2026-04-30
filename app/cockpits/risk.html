@@ -1,32 +1,101 @@
-<!doctype html><html><head><meta charset="utf-8"><title>risk Cockpit</title>
-<link rel="stylesheet" href="../zui.css"></head>
-<body><main class="wrap">
-<nav class="nav"><div class="logo">ZENTRA</div><a href="../modules/risk.html">Back</a></nav>
-<section class="hero"><div class="k">RISK COCKPIT</div>
-<h1 class="title">Canlı karar yüzü</h1>
-<p class="sub">Bu modülün kendi verisi ve çıktısı burada.</p>
-<a class="btn" href="../reports/risk.html">Generate Report</a>
-</section>
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ZENTRA RiskLens Cockpit</title>
+<link rel="stylesheet" href="../premium-surface.css">
+</head>
+<body>
+<div class="shell">
+<aside class="sidebar">
+  <div class="logo">ZENTRA</div>
+  <div class="sub">RISKLENS COCKPIT</div>
+  <nav class="nav">
+    <a href="../index.html">Command Center</a>
+    <a href="../matrix.html">Matrix</a>
+    <a href="../modules/risk.html">RiskLens</a>
+    <a class="active" href="./risk.html">Risk Cockpit</a>
+    <a href="../reports/risk.html">Risk Report</a>
+    <a href="../market/index.html">Market Pack</a>
+  </nav>
+</aside>
 
-<section class="grid" style="margin-top:16px">
-  <div class="card">
-    <div class="label">Signal Indicator Panel</div>
-    <div class="bars"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
-    <p>Canlı sinyal, baskı, risk ve karar yönü bu panelde izlenir.</p>
+<main class="main">
+  <div class="top">
+    <div>
+      <span class="badge live">● RISK COCKPIT LIVE</span>
+      <span class="badge">Lens / Telescope / Simulation</span>
+      <span class="badge">TR / EN / AR Ready</span>
+    </div>
+    <span class="badge">Updated: 8s</span>
   </div>
 
-  <div class="card">
-    <div class="label">Assistant Guidance</div>
-    <p><b>WHY:</b> Bu cockpit ilgili ürün hattının karar sinyallerini toplar.</p>
-    <p><b>ACTION:</b> Sinyal, risk ve rapor çıktısını birlikte değerlendir.</p>
-    <p><b>WARNING:</b> Tek metrikle karar verme; cockpit + report + audit birlikte okunur.</p>
-  </div>
+  <section class="hero">
+    <div class="k">RISKLENS DECISION SURFACE</div>
+    <h1 class="title">Risk baskısını, sapmayı ve karar etkisini tek cockpit’te okur.</h1>
+    <p class="desc">
+      RiskLens; risk skoru, stres seviyesi, sapma haritası, karar baskısı ve assistant guidance ile
+      kullanıcının risk kararını cockpit → report → market pack akışına bağlar.
+    </p>
+    <a class="btn" href="../reports/risk.html">Risk Report Üret</a>
+    <a class="btn2" href="../market/index.html">Risk Pack’i Gör</a>
+  </section>
 
-  <div class="card">
-    <div class="label">Output Route</div>
-    <p>Cockpit → Report → Market Pack → Assistant Follow-up</p>
-  </div>
-</section>
+  <section class="grid g4">
+    <div class="card"><div class="label">Risk Score</div><div class="big">72</div><span class="pill warn">CAUTION</span></div>
+    <div class="card"><div class="label">Stress</div><div class="big">64</div><span class="pill warn">ELEVATED</span></div>
+    <div class="card"><div class="label">Deviation</div><div class="big">18%</div><span class="pill warn">WATCH</span></div>
+    <div class="card"><div class="label">Decision Pressure</div><div class="big">HIGH</div><span class="pill danger">CONTROL</span></div>
+  </section>
 
-</main><script src="../zui-surfaces.js"></script>
-</body></html>
+  <section class="grid g2">
+    <div class="card">
+      <div class="label">Risk Pressure Chart</div>
+      <div class="main-chart">
+        <svg viewBox="0 0 700 260" preserveAspectRatio="none">
+          <polyline points="0,180 70,158 140,174 210,124 280,136 350,94 420,112 490,72 560,88 630,60 700,78"
+            fill="none" stroke="#34f5a4" stroke-width="4"/>
+          <polyline points="0,208 75,190 150,198 225,162 300,174 375,140 450,154 525,128 600,136 700,114"
+            fill="none" stroke="#7aa2ff" stroke-width="2" opacity=".75"/>
+          <polyline points="0,120 80,132 160,126 240,150 320,144 400,164 480,156 560,176 640,168 700,188"
+            fill="none" stroke="#ff5c7a" stroke-width="2" opacity=".6"/>
+        </svg>
+      </div>
+      <p class="muted">Yeşil: karar gücü. Mavi: likidite desteği. Kırmızı: stres baskısı.</p>
+    </div>
+
+    <div class="card">
+      <div class="label">RiskLens Assistant</div>
+      <div id="assistant-box">
+        <p><b>WHY:</b> Risk skoru yüksek; ancak likidite ve sinyal dengesi kararı tamamen kapatmıyor.</p>
+        <p><b>ACTION:</b> Exposure azalt, report üret, karar öncesi sapma haritasını kontrol et.</p>
+        <p><b>WARNING:</b> RiskLens sonucu tek başına alım/satım tavsiyesi değildir.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="grid g2">
+    <div class="card">
+      <div class="label">Risk Drivers</div>
+      <table>
+        <tr><th>Driver</th><th>Impact</th><th>Signal</th></tr>
+        <tr><td>Market Stress</td><td>High</td><td>Risk elevated</td></tr>
+        <tr><td>Credit Pressure</td><td>Medium</td><td>Review required</td></tr>
+        <tr><td>Liquidity</td><td>Low</td><td>Stable</td></tr>
+        <tr><td>Macro</td><td>Medium</td><td>Mixed support</td></tr>
+      </table>
+    </div>
+
+    <div class="card">
+      <div class="label">Output Route</div>
+      <p><b>Cockpit:</b> risk sinyali ve karar baskısı</p>
+      <p><b>Report:</b> kurumsal çıktı ve audit trace</p>
+      <p><b>Market Pack:</b> Risk Pack / Institutional Suite</p>
+      <a class="btn" href="../reports/risk.html">Report’a Geç</a>
+    </div>
+  </section>
+</main>
+</div>
+</body>
+</html>
