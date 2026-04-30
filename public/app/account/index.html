@@ -62,8 +62,12 @@ async function loginZentra(){
   const email = document.getElementById("email").value;
   const out = document.getElementById("account-output");
   out.innerText = "Logging in...";
-  const data = await window.ZENTRA_COMMERCIAL_CORE.login(email);
-  out.innerText = JSON.stringify(data, null, 2);
+  try{
+    const data = await window.ZENTRA_COMMERCIAL_CORE.login(email);
+    out.innerText = JSON.stringify(data, null, 2);
+  }catch(e){
+    out.innerText = "LOGIN ERROR: " + e;
+  }
 }
 async function loadWorkspace(){
   const out = document.getElementById("account-output");
