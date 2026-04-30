@@ -3,6 +3,30 @@
     {
       "id": "agent-001",
       "name": "ZENTRA_AGENT"
+    },
+    {
+      "id": "a18f8055-c424-4993-b0e1-ed66c6be1db5",
+      "email": "42mehmetaltas@gmail.com",
+      "name": "42mehmetaltas",
+      "plan": "expert",
+      "role": "user",
+      "created_at": "2026-04-30T14:54:52.963Z"
+    },
+    {
+      "id": "dfdf8b2f-9bd0-4a02-a332-8bc5e5dad843",
+      "email": "reality_2026-04-30_17-54@zentra.local",
+      "name": "Reality Test",
+      "plan": "free",
+      "role": "user",
+      "created_at": "2026-04-30T14:54:55.794Z"
+    },
+    {
+      "id": "83d51947-eaf5-475b-ab1a-bfdb291efd78",
+      "email": "reality_2026-04-30_18-14@zentra.local",
+      "name": "Reality Test",
+      "plan": "free",
+      "role": "user",
+      "created_at": "2026-04-30T15:14:34.625Z"
     }
   ],
   "actions": [
@@ -66,6 +90,44 @@
       "created_at": "2026-04-30T14:20:01.673Z"
     }
   ],
-  "sessions": [],
-  "payments": []
+  "sessions": [
+    {
+      "token": "97c35cbe8e6a6be233b64d41545d706c008e0d25d5ac6da9",
+      "user_id": "a18f8055-c424-4993-b0e1-ed66c6be1db5",
+      "created_at": "2026-04-30T14:54:52.968Z"
+    },
+    {
+      "token": "d2055077d6b33eaafaccb6e1222f00ade7ff51a9b4fffd56",
+      "user_id": "dfdf8b2f-9bd0-4a02-a332-8bc5e5dad843",
+      "created_at": "2026-04-30T14:54:55.794Z"
+    },
+    {
+      "token": "8f02f0b83aef4256b2be8df99121f89e0c665cb3bfbf07a7",
+      "user_id": "a18f8055-c424-4993-b0e1-ed66c6be1db5",
+      "created_at": "2026-04-30T14:59:51.536Z"
+    },
+    {
+      "token": "635133c8d70ff6c726bc4ef098de93af71a2a4cdb36c18a4",
+      "user_id": "83d51947-eaf5-475b-ab1a-bfdb291efd78",
+      "created_at": "2026-04-30T15:14:34.629Z"
+    }
+  ],
+  "payments": [
+    {
+      "id": "f5200b10-262b-431f-8fa8-ea6dd67d77ce",
+      "user_id": "dfdf8b2f-9bd0-4a02-a332-8bc5e5dad843",
+      "plan": "core",
+      "status": "pending_manual_payment",
+      "note": "Payment provider not connected yet. Manual/Stripe/iyzico/PayTR integration required.",
+      "created_at": "2026-04-30T14:54:56.288Z"
+    },
+    {
+      "id": "aa545d8b-41bd-429c-8762-9d9f94c7164d",
+      "user_id": "83d51947-eaf5-475b-ab1a-bfdb291efd78",
+      "plan": "core",
+      "status": "pending_manual_payment",
+      "note": "Payment provider not connected yet. Manual/Stripe/iyzico/PayTR integration required.",
+      "created_at": "2026-04-30T15:14:35.141Z"
+    }
+  ]
 }

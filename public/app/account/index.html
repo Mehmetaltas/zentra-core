@@ -72,8 +72,12 @@ async function loginZentra(){
 async function loadWorkspace(){
   const out = document.getElementById("account-output");
   out.innerText = "Loading workspace...";
-  const data = await window.ZENTRA_COMMERCIAL_CORE.workspace();
-  out.innerText = JSON.stringify(data, null, 2);
+  try{
+    const data = await window.ZENTRA_COMMERCIAL_CORE.workspace();
+    out.innerText = JSON.stringify(data, null, 2);
+  }catch(e){
+    out.innerText = "WORKSPACE ERROR: " + e;
+  }
 }
 async function requestPlan(plan){
   const out = document.getElementById("account-output");
