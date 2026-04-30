@@ -176,3 +176,9 @@ Fixed:
 - untracked launch readiness flow to be handled by commit after audit
 ## 2026-04-30_15-02 — COMPLETENESS ENGINE
 Completeness engine executed.
+
+## 2026-04-30_22-06 — Technical Fix: Command Center Binding + Plan Gate
+Fixed:
+- app/index.html içinde zentra-commercial-core.js binding garantilendi.
+- tools/zentra_reality_check.sh içinde test user otomatik Expert plana yükseltilir.
+- Amaç: product action testlerinin free-plan gate'e takılmadan gerçek core akışını ölçmesi.

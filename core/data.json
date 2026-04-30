@@ -35,6 +35,14 @@
       "plan": "free",
       "role": "user",
       "created_at": "2026-04-30T18:07:54.997Z"
+    },
+    {
+      "id": "c2c75b1f-7dd0-4f8d-8e67-64e819e2f1a2",
+      "email": "reality_2026-04-30_22-06@zentra.local",
+      "name": "Reality Test",
+      "plan": "expert",
+      "role": "user",
+      "created_at": "2026-04-30T19:06:09.560Z"
     }
   ],
   "actions": [
@@ -329,6 +337,204 @@
         ]
       },
       "created_at": "2026-04-30T16:23:25.164Z"
+    },
+    {
+      "id": "97a5904c-c3de-4e3d-9cd1-85d968acf8e6",
+      "user_id": "c2c75b1f-7dd0-4f8d-8e67-64e819e2f1a2",
+      "product": "risk",
+      "input": {
+        "asset": "THY",
+        "case": "reality-check"
+      },
+      "decision": {
+        "product": "risk",
+        "asset": "THY",
+        "risk": 64,
+        "signal": "CONTROLLED",
+        "confidence": 78,
+        "data_source": "fallback",
+        "decision": "MONITOR / CONTROL",
+        "scenario": {
+          "base": "risk controlled",
+          "risk": "stress rises",
+          "weak": "liquidity tightens"
+        },
+        "action": {
+          "reduce": "exposure if risk rises",
+          "hedge": "recommended when risk>70",
+          "monitor": "daily"
+        },
+        "warning": [
+          "single metric is not enough",
+          "use report + audit"
+        ]
+      },
+      "created_at": "2026-04-30T19:06:10.805Z"
+    },
+    {
+      "id": "44addf1a-0cfb-49d2-acc2-b4dc877d5013",
+      "user_id": "c2c75b1f-7dd0-4f8d-8e67-64e819e2f1a2",
+      "product": "trade",
+      "input": {
+        "asset": "THY",
+        "case": "reality-check"
+      },
+      "decision": {
+        "product": "trade",
+        "asset": "THY",
+        "risk": 64,
+        "signal": "CONTROLLED",
+        "confidence": 78,
+        "data_source": "fallback",
+        "decision": "LIMITED ENTRY / CONFIRMATION REQUIRED",
+        "scenario": {
+          "base": "controlled follow-through",
+          "risk": "risk spike → hedge/reduce",
+          "weak": "signal downgrade → hold"
+        },
+        "action": {
+          "entry": "max 30%",
+          "stop": "risk > 80 OR signal downgrade",
+          "review": "before increasing exposure"
+        },
+        "warning": [
+          "not investment advice",
+          "avoid full exposure",
+          "confirm with RiskLens"
+        ]
+      },
+      "created_at": "2026-04-30T19:06:11.063Z"
+    },
+    {
+      "id": "34890234-9a84-4881-b5af-f399544d4a20",
+      "user_id": "c2c75b1f-7dd0-4f8d-8e67-64e819e2f1a2",
+      "product": "credit",
+      "input": {
+        "asset": "THY",
+        "case": "reality-check"
+      },
+      "decision": {
+        "product": "credit",
+        "asset": "THY",
+        "risk": 72,
+        "signal": "WATCH",
+        "confidence": 78,
+        "data_source": "fallback",
+        "decision": "CREDIT WATCH",
+        "scenario": {
+          "base": "payment capacity stable",
+          "risk": "FX pressure rises",
+          "weak": "cash stress increases"
+        },
+        "action": {
+          "review": "payment plan",
+          "reduce": "unnecessary commitments",
+          "monitor": "FX/credit stress"
+        },
+        "warning": [
+          "not credit advice",
+          "requires customer-specific data"
+        ]
+      },
+      "created_at": "2026-04-30T19:06:11.321Z"
+    },
+    {
+      "id": "3c2b9202-c278-46f7-8dbc-35ff4e4d3d3f",
+      "user_id": "c2c75b1f-7dd0-4f8d-8e67-64e819e2f1a2",
+      "product": "portfolio",
+      "input": {
+        "asset": "THY",
+        "case": "reality-check"
+      },
+      "decision": {
+        "product": "portfolio",
+        "asset": "THY",
+        "risk": 64,
+        "signal": "CONTROLLED",
+        "confidence": 78,
+        "data_source": "fallback",
+        "decision": "BALANCED WATCH",
+        "scenario": {
+          "base": "balanced allocation",
+          "risk": "defensive shift",
+          "weak": "reduce volatile buckets"
+        },
+        "action": {
+          "allocation": "cap high-risk buckets",
+          "rebalance": "weekly",
+          "liquidity": "keep buffer"
+        },
+        "warning": [
+          "portfolio profile required",
+          "not personal investment advice"
+        ]
+      },
+      "created_at": "2026-04-30T19:06:11.568Z"
+    },
+    {
+      "id": "3ee34fee-910d-4a32-8604-5b8c47123a36",
+      "user_id": "c2c75b1f-7dd0-4f8d-8e67-64e819e2f1a2",
+      "product": "contract",
+      "input": {
+        "asset": "THY",
+        "case": "reality-check"
+      },
+      "decision": {
+        "product": "contract",
+        "asset": "THY",
+        "risk": 64,
+        "signal": "CONTROLLED",
+        "confidence": 78,
+        "data_source": "fallback",
+        "decision": "DOCUMENT RISK REVIEW REQUIRED",
+        "scenario": {
+          "base": "obligation scan",
+          "risk": "hidden cost/forced bundle",
+          "weak": "unclear consent"
+        },
+        "action": {
+          "check": "fees, termination, consent, bundled products",
+          "prepare": "questions/objection notes"
+        },
+        "warning": [
+          "not legal advice",
+          "lawyer review may be required"
+        ]
+      },
+      "created_at": "2026-04-30T19:06:11.799Z"
+    },
+    {
+      "id": "e9a81ff6-03cf-4022-93b2-96c8b50df42e",
+      "user_id": "c2c75b1f-7dd0-4f8d-8e67-64e819e2f1a2",
+      "product": "sme",
+      "input": {
+        "asset": "THY",
+        "case": "reality-check"
+      },
+      "decision": {
+        "product": "sme",
+        "asset": "THY",
+        "risk": 64,
+        "signal": "CONTROLLED",
+        "confidence": 78,
+        "data_source": "fallback",
+        "decision": "CASH STRESS MAP REQUIRED",
+        "scenario": {
+          "base": "30-day cash view",
+          "risk": "receivable delay / FX / credit pressure",
+          "weak": "liquidity gap"
+        },
+        "action": {
+          "list": "payables/receivables",
+          "prioritize": "critical payments",
+          "monitor": "cash buffer"
+        },
+        "warning": [
+          "requires real business data",
+          "not accounting advice"
+        ]
+      },
+      "created_at": "2026-04-30T19:06:12.029Z"
     }
   ],
   "sessions": [
@@ -391,6 +597,11 @@
       "token": "0d66a153525037d22d4c4441f3fea5e65258a65b732e929f",
       "user_id": "05dc4e21-b3a5-4a32-af82-dc8b80c76a01",
       "created_at": "2026-04-30T18:07:54.997Z"
+    },
+    {
+      "token": "52dfdbf832d871b4889cae73e9bcb6cfe23d78ef54643603",
+      "user_id": "c2c75b1f-7dd0-4f8d-8e67-64e819e2f1a2",
+      "created_at": "2026-04-30T19:06:09.560Z"
     }
   ],
   "payments": [
@@ -433,6 +644,14 @@
       "status": "pending_manual_payment",
       "note": "Payment provider not connected yet. Manual/Stripe/iyzico/PayTR integration required.",
       "created_at": "2026-04-30T18:07:55.531Z"
+    },
+    {
+      "id": "90a6a991-a6b7-45f6-b7b0-352110e02930",
+      "user_id": "c2c75b1f-7dd0-4f8d-8e67-64e819e2f1a2",
+      "plan": "core",
+      "status": "pending_manual_payment",
+      "note": "Payment provider not connected yet. Manual/Stripe/iyzico/PayTR integration required.",
+      "created_at": "2026-04-30T19:06:10.191Z"
     }
   ]
 }

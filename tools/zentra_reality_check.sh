@@ -57,6 +57,12 @@ USER_ID=$(echo "$LOGIN" | python3 -c "import sys,json; d=json.load(sys.stdin); p
 
 [ -n "$TOKEN" ] && pass "token generated" || fail "token missing"
 [ -n "$USER_ID" ] && pass "user_id generated" || fail "user_id missing"
+
+# Reality test user must be upgraded to Expert so product actions test the real action flow, not free-plan blocking.
+curl -s -X POST http://127.0.0.1:4000/admin/activate-plan \
+-H "Content-Type: application/json" \
+-d "{\"email\":\"$EMAIL\",\"plan\":\"expert\",\"admin_key\":\"ZENTRA_ADMIN_LOCAL\"}" >/dev/null
+
 say ""
 
 say "## 4) Workspace Test"
