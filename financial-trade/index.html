@@ -165,7 +165,7 @@ function runAll(){makeProfile();makeBasket();makeDecision();makeProof();makeRepo
 
 
 <!-- ZENTRA FINAL REAL MP3 VOICE ASSISTANT -->
-<div id="zentraFinalVoice" style="position:fixed;right:20px;bottom:20px;z-index:999999;font-family:Arial">
+<div id="zentraFinalVoice" style="display:none" style="position:fixed;right:20px;bottom:20px;z-index:999999;font-family:Arial">
   <button onclick="zfvToggle()" style="width:56px;height:56px;border-radius:50%;border:0;background:#66e7ff;color:#050814;font-size:22px;font-weight:900">🎙</button>
   <div id="zfvBox" style="display:none;width:320px;margin-bottom:10px;background:#11182e;color:#eef3ff;border:1px solid #2d3a66;border-radius:18px;padding:14px">
     <b>ZENTRA Assistant</b>
@@ -205,6 +205,44 @@ function zfvPlayMatrix(){
 }
 </script>
 
+
+<!-- ZENTRA SILENT SALES ADVISOR -->
+<div id="silentAdvisor" style="position:fixed;right:18px;bottom:18px;z-index:999999;font-family:Arial">
+  <button onclick="silentToggle()" style="width:58px;height:58px;border-radius:50%;border:0;background:#66e7ff;color:#050814;font-size:22px;font-weight:900">💬</button>
+
+  <div id="silentBox" style="display:none;width:340px;margin-bottom:10px;background:#11182e;color:#eef3ff;border:1px solid #2d3a66;border-radius:18px;padding:16px;box-shadow:0 20px 70px #000b">
+    <b>ZENTRA Danışman</b>
+    <p id="silentText" style="font-size:14px;color:#aab6d6;line-height:1.45">
+      Size nasıl yardımcı olabilirim?
+    </p>
+
+    <button onclick="silentStep('opportunity')" style="width:100%;margin-top:8px;background:#66e7ff;color:#050814;font-weight:900">Fırsat Sepeti</button>
+    <button onclick="silentStep('risk')" style="width:100%;margin-top:6px">Risk Analizi</button>
+    <button onclick="silentStep('report')" style="width:100%;margin-top:6px">Proof Raporu</button>
+    <button onclick="silentStep('package')" style="width:100%;margin-top:6px">Paketler</button>
+    <button onclick="silentStep('legal')" style="width:100%;margin-top:6px">Güvenli Çalışma</button>
+  </div>
+</div>
+
+<script>
+const silentMessages = {
+  opportunity: "Fırsat Sepeti, risk profilinize göre filtrelenmiş paper-only takip listesidir. Gerçek emir içermez. Önce profilinizi oluşturun, sonra sepeti üretin.",
+  risk: "Risk Analizi, sinyali tek başına değerlendirmez. Veri, risk ve sonuç birlikte ölçülür. Sistem karar disiplinini kurar.",
+  report: "Proof Raporu; bugün sistemin ne dediğini, sonra ne olduğunu, farkı ve skoru görünür hâle getirir.",
+  package: "Paket mantığı: Free bilgi verir, Pro fırsat sepeti ve proof sunar, Expert gelişmiş analiz ve rapor verir, Institutional kurumsal kullanım içindir.",
+  legal: "ZENTRA yatırım tavsiyesi vermez. Gerçek emir yoktur. Broker bağlantısı yoktur. Sistem paper-only karar destek yüzeyidir."
+};
+
+function silentToggle(){
+  const box = document.getElementById("silentBox");
+  box.style.display = box.style.display === "block" ? "none" : "block";
+}
+
+function silentStep(key){
+  document.getElementById("silentText").innerText = silentMessages[key];
+}
+</script>
+
 </body>
 </html>
 <!-- =========================================================
@@ -212,7 +250,7 @@ ZENTRA GLOBAL ASSISTANT WIDGET
 TR / EN / AR + Voice + Optional Guide
 Paste this block before 
 <!-- ZENTRA FINAL REAL MP3 VOICE ASSISTANT -->
-<div id="zentraFinalVoice" style="position:fixed;right:20px;bottom:20px;z-index:999999;font-family:Arial">
+<div id="zentraFinalVoice" style="display:none" style="position:fixed;right:20px;bottom:20px;z-index:999999;font-family:Arial">
   <button onclick="zfvToggle()" style="width:56px;height:56px;border-radius:50%;border:0;background:#66e7ff;color:#050814;font-size:22px;font-weight:900">🎙</button>
   <div id="zfvBox" style="display:none;width:320px;margin-bottom:10px;background:#11182e;color:#eef3ff;border:1px solid #2d3a66;border-radius:18px;padding:14px">
     <b>ZENTRA Assistant</b>
@@ -249,6 +287,44 @@ function zfvPlayMatrix(){
   zfvStop();
   zfvAudio = new Audio("/audio/matrix_tr.mp3?v=real1");
   zfvAudio.play();
+}
+</script>
+
+
+<!-- ZENTRA SILENT SALES ADVISOR -->
+<div id="silentAdvisor" style="position:fixed;right:18px;bottom:18px;z-index:999999;font-family:Arial">
+  <button onclick="silentToggle()" style="width:58px;height:58px;border-radius:50%;border:0;background:#66e7ff;color:#050814;font-size:22px;font-weight:900">💬</button>
+
+  <div id="silentBox" style="display:none;width:340px;margin-bottom:10px;background:#11182e;color:#eef3ff;border:1px solid #2d3a66;border-radius:18px;padding:16px;box-shadow:0 20px 70px #000b">
+    <b>ZENTRA Danışman</b>
+    <p id="silentText" style="font-size:14px;color:#aab6d6;line-height:1.45">
+      Size nasıl yardımcı olabilirim?
+    </p>
+
+    <button onclick="silentStep('opportunity')" style="width:100%;margin-top:8px;background:#66e7ff;color:#050814;font-weight:900">Fırsat Sepeti</button>
+    <button onclick="silentStep('risk')" style="width:100%;margin-top:6px">Risk Analizi</button>
+    <button onclick="silentStep('report')" style="width:100%;margin-top:6px">Proof Raporu</button>
+    <button onclick="silentStep('package')" style="width:100%;margin-top:6px">Paketler</button>
+    <button onclick="silentStep('legal')" style="width:100%;margin-top:6px">Güvenli Çalışma</button>
+  </div>
+</div>
+
+<script>
+const silentMessages = {
+  opportunity: "Fırsat Sepeti, risk profilinize göre filtrelenmiş paper-only takip listesidir. Gerçek emir içermez. Önce profilinizi oluşturun, sonra sepeti üretin.",
+  risk: "Risk Analizi, sinyali tek başına değerlendirmez. Veri, risk ve sonuç birlikte ölçülür. Sistem karar disiplinini kurar.",
+  report: "Proof Raporu; bugün sistemin ne dediğini, sonra ne olduğunu, farkı ve skoru görünür hâle getirir.",
+  package: "Paket mantığı: Free bilgi verir, Pro fırsat sepeti ve proof sunar, Expert gelişmiş analiz ve rapor verir, Institutional kurumsal kullanım içindir.",
+  legal: "ZENTRA yatırım tavsiyesi vermez. Gerçek emir yoktur. Broker bağlantısı yoktur. Sistem paper-only karar destek yüzeyidir."
+};
+
+function silentToggle(){
+  const box = document.getElementById("silentBox");
+  box.style.display = box.style.display === "block" ? "none" : "block";
+}
+
+function silentStep(key){
+  document.getElementById("silentText").innerText = silentMessages[key];
 }
 </script>
 
@@ -328,7 +404,7 @@ function zentraStopAssistant(){
 }
 </script>
 <!-- ZENTRA REAL VOICE ASSISTANT -->
-<div id="za" style="position:fixed;right:20px;bottom:20px;z-index:99999">
+<div id="za" style="display:none" style="position:fixed;right:20px;bottom:20px;z-index:99999">
   <button onclick="zaToggle()" style="width:56px;height:56px;border-radius:50%;border:0;background:#66e7ff;color:#050814;font-size:22px;font-weight:900">🎙</button>
   <div id="zaBox" style="display:none;width:320px;margin-bottom:10px;background:#11182e;color:#eef3ff;border:1px solid #2d3a66;border-radius:18px;padding:14px">
     <b>ZENTRA Assistant</b>
@@ -394,7 +470,7 @@ async function old_zaSpeak_disabled(){
 }
 </script>
 <!-- ZENTRA REAL VOICE ASSISTANT -->
-<div id="za" style="position:fixed;right:20px;bottom:20px;z-index:99999">
+<div id="za" style="display:none" style="position:fixed;right:20px;bottom:20px;z-index:99999">
   <button onclick="zaToggle()" style="width:56px;height:56px;border-radius:50%;border:0;background:#66e7ff;color:#050814;font-size:22px;font-weight:900">🎙</button>
   <div id="zaBox" style="display:none;width:320px;margin-bottom:10px;background:#11182e;color:#eef3ff;border:1px solid #2d3a66;border-radius:18px;padding:14px">
     <b>ZENTRA Assistant</b>
