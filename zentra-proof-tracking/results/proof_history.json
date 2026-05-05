@@ -1,0 +1,430 @@
+{
+  "items": [
+    {
+      "time": "2026-05-05T12:42:43.342Z",
+      "status": "PROOF_TRACKING_ACTIVE",
+      "mode": "PAPER_ONLY",
+      "question": "Bugün sistem ne dedi?",
+      "said": {
+        "financialTrade": {
+          "time": "2026-05-05T11:26:18.830Z",
+          "mode": "FINANCIAL_TRADE_PAPER_ONLY",
+          "realExecution": false,
+          "results": [
+            {
+              "symbol": "BIST100",
+              "price": 14370,
+              "change": -0.5,
+              "signal": "WAIT",
+              "risk": "MEDIUM",
+              "decision": "HOLD",
+              "proofChain": [
+                "paper_only",
+                "sample_data",
+                "simple_momentum_logic"
+              ]
+            },
+            {
+              "symbol": "BTCUSDT",
+              "price": 62000,
+              "change": 1.2,
+              "signal": "BUY",
+              "risk": "MEDIUM",
+              "decision": "LIMITED ENTRY",
+              "proofChain": [
+                "paper_only",
+                "sample_data",
+                "simple_momentum_logic"
+              ]
+            },
+            {
+              "symbol": "XAUUSD",
+              "price": 2300,
+              "change": -0.8,
+              "signal": "WAIT",
+              "risk": "MEDIUM",
+              "decision": "HOLD",
+              "proofChain": [
+                "paper_only",
+                "sample_data",
+                "simple_momentum_logic"
+              ]
+            }
+          ]
+        },
+        "opportunityBasket": {
+          "time": "2026-05-05T12:42:42.711Z",
+          "status": "OPPORTUNITY_BASKET_ACTIVE",
+          "mode": "PAPER_ONLY",
+          "client": {
+            "id": "CLIENT-PAPER-001",
+            "capitalBand": "LOW_MEDIUM",
+            "intent": "learn_and_track_opportunities",
+            "riskTolerance": "MEDIUM",
+            "timeHorizon": "SWING",
+            "psychology": {
+              "panicRisk": "MEDIUM",
+              "patience": "MEDIUM",
+              "experience": "BEGINNER_INTERMEDIATE"
+            },
+            "restrictions": [
+              "paper_only",
+              "no_personal_investment_advice",
+              "no_real_execution"
+            ]
+          },
+          "basket": [
+            {
+              "symbol": "AAPL",
+              "market": "us_equity",
+              "trend": "UP",
+              "volatility": "MEDIUM",
+              "liquidity": "HIGH",
+              "risk": "MEDIUM",
+              "score": 70,
+              "decision": "PAPER_OPPORTUNITY",
+              "proof": [
+                "paper_only",
+                "client_profile_filter",
+                "risk_liquidity_trend_check",
+                "no_real_execution"
+              ]
+            },
+            {
+              "symbol": "SPY",
+              "market": "etf",
+              "trend": "NEUTRAL",
+              "volatility": "LOW",
+              "liquidity": "HIGH",
+              "risk": "LOW",
+              "score": 60,
+              "decision": "PAPER_OPPORTUNITY",
+              "proof": [
+                "paper_only",
+                "client_profile_filter",
+                "risk_liquidity_trend_check",
+                "no_real_execution"
+              ]
+            },
+            {
+              "symbol": "BIST100",
+              "market": "bist_index",
+              "trend": "NEUTRAL",
+              "volatility": "MEDIUM",
+              "liquidity": "HIGH",
+              "risk": "MEDIUM",
+              "score": 50,
+              "decision": "WATCH",
+              "proof": [
+                "paper_only",
+                "client_profile_filter",
+                "risk_liquidity_trend_check",
+                "no_real_execution"
+              ]
+            },
+            {
+              "symbol": "BTCUSDT",
+              "market": "crypto",
+              "trend": "UP",
+              "volatility": "HIGH",
+              "liquidity": "HIGH",
+              "risk": "HIGH",
+              "score": 35,
+              "decision": "WATCH",
+              "proof": [
+                "paper_only",
+                "client_profile_filter",
+                "risk_liquidity_trend_check",
+                "no_real_execution"
+              ]
+            },
+            {
+              "symbol": "XAUUSD",
+              "market": "gold",
+              "trend": "DOWN",
+              "volatility": "MEDIUM",
+              "liquidity": "HIGH",
+              "risk": "MEDIUM",
+              "score": 35,
+              "decision": "WATCH",
+              "proof": [
+                "paper_only",
+                "client_profile_filter",
+                "risk_liquidity_trend_check",
+                "no_real_execution"
+              ]
+            }
+          ],
+          "top": [
+            {
+              "symbol": "AAPL",
+              "market": "us_equity",
+              "trend": "UP",
+              "volatility": "MEDIUM",
+              "liquidity": "HIGH",
+              "risk": "MEDIUM",
+              "score": 70,
+              "decision": "PAPER_OPPORTUNITY",
+              "proof": [
+                "paper_only",
+                "client_profile_filter",
+                "risk_liquidity_trend_check",
+                "no_real_execution"
+              ]
+            },
+            {
+              "symbol": "SPY",
+              "market": "etf",
+              "trend": "NEUTRAL",
+              "volatility": "LOW",
+              "liquidity": "HIGH",
+              "risk": "LOW",
+              "score": 60,
+              "decision": "PAPER_OPPORTUNITY",
+              "proof": [
+                "paper_only",
+                "client_profile_filter",
+                "risk_liquidity_trend_check",
+                "no_real_execution"
+              ]
+            },
+            {
+              "symbol": "BIST100",
+              "market": "bist_index",
+              "trend": "NEUTRAL",
+              "volatility": "MEDIUM",
+              "liquidity": "HIGH",
+              "risk": "MEDIUM",
+              "score": 50,
+              "decision": "WATCH",
+              "proof": [
+                "paper_only",
+                "client_profile_filter",
+                "risk_liquidity_trend_check",
+                "no_real_execution"
+              ]
+            }
+          ],
+          "warning": "This is not investment advice. No real execution."
+        },
+        "ops": {
+          "title": "ZENTRA OPS AUTO REPORT",
+          "time": "2026-05-05T12:18:53.014Z",
+          "mode": "BANKING_TASARRUF_ISLAMIC_PAPER_ONLY",
+          "realExecution": false,
+          "modules": {
+            "banking": {
+              "module": "banking",
+              "time": "2026-05-05T12:18:53.018Z",
+              "status": "TESTED",
+              "realExecution": false,
+              "accepted": [
+                "BNK-003"
+              ],
+              "review": [
+                "BNK-001"
+              ],
+              "blocked": [
+                "BNK-002"
+              ],
+              "results": [
+                {
+                  "id": "BNK-001",
+                  "item": "credit_application",
+                  "risk": "MEDIUM",
+                  "proof": "income pressure",
+                  "score": 45,
+                  "decision": "REVIEW",
+                  "realExecution": false,
+                  "dataType": "FREE_SAMPLE_OR_HISTORICAL",
+                  "proofChain": [
+                    "paper_only",
+                    "free_or_historical_data",
+                    "income pressure",
+                    "human_review_if_required"
+                  ]
+                },
+                {
+                  "id": "BNK-002",
+                  "item": "collection_case",
+                  "risk": "HIGH",
+                  "proof": "default pressure",
+                  "score": 75,
+                  "decision": "BLOCK_OR_HUMAN_REVIEW",
+                  "realExecution": false,
+                  "dataType": "FREE_SAMPLE_OR_HISTORICAL",
+                  "proofChain": [
+                    "paper_only",
+                    "free_or_historical_data",
+                    "default pressure",
+                    "human_review_if_required"
+                  ]
+                },
+                {
+                  "id": "BNK-003",
+                  "item": "portfolio_case",
+                  "risk": "LOW",
+                  "proof": "stable exposure",
+                  "score": 15,
+                  "decision": "PASS",
+                  "realExecution": false,
+                  "dataType": "FREE_SAMPLE_OR_HISTORICAL",
+                  "proofChain": [
+                    "paper_only",
+                    "free_or_historical_data",
+                    "stable exposure",
+                    "human_review_if_required"
+                  ]
+                }
+              ]
+            },
+            "tasarruf": {
+              "module": "tasarruf",
+              "time": "2026-05-05T12:18:53.018Z",
+              "status": "TESTED",
+              "realExecution": false,
+              "accepted": [
+                "TSF-001"
+              ],
+              "review": [
+                "TSF-003"
+              ],
+              "blocked": [
+                "TSF-002"
+              ],
+              "results": [
+                {
+                  "id": "TSF-001",
+                  "item": "participant",
+                  "risk": "LOW",
+                  "proof": "payment discipline",
+                  "score": 15,
+                  "decision": "PASS",
+                  "realExecution": false,
+                  "dataType": "FREE_SAMPLE_OR_HISTORICAL",
+                  "proofChain": [
+                    "paper_only",
+                    "free_or_historical_data",
+                    "payment discipline",
+                    "human_review_if_required"
+                  ]
+                },
+                {
+                  "id": "TSF-002",
+                  "item": "pool_liquidity",
+                  "risk": "HIGH",
+                  "proof": "liquidity pressure",
+                  "score": 75,
+                  "decision": "BLOCK_OR_HUMAN_REVIEW",
+                  "realExecution": false,
+                  "dataType": "FREE_SAMPLE_OR_HISTORICAL",
+                  "proofChain": [
+                    "paper_only",
+                    "free_or_historical_data",
+                    "liquidity pressure",
+                    "human_review_if_required"
+                  ]
+                },
+                {
+                  "id": "TSF-003",
+                  "item": "allocation",
+                  "risk": "MEDIUM",
+                  "proof": "fairness review",
+                  "score": 45,
+                  "decision": "REVIEW",
+                  "realExecution": false,
+                  "dataType": "FREE_SAMPLE_OR_HISTORICAL",
+                  "proofChain": [
+                    "paper_only",
+                    "free_or_historical_data",
+                    "fairness review",
+                    "human_review_if_required"
+                  ]
+                }
+              ]
+            },
+            "islamic": {
+              "module": "islamic",
+              "time": "2026-05-05T12:18:53.018Z",
+              "status": "TESTED",
+              "realExecution": false,
+              "accepted": [
+                "ISF-003"
+              ],
+              "review": [
+                "ISF-001"
+              ],
+              "blocked": [
+                "ISF-002"
+              ],
+              "results": [
+                {
+                  "id": "ISF-001",
+                  "item": "contract_review",
+                  "risk": "MEDIUM",
+                  "proof": "human review needed",
+                  "score": 45,
+                  "decision": "REVIEW",
+                  "realExecution": false,
+                  "dataType": "FREE_SAMPLE_OR_HISTORICAL",
+                  "proofChain": [
+                    "paper_only",
+                    "free_or_historical_data",
+                    "human review needed",
+                    "human_review_if_required"
+                  ]
+                },
+                {
+                  "id": "ISF-002",
+                  "item": "suitability",
+                  "risk": "HIGH",
+                  "proof": "suitability risk",
+                  "score": 75,
+                  "decision": "BLOCK_OR_HUMAN_REVIEW",
+                  "realExecution": false,
+                  "dataType": "FREE_SAMPLE_OR_HISTORICAL",
+                  "proofChain": [
+                    "paper_only",
+                    "free_or_historical_data",
+                    "suitability risk",
+                    "human_review_if_required"
+                  ]
+                },
+                {
+                  "id": "ISF-003",
+                  "item": "asset_risk",
+                  "risk": "LOW",
+                  "proof": "asset backed",
+                  "score": 15,
+                  "decision": "PASS",
+                  "realExecution": false,
+                  "dataType": "FREE_SAMPLE_OR_HISTORICAL",
+                  "proofChain": [
+                    "paper_only",
+                    "free_or_historical_data",
+                    "asset backed",
+                    "human_review_if_required"
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      },
+      "outcome": {
+        "status": "PENDING",
+        "note": "Outcome will be compared after next data cycle."
+      },
+      "delta": {
+        "correct": null,
+        "wrong": null,
+        "score": null,
+        "explanation": "Henüz sonuç karşılaştırması yapılmadı."
+      },
+      "learningInput": {
+        "memoryStatus": "ACTIVE",
+        "next": "Track outcome, compare decision, update learning."
+      }
+    }
+  ]
+}

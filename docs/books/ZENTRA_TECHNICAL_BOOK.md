@@ -215,3 +215,11 @@ Task Engine now ingests Product Discovery generated tasks.
 
 ## Intelligence Separation Technical
 Added zentra-evolution-core/data/intelligence_separation.json to separate Market Intel from General AI while allowing both to feed tasks, roadmap and Founder reports.
+
+## Proof Tracking / Client Intel / Opportunity Basket
+Added:
+- zentra-client-intel
+- zentra-opportunity-basket
+- zentra-proof-tracking
+
+These connect client profile, paper-only opportunity basket and proof history to the system runner.

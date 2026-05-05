@@ -1,0 +1,31 @@
+{
+  "time": "2026-05-05T12:42:42.229Z",
+  "status": "CLIENT_INTEL_ACTIVE",
+  "mode": "PAPER_ONLY_SUITABILITY_SUPPORT",
+  "client": {
+    "id": "CLIENT-PAPER-001",
+    "capitalBand": "LOW_MEDIUM",
+    "intent": "learn_and_track_opportunities",
+    "riskTolerance": "MEDIUM",
+    "timeHorizon": "SWING",
+    "psychology": {
+      "panicRisk": "MEDIUM",
+      "patience": "MEDIUM",
+      "experience": "BEGINNER_INTERMEDIATE"
+    },
+    "restrictions": [
+      "paper_only",
+      "no_personal_investment_advice",
+      "no_real_execution"
+    ]
+  },
+  "output": {
+    "suitableFlow": "education + opportunity tracking + proof report",
+    "assistantRole": "ask, understand, route, explain, support",
+    "blockedActions": [
+      "real_order",
+      "personal_advice",
+      "broker_execution"
+    ]
+  }
+}

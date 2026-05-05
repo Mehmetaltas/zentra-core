@@ -254,5 +254,21 @@ function maintenance(){
 - Günlük proof / report çıktısı kontrolü`;
 }
 </script>
+
+<div class="card">
+<h2>F.Trade Müşteri Niyeti + Fırsat Sepeti</h2>
+<p>Asistan kullanıcıyı tanır, risk/sermaye/niyet profilini çıkarır, paper-only fırsat sepetine yönlendirir.</p>
+<button onclick="loadZentraProof()" style="padding:10px;border-radius:10px">Proof + Basket Göster</button>
+<pre id="zentraProofBox">Hazır.</pre>
+</div>
+
+<script>
+async function loadZentraProof(){
+  async function get(p){try{let r=await fetch(p,{cache:"no-store"});return await r.json()}catch(e){return "missing"}}
+  const proof=await get("/zentra-proof-tracking/results/latest_proof.json");
+  const basket=await get("/zentra-opportunity-basket/results/opportunity_basket.json");
+  document.getElementById("zentraProofBox").textContent=JSON.stringify({proof,basket},null,2);
+}
+</script>
 </body>
 </html>

@@ -1,0 +1,155 @@
+{
+  "time": "2026-05-05T12:42:42.711Z",
+  "status": "OPPORTUNITY_BASKET_ACTIVE",
+  "mode": "PAPER_ONLY",
+  "client": {
+    "id": "CLIENT-PAPER-001",
+    "capitalBand": "LOW_MEDIUM",
+    "intent": "learn_and_track_opportunities",
+    "riskTolerance": "MEDIUM",
+    "timeHorizon": "SWING",
+    "psychology": {
+      "panicRisk": "MEDIUM",
+      "patience": "MEDIUM",
+      "experience": "BEGINNER_INTERMEDIATE"
+    },
+    "restrictions": [
+      "paper_only",
+      "no_personal_investment_advice",
+      "no_real_execution"
+    ]
+  },
+  "basket": [
+    {
+      "symbol": "AAPL",
+      "market": "us_equity",
+      "trend": "UP",
+      "volatility": "MEDIUM",
+      "liquidity": "HIGH",
+      "risk": "MEDIUM",
+      "score": 70,
+      "decision": "PAPER_OPPORTUNITY",
+      "proof": [
+        "paper_only",
+        "client_profile_filter",
+        "risk_liquidity_trend_check",
+        "no_real_execution"
+      ]
+    },
+    {
+      "symbol": "SPY",
+      "market": "etf",
+      "trend": "NEUTRAL",
+      "volatility": "LOW",
+      "liquidity": "HIGH",
+      "risk": "LOW",
+      "score": 60,
+      "decision": "PAPER_OPPORTUNITY",
+      "proof": [
+        "paper_only",
+        "client_profile_filter",
+        "risk_liquidity_trend_check",
+        "no_real_execution"
+      ]
+    },
+    {
+      "symbol": "BIST100",
+      "market": "bist_index",
+      "trend": "NEUTRAL",
+      "volatility": "MEDIUM",
+      "liquidity": "HIGH",
+      "risk": "MEDIUM",
+      "score": 50,
+      "decision": "WATCH",
+      "proof": [
+        "paper_only",
+        "client_profile_filter",
+        "risk_liquidity_trend_check",
+        "no_real_execution"
+      ]
+    },
+    {
+      "symbol": "BTCUSDT",
+      "market": "crypto",
+      "trend": "UP",
+      "volatility": "HIGH",
+      "liquidity": "HIGH",
+      "risk": "HIGH",
+      "score": 35,
+      "decision": "WATCH",
+      "proof": [
+        "paper_only",
+        "client_profile_filter",
+        "risk_liquidity_trend_check",
+        "no_real_execution"
+      ]
+    },
+    {
+      "symbol": "XAUUSD",
+      "market": "gold",
+      "trend": "DOWN",
+      "volatility": "MEDIUM",
+      "liquidity": "HIGH",
+      "risk": "MEDIUM",
+      "score": 35,
+      "decision": "WATCH",
+      "proof": [
+        "paper_only",
+        "client_profile_filter",
+        "risk_liquidity_trend_check",
+        "no_real_execution"
+      ]
+    }
+  ],
+  "top": [
+    {
+      "symbol": "AAPL",
+      "market": "us_equity",
+      "trend": "UP",
+      "volatility": "MEDIUM",
+      "liquidity": "HIGH",
+      "risk": "MEDIUM",
+      "score": 70,
+      "decision": "PAPER_OPPORTUNITY",
+      "proof": [
+        "paper_only",
+        "client_profile_filter",
+        "risk_liquidity_trend_check",
+        "no_real_execution"
+      ]
+    },
+    {
+      "symbol": "SPY",
+      "market": "etf",
+      "trend": "NEUTRAL",
+      "volatility": "LOW",
+      "liquidity": "HIGH",
+      "risk": "LOW",
+      "score": 60,
+      "decision": "PAPER_OPPORTUNITY",
+      "proof": [
+        "paper_only",
+        "client_profile_filter",
+        "risk_liquidity_trend_check",
+        "no_real_execution"
+      ]
+    },
+    {
+      "symbol": "BIST100",
+      "market": "bist_index",
+      "trend": "NEUTRAL",
+      "volatility": "MEDIUM",
+      "liquidity": "HIGH",
+      "risk": "MEDIUM",
+      "score": 50,
+      "decision": "WATCH",
+      "proof": [
+        "paper_only",
+        "client_profile_filter",
+        "risk_liquidity_trend_check",
+        "no_real_execution"
+      ]
+    }
+  ],
+  "warning": "This is not investment advice. No real execution."
+}

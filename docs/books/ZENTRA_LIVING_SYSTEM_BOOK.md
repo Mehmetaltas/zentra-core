@@ -156,3 +156,6 @@ Market Intel now creates product candidates, opens product tasks and feeds the p
 
 ## Market Intel + General AI Separation
 Market Intel handles economy, money, finance, sectors, products, customer needs and product opportunities. General AI is the broader system mind for human, world, social, political, scientific, academic, philosophical, technical and general wisdom. Both can detect needs, open tasks, create candidates when relevant, update roadmap and report to Founder. Not every General AI insight becomes a product.
+
+## Faz 1/2/3 Product Support + Proof Tracking
+ZENTRA now includes client-intent intake, paper-only opportunity basket and proof tracking. The assistant can collect user intent, risk psychology and capital band, then route to paper-only opportunity tracking. This is not personal investment advice and no real execution is allowed.

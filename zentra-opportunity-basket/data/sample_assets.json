@@ -1,0 +1,7 @@
+[
+  {"symbol":"BTCUSDT","market":"crypto","trend":"UP","volatility":"HIGH","liquidity":"HIGH","risk":"HIGH"},
+  {"symbol":"AAPL","market":"us_equity","trend":"UP","volatility":"MEDIUM","liquidity":"HIGH","risk":"MEDIUM"},
+  {"symbol":"SPY","market":"etf","trend":"NEUTRAL","volatility":"LOW","liquidity":"HIGH","risk":"LOW"},
+  {"symbol":"BIST100","market":"bist_index","trend":"NEUTRAL","volatility":"MEDIUM","liquidity":"HIGH","risk":"MEDIUM"},
+  {"symbol":"XAUUSD","market":"gold","trend":"DOWN","volatility":"MEDIUM","liquidity":"HIGH","risk":"MEDIUM"}
+]
