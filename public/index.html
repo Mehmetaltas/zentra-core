@@ -1,41 +1,198 @@
-<!doctype html><html><head><meta charset="utf-8"><title>ZENTRA Matrix Ecosystem</title><style>:root{--bg:#050814;--card:#111a35;--line:#2d3a66;--txt:#eef3ff;--muted:#a9b5d5;--blue:#7fb3ff;--cyan:#66e7ff;--gold:#f5d76e;--green:#69e7ad;--red:#ff8f9c}
-*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 18% 8%,#66e7ff22,transparent 28%),radial-gradient(circle at 82% 16%,#7f5bff24,transparent 24%),linear-gradient(180deg,#050814,#070b16 50%,#050814);color:var(--txt);font-family:Arial,Helvetica,sans-serif;overflow-x:hidden}
-body:before{content:"";position:fixed;inset:0;background:repeating-linear-gradient(90deg,transparent 0 42px,#7fb3ff0d 43px 44px),repeating-linear-gradient(0deg,transparent 0 42px,#7fb3ff0a 43px 44px);z-index:-2;animation:gridMove 22s linear infinite}
-@keyframes gridMove{to{transform:translate(80px,80px)}}a{color:var(--blue);text-decoration:none}
-header{padding:22px 28px;background:#050814cc;backdrop-filter:blur(18px);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:5}
-nav{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}.pill{padding:9px 13px;border:1px solid var(--line);border-radius:999px;background:#101a35;color:var(--txt)}
-main{padding:28px}.hero{position:relative;min-height:460px;border:1px solid var(--line);border-radius:30px;padding:36px;background:linear-gradient(135deg,rgba(255,255,255,.08),rgba(255,255,255,.02));box-shadow:0 30px 90px #0008;overflow:hidden}
-.hero:after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 72% 44%,#66e7ff2b,transparent 22%);animation:pulse 6s ease-in-out infinite}
-@keyframes pulse{50%{opacity:.55}}.hero-content{position:relative;z-index:2;max-width:820px}.kicker{color:var(--cyan);font-weight:800;letter-spacing:.13em;text-transform:uppercase;font-size:12px}
-h1{font-size:50px;line-height:1.05;margin:14px 0}p{line-height:1.6}.sub{font-size:19px;color:var(--muted)}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(245px,1fr));gap:16px;margin-top:22px}.card{background:rgba(17,26,53,.72);border:1px solid rgba(255,255,255,.14);border-radius:22px;padding:20px;backdrop-filter:blur(18px);box-shadow:0 18px 50px #0006;transition:.35s}
-.card:hover{transform:translateY(-8px);box-shadow:0 28px 70px #0009}.btn{display:inline-block;padding:13px 18px;border-radius:14px;border:1px solid var(--line);background:#16244a;color:var(--txt);font-weight:800;margin:4px}.btn.primary{background:linear-gradient(135deg,var(--cyan),#7f5bff);color:#050814;border:0}
-.badge{display:inline-block;padding:5px 9px;border-radius:999px;background:#243156;margin:3px;font-size:12px}.good{color:var(--green)}.warn{color:var(--gold)}.bad{color:var(--red)}.muted{color:var(--muted)}
-.flow{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}.flow span{padding:10px 12px;border:1px solid var(--line);border-radius:12px;background:#0b1228}
-.story{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-top:24px}.step{padding:16px;border-radius:18px;background:rgba(255,255,255,.055);border:1px solid rgba(255,255,255,.14);animation:floaty 6s ease-in-out infinite}.step:nth-child(2){animation-delay:.4s}.step:nth-child(3){animation-delay:.8s}.step:nth-child(4){animation-delay:1.2s}.step:nth-child(5){animation-delay:1.6s}@keyframes floaty{50%{transform:translateY(-8px)}}
-.section{margin-top:34px}.kpi{font-size:30px;font-weight:900}
-</style></head><body>
-<header><strong>ZENTRA Matrix Ecosystem</strong><nav><a class="pill" href="/">Matrix</a><a class="pill" href="/intel">Intel Market</a><a class="pill" href="/gate">Gate Market</a><a class="pill" href="/financial-trade">Financial Trade</a><a class="pill" href="/pricing">Paketler</a><a class="pill" href="/free-feed">Free Feed</a><a class="pill" href="/academy">Academy</a></nav></header>
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>ZENTRA Matrix Ecosystem</title>
+<style>
+:root{
+  --bg:#050814;--panel:#0c1328;--card:rgba(17,26,53,.74);
+  --line:rgba(150,180,255,.22);--txt:#eef3ff;--muted:#aab6d6;
+  --cyan:#66e7ff;--blue:#7fb3ff;--violet:#8b5cff;--gold:#f5d76e;--green:#69e7ad;--red:#ff8f9c;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;color:var(--txt);font-family:Arial,Helvetica,sans-serif;overflow-x:hidden;
+  background:
+    radial-gradient(circle at 18% 8%,rgba(102,231,255,.22),transparent 28%),
+    radial-gradient(circle at 82% 16%,rgba(139,92,255,.24),transparent 24%),
+    linear-gradient(180deg,#050814,#071020 46%,#050814);
+}
+canvas{position:fixed;inset:0;z-index:-3}
+body:before{
+  content:"";position:fixed;inset:-20%;z-index:-2;
+  background:
+    repeating-linear-gradient(90deg,transparent 0 44px,rgba(127,179,255,.08) 45px 46px),
+    repeating-linear-gradient(0deg,transparent 0 44px,rgba(127,179,255,.06) 45px 46px);
+  transform:rotate(-7deg);animation:gridMove 28s linear infinite;
+}
+@keyframes gridMove{to{transform:rotate(-7deg) translate(90px,90px)}}
+header{
+  position:sticky;top:0;z-index:20;padding:18px 26px;
+  background:rgba(5,8,20,.72);backdrop-filter:blur(22px);
+  border-bottom:1px solid var(--line);
+}
+.brand{font-weight:900;letter-spacing:.06em}
+nav{display:flex;gap:9px;flex-wrap:wrap;margin-top:12px}
+a{color:var(--blue);text-decoration:none}
+.pill{
+  padding:9px 13px;border:1px solid var(--line);border-radius:999px;
+  background:rgba(255,255,255,.055);color:var(--txt);transition:.25s
+}
+.pill:hover{transform:translateY(-2px);border-color:var(--cyan);box-shadow:0 0 26px rgba(102,231,255,.18)}
+main{padding:28px}
+.hero{
+  min-height:560px;position:relative;overflow:hidden;border:1px solid var(--line);
+  border-radius:32px;padding:38px;background:
+    radial-gradient(circle at 72% 42%,rgba(102,231,255,.22),transparent 22%),
+    radial-gradient(circle at 45% 58%,rgba(139,92,255,.18),transparent 35%),
+    linear-gradient(135deg,rgba(255,255,255,.09),rgba(255,255,255,.025));
+  box-shadow:0 30px 110px rgba(0,0,0,.55);
+}
+.hero:after{
+  content:"";position:absolute;inset:0;
+  background:radial-gradient(circle at 50% 50%,rgba(102,231,255,.12),transparent 42%);
+  animation:pulse 6s ease-in-out infinite;
+}
+@keyframes pulse{0%,100%{opacity:.28}50%{opacity:.85}}
+.hero-content{position:relative;z-index:3;max-width:850px}
+.kicker{color:var(--cyan);font-weight:900;letter-spacing:.14em;text-transform:uppercase;font-size:12px}
+h1{font-size:clamp(38px,7vw,76px);line-height:.98;margin:16px 0}
+.sub{font-size:20px;color:var(--muted);line-height:1.65;max-width:760px}
+.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:24px}
+.btn{
+  display:inline-block;padding:14px 19px;border-radius:16px;border:1px solid var(--line);
+  background:rgba(255,255,255,.07);color:var(--txt);font-weight:900;transition:.3s
+}
+.btn.primary{background:linear-gradient(135deg,var(--cyan),var(--violet));color:#050814;border:0}
+.btn:hover{transform:translateY(-4px);box-shadow:0 20px 50px rgba(0,0,0,.35)}
+.orbit{position:absolute;right:5%;top:12%;width:330px;height:330px;border:1px solid rgba(102,231,255,.45);border-radius:50%;z-index:2}
+.orbit:before,.orbit:after{content:"";position:absolute;border-radius:50%;border:1px solid rgba(127,179,255,.25)}
+.orbit:before{inset:42px}.orbit:after{inset:88px;border-color:rgba(245,215,110,.42)}
+.dot{position:absolute;width:11px;height:11px;background:var(--cyan);border-radius:50%;box-shadow:0 0 24px var(--cyan);left:50%;top:-5px;animation:spin 10s linear infinite}
+@keyframes spin{from{transform:rotate(0deg) translateX(165px) rotate(0)}to{transform:rotate(360deg) translateX(165px) rotate(-360deg)}}
+.story{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-top:28px;position:relative;z-index:3}
+.step,.card{
+  background:var(--card);border:1px solid var(--line);border-radius:22px;padding:18px;
+  backdrop-filter:blur(18px);box-shadow:0 18px 50px rgba(0,0,0,.34);transition:.35s
+}
+.step{animation:floaty 7s ease-in-out infinite}
+.step:nth-child(2){animation-delay:.4s}.step:nth-child(3){animation-delay:.8s}.step:nth-child(4){animation-delay:1.2s}.step:nth-child(5){animation-delay:1.6s}
+@keyframes floaty{50%{transform:translateY(-9px)}}
+.card:hover{transform:translateY(-9px);box-shadow:0 28px 70px rgba(0,0,0,.5)}
+.section{margin-top:38px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px}
+.badge{display:inline-block;margin:4px 4px 0 0;padding:6px 10px;border-radius:999px;background:rgba(127,179,255,.16);border:1px solid var(--line);font-size:12px}
+.good{color:var(--green)}.warn{color:var(--gold)}.bad{color:var(--red)}.muted{color:var(--muted)}
+.flow{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}
+.flow span{padding:11px 13px;border:1px solid var(--line);border-radius:14px;background:rgba(5,8,20,.5)}
+.ticker{margin-top:26px;overflow:hidden;border:1px solid var(--line);border-radius:20px;background:rgba(5,8,20,.48)}
+.ticker-inner{display:flex;gap:22px;white-space:nowrap;animation:ticker 26s linear infinite;padding:15px}
+@keyframes ticker{to{transform:translateX(-50%)}}
+.market-screen{
+  margin-top:22px;border:1px solid var(--line);border-radius:24px;padding:18px;
+  background:linear-gradient(135deg,rgba(255,255,255,.08),rgba(255,255,255,.02));
+}
+.bars{display:flex;align-items:end;height:130px;gap:9px}
+.bar{flex:1;border-radius:10px 10px 0 0;background:linear-gradient(180deg,var(--cyan),var(--violet));animation:bars 3s ease-in-out infinite}
+.bar:nth-child(2){animation-delay:.2s}.bar:nth-child(3){animation-delay:.5s}.bar:nth-child(4){animation-delay:.8s}.bar:nth-child(5){animation-delay:1.1s}.bar:nth-child(6){animation-delay:1.4s}
+@keyframes bars{0%,100%{height:35%}50%{height:95%}}
+.footer{margin:40px 0 10px;color:var(--muted)}
+</style>
+</head>
+<body>
+<canvas id="stars"></canvas>
+
+<header>
+  <div class="brand">ZENTRA Matrix Ecosystem</div>
+  <nav>
+    <a class="pill" href="/">Matrix</a>
+    <a class="pill" href="/intel">Intel Market</a>
+    <a class="pill" href="/gate">Gate Market</a>
+    <a class="pill" href="/financial-trade">Financial Trade</a>
+    <a class="pill" href="/free-feed">Free Feed</a>
+    <a class="pill" href="/academy">Academy</a>
+    <a class="pill" href="/pricing">Paketler</a>
+  </nav>
+</header>
+
 <main>
-<section class="hero"><div class="hero-content"><div class="kicker">Global Economic Telescope · Matrix · Lens</div><h1>ZENTRA, piyasayı göstermez.<br>Karar akışını kurar.</h1><p class="sub">Veri · Risk · Sonuç · Öğrenme. Tek sistemde.</p><a class="btn primary" href="/gate">Gate Market</a><a class="btn" href="/intel">Intel Market</a><a class="btn" href="/financial-trade">Financial Trade</a><div class="story"><div class="step"><b>Data</b><br><span class="muted">Akış başlar</span></div><div class="step"><b>Signal</b><br><span class="muted">İlk iz oluşur</span></div><div class="step"><b>Decision</b><br><span class="muted">Karar katmanı</span></div><div class="step"><b>Proof</b><br><span class="muted">Sonuç kaydı</span></div><div class="step"><b>Learning</b><br><span class="muted">Sistem evrilir</span></div></div></div></section>
-<section class="section"><h2>Intel araçtır. Gate sistemdir.</h2><div class="grid"><div class="card"><h3>Intel Market <span class="badge">ZENTRA’sız</span></h3><p class="muted">Bağımsız ürün setleri: chart, signal, screener, report.</p></div><div class="card"><h3>Gate Market <span class="badge">ZENTRA’lı</span></h3><p class="muted">Decision, risk, proof, memory ve portfolio risk ile güçlendirilmiş sistem.</p></div></div></section>
-<section class="section"><h2>Lens Ailesi</h2><div class="grid"><div class="card"><h3>Financial Trade Lens</h3><p>Trade kararını yönetir.</p></div><div class="card"><h3>Banking Lens</h3><p>Müşteri, kredi, tahsilat ve risk akışını kurar.</p></div><div class="card"><h3>Tasarruf Lens</h3><p>Havuz, tahsis ve likiditeyi izler.</p></div><div class="card"><h3>Islamic Finance Lens</h3><p>Uygunluk, sözleşme ve risk birlikte değerlendirilir.</p></div></div></section>
-<section class="section"><div class="card"><h2>Güvenli çalışma</h2><p class="bad"><b>Gerçek emir yok. Broker yok. Public tavsiye yok.</b></p><div class="flow"><span>Data</span><span>Backtest</span><span>Learning</span><span>Strict Filter</span><span>Portfolio Risk</span><span>Proof</span></div></div></section>
+  <section class="hero">
+    <div class="orbit"><div class="dot"></div></div>
+    <div class="hero-content">
+      <div class="kicker">Global Economic Telescope · Matrix · Lens</div>
+      <h1>ZENTRA, piyasayı göstermez.<br>Karar akışını kurar.</h1>
+      <p class="sub">Veri · Risk · Sonuç · Öğrenme. Ekonomik evreni lenslerle izleyen, proof ve hafıza ile karar disiplinini kuran sistem.</p>
+      <div class="actions">
+        <a class="btn primary" href="/gate">Gate Market</a>
+        <a class="btn" href="/intel">Intel Market</a>
+        <a class="btn" href="/financial-trade">Financial Trade</a>
+      </div>
 
-<section class="section">
-<h2>Free Feed + Academy</h2>
-<div class="grid">
-<div class="card">
-<h3>Free Feed</h3>
-<p>Günlük piyasa okuma, risk iştahı, makro takvim ve ZENTRA lens notu.</p>
-<a class="btn" href="/free-feed">Free Feed</a>
-</div>
-<div class="card">
-<h3>Academy</h3>
-<p>Risk, sinyal, backtest, decision autopsy ve portfolio disiplinini öğren.</p>
-<a class="btn" href="/academy">Academy</a>
-</div>
-</div>
-</section>
+      <div class="story">
+        <div class="step"><b>Data</b><br><span class="muted">Akış başlar</span></div>
+        <div class="step"><b>Signal</b><br><span class="muted">İlk iz oluşur</span></div>
+        <div class="step"><b>Decision</b><br><span class="muted">Karar katmanı</span></div>
+        <div class="step"><b>Proof</b><br><span class="muted">Sonuç kaydı</span></div>
+        <div class="step"><b>Learning</b><br><span class="muted">Sistem evrilir</span></div>
+      </div>
+    </div>
+  </section>
 
-</main></body></html>
+  <div class="ticker"><div class="ticker-inner">
+    <span>Decision Intelligence</span><span>Risk Lens</span><span>Proof Pack</span><span>Portfolio Memory</span><span>Signal Discipline</span><span>Paper-Only Safety</span>
+    <span>Decision Intelligence</span><span>Risk Lens</span><span>Proof Pack</span><span>Portfolio Memory</span><span>Signal Discipline</span><span>Paper-Only Safety</span>
+  </div></div>
+
+  <section class="section">
+    <h2>Intel araçtır. Gate sistemdir.</h2>
+    <div class="grid">
+      <div class="card"><h3>Intel Market <span class="badge">ZENTRA’sız</span></h3><p class="muted">Bağımsız ürün setleri: chart, signal, screener, report ve analiz araçları.</p><span class="badge">Tool</span><span class="badge">Report</span><span class="badge">Signal</span></div>
+      <div class="card"><h3>Gate Market <span class="badge">ZENTRA’lı</span></h3><p class="muted">Decision, risk, proof, memory ve portfolio risk ile güçlendirilmiş sistem.</p><span class="badge">Decision</span><span class="badge">Risk</span><span class="badge">Learning</span></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>Lens Ailesi</h2>
+    <div class="grid">
+      <div class="card"><h3>Financial Trade Lens</h3><p>Trade kararını yönetir.</p></div>
+      <div class="card"><h3>Banking Lens</h3><p>Müşteri, kredi, tahsilat ve risk akışını kurar.</p></div>
+      <div class="card"><h3>Tasarruf Lens</h3><p>Havuz, tahsis ve likiditeyi izler.</p></div>
+      <div class="card"><h3>Islamic Finance Lens</h3><p>Uygunluk, sözleşme ve risk birlikte değerlendirilir.</p></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="market-screen">
+      <h2>Canlı Sistem Hissi</h2>
+      <p class="muted">Risk · Signal · Proof · Learning akışı hareketli piyasa yüzeyiyle izlenir.</p>
+      <div class="bars">
+        <div class="bar" style="height:35%"></div><div class="bar" style="height:55%"></div><div class="bar" style="height:75%"></div><div class="bar" style="height:45%"></div><div class="bar" style="height:85%"></div><div class="bar" style="height:60%"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="card">
+      <h2>Güvenli çalışma</h2>
+      <p class="bad"><b>Gerçek emir yok. Broker yok. Public tavsiye yok.</b></p>
+      <div class="flow"><span>Data</span><span>Backtest</span><span>Learning</span><span>Strict Filter</span><span>Portfolio Risk</span><span>Proof</span></div>
+    </div>
+  </section>
+
+  <p class="footer">ZENTRA Matrix Ecosystem · Paper-only decision support surface.</p>
+</main>
+
+<script>
+const c=document.getElementById("stars"),ctx=c.getContext("2d");
+function resize(){c.width=innerWidth;c.height=innerHeight}resize();addEventListener("resize",resize);
+let p=Array.from({length:80},()=>({x:Math.random()*c.width,y:Math.random()*c.height,vx:(Math.random()-.5)*.45,vy:(Math.random()-.5)*.45,s:Math.random()*2+1}));
+function draw(){
+ ctx.clearRect(0,0,c.width,c.height);ctx.fillStyle="rgba(127,179,255,.8)";
+ for(const a of p){a.x+=a.vx;a.y+=a.vy;if(a.x<0||a.x>c.width)a.vx*=-1;if(a.y<0||a.y>c.height)a.vy*=-1;ctx.beginPath();ctx.arc(a.x,a.y,a.s,0,Math.PI*2);ctx.fill()}
+ requestAnimationFrame(draw)
+}draw();
+</script>
+</body>
+</html>
