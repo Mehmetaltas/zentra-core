@@ -153,3 +153,6 @@ ZENTRA now captures raw memory, classifies information, extracts market needs an
 
 ## Product Discovery Loop
 Market Intel now creates product candidates, opens product tasks and feeds the product roadmap. Raw insights remain stored, but product candidates are processed before entering Intel Market or Gate Market.
+
+## Market Intel + General AI Separation
+Market Intel handles economy, money, finance, sectors, products, customer needs and product opportunities. General AI is the broader system mind for human, world, social, political, scientific, academic, philosophical, technical and general wisdom. Both can detect needs, open tasks, create candidates when relevant, update roadmap and report to Founder. Not every General AI insight becomes a product.

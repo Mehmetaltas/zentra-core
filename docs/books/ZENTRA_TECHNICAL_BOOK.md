@@ -212,3 +212,6 @@ Added:
 - zentra-product-discovery/roadmap/product_roadmap.json
 
 Task Engine now ingests Product Discovery generated tasks.
+
+## Intelligence Separation Technical
+Added zentra-evolution-core/data/intelligence_separation.json to separate Market Intel from General AI while allowing both to feed tasks, roadmap and Founder reports.

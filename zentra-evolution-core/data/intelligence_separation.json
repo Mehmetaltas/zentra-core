@@ -1,0 +1,19 @@
+{
+  "version": "INTELLIGENCE_SEPARATION_V1",
+  "market_intel": {
+    "role": "Economy, money, finance, sectors, products, customer needs, market gaps and product opportunities",
+    "outputs": ["need", "problem", "market_gap", "product_candidate", "roadmap_task", "founder_report"]
+  },
+  "general_ai": {
+    "role": "Human, world, social, political, scientific, academic, philosophical, technical and general wisdom layer",
+    "outputs": ["knowledge", "wisdom", "hypothesis", "confirmed_knowledge", "system_advice", "possible_product_candidate", "founder_report"]
+  },
+  "shared_flow": [
+    "need_or_problem_detection",
+    "task_generation",
+    "candidate_generation_if_relevant",
+    "roadmap_update",
+    "founder_report"
+  ],
+  "rule": "Market Intel is market/product oriented. General AI is broad wisdom and system mind. Not every General AI insight becomes a product."
+}
