@@ -322,5 +322,95 @@ function stopAssistant(){
 }
 </script>
 
+
+<div id="assistantToggle" style="
+position:fixed;bottom:20px;right:20px;z-index:999;
+background:#0b1228;border:1px solid #2d3a66;
+border-radius:50px;padding:12px 16px;
+cursor:pointer;font-weight:bold">
+🎧 Tanıtımı Aç
+</div>
+
+<div id="assistantPanel" style="
+display:none;
+position:fixed;bottom:90px;right:20px;
+width:320px;z-index:999;
+background:#050814;border:1px solid #2d3a66;
+border-radius:20px;padding:16px">
+
+<h3>ZENTRA Assistant</h3>
+
+<div style="margin-bottom:10px">
+<button onclick="runGuide('matrix')" class="btn">Matrix</button>
+<button onclick="runGuide('intel')" class="btn">Intel</button>
+<button onclick="runGuide('gate')" class="btn">Gate</button>
+<button onclick="runGuide('trade')" class="btn">F.Trade</button>
+</div>
+
+<div style="margin-bottom:10px">
+<button onclick="setVoice('zentra')" class="btn primary">ZENTRA</button>
+<button onclick="setVoice('matrix')" class="btn">MATRIX</button>
+</div>
+
+<div style="margin-bottom:10px">
+<button onclick="muteGuide()" class="btn">Sessiz</button>
+<button onclick="stopGuide()" class="btn">Kapat</button>
+</div>
+
+<p id="assistantText">Hazır</p>
+</div>
+
+<script>
+let voiceType = "zentra"
+let muted = false
+
+function toggleAssistant(){
+  const p = document.getElementById("assistantPanel")
+  p.style.display = p.style.display === "none" ? "block" : "none"
+}
+
+document.getElementById("assistantToggle").onclick = toggleAssistant
+
+function setVoice(v){ voiceType = v }
+
+function speak(text){
+  if(muted) return
+  const u = new SpeechSynthesisUtterance(text)
+  u.pitch = voiceType==="zentra"?1.2:0.8
+  u.rate = 0.95
+  speechSynthesis.cancel()
+  speechSynthesis.speak(u)
+}
+
+function runGuide(section){
+  let text = ""
+
+  if(section==="matrix"){
+    text = "ZENTRA Matrix, ekonomik evreni izleyen ve karar akışını kuran sistemdir."
+  }
+  if(section==="intel"){
+    text = "Intel Market, ZENTRA olmadan çalışan araç setidir."
+  }
+  if(section==="gate"){
+    text = "Gate Market, ZENTRA ile güçlendirilmiş karar sistemidir."
+  }
+  if(section==="trade"){
+    text = "Financial Trade, trade kararını yönetir, sadece sinyal göstermez."
+  }
+
+  document.getElementById("assistantText").innerText = text
+  speak(text)
+}
+
+function muteGuide(){
+  muted = true
+  speechSynthesis.cancel()
+}
+
+function stopGuide(){
+  speechSynthesis.cancel()
+  document.getElementById("assistantPanel").style.display = "none"
+}
+</script>
 </body>
 </html>
