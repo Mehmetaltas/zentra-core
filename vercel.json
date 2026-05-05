@@ -1,97 +1,27 @@
 {
   "version": 2,
   "rewrites": [
-    {
-      "source": "/",
-      "destination": "/index.html"
-    },
-    {
-      "source": "/matrix",
-      "destination": "/index.html"
-    },
-    {
-      "source": "/intel",
-      "destination": "/public/intel/index.html"
-    },
-    {
-      "source": "/gate",
-      "destination": "/public/gate/index.html"
-    },
-    {
-      "source": "/pricing",
-      "destination": "/public/pricing/index.html"
-    },
-    {
-      "source": "/auth",
-      "destination": "/public/auth/index.html"
-    },
-    {
-      "source": "/free-feed",
-      "destination": "/public/free-feed/index.html"
-    },
-    {
-      "source": "/academy",
-      "destination": "/public/academy/index.html"
-    },
-    {
-      "source": "/financial-trade",
-      "destination": "/financial-trade.html"
-    },
-    {
-      "source": "/banking",
-      "destination": "/banking/index.html"
-    },
-    {
-      "source": "/tasarruf",
-      "destination": "/tasarruf/index.html"
-    },
-    {
-      "source": "/islamic-finance",
-      "destination": "/islamic-finance/index.html"
-    },
-    {
-      "source": "/operations",
-      "destination": "/operations/index.html"
-    },
-    {
-      "source": "/hr",
-      "destination": "/hr/index.html"
-    },
-    {
-      "source": "/assistant",
-      "destination": "/assistant.html"
-    },
-    {
-      "source": "/support",
-      "destination": "/support.html"
-    },
-    {
-      "source": "/legal",
-      "destination": "/legal.html"
-    },
-    {
-      "source": "/security",
-      "destination": "/security.html"
-    },
-    {
-      "source": "/social",
-      "destination": "/social.html"
-    },
-    {
-      "source": "/privacy",
-      "destination": "/legal.html"
-    },
-    {
-      "source": "/terms",
-      "destination": "/legal.html"
-    },
-    {
-      "source": "/maintenance",
-      "destination": "/security.html"
-    },
-    {
-      "source": "/accessibility",
-      "destination": "/support.html"
-    }
+    { "source": "/", "destination": "/index.html" },
+    { "source": "/matrix", "destination": "/index.html" },
+
+    { "source": "/assistant", "destination": "/assistant/index.html" },
+    { "source": "/support", "destination": "/support/index.html" },
+    { "source": "/legal", "destination": "/legal/index.html" },
+    { "source": "/social", "destination": "/social/index.html" },
+    { "source": "/security", "destination": "/security/index.html" },
+    { "source": "/privacy", "destination": "/privacy/index.html" },
+    { "source": "/terms", "destination": "/terms/index.html" },
+    { "source": "/maintenance", "destination": "/maintenance/index.html" },
+    { "source": "/accessibility", "destination": "/accessibility/index.html" },
+
+    { "source": "/intel", "destination": "/public/intel/index.html" },
+    { "source": "/gate", "destination": "/public/gate/index.html" },
+    { "source": "/pricing", "destination": "/public/pricing/index.html" },
+    { "source": "/free-feed", "destination": "/public/free-feed/index.html" },
+    { "source": "/academy", "destination": "/public/academy/index.html" },
+    { "source": "/financial-trade", "destination": "/financial-trade.html" },
+    { "source": "/banking", "destination": "/banking/index.html" },
+    { "source": "/tasarruf", "destination": "/tasarruf/index.html" },
+    { "source": "/islamic-finance", "destination": "/islamic-finance/index.html" }
   ]
 }
