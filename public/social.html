@@ -1,6 +1,258 @@
-<!doctype html><html><head><meta charset="utf-8"><title>ZENTRA Social OS</title></head>
-<body style="background:#050814;color:#eef3ff;font-family:Arial;padding:40px">
-<h1>Social Media / Publishing OS</h1>
-<p>LinkedIn, X, Instagram, newsletter, Free Feed ve Academy yayın görev merkezi.</p>
-<a href="/assistant">Assistant OS</a>
-</body></html>
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ZENTRA Assistant OS Premium</title>
+<style>
+:root{--bg:#050814;--card:#11182e;--line:#2d3a66;--txt:#eef3ff;--muted:#aab6d6;--blue:#7fb3ff;--cyan:#66e7ff;--green:#69e7ad;--gold:#f5d76e;--red:#ff8f9c}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(circle at 18% 8%,#66e7ff22,transparent 28%),linear-gradient(180deg,#050814,#071020 55%,#050814);color:var(--txt);font-family:Arial,Helvetica,sans-serif;padding:28px}
+a{color:var(--blue);text-decoration:none}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px}
+.card{background:rgba(17,24,46,.82);border:1px solid var(--line);border-radius:20px;padding:20px;margin:14px 0;box-shadow:0 18px 50px #0006}
+.btn{display:inline-block;padding:11px 14px;border-radius:13px;background:#101a35;border:1px solid var(--line);color:var(--txt);margin:4px;cursor:pointer;font-weight:700}
+.primary{background:linear-gradient(135deg,var(--cyan),#8b5cff);color:#050814;border:0}
+input,select,textarea{width:100%;padding:12px;border-radius:12px;background:#0b1228;color:var(--txt);border:1px solid var(--line);margin:6px 0}
+pre{white-space:pre-wrap;background:#050814;border:1px solid var(--line);border-radius:14px;padding:14px;overflow:auto}
+.bad{color:var(--red)}.good{color:var(--green)}.warn{color:var(--gold)}.muted{color:var(--muted)}
+.badge{display:inline-block;padding:5px 9px;border-radius:999px;background:#243156;margin:3px;font-size:12px}
+</style>
+</head>
+<body>
+
+<h1>ZENTRA Assistant OS Premium</h1>
+<p class="muted">Müşteri · destek · free feed · academy · legal · social · security · maintenance · geçmiş veri test merkezi</p>
+
+<p>
+<a class="btn" href="/">Matrix</a>
+<a class="btn" href="/financial-trade">Financial Trade</a>
+<a class="btn" href="/free-feed">Free Feed</a>
+<a class="btn" href="/academy">Academy</a>
+<a class="btn" href="/support">Support</a>
+<a class="btn" href="/legal">Legal</a>
+<a class="btn" href="/social">Social</a>
+<a class="btn" href="/security">Security</a>
+</p>
+
+<div class="card">
+<h2>Canlı Karşılama / Yönlendirme</h2>
+<p class="muted">Kullanıcı niyetini seçer; asistan doğru bölümü, paketi, destek yolunu ve açıklamayı verir.</p>
+<select id="intent">
+<option value="banking">Banking OS</option>
+<option value="tasarruf">Tasarruf / Alternative Finance OS</option>
+<option value="islamic">Islamic Finance OS</option>
+<option value="financial">Financial Trade</option>
+<option value="pricing">Paket / abonelik</option>
+<option value="support">Destek / arıza / bakım</option>
+<option value="legal">Sözleşme / gizlilik / hukuk</option>
+<option value="accessibility">Engelli destek / erişilebilirlik</option>
+<option value="security">Güvenlik / siber olay</option>
+<option value="feed">Günlük bülten</option>
+<option value="academy">Eğitim</option>
+<option value="social">Sosyal medya</option>
+<option value="offer">Teklif / kurumsal talep</option>
+</select>
+<button class="btn primary" onclick="route()">Yönlendir + Sesli Anlat</button>
+<button class="btn" onclick="stopVoice()">Sesi Durdur</button>
+<pre id="out">Hazır.</pre>
+</div>
+
+<div class="grid">
+<div class="card"><h3>Banking OS</h3><p>Müşteri, kredi, tahsilat, portföy, fraud, compliance.</p><span class="badge">Historical Data</span><span class="badge">Proof</span></div>
+<div class="card"><h3>Tasarruf OS</h3><p>Katılımcı, havuz, tahsis, likidite, sözleşme, fairness.</p><span class="badge">Pool Test</span><span class="badge">Risk</span></div>
+<div class="card"><h3>Islamic Finance OS</h3><p>Sözleşme, uygunluk, risk, insan incelemesi, audit.</p><span class="badge">Suitability</span><span class="badge">Review</span></div>
+<div class="card"><h3>Free Feed</h3><p>Günlük bülten, piyasa okuma, ZENTRA lens notu.</p><span class="badge">Public</span></div>
+</div>
+
+<div class="card">
+<h2>Ücretsiz / Geçmiş Veri Test Merkezi</h2>
+<p class="muted">Lisanslı API olmadan: CSV/manual data, public geçmiş veri ve örnek dataset ile proof üretir.</p>
+<textarea id="csvInput" rows="7">id,type,metric,risk
+BNK-001,credit,income_pressure,MEDIUM
+BNK-002,collection,default_risk,HIGH
+TSF-001,pool,liquidity,MEDIUM
+ISF-001,contract,suitability,HIGH</textarea>
+<button class="btn primary" onclick="runHistoricalTest()">Geçmiş veri testi çalıştır</button>
+<pre id="testOut"></pre>
+</div>
+
+<div class="card">
+<h2>Günlük Free Feed Taslağı</h2>
+<button class="btn primary" onclick="makeBulletin()">Bülten üret</button>
+<pre id="bulletinOut"></pre>
+</div>
+
+<div class="card">
+<h2>Academy Eğitim Görevi</h2>
+<button class="btn" onclick="lesson('risk')">Risk</button>
+<button class="btn" onclick="lesson('signal')">Sinyal</button>
+<button class="btn" onclick="lesson('proof')">Proof</button>
+<button class="btn" onclick="lesson('backtest')">Backtest</button>
+<button class="btn" onclick="lesson('portfolio')">Portfolio</button>
+<pre id="lessonOut"></pre>
+</div>
+
+<div class="card">
+<h2>Support / Incident / Billing Akışı</h2>
+<select id="supportType">
+<option value="billing">Billing / fatura / abonelik</option>
+<option value="refund">İptal / iade</option>
+<option value="incident">Arıza / incident</option>
+<option value="security">Security incident</option>
+<option value="accessibility">Engelli destek / erişilebilirlik</option>
+<option value="corporate">Kurumsal talep</option>
+</select>
+<button class="btn primary" onclick="supportFlow()">Akış üret</button>
+<pre id="supportOut"></pre>
+</div>
+
+<div class="card">
+<h2>Teklif / Mail Taslağı</h2>
+<input id="lead" placeholder="Müşteri / kurum adı">
+<select id="pack">
+<option>Financial Trade Pro</option>
+<option>Banking OS Institutional</option>
+<option>Tasarruf OS Institutional</option>
+<option>Islamic Finance OS Institutional</option>
+<option>Gate Market Enterprise</option>
+</select>
+<button class="btn primary" onclick="offer()">Teklif taslağı üret</button>
+<pre id="offerOut"></pre>
+</div>
+
+<div class="card">
+<h2>Social Media / Publishing</h2>
+<button class="btn" onclick="social('linkedin')">LinkedIn</button>
+<button class="btn" onclick="social('x')">X</button>
+<button class="btn" onclick="social('instagram')">Instagram</button>
+<button class="btn" onclick="social('newsletter')">Newsletter</button>
+<pre id="socialOut"></pre>
+</div>
+
+<div class="card">
+<h2>Security / Maintenance Checklist</h2>
+<button class="btn primary" onclick="maintenance()">Kontrol listesi üret</button>
+<pre id="maintenanceOut"></pre>
+</div>
+
+<script>
+const intentMap={
+ banking:"Banking OS; müşteri, kredi, tahsilat, portföy, compliance ve fraud akışlarını proof ve geçmiş veri testleriyle izler. Lisanslı banka entegrasyonu yoksa historical/manual data ile çalışır.",
+ tasarruf:"Tasarruf OS; katılımcı, havuz, tahsis, likidite, sözleşme ve fairness riskini ölçer. Gerçek kurum entegrasyonu yoksa geçmiş/örnek veriyle proof üretir.",
+ islamic:"Islamic Finance OS; sözleşme türü, uygunluk, risk ve insan incelemesi gereken alanları düzenler. Nihai hukuki ve şer'i inceleme insan uzman gerektirir.",
+ financial:"Financial Trade; trade kararını, riskini, sonucunu ve öğrenmesini yönetir. Gerçek emir yok, paper-only karar destek çalışır.",
+ pricing:"Paketler: Free, Pro, Expert, Institutional. Ödeme sistemi sonra bağlanır; şu an erişim ve paket kurgusu hazırlanır.",
+ support:"Destek: arıza, bakım, cockpit, rapor, fatura, iptal, iade ve güvenlik olayları sınıflandırılır.",
+ legal:"Legal: yatırım tavsiyesi değildir, gizlilik, telif, görsel/grafik/rapor hakları, kullanım şartları ve sorumluluk sınırları.",
+ accessibility:"Erişilebilirlik: engelli kullanıcı destek akışı, sesli anlatım, okunabilirlik ve kolay yönlendirme ilkeleri.",
+ security:"Security: token, erişim, audit, cyber, data safety, paper-only kilit ve deploy kontrolü.",
+ feed:"Free Feed: günlük piyasa okuma, risk iştahı, makro takvim ve ZENTRA lens notu üretir.",
+ academy:"Academy: risk, sinyal, proof, backtest, portfolio ve decision autopsy eğitimleri verir.",
+ social:"Social OS: LinkedIn, X, Instagram, newsletter ve Free Feed yayın taslakları üretir.",
+ offer:"Kurumsal teklif: ürün, paket, kullanım alanı, kurum tipi, destek ve erişim seviyesi çıkarılır."
+};
+
+function speak(t){if(window.speechSynthesis){const u=new SpeechSynthesisUtterance(t);u.lang="tr-TR";u.rate=.92;u.pitch=1.05;speechSynthesis.cancel();speechSynthesis.speak(u)}}
+function stopVoice(){if(window.speechSynthesis)speechSynthesis.cancel()}
+function route(){const t=intentMap[intent.value];out.textContent=t;speak(t)}
+
+function runHistoricalTest(){
+ const rows=csvInput.value.trim().split("\\n").slice(1).map(x=>x.split(","));
+ const results=rows.map(r=>{
+   const risk=r[3]||"LOW";
+   let score=risk==="HIGH"?75:risk==="MEDIUM"?45:15;
+   let status=score>=70?"BLOCK":score>=40?"REVIEW":"PASS";
+   return {id:r[0],type:r[1],metric:r[2],risk,score,status,proof:["historical/manual data","paper-only","no licensed live API"]};
+ });
+ testOut.textContent=JSON.stringify({time:new Date().toISOString(),mode:"FREE_HISTORICAL_DATA_TEST",realExecution:false,results},null,2);
+}
+
+function makeBulletin(){
+ bulletinOut.textContent=`ZENTRA Günlük Free Feed Taslağı
+
+1. Market Pulse:
+BIST, global piyasa, döviz, altın, petrol ve crypto genel görünümü.
+
+2. Risk Appetite:
+Makro veri, jeopolitik risk, volatilite ve likidite etkisi.
+
+3. Sector / Company Watch:
+Öne çıkan sektör ve şirket haberleri sadeleştirilir.
+
+4. ZENTRA Lens Note:
+Veri → risk → karar → proof akışıyla kısa yorum.
+
+Uyarı:
+Yatırım tavsiyesi değildir. Gerçek emir yok. Paper-only karar destek katmanıdır.`;
+}
+
+function lesson(k){
+ const m={
+ risk:"Risk, fiyat hareketinden önce sistemin taşıdığı belirsizlik ve zarar ihtimalidir. ZENTRA riski kararın merkezine koyar.",
+ signal:"Sinyal tek başına karar değildir. Risk, proof ve sonuçla bağlanmadıkça karar olmaz.",
+ proof:"Proof, kararın neden alındığını ve sonucunun ne olduğunu kaydeden kanıt katmanıdır.",
+ backtest:"Backtest, karar mantığının geçmiş veride test edilmesidir. Tek başına başarı garantisi değildir.",
+ portfolio:"Portfolio risk, tek varlık yerine toplam etkiyi, ağırlığı ve zarar yayılımını ölçer."
+ };
+ lessonOut.textContent=m[k];speak(m[k]);
+}
+
+function supportFlow(){
+ const m={
+ billing:"Billing akışı: plan/fatura talebi alınır, kullanıcı hesabı kontrol edilir, ödeme aktif değilse kurum teklif sürecine yönlendirilir.",
+ refund:"İptal/iade akışı: talep nedeni, kullanım durumu, sözleşme ve iade politikası kontrol edilir.",
+ incident:"Incident akışı: problem türü, etkilenen sayfa, zaman, ekran görüntüsü ve tekrar üretme adımları alınır.",
+ security:"Security incident: şüpheli giriş, token riski, veri olayı, erişim problemi ve audit kontrolü başlatılır.",
+ accessibility:"Erişilebilirlik: sesli anlatım, okunabilirlik, yönlendirme, engelli destek talebi ve alternatif iletişim kanalı açılır.",
+ corporate:"Kurumsal talep: ürün, kullanıcı sayısı, sektör, entegrasyon ihtiyacı ve paket seviyesi belirlenir."
+ };
+ supportOut.textContent=m[supportType.value];
+}
+
+function offer(){
+ offerOut.textContent=`Konu: ZENTRA ${pack.value} Tanıtım / Teklif Taslağı
+
+Merhaba ${lead.value||"Kurum"},
+
+ZENTRA ${pack.value}; karar, risk, proof, öğrenme ve rapor katmanlarını tek işletim yüzünde birleştiren paper-only karar destek sistemidir.
+
+Kapsam:
+- Ürün ve cockpit tanıtımı
+- Geçmiş veri / ücretsiz veri test yaklaşımı
+- Proof ve rapor akışı
+- Legal, gizlilik, erişilebilirlik ve güvenlik çerçevesi
+- Kurumsal entegrasyon hazırlığı
+
+Not: Gerçek emir, broker bağlantısı veya yatırım tavsiyesi içermez. Lisanslı canlı veri ve kurum entegrasyonu ayrı sözleşme gerektirir.
+
+Saygılar,
+ZENTRA Team`;
+}
+
+function social(type){
+ const m={
+ linkedin:"ZENTRA Matrix Ecosystem piyasayı sadece göstermez; karar akışını kurar. Data → Signal → Decision → Proof → Learning.",
+ x:"Intel araçtır. Gate sistemdir. Financial Trade kararın riskini, sonucunu ve proof’unu yönetir.",
+ instagram:"Veri, risk, proof ve öğrenme. ZENTRA ekonomik evreni lenslerle izler.",
+ newsletter:"Bu hafta ZENTRA lensinde: risk iştahı, proof, decision discipline ve paper-only güvenli çalışma."
+ };
+ socialOut.textContent=m[type];
+}
+
+function maintenance(){
+ maintenanceOut.textContent=`ZENTRA Maintenance / Security Checklist
+
+- Route kontrolü: /, /assistant, /support, /legal, /financial-trade
+- Deploy kontrolü: Vercel status Ready
+- Function kontrolü: 0 function hedefi
+- Paper-only policy kontrolü
+- Token / auth shell kontrolü
+- Legal / privacy / terms görünürlük kontrolü
+- Free Feed / Academy içerik kontrolü
+- Broken link kontrolü
+- Security incident kayıt kontrolü
+- Günlük proof / report çıktısı kontrolü`;
+}
+</script>
+</body>
+</html>
