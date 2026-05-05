@@ -1,0 +1,66 @@
+<!-- ZENTRA REAL VOICE ASSISTANT -->
+<div id="za" style="position:fixed;right:20px;bottom:20px;z-index:99999">
+  <button onclick="zaToggle()" style="width:56px;height:56px;border-radius:50%;border:0;background:#66e7ff;color:#050814;font-size:22px;font-weight:900">🎙</button>
+  <div id="zaBox" style="display:none;width:320px;margin-bottom:10px;background:#11182e;color:#eef3ff;border:1px solid #2d3a66;border-radius:18px;padding:14px">
+    <b>ZENTRA Assistant</b>
+    <select id="zaLang" onchange="zaUpdate()" style="width:100%;margin-top:8px">
+      <option value="tr">TR</option>
+      <option value="en">EN</option>
+      <option value="ar">AR</option>
+    </select>
+    <p id="zaText" style="font-size:14px;color:#aab6d6"></p>
+    <button onclick="zaSpeak()" style="width:100%;margin-top:8px;background:#66e7ff;color:#050814;font-weight:900">Konuş</button>
+    <button onclick="zaStop()" style="width:100%;margin-top:6px">Durdur</button>
+  </div>
+</div>
+
+<script>
+let zaLang = "tr";
+let zaAudio = null;
+const zaContent = {
+  tr: "ZENTRA Financial Trade'e hoş geldiniz. Bu sistem piyasayı göstermez. Karar disiplinini kurar.",
+  en: "Welcome to ZENTRA Financial Trade. This system builds decision discipline.",
+  ar: "مرحبًا بك في زينترا. هذا النظام يبني انضباط القرار."
+};
+
+function zaToggle(){
+  const box = document.getElementById("zaBox");
+  box.style.display = box.style.display === "block" ? "none" : "block";
+  zaUpdate();
+}
+
+function zaUpdate(){
+  zaLang = document.getElementById("zaLang").value;
+  document.getElementById("zaText").innerText = zaContent[zaLang];
+}
+
+function zaStop(){
+  if(zaAudio){ zaAudio.pause(); zaAudio = null; }
+  if(window.speechSynthesis) speechSynthesis.cancel();
+}
+
+async function zaSpeak(){
+  zaStop();
+  const text = zaContent[zaLang];
+
+  try{
+    const res = await fetch("http://localhost:5051/speak", {
+      method: "POST",
+      headers: {"Content-Type":"application/json"},
+      body: JSON.stringify({text:text, lang:zaLang})
+    });
+    if(res.ok){
+      const blob = await res.blob();
+      const url = URL.createObjectURL(blob);
+      zaAudio = new Audio(url);
+      zaAudio.play();
+      return;
+    }
+  }catch(e){}
+
+  const msg = new SpeechSynthesisUtterance(text);
+  msg.lang = zaLang === "tr" ? "tr-TR" : zaLang === "ar" ? "ar-SA" : "en-US";
+  msg.rate = 0.95;
+  speechSynthesis.speak(msg);
+}
+</script>
