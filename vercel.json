@@ -36,6 +36,14 @@
     {
       "source": "/financial-trade",
       "destination": "/public/financial-trade/index.html"
+    },
+    {
+      "source": "/free-feed",
+      "destination": "/public/free-feed/index.html"
+    },
+    {
+      "source": "/academy",
+      "destination": "/public/academy/index.html"
     }
   ]
 }
