@@ -1,2 +1,12 @@
 __pycache__/
 *.pyc
+
+# Local audit/output files
+CLEANUP_CANDIDATES.txt
+REPO_FILE_AUDIT.txt
+__pycache__/
+*.pyc
+*.tmp
+*.bak
+*~
+.DS_Store
