@@ -261,406 +261,74 @@ function humanAnswer(msg){
     return "Sizin için temel akışı başlattım: profil, fırsat sepeti, karar, proof ve rapor. Şimdi ekranda sonuçları görebilirsiniz. İsterseniz bir sonraki adımda proof raporunu birlikte okuyabiliriz.";
   }
 
-  return "Anladım. Size doğru yönlendirme yapabilmem için bunu üç yoldan birine bağlayalım: fırsat sepeti, risk/karar akışı veya proof raporu. İsterseniz 'başla' yazın; temel akışı sizin için çalıştırayım.";
-}
-
-function humanSend(){
-  const input = document.getElementById("humanInput");
-  const msg = input.value.trim();
-  if(!msg) return;
-  humanUser(msg);
-  input.value = "";
-  setTimeout(function(){ humanBot(humanAnswer(msg)); }, 350);
-}
-
-function humanQuick(type){
-  document.getElementById("humanInput").value = type;
-  humanSend();
-}
-
-document.addEventListener("keydown", function(e){
-  if(e.key === "Enter" && document.activeElement && document.activeElement.id === "humanInput"){
-    humanSend();
-  }
-});
-</script>
-
-
-<!-- ZENTRA ADVISOR OS (FULL SYSTEM) -->
+  return "Anladım. Size doğru yönlendirme yapabilmem için bunu üç 
+<!-- ZENTRA ADVISOR OS CLEAN -->
 <div id="advisorOS" style="position:fixed;right:18px;bottom:18px;z-index:999999;font-family:Arial">
-  <button onclick="aToggle()" style="width:58px;height:58px;border-radius:50%;border:0;background:#66e7ff;color:#050814;font-size:22px;font-weight:900">💬</button>
-
-  <div id="aBox" style="display:none;width:380px;margin-bottom:10px;background:#11182e;color:#eef3ff;border:1px solid #2d3a66;border-radius:18px;padding:16px;box-shadow:0 20px 70px #000b">
-    <b>ZENTRA Danışman</b>
-
-    <div id="aChat" style="height:260px;overflow:auto;background:#050814;border:1px solid #2d3a66;border-radius:14px;padding:12px;margin-top:10px;font-size:14px;line-height:1.45;color:#dce6ff"></div>
-
-    <input id="aInput" placeholder="Ne yapmak istiyorsunuz?" style="width:100%;margin-top:10px;padding:10px;border-radius:10px;background:#0b1228;color:#eef3ff;border:1px solid #2d3a66">
-
-    <button onclick="aSend()" style="width:100%;margin-top:8px;background:#66e7ff;color:#050814;font-weight:900;border:0;border-radius:10px;padding:10px">Gönder</button>
-  </div>
+<button onclick="aToggle()" style="width:58px;height:58px;border-radius:50%;border:0;background:#66e7ff;color:#050814;font-size:22px;font-weight:900">💬</button>
+<div id="aBox" style="display:none;width:390px;margin-bottom:10px;background:#11182e;color:#eef3ff;border:1px solid #2d3a66;border-radius:18px;padding:16px;box-shadow:0 20px 70px #000b">
+<b>ZENTRA Danışman</b>
+<div id="aChat" style="height:285px;overflow:auto;background:#050814;border:1px solid #2d3a66;border-radius:14px;padding:12px;margin-top:10px;font-size:14px;line-height:1.5;color:#dce6ff"></div>
+<input id="aInput" placeholder="Fırsat, risk, rapor, paket..." style="width:100%;margin-top:10px;padding:10px;border-radius:10px;background:#0b1228;color:#eef3ff;border:1px solid #2d3a66">
+<button onclick="aSend()" style="width:100%;margin-top:8px;background:#66e7ff;color:#050814;font-weight:900;border:0;border-radius:10px;padding:10px">Gönder</button>
+<div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:8px">
+<button onclick="aQuick('fırsat')" style="flex:1;padding:8px;border-radius:9px">Fırsat</button>
+<button onclick="aQuick('risk')" style="flex:1;padding:8px;border-radius:9px">Risk</button>
+<button onclick="aQuick('rapor')" style="flex:1;padding:8px;border-radius:9px">Rapor</button>
+<button onclick="aQuick('paket')" style="flex:1;padding:8px;border-radius:9px">Paket</button>
 </div>
-
+</div>
+</div>
 <script>
-let A = {
-  context: {},
-  history: []
-};
-
+var A_STARTED=false;
 function aToggle(){
-  const box = document.getElementById("aBox");
-  box.style.display = box.style.display === "block" ? "none" : "block";
-
-  if(!A.started){
-    aBot("Merhaba, ben ZENTRA danışmanınız. Size en doğru yolu birlikte seçelim. Ne yapmak istiyorsunuz?");
-    A.started = true;
+  var box=document.getElementById("aBox");
+  box.style.display=box.style.display==="block"?"none":"block";
+  if(!A_STARTED){
+    aBot("Merhaba. Ben ZENTRA danışmanınız. Size en doğru yolu birlikte seçelim. Fırsat sepeti, risk akışı veya proof raporu ile başlayabiliriz.");
+    A_STARTED=true;
   }
 }
-
 function aBot(t){
-  const chat = document.getElementById("aChat");
-  chat.innerHTML += '<div><b style="color:#66e7ff">ZENTRA:</b> '+t+'</div>';
-  chat.scrollTop = chat.scrollHeight;
+  var c=document.getElementById("aChat");
+  c.innerHTML+='<div style="margin:8px 0"><b style="color:#66e7ff">ZENTRA:</b> '+t+'</div>';
+  c.scrollTop=c.scrollHeight;
 }
-
 function aUser(t){
-  const chat = document.getElementById("aChat");
-  chat.innerHTML += '<div style="text-align:right"><b style="color:#69e7ad">Siz:</b> '+t+'</div>';
-  chat.scrollTop = chat.scrollHeight;
+  var c=document.getElementById("aChat");
+  c.innerHTML+='<div style="margin:8px 0;text-align:right"><b style="color:#69e7ad">Siz:</b> '+t+'</div>';
+  c.scrollTop=c.scrollHeight;
 }
-
-function getProfile(){
-  return {
-    risk: document.getElementById("risk") ? document.getElementById("risk").value : "MEDIUM",
-    capital: document.getElementById("capital") ? document.getElementById("capital").value : "MEDIUM"
-  };
-}
-
-/* INTENT ENGINE */
-function detectIntent(msg){
-  msg = msg.toLowerCase();
-
-  if(msg.includes("fırsat") || msg.includes("sepet")) return "opportunity";
-  if(msg.includes("risk") || msg.includes("karar")) return "risk";
-  if(msg.includes("rapor") || msg.includes("proof")) return "report";
-  if(msg.includes("paket") || msg.includes("fiyat")) return "package";
-  if(msg.includes("legal") || msg.includes("tavsiye") || msg.includes("güven")) return "legal";
-  if(msg.includes("founder")) return "handoff";
-
+function aDetect(m){
+  m=m.toLowerCase();
+  if(m.includes("fırsat")||m.includes("sepet")) return "opportunity";
+  if(m.includes("risk")||m.includes("karar")) return "risk";
+  if(m.includes("rapor")||m.includes("proof")||m.includes("kanıt")) return "report";
+  if(m.includes("paket")||m.includes("fiyat")||m.includes("ücret")) return "package";
+  if(m.includes("legal")||m.includes("hukuk")||m.includes("tavsiye")||m.includes("güven")) return "legal";
+  if(m.includes("başla")||m.includes("çalıştır")) return "start";
   return "unknown";
 }
-
-/* CORE FLOW */
-function handle(intent, msg){
-  const p = getProfile();
-
-  if(intent==="opportunity"){
-    if(typeof makeBasket==="function") makeBasket();
-
-    return "Fırsat sepetini oluşturdum. Risk profilinize göre filtrelenmiş bir takip listesi hazır. Şimdi karar akışına geçmenizi öneririm.";
-  }
-
-  if(intent==="risk"){
-    if(typeof makeDecision==="function") makeDecision();
-
-    return "Karar ve risk akışını oluşturdum. Bu aşamada sinyal tek başına yeterli değildir. İsterseniz proof raporuna geçelim.";
-  }
-
-  if(intent==="report"){
-    if(typeof makeProof==="function") makeProof();
-    if(typeof makeReport==="function") makeReport();
-
-    return "Proof raporu hazır. Sistem ne dedi, ne oldu ve fark net şekilde görünür. Bu veriyi karar kalitenizi artırmak için kullanabilirsiniz.";
-  }
-
-  if(intent==="package"){
-    if(typeof packageCheck==="function") packageCheck();
-
-    return "Paket yapısını kısaca özetleyeyim: Pro fırsat ve proof için, Expert ileri analiz için uygundur. Size uygun paketi seçebilirsiniz.";
-  }
-
-  if(intent==="legal"){
-    return "ZENTRA yatırım tavsiyesi vermez. Gerçek emir oluşturmaz. Sistem yalnızca karar destek ve analiz amaçlıdır.";
-  }
-
-  if(intent==="handoff"){
-    return "Bu konu sistem sınırlarını aşıyor. Founder kontrolü veya manuel inceleme gerekebilir.";
-  }
-
-  return "Sizi doğru yönlendirmek için üç seçenekten birine odaklanalım: fırsat sepeti, risk analizi veya proof raporu.";
+function aHandle(intent){
+  if(intent==="start"){ if(typeof runAll==="function")runAll(); return "Temel akışı başlattım. Profil, fırsat sepeti, karar, proof ve rapor adımları çalıştı."; }
+  if(intent==="opportunity"){ if(typeof makeBasket==="function")makeBasket(); return "Fırsat sepetini oluşturdum. Şimdi karar ve risk akışına geçmeniz doğru olur."; }
+  if(intent==="risk"){ if(typeof makeDecision==="function")makeDecision(); return "Risk ve karar akışını oluşturdum. Sinyal tek başına karar değildir; veri, risk ve sonuç birlikte değerlendirilir."; }
+  if(intent==="report"){ if(typeof makeProof==="function")makeProof(); if(typeof makeReport==="function")makeReport(); return "Proof raporu hazır. Sistem ne dedi, ne oldu ve fark görünür hâle geldi."; }
+  if(intent==="package"){ if(typeof packageCheck==="function")packageCheck(); return "Paketler: Free bilgi, Pro fırsat sepeti ve proof, Expert ileri analiz, Institutional kurumsal kullanım içindir."; }
+  if(intent==="legal"){ return "ZENTRA yatırım tavsiyesi vermez. Gerçek emir yoktur. Broker bağlantısı yoktur. Paper-only karar destek sistemidir."; }
+  return "Bunu üç yoldan birine bağlayalım: fırsat sepeti, risk akışı veya proof raporu. İsterseniz başla yazın.";
 }
-
-/* MAIN LOOP */
 function aSend(){
-  const input = document.getElementById("aInput");
-  const msg = input.value.trim();
-  if(!msg) return;
-
+  var input=document.getElementById("aInput");
+  var msg=input.value.trim();
+  if(!msg)return;
   aUser(msg);
-  input.value = "";
-
-  const intent = detectIntent(msg);
-  const reply = handle(intent, msg);
-
-  A.history.push({msg, intent, reply});
-
-  setTimeout(()=>aBot(reply), 300);
+  input.value="";
+  var intent=aDetect(msg);
+  var reply=aHandle(intent);
+  setTimeout(function(){aBot(reply);},250);
+}
+function aQuick(x){
+  document.getElementById("aInput").value=x;
+  aSend();
 }
 </script>
-
-</body>
-</html>
-<!-- =========================================================
-ZENTRA GLOBAL ASSISTANT WIDGET
-TR / EN / AR + Voice + Optional Guide
-Paste this block before 
-
-
-
-
-
-
-
-
-
-<!-- ZENTRA HUMAN-LIKE TEXT ADVISOR -->
-<div id="humanAdvisor" style="position:fixed;right:18px;bottom:18px;z-index:999999;font-family:Arial">
-  <button onclick="humanToggle()" style="width:58px;height:58px;border-radius:50%;border:0;background:#66e7ff;color:#050814;font-size:22px;font-weight:900">💬</button>
-
-  <div id="humanBox" style="display:none;width:370px;margin-bottom:10px;background:#11182e;color:#eef3ff;border:1px solid #2d3a66;border-radius:18px;padding:16px;box-shadow:0 20px 70px #000b">
-    <b>ZENTRA Danışman</b>
-    <div id="humanChat" style="height:260px;overflow:auto;background:#050814;border:1px solid #2d3a66;border-radius:14px;padding:12px;margin-top:10px;font-size:14px;line-height:1.45;color:#dce6ff"></div>
-
-    <input id="humanInput" placeholder="Örn: Bana fırsat sepetini anlat, riskimi ölç, rapor alayım..." style="width:100%;margin-top:10px;padding:10px;border-radius:10px;background:#0b1228;color:#eef3ff;border:1px solid #2d3a66">
-
-    <button onclick="humanSend()" style="width:100%;margin-top:8px;background:#66e7ff;color:#050814;font-weight:900;border:0;border-radius:10px;padding:10px">Gönder</button>
-
-    <div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:8px">
-      <button onclick="humanQuick('fırsat')" style="flex:1;padding:8px;border-radius:9px">Fırsat</button>
-      <button onclick="humanQuick('risk')" style="flex:1;padding:8px;border-radius:9px">Risk</button>
-      <button onclick="humanQuick('rapor')" style="flex:1;padding:8px;border-radius:9px">Rapor</button>
-      <button onclick="humanQuick('paket')" style="flex:1;padding:8px;border-radius:9px">Paket</button>
-    </div>
-  </div>
-</div>
-
-<script>
-function humanToggle(){
-  const box = document.getElementById("humanBox");
-  box.style.display = box.style.display === "block" ? "none" : "block";
-  if(!window.humanStarted){
-    humanBot("Merhaba, ben ZENTRA danışmanınız. Size satış baskısı yapmadan doğru yolu göstereceğim. Önce ne yapmak istediğinizi anlayalım: fırsat sepeti mi, risk analizi mi, proof raporu mu?");
-    window.humanStarted = true;
-  }
-}
-
-function humanBot(text){
-  const chat = document.getElementById("humanChat");
-  chat.innerHTML += '<div style="margin:8px 0"><b style="color:#66e7ff">ZENTRA:</b> '+text+'</div>';
-  chat.scrollTop = chat.scrollHeight;
-}
-
-function humanUser(text){
-  const chat = document.getElementById("humanChat");
-  chat.innerHTML += '<div style="margin:8px 0;text-align:right"><b style="color:#69e7ad">Siz:</b> '+text+'</div>';
-  chat.scrollTop = chat.scrollHeight;
-}
-
-function humanProfile(){
-  const capital = document.getElementById("capital") ? document.getElementById("capital").value : "MEDIUM";
-  const risk = document.getElementById("risk") ? document.getElementById("risk").value : "MEDIUM";
-  const intent = document.getElementById("intent") ? document.getElementById("intent").value : "fırsat takip etmek";
-  return {capital, risk, intent};
-}
-
-function humanAnswer(msg){
-  const m = msg.toLowerCase();
-  const p = humanProfile();
-
-  if(m.includes("fırsat") || m.includes("sepet")){
-    if(typeof makeBasket === "function") makeBasket();
-    return "Tamam. Risk profilinizi " + p.risk + " olarak okuyorum. Önce fırsat sepetini oluşturdum. Bu sepet gerçek emir değildir; yalnızca paper-only takip listesidir. Bir sonraki doğru adım: karar ve risk akışını üretmek.";
-  }
-
-  if(m.includes("risk") || m.includes("karar")){
-    if(typeof makeDecision === "function") makeDecision();
-    return "Risk tarafını birlikte ele alalım. ZENTRA sinyali tek başına karar saymaz. Veri, risk ve sonuç birlikte değerlendirilir. Karar akışını oluşturdum; şimdi isterseniz proof raporuna geçebiliriz.";
-  }
-
-  if(m.includes("proof") || m.includes("rapor") || m.includes("kanıt")){
-    if(typeof makeProof === "function") makeProof();
-    if(typeof makeReport === "function") makeReport();
-    return "Proof raporunu hazırladım. Burada sistemin ne dediği, sonra ne olduğu, fark ve skor görünür hâle gelir. Bu alan ZENTRA’nın güven katmanıdır.";
-  }
-
-  if(m.includes("paket") || m.includes("fiyat") || m.includes("ücret")){
-    if(typeof packageCheck === "function") packageCheck();
-    return "Paketleri basit anlatayım: Free bilgi ve sınırlı takip içindir. Pro fırsat sepeti ve proof için uygundur. Expert daha derin analiz ve rapor içindir. Institutional kurumsal kullanım içindir. Ödeme sistemi açılmadan önce paket mantığı hazır tutulur.";
-  }
-
-  if(m.includes("güven") || m.includes("hukuk") || m.includes("legal") || m.includes("tavsiye")){
-    return "Net söyleyeyim: ZENTRA yatırım tavsiyesi vermez. Gerçek emir açmaz. Broker bağlantısı kurmaz. Sistem paper-only karar destek yüzeyidir; amacı karar disiplinini ve proof kaydını görünür hâle getirmektir.";
-  }
-
-  if(m.includes("founder") || m.includes("kurucu") || m.includes("muhasebe") || m.includes("finans")){
-    return "Founder alanı müşteriye açık değildir. Orada ürün finansı, maliyet, fiyat, marj, proof ve paket hazırlığı takip edilir. Public tarafta yalnızca temiz ürün yüzü görünmelidir.";
-  }
-
-  if(m.includes("başla") || m.includes("ne yap")){
-    if(typeof runAll === "function") runAll();
-    return "Sizin için temel akışı başlattım: profil, fırsat sepeti, karar, proof ve rapor. Şimdi ekranda sonuçları görebilirsiniz. İsterseniz bir sonraki adımda proof raporunu birlikte okuyabiliriz.";
-  }
-
-  return "Anladım. Size doğru yönlendirme yapabilmem için bunu üç yoldan birine bağlayalım: fırsat sepeti, risk/karar akışı veya proof raporu. İsterseniz 'başla' yazın; temel akışı sizin için çalıştırayım.";
-}
-
-function humanSend(){
-  const input = document.getElementById("humanInput");
-  const msg = input.value.trim();
-  if(!msg) return;
-  humanUser(msg);
-  input.value = "";
-  setTimeout(function(){ humanBot(humanAnswer(msg)); }, 350);
-}
-
-function humanQuick(type){
-  document.getElementById("humanInput").value = type;
-  humanSend();
-}
-
-document.addEventListener("keydown", function(e){
-  if(e.key === "Enter" && document.activeElement && document.activeElement.id === "humanInput"){
-    humanSend();
-  }
-});
-</script>
-
-
-<!-- ZENTRA ADVISOR OS (FULL SYSTEM) -->
-<div id="advisorOS" style="position:fixed;right:18px;bottom:18px;z-index:999999;font-family:Arial">
-  <button onclick="aToggle()" style="width:58px;height:58px;border-radius:50%;border:0;background:#66e7ff;color:#050814;font-size:22px;font-weight:900">💬</button>
-
-  <div id="aBox" style="display:none;width:380px;margin-bottom:10px;background:#11182e;color:#eef3ff;border:1px solid #2d3a66;border-radius:18px;padding:16px;box-shadow:0 20px 70px #000b">
-    <b>ZENTRA Danışman</b>
-
-    <div id="aChat" style="height:260px;overflow:auto;background:#050814;border:1px solid #2d3a66;border-radius:14px;padding:12px;margin-top:10px;font-size:14px;line-height:1.45;color:#dce6ff"></div>
-
-    <input id="aInput" placeholder="Ne yapmak istiyorsunuz?" style="width:100%;margin-top:10px;padding:10px;border-radius:10px;background:#0b1228;color:#eef3ff;border:1px solid #2d3a66">
-
-    <button onclick="aSend()" style="width:100%;margin-top:8px;background:#66e7ff;color:#050814;font-weight:900;border:0;border-radius:10px;padding:10px">Gönder</button>
-  </div>
-</div>
-
-<script>
-let A = {
-  context: {},
-  history: []
-};
-
-function aToggle(){
-  const box = document.getElementById("aBox");
-  box.style.display = box.style.display === "block" ? "none" : "block";
-
-  if(!A.started){
-    aBot("Merhaba, ben ZENTRA danışmanınız. Size en doğru yolu birlikte seçelim. Ne yapmak istiyorsunuz?");
-    A.started = true;
-  }
-}
-
-function aBot(t){
-  const chat = document.getElementById("aChat");
-  chat.innerHTML += '<div><b style="color:#66e7ff">ZENTRA:</b> '+t+'</div>';
-  chat.scrollTop = chat.scrollHeight;
-}
-
-function aUser(t){
-  const chat = document.getElementById("aChat");
-  chat.innerHTML += '<div style="text-align:right"><b style="color:#69e7ad">Siz:</b> '+t+'</div>';
-  chat.scrollTop = chat.scrollHeight;
-}
-
-function getProfile(){
-  return {
-    risk: document.getElementById("risk") ? document.getElementById("risk").value : "MEDIUM",
-    capital: document.getElementById("capital") ? document.getElementById("capital").value : "MEDIUM"
-  };
-}
-
-/* INTENT ENGINE */
-function detectIntent(msg){
-  msg = msg.toLowerCase();
-
-  if(msg.includes("fırsat") || msg.includes("sepet")) return "opportunity";
-  if(msg.includes("risk") || msg.includes("karar")) return "risk";
-  if(msg.includes("rapor") || msg.includes("proof")) return "report";
-  if(msg.includes("paket") || msg.includes("fiyat")) return "package";
-  if(msg.includes("legal") || msg.includes("tavsiye") || msg.includes("güven")) return "legal";
-  if(msg.includes("founder")) return "handoff";
-
-  return "unknown";
-}
-
-/* CORE FLOW */
-function handle(intent, msg){
-  const p = getProfile();
-
-  if(intent==="opportunity"){
-    if(typeof makeBasket==="function") makeBasket();
-
-    return "Fırsat sepetini oluşturdum. Risk profilinize göre filtrelenmiş bir takip listesi hazır. Şimdi karar akışına geçmenizi öneririm.";
-  }
-
-  if(intent==="risk"){
-    if(typeof makeDecision==="function") makeDecision();
-
-    return "Karar ve risk akışını oluşturdum. Bu aşamada sinyal tek başına yeterli değildir. İsterseniz proof raporuna geçelim.";
-  }
-
-  if(intent==="report"){
-    if(typeof makeProof==="function") makeProof();
-    if(typeof makeReport==="function") makeReport();
-
-    return "Proof raporu hazır. Sistem ne dedi, ne oldu ve fark net şekilde görünür. Bu veriyi karar kalitenizi artırmak için kullanabilirsiniz.";
-  }
-
-  if(intent==="package"){
-    if(typeof packageCheck==="function") packageCheck();
-
-    return "Paket yapısını kısaca özetleyeyim: Pro fırsat ve proof için, Expert ileri analiz için uygundur. Size uygun paketi seçebilirsiniz.";
-  }
-
-  if(intent==="legal"){
-    return "ZENTRA yatırım tavsiyesi vermez. Gerçek emir oluşturmaz. Sistem yalnızca karar destek ve analiz amaçlıdır.";
-  }
-
-  if(intent==="handoff"){
-    return "Bu konu sistem sınırlarını aşıyor. Founder kontrolü veya manuel inceleme gerekebilir.";
-  }
-
-  return "Sizi doğru yönlendirmek için üç seçenekten birine odaklanalım: fırsat sepeti, risk analizi veya proof raporu.";
-}
-
-/* MAIN LOOP */
-function aSend(){
-  const input = document.getElementById("aInput");
-  const msg = input.value.trim();
-  if(!msg) return;
-
-  aUser(msg);
-  input.value = "";
-
-  const intent = detectIntent(msg);
-  const reply = handle(intent, msg);
-
-  A.history.push({msg, intent, reply});
-
-  setTimeout(()=>aBot(reply), 300);
-}
-</script>
-
-</body> in any HTML page.
-========================================================= -->
-
-
-
-
