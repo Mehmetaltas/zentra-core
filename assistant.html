@@ -1,0 +1,70 @@
+<!doctype html><html lang="tr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ZENTRA Assistant OS</title>
+<style>
+body{margin:0;background:#050814;color:#eef3ff;font-family:Arial;padding:32px}
+a{color:#8ab4ff;text-decoration:none}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
+.card{background:#11182e;border:1px solid #2d3a66;border-radius:18px;padding:20px;margin:12px 0}.btn{display:inline-block;padding:10px 13px;border-radius:12px;background:#101a35;border:1px solid #2d3a66;color:#eef3ff;margin:4px}
+textarea,input,select{width:100%;padding:12px;border-radius:12px;background:#0b1228;color:#eef3ff;border:1px solid #2d3a66;margin:6px 0}pre{white-space:pre-wrap;background:#050814;border:1px solid #2d3a66;border-radius:14px;padding:14px}
+</style></head><body>
+<h1>ZENTRA Assistant OS</h1>
+<p>Müşteri karşılama · destek · bülten · eğitim · market yönlendirme · legal · sosyal medya · bakım · güvenlik</p>
+<p><a class="btn" href="/">Matrix</a><a class="btn" href="/support">Support</a><a class="btn" href="/legal">Legal</a><a class="btn" href="/security">Security</a><a class="btn" href="/social">Social</a></p>
+
+<div class="card">
+<h2>Canlı Yönlendirme</h2>
+<select id="intent">
+<option value="financial">Financial Trade</option><option value="pricing">Paket / abonelik</option><option value="support">Destek / arıza</option><option value="legal">Sözleşme / gizlilik / hukuk</option><option value="accessibility">Engelli destek / erişilebilirlik</option><option value="security">Güvenlik / siber olay</option><option value="feed">Günlük bülten</option><option value="academy">Eğitim</option><option value="social">Sosyal medya</option><option value="offer">Teklif / kurumsal talep</option>
+</select>
+<button class="btn" onclick="route()">Yönlendir</button>
+<pre id="out">Hazır.</pre>
+</div>
+
+<div class="grid">
+<div class="card"><h3>Support / Incident / Billing</h3><p>Arıza, bakım, fatura, iptal, iade, plan ve ürün desteği.</p><a class="btn" href="/support">Aç</a></div>
+<div class="card"><h3>Free Feed</h3><p>Günlük piyasa bülteni ve ZENTRA lens notu.</p><a class="btn" href="/free-feed">Aç</a></div>
+<div class="card"><h3>Academy</h3><p>Risk, sinyal, proof, backtest, portfolio eğitimleri.</p><a class="btn" href="/academy">Aç</a></div>
+<div class="card"><h3>Legal / Privacy / Terms</h3><p>Sözleşmeler, gizlilik, telif, kullanım şartları.</p><a class="btn" href="/legal">Aç</a></div>
+<div class="card"><h3>Social Media OS</h3><p>LinkedIn, X, Instagram, newsletter taslakları.</p><a class="btn" href="/social">Aç</a></div>
+<div class="card"><h3>Security / Maintenance</h3><p>Bakım, audit, siber güvenlik, erişim kontrol.</p><a class="btn" href="/security">Aç</a></div>
+</div>
+
+<div class="card">
+<h2>Teklif / Mail Taslağı</h2>
+<input id="lead" placeholder="Müşteri / kurum adı">
+<select id="pack"><option>Financial Trade Pro</option><option>Gate Market Institutional</option><option>Banking OS</option><option>Tasarruf OS</option><option>Islamic Finance OS</option></select>
+<button class="btn" onclick="offer()">Taslak üret</button>
+<pre id="offerOut"></pre>
+</div>
+
+<script>
+const map={
+financial:"Financial Trade: paper-only karar destek, backtest, proof, portfolio risk ve decision autopsy katmanı. Gerçek emir yok.",
+pricing:"Paketler: Free, Pro, Expert, Institutional. Gerçek ödeme/abonelik backend ayrı aktif edilir.",
+support:"Destek: arıza, erişim, cockpit, rapor, plan, fatura, iptal/iade ve incident talepleri sınıflandırılır.",
+legal:"Legal: yatırım tavsiyesi değildir, gizlilik, kullanım şartları, telif, rapor/görsel hakları ve sorumluluk sınırları.",
+accessibility:"Erişilebilirlik: engelli kullanıcı destek akışı, okunabilirlik, sesli anlatım, yönlendirme ve kolay erişim ilkeleri.",
+security:"Security: token, erişim, siber olay, audit, paper-only kilit ve veri güvenliği kontrolü.",
+feed:"Free Feed: günlük piyasa okuma, makro takvim, risk iştahı, ZENTRA lens notu.",
+academy:"Academy: risk, sinyal, proof, backtest, portfolio ve decision autopsy eğitimleri.",
+social:"Social: LinkedIn, X, Instagram, newsletter ve günlük yayın taslakları.",
+offer:"Kurumsal teklif: ürün, paket, kullanım alanı, kurum tipi, destek ve erişim seviyesi çıkarılır."
+};
+function route(){let t=map[document.getElementById('intent').value];out.textContent=t;if(speechSynthesis){let u=new SpeechSynthesisUtterance(t);u.lang='tr-TR';speechSynthesis.cancel();speechSynthesis.speak(u)}}
+function offer(){offerOut.textContent=`Konu: ZENTRA ${pack.value} Tanıtım / Teklif Taslağı
+
+Merhaba ${lead.value||"Kurum"},
+
+ZENTRA ${pack.value}; karar, risk, proof, öğrenme ve rapor katmanlarını tek işletim yüzünde birleştiren paper-only karar destek sistemidir.
+
+Kapsam:
+- Ürün ve cockpit tanıtımı
+- Paket / erişim modeli
+- Proof ve rapor akışı
+- Legal, gizlilik ve güvenlik çerçevesi
+- Kurumsal kullanım senaryosu
+
+Not: Gerçek emir, broker bağlantısı veya yatırım tavsiyesi içermez.
+
+Saygılar,
+ZENTRA Team`;}</script>
+</body></html>

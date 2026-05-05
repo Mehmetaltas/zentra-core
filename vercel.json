@@ -50,40 +50,48 @@
       "destination": "/islamic-finance/index.html"
     },
     {
-      "source": "/assistant",
-      "destination": "/assistant/index.html"
-    },
-    {
-      "source": "/legal",
-      "destination": "/legal/index.html"
-    },
-    {
-      "source": "/privacy",
-      "destination": "/privacy/index.html"
-    },
-    {
-      "source": "/terms",
-      "destination": "/terms/index.html"
-    },
-    {
-      "source": "/support",
-      "destination": "/support/index.html"
-    },
-    {
       "source": "/operations",
       "destination": "/operations/index.html"
     },
     {
+      "source": "/hr",
+      "destination": "/hr/index.html"
+    },
+    {
+      "source": "/assistant",
+      "destination": "/assistant.html"
+    },
+    {
+      "source": "/support",
+      "destination": "/support.html"
+    },
+    {
+      "source": "/legal",
+      "destination": "/legal.html"
+    },
+    {
       "source": "/security",
-      "destination": "/security/index.html"
+      "destination": "/security.html"
     },
     {
       "source": "/social",
-      "destination": "/social/index.html"
+      "destination": "/social.html"
     },
     {
-      "source": "/hr",
-      "destination": "/hr/index.html"
+      "source": "/privacy",
+      "destination": "/legal.html"
+    },
+    {
+      "source": "/terms",
+      "destination": "/legal.html"
+    },
+    {
+      "source": "/maintenance",
+      "destination": "/security.html"
+    },
+    {
+      "source": "/accessibility",
+      "destination": "/support.html"
     }
   ]
 }
