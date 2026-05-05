@@ -181,7 +181,55 @@ h1{font-size:clamp(38px,7vw,76px);line-height:.98;margin:16px 0}
     </div>
   </section>
 
-  <p class="footer">ZENTRA Matrix Ecosystem · Paper-only decision support surface.</p>
+  
+<section class="section">
+  <div class="card">
+    <h2>ZENTRA Assistant · MATRIX Narrator</h2>
+    <p class="muted">Sistem kendini anlatır. Sesli veya sessiz tanıtım modu.</p>
+
+    <div class="flow">
+      <button class="btn primary" onclick="startAssistant('tr','zentra')">ZENTRA TR</button>
+      <button class="btn" onclick="startAssistant('en','zentra')">ZENTRA EN</button>
+      <button class="btn" onclick="startAssistant('ar','zentra')">ZENTRA AR</button>
+      <button class="btn primary" onclick="startAssistant('tr','matrix')">MATRIX TR</button>
+      <button class="btn" onclick="silentTour()">Sessiz Tur</button>
+      <button class="btn" onclick="stopAssistant()">Durdur</button>
+    </div>
+
+    <div class="market-screen" id="assistantStage">
+      <h3 id="assistantTitle">ZENTRA canlı tanıtım hazır</h3>
+      <p id="assistantText" class="sub">Bir dil ve anlatıcı seç.</p>
+      <div class="bars">
+        <div class="bar" style="height:40%"></div>
+        <div class="bar" style="height:70%"></div>
+        <div class="bar" style="height:55%"></div>
+        <div class="bar" style="height:90%"></div>
+        <div class="bar" style="height:60%"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="grid">
+    <div class="card">
+      <h3>Social Media Assistant</h3>
+      <p>Günlük Free Feed, Academy notu ve Financial Trade tanıtımından sosyal medya post taslakları üretir.</p>
+      <span class="badge">LinkedIn</span>
+      <span class="badge">X</span>
+      <span class="badge">Newsletter</span>
+    </div>
+    <div class="card">
+      <h3>Sales Assistant</h3>
+      <p>Intel Market ve Gate Market farkını anlatır, kullanıcıyı doğru pakete yönlendirir.</p>
+      <span class="badge">Lead</span>
+      <span class="badge">Package</span>
+      <span class="badge">Cockpit</span>
+    </div>
+  </div>
+</section>
+
+<p class="footer">ZENTRA Matrix Ecosystem · Paper-only decision support surface.</p>
 </main>
 
 <script>
@@ -194,5 +242,85 @@ function draw(){
  requestAnimationFrame(draw)
 }draw();
 </script>
+
+<script>
+const assistantSlides = {
+  tr: [
+    ["Matrix", "ZENTRA Matrix Ecosystem, ekonomik evreni lenslerle izleyen karar işletim sistemidir."],
+    ["Intel Market", "Intel Market bağımsız araç setidir. Chart, signal, screener ve report sunar."],
+    ["Gate Market", "Gate Market ZENTRA ile güçlendirilmiş sistemdir. Decision, risk, proof ve learning katmanlarını birleştirir."],
+    ["Financial Trade Lens", "Financial Trade yalnızca trade göstermez. Trade kararını, riskini, sonucunu ve öğrenmesini yönetir."],
+    ["Proof", "Her karar kaydedilir. Sonuç ölçülür. Sistem öğrenir."],
+    ["Safety", "Gerçek emir yok. Broker yok. Public yatırım tavsiyesi yok. Paper-only güvenli çalışma modu aktiftir."]
+  ],
+  en: [
+    ["Matrix", "ZENTRA Matrix Ecosystem is a decision operating system observing the economic universe through lenses."],
+    ["Intel Market", "Intel Market is the standalone tool layer: chart, signal, screener and report."],
+    ["Gate Market", "Gate Market is the ZENTRA-powered system layer: decision, risk, proof and learning."],
+    ["Financial Trade Lens", "Financial Trade manages the decision behind the trade, not only the market view."],
+    ["Proof", "Every decision is recorded, measured and returned to learning."],
+    ["Safety", "No real orders. No broker connection. Paper-only decision support mode is active."]
+  ],
+  ar: [
+    ["Matrix", "منظومة زنترا تراقب الاقتصاد عبر عدسات وتبني مسار القرار."],
+    ["Intel Market", "سوق إنتل هو طبقة أدوات مستقلة: رسوم، إشارات، تقارير."],
+    ["Gate Market", "سوق غيت هو النظام المدعوم بزنترا: قرار، مخاطر، إثبات وتعلم."],
+    ["Financial Trade Lens", "عدسة التداول المالي لا تعرض السوق فقط، بل تدير منطق القرار."],
+    ["Proof", "كل قرار يُسجل، تُقاس نتيجته، ثم يعود إلى التعلم."],
+    ["Safety", "لا أوامر حقيقية. لا وسيط. النظام يعمل في وضع ورقي آمن."]
+  ]
+};
+
+let tourTimer = null;
+
+function speak(text, lang, persona){
+  if(!window.speechSynthesis) return;
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = lang === "tr" ? "tr-TR" : lang === "ar" ? "ar-SA" : "en-US";
+  u.pitch = persona === "zentra" ? 1.15 : 0.85;
+  u.rate = 0.95;
+  speechSynthesis.cancel();
+  speechSynthesis.speak(u);
+}
+
+function showSlide(slide){
+  document.getElementById("assistantTitle").textContent = slide[0];
+  document.getElementById("assistantText").textContent = slide[1];
+}
+
+function startAssistant(lang, persona){
+  const slides = assistantSlides[lang] || assistantSlides.tr;
+  let i = 0;
+  clearInterval(tourTimer);
+  showSlide(slides[i]);
+  speak(slides[i][1], lang, persona);
+
+  tourTimer = setInterval(()=>{
+    i++;
+    if(i >= slides.length){ clearInterval(tourTimer); return; }
+    showSlide(slides[i]);
+    speak(slides[i][1], lang, persona);
+  }, 6500);
+}
+
+function silentTour(){
+  const slides = assistantSlides.tr;
+  let i = 0;
+  clearInterval(tourTimer);
+  speechSynthesis.cancel();
+  showSlide(slides[i]);
+  tourTimer = setInterval(()=>{
+    i++;
+    if(i >= slides.length){ clearInterval(tourTimer); return; }
+    showSlide(slides[i]);
+  }, 3500);
+}
+
+function stopAssistant(){
+  clearInterval(tourTimer);
+  if(window.speechSynthesis) speechSynthesis.cancel();
+}
+</script>
+
 </body>
 </html>
