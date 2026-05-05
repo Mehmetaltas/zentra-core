@@ -170,91 +170,119 @@ function runAll(){makeProfile();makeBasket();makeDecision();makeProof();makeRepo
 
 
 
-<!-- ZENTRA SMART SILENT ADVISOR -->
-<div id="smartAdvisor" style="position:fixed;right:18px;bottom:18px;z-index:999999;font-family:Arial">
-  <button onclick="smartToggle()" style="width:58px;height:58px;border-radius:50%;border:0;background:#66e7ff;color:#050814;font-size:22px;font-weight:900">💬</button>
 
-  <div id="smartBox" style="display:none;width:360px;margin-bottom:10px;background:#11182e;color:#eef3ff;border:1px solid #2d3a66;border-radius:18px;padding:16px;box-shadow:0 20px 70px #000b">
-    <b>ZENTRA Akıllı Danışman</b>
-    <p id="smartText" style="font-size:14px;color:#aab6d6;line-height:1.45">
-      Size doğru yolu göstermek için önce profilinizi okuyorum.
-    </p>
 
-    <button onclick="smartAnalyze()" style="width:100%;margin-top:8px;background:#66e7ff;color:#050814;font-weight:900">Profilimi Analiz Et</button>
-    <button onclick="smartAction('opportunity')" style="width:100%;margin-top:6px">Fırsat Sepetine Git</button>
-    <button onclick="smartAction('risk')" style="width:100%;margin-top:6px">Risk / Karar Akışı</button>
-    <button onclick="smartAction('proof')" style="width:100%;margin-top:6px">Proof Raporu</button>
-    <button onclick="smartAction('package')" style="width:100%;margin-top:6px">Paket Yönlendirme</button>
-    <button onclick="smartAction('legal')" style="width:100%;margin-top:6px">Güvenli Çalışma</button>
+
+<!-- ZENTRA HUMAN-LIKE TEXT ADVISOR -->
+<div id="humanAdvisor" style="position:fixed;right:18px;bottom:18px;z-index:999999;font-family:Arial">
+  <button onclick="humanToggle()" style="width:58px;height:58px;border-radius:50%;border:0;background:#66e7ff;color:#050814;font-size:22px;font-weight:900">💬</button>
+
+  <div id="humanBox" style="display:none;width:370px;margin-bottom:10px;background:#11182e;color:#eef3ff;border:1px solid #2d3a66;border-radius:18px;padding:16px;box-shadow:0 20px 70px #000b">
+    <b>ZENTRA Danışman</b>
+    <div id="humanChat" style="height:260px;overflow:auto;background:#050814;border:1px solid #2d3a66;border-radius:14px;padding:12px;margin-top:10px;font-size:14px;line-height:1.45;color:#dce6ff"></div>
+
+    <input id="humanInput" placeholder="Örn: Bana fırsat sepetini anlat, riskimi ölç, rapor alayım..." style="width:100%;margin-top:10px;padding:10px;border-radius:10px;background:#0b1228;color:#eef3ff;border:1px solid #2d3a66">
+
+    <button onclick="humanSend()" style="width:100%;margin-top:8px;background:#66e7ff;color:#050814;font-weight:900;border:0;border-radius:10px;padding:10px">Gönder</button>
+
+    <div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:8px">
+      <button onclick="humanQuick('fırsat')" style="flex:1;padding:8px;border-radius:9px">Fırsat</button>
+      <button onclick="humanQuick('risk')" style="flex:1;padding:8px;border-radius:9px">Risk</button>
+      <button onclick="humanQuick('rapor')" style="flex:1;padding:8px;border-radius:9px">Rapor</button>
+      <button onclick="humanQuick('paket')" style="flex:1;padding:8px;border-radius:9px">Paket</button>
+    </div>
   </div>
 </div>
 
 <script>
-function smartToggle(){
-  const box = document.getElementById("smartBox");
+function humanToggle(){
+  const box = document.getElementById("humanBox");
   box.style.display = box.style.display === "block" ? "none" : "block";
+  if(!window.humanStarted){
+    humanBot("Merhaba, ben ZENTRA danışmanınız. Size satış baskısı yapmadan doğru yolu göstereceğim. Önce ne yapmak istediğinizi anlayalım: fırsat sepeti mi, risk analizi mi, proof raporu mu?");
+    window.humanStarted = true;
+  }
 }
 
-function smartGetProfile(){
+function humanBot(text){
+  const chat = document.getElementById("humanChat");
+  chat.innerHTML += '<div style="margin:8px 0"><b style="color:#66e7ff">ZENTRA:</b> '+text+'</div>';
+  chat.scrollTop = chat.scrollHeight;
+}
+
+function humanUser(text){
+  const chat = document.getElementById("humanChat");
+  chat.innerHTML += '<div style="margin:8px 0;text-align:right"><b style="color:#69e7ad">Siz:</b> '+text+'</div>';
+  chat.scrollTop = chat.scrollHeight;
+}
+
+function humanProfile(){
   const capital = document.getElementById("capital") ? document.getElementById("capital").value : "MEDIUM";
   const risk = document.getElementById("risk") ? document.getElementById("risk").value : "MEDIUM";
   const intent = document.getElementById("intent") ? document.getElementById("intent").value : "fırsat takip etmek";
   return {capital, risk, intent};
 }
 
-function smartAnalyze(){
-  const p = smartGetProfile();
-  let msg = "Profiliniz okundu. ";
+function humanAnswer(msg){
+  const m = msg.toLowerCase();
+  const p = humanProfile();
 
-  if(p.risk === "LOW"){
-    msg += "Düşük risk profili için önce güvenli takip, düşük riskli sepet ve proof raporu önerilir. ";
-  } else if(p.risk === "HIGH"){
-    msg += "Yüksek risk profili için önce risk kontrolü, volatilite uyarısı ve paper-only takip önerilir. ";
-  } else {
-    msg += "Orta risk profili için fırsat sepeti, karar akışı ve proof raporu birlikte kullanılmalı. ";
+  if(m.includes("fırsat") || m.includes("sepet")){
+    if(typeof makeBasket === "function") makeBasket();
+    return "Tamam. Risk profilinizi " + p.risk + " olarak okuyorum. Önce fırsat sepetini oluşturdum. Bu sepet gerçek emir değildir; yalnızca paper-only takip listesidir. Bir sonraki doğru adım: karar ve risk akışını üretmek.";
   }
 
-  if(p.capital === "LOW"){
-    msg += "Sermaye bandınız düşük olduğu için koruma ve küçük adımlı takip öne alınır. ";
-  } else if(p.capital === "HIGH"){
-    msg += "Sermaye bandınız yüksek olduğu için portföy etkisi ve risk dağılımı ayrıca izlenmelidir. ";
+  if(m.includes("risk") || m.includes("karar")){
+    if(typeof makeDecision === "function") makeDecision();
+    return "Risk tarafını birlikte ele alalım. ZENTRA sinyali tek başına karar saymaz. Veri, risk ve sonuç birlikte değerlendirilir. Karar akışını oluşturdum; şimdi isterseniz proof raporuna geçebiliriz.";
   }
 
-  msg += "Devam etmek için önce 'Akışı Çalıştır', sonra 'Sepeti Üret' ve 'Proof Hesapla' adımlarını kullanın.";
-  document.getElementById("smartText").innerText = msg;
+  if(m.includes("proof") || m.includes("rapor") || m.includes("kanıt")){
+    if(typeof makeProof === "function") makeProof();
+    if(typeof makeReport === "function") makeReport();
+    return "Proof raporunu hazırladım. Burada sistemin ne dediği, sonra ne olduğu, fark ve skor görünür hâle gelir. Bu alan ZENTRA’nın güven katmanıdır.";
+  }
+
+  if(m.includes("paket") || m.includes("fiyat") || m.includes("ücret")){
+    if(typeof packageCheck === "function") packageCheck();
+    return "Paketleri basit anlatayım: Free bilgi ve sınırlı takip içindir. Pro fırsat sepeti ve proof için uygundur. Expert daha derin analiz ve rapor içindir. Institutional kurumsal kullanım içindir. Ödeme sistemi açılmadan önce paket mantığı hazır tutulur.";
+  }
+
+  if(m.includes("güven") || m.includes("hukuk") || m.includes("legal") || m.includes("tavsiye")){
+    return "Net söyleyeyim: ZENTRA yatırım tavsiyesi vermez. Gerçek emir açmaz. Broker bağlantısı kurmaz. Sistem paper-only karar destek yüzeyidir; amacı karar disiplinini ve proof kaydını görünür hâle getirmektir.";
+  }
+
+  if(m.includes("founder") || m.includes("kurucu") || m.includes("muhasebe") || m.includes("finans")){
+    return "Founder alanı müşteriye açık değildir. Orada ürün finansı, maliyet, fiyat, marj, proof ve paket hazırlığı takip edilir. Public tarafta yalnızca temiz ürün yüzü görünmelidir.";
+  }
+
+  if(m.includes("başla") || m.includes("ne yap")){
+    if(typeof runAll === "function") runAll();
+    return "Sizin için temel akışı başlattım: profil, fırsat sepeti, karar, proof ve rapor. Şimdi ekranda sonuçları görebilirsiniz. İsterseniz bir sonraki adımda proof raporunu birlikte okuyabiliriz.";
+  }
+
+  return "Anladım. Size doğru yönlendirme yapabilmem için bunu üç yoldan birine bağlayalım: fırsat sepeti, risk/karar akışı veya proof raporu. İsterseniz 'başla' yazın; temel akışı sizin için çalıştırayım.";
 }
 
-function smartAction(type){
-  const p = smartGetProfile();
-  let msg = "";
-
-  if(type === "opportunity"){
-    msg = "Fırsat Sepeti için yukarıdaki 'Sepeti Üret' butonuna basın. Sistem, risk profilinize göre paper-only takip listesi oluşturur. Gerçek emir içermez.";
-    if(typeof makeBasket === "function"){ makeBasket(); }
-  }
-
-  if(type === "risk"){
-    msg = "Risk / Karar akışı için 'Karar Üret' butonuna basın. Sinyal tek başına karar değildir; risk, veri ve sonuç birlikte değerlendirilir.";
-    if(typeof makeDecision === "function"){ makeDecision(); }
-  }
-
-  if(type === "proof"){
-    msg = "Proof Raporu için 'Proof Hesapla' ve ardından 'Rapor Üret' butonlarını kullanın. Sistem ne dedi, ne oldu, fark ne, skor ne; hepsi görünür hâle gelir.";
-    if(typeof makeProof === "function"){ makeProof(); }
-    if(typeof makeReport === "function"){ makeReport(); }
-  }
-
-  if(type === "package"){
-    msg = "Paket yönlendirme: Free bilgi ve sınırlı takip için; Pro fırsat sepeti ve proof için; Expert gelişmiş analiz için; Institutional kurumsal kullanım içindir.";
-    if(typeof packageCheck === "function"){ packageCheck(); }
-  }
-
-  if(type === "legal"){
-    msg = "Güvenli çalışma kuralı: ZENTRA yatırım tavsiyesi vermez. Gerçek emir yoktur. Broker bağlantısı yoktur. Sistem paper-only karar destek yüzeyidir.";
-  }
-
-  document.getElementById("smartText").innerText = msg;
+function humanSend(){
+  const input = document.getElementById("humanInput");
+  const msg = input.value.trim();
+  if(!msg) return;
+  humanUser(msg);
+  input.value = "";
+  setTimeout(function(){ humanBot(humanAnswer(msg)); }, 350);
 }
+
+function humanQuick(type){
+  document.getElementById("humanInput").value = type;
+  humanSend();
+}
+
+document.addEventListener("keydown", function(e){
+  if(e.key === "Enter" && document.activeElement && document.activeElement.id === "humanInput"){
+    humanSend();
+  }
+});
 </script>
 
 </body>
@@ -269,91 +297,119 @@ Paste this block before
 
 
 
-<!-- ZENTRA SMART SILENT ADVISOR -->
-<div id="smartAdvisor" style="position:fixed;right:18px;bottom:18px;z-index:999999;font-family:Arial">
-  <button onclick="smartToggle()" style="width:58px;height:58px;border-radius:50%;border:0;background:#66e7ff;color:#050814;font-size:22px;font-weight:900">💬</button>
 
-  <div id="smartBox" style="display:none;width:360px;margin-bottom:10px;background:#11182e;color:#eef3ff;border:1px solid #2d3a66;border-radius:18px;padding:16px;box-shadow:0 20px 70px #000b">
-    <b>ZENTRA Akıllı Danışman</b>
-    <p id="smartText" style="font-size:14px;color:#aab6d6;line-height:1.45">
-      Size doğru yolu göstermek için önce profilinizi okuyorum.
-    </p>
 
-    <button onclick="smartAnalyze()" style="width:100%;margin-top:8px;background:#66e7ff;color:#050814;font-weight:900">Profilimi Analiz Et</button>
-    <button onclick="smartAction('opportunity')" style="width:100%;margin-top:6px">Fırsat Sepetine Git</button>
-    <button onclick="smartAction('risk')" style="width:100%;margin-top:6px">Risk / Karar Akışı</button>
-    <button onclick="smartAction('proof')" style="width:100%;margin-top:6px">Proof Raporu</button>
-    <button onclick="smartAction('package')" style="width:100%;margin-top:6px">Paket Yönlendirme</button>
-    <button onclick="smartAction('legal')" style="width:100%;margin-top:6px">Güvenli Çalışma</button>
+
+<!-- ZENTRA HUMAN-LIKE TEXT ADVISOR -->
+<div id="humanAdvisor" style="position:fixed;right:18px;bottom:18px;z-index:999999;font-family:Arial">
+  <button onclick="humanToggle()" style="width:58px;height:58px;border-radius:50%;border:0;background:#66e7ff;color:#050814;font-size:22px;font-weight:900">💬</button>
+
+  <div id="humanBox" style="display:none;width:370px;margin-bottom:10px;background:#11182e;color:#eef3ff;border:1px solid #2d3a66;border-radius:18px;padding:16px;box-shadow:0 20px 70px #000b">
+    <b>ZENTRA Danışman</b>
+    <div id="humanChat" style="height:260px;overflow:auto;background:#050814;border:1px solid #2d3a66;border-radius:14px;padding:12px;margin-top:10px;font-size:14px;line-height:1.45;color:#dce6ff"></div>
+
+    <input id="humanInput" placeholder="Örn: Bana fırsat sepetini anlat, riskimi ölç, rapor alayım..." style="width:100%;margin-top:10px;padding:10px;border-radius:10px;background:#0b1228;color:#eef3ff;border:1px solid #2d3a66">
+
+    <button onclick="humanSend()" style="width:100%;margin-top:8px;background:#66e7ff;color:#050814;font-weight:900;border:0;border-radius:10px;padding:10px">Gönder</button>
+
+    <div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:8px">
+      <button onclick="humanQuick('fırsat')" style="flex:1;padding:8px;border-radius:9px">Fırsat</button>
+      <button onclick="humanQuick('risk')" style="flex:1;padding:8px;border-radius:9px">Risk</button>
+      <button onclick="humanQuick('rapor')" style="flex:1;padding:8px;border-radius:9px">Rapor</button>
+      <button onclick="humanQuick('paket')" style="flex:1;padding:8px;border-radius:9px">Paket</button>
+    </div>
   </div>
 </div>
 
 <script>
-function smartToggle(){
-  const box = document.getElementById("smartBox");
+function humanToggle(){
+  const box = document.getElementById("humanBox");
   box.style.display = box.style.display === "block" ? "none" : "block";
+  if(!window.humanStarted){
+    humanBot("Merhaba, ben ZENTRA danışmanınız. Size satış baskısı yapmadan doğru yolu göstereceğim. Önce ne yapmak istediğinizi anlayalım: fırsat sepeti mi, risk analizi mi, proof raporu mu?");
+    window.humanStarted = true;
+  }
 }
 
-function smartGetProfile(){
+function humanBot(text){
+  const chat = document.getElementById("humanChat");
+  chat.innerHTML += '<div style="margin:8px 0"><b style="color:#66e7ff">ZENTRA:</b> '+text+'</div>';
+  chat.scrollTop = chat.scrollHeight;
+}
+
+function humanUser(text){
+  const chat = document.getElementById("humanChat");
+  chat.innerHTML += '<div style="margin:8px 0;text-align:right"><b style="color:#69e7ad">Siz:</b> '+text+'</div>';
+  chat.scrollTop = chat.scrollHeight;
+}
+
+function humanProfile(){
   const capital = document.getElementById("capital") ? document.getElementById("capital").value : "MEDIUM";
   const risk = document.getElementById("risk") ? document.getElementById("risk").value : "MEDIUM";
   const intent = document.getElementById("intent") ? document.getElementById("intent").value : "fırsat takip etmek";
   return {capital, risk, intent};
 }
 
-function smartAnalyze(){
-  const p = smartGetProfile();
-  let msg = "Profiliniz okundu. ";
+function humanAnswer(msg){
+  const m = msg.toLowerCase();
+  const p = humanProfile();
 
-  if(p.risk === "LOW"){
-    msg += "Düşük risk profili için önce güvenli takip, düşük riskli sepet ve proof raporu önerilir. ";
-  } else if(p.risk === "HIGH"){
-    msg += "Yüksek risk profili için önce risk kontrolü, volatilite uyarısı ve paper-only takip önerilir. ";
-  } else {
-    msg += "Orta risk profili için fırsat sepeti, karar akışı ve proof raporu birlikte kullanılmalı. ";
+  if(m.includes("fırsat") || m.includes("sepet")){
+    if(typeof makeBasket === "function") makeBasket();
+    return "Tamam. Risk profilinizi " + p.risk + " olarak okuyorum. Önce fırsat sepetini oluşturdum. Bu sepet gerçek emir değildir; yalnızca paper-only takip listesidir. Bir sonraki doğru adım: karar ve risk akışını üretmek.";
   }
 
-  if(p.capital === "LOW"){
-    msg += "Sermaye bandınız düşük olduğu için koruma ve küçük adımlı takip öne alınır. ";
-  } else if(p.capital === "HIGH"){
-    msg += "Sermaye bandınız yüksek olduğu için portföy etkisi ve risk dağılımı ayrıca izlenmelidir. ";
+  if(m.includes("risk") || m.includes("karar")){
+    if(typeof makeDecision === "function") makeDecision();
+    return "Risk tarafını birlikte ele alalım. ZENTRA sinyali tek başına karar saymaz. Veri, risk ve sonuç birlikte değerlendirilir. Karar akışını oluşturdum; şimdi isterseniz proof raporuna geçebiliriz.";
   }
 
-  msg += "Devam etmek için önce 'Akışı Çalıştır', sonra 'Sepeti Üret' ve 'Proof Hesapla' adımlarını kullanın.";
-  document.getElementById("smartText").innerText = msg;
+  if(m.includes("proof") || m.includes("rapor") || m.includes("kanıt")){
+    if(typeof makeProof === "function") makeProof();
+    if(typeof makeReport === "function") makeReport();
+    return "Proof raporunu hazırladım. Burada sistemin ne dediği, sonra ne olduğu, fark ve skor görünür hâle gelir. Bu alan ZENTRA’nın güven katmanıdır.";
+  }
+
+  if(m.includes("paket") || m.includes("fiyat") || m.includes("ücret")){
+    if(typeof packageCheck === "function") packageCheck();
+    return "Paketleri basit anlatayım: Free bilgi ve sınırlı takip içindir. Pro fırsat sepeti ve proof için uygundur. Expert daha derin analiz ve rapor içindir. Institutional kurumsal kullanım içindir. Ödeme sistemi açılmadan önce paket mantığı hazır tutulur.";
+  }
+
+  if(m.includes("güven") || m.includes("hukuk") || m.includes("legal") || m.includes("tavsiye")){
+    return "Net söyleyeyim: ZENTRA yatırım tavsiyesi vermez. Gerçek emir açmaz. Broker bağlantısı kurmaz. Sistem paper-only karar destek yüzeyidir; amacı karar disiplinini ve proof kaydını görünür hâle getirmektir.";
+  }
+
+  if(m.includes("founder") || m.includes("kurucu") || m.includes("muhasebe") || m.includes("finans")){
+    return "Founder alanı müşteriye açık değildir. Orada ürün finansı, maliyet, fiyat, marj, proof ve paket hazırlığı takip edilir. Public tarafta yalnızca temiz ürün yüzü görünmelidir.";
+  }
+
+  if(m.includes("başla") || m.includes("ne yap")){
+    if(typeof runAll === "function") runAll();
+    return "Sizin için temel akışı başlattım: profil, fırsat sepeti, karar, proof ve rapor. Şimdi ekranda sonuçları görebilirsiniz. İsterseniz bir sonraki adımda proof raporunu birlikte okuyabiliriz.";
+  }
+
+  return "Anladım. Size doğru yönlendirme yapabilmem için bunu üç yoldan birine bağlayalım: fırsat sepeti, risk/karar akışı veya proof raporu. İsterseniz 'başla' yazın; temel akışı sizin için çalıştırayım.";
 }
 
-function smartAction(type){
-  const p = smartGetProfile();
-  let msg = "";
-
-  if(type === "opportunity"){
-    msg = "Fırsat Sepeti için yukarıdaki 'Sepeti Üret' butonuna basın. Sistem, risk profilinize göre paper-only takip listesi oluşturur. Gerçek emir içermez.";
-    if(typeof makeBasket === "function"){ makeBasket(); }
-  }
-
-  if(type === "risk"){
-    msg = "Risk / Karar akışı için 'Karar Üret' butonuna basın. Sinyal tek başına karar değildir; risk, veri ve sonuç birlikte değerlendirilir.";
-    if(typeof makeDecision === "function"){ makeDecision(); }
-  }
-
-  if(type === "proof"){
-    msg = "Proof Raporu için 'Proof Hesapla' ve ardından 'Rapor Üret' butonlarını kullanın. Sistem ne dedi, ne oldu, fark ne, skor ne; hepsi görünür hâle gelir.";
-    if(typeof makeProof === "function"){ makeProof(); }
-    if(typeof makeReport === "function"){ makeReport(); }
-  }
-
-  if(type === "package"){
-    msg = "Paket yönlendirme: Free bilgi ve sınırlı takip için; Pro fırsat sepeti ve proof için; Expert gelişmiş analiz için; Institutional kurumsal kullanım içindir.";
-    if(typeof packageCheck === "function"){ packageCheck(); }
-  }
-
-  if(type === "legal"){
-    msg = "Güvenli çalışma kuralı: ZENTRA yatırım tavsiyesi vermez. Gerçek emir yoktur. Broker bağlantısı yoktur. Sistem paper-only karar destek yüzeyidir.";
-  }
-
-  document.getElementById("smartText").innerText = msg;
+function humanSend(){
+  const input = document.getElementById("humanInput");
+  const msg = input.value.trim();
+  if(!msg) return;
+  humanUser(msg);
+  input.value = "";
+  setTimeout(function(){ humanBot(humanAnswer(msg)); }, 350);
 }
+
+function humanQuick(type){
+  document.getElementById("humanInput").value = type;
+  humanSend();
+}
+
+document.addEventListener("keydown", function(e){
+  if(e.key === "Enter" && document.activeElement && document.activeElement.id === "humanInput"){
+    humanSend();
+  }
+});
 </script>
 
 </body> in any HTML page.
