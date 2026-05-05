@@ -1,0 +1,78 @@
+<!-- =========================================================
+ZENTRA GLOBAL ASSISTANT WIDGET
+TR / EN / AR + Voice + Optional Guide
+Paste this block before </body> in any HTML page.
+========================================================= -->
+
+<div id="zentraAssistantWidget">
+  <button id="zentraAssistantButton" onclick="zentraToggleAssistant()">🎙</button>
+
+  <div id="zentraAssistantBox">
+    <div class="za-head">
+      <b>ZENTRA Assistant</b>
+      <button onclick="zentraToggleAssistant()">×</button>
+    </div>
+
+    <label>Dil / Language / اللغة</label>
+    <select id="zentraAssistantLang" onchange="zentraSetAssistantLang()">
+      <option value="tr">TR</option>
+      <option value="en">EN</option>
+      <option value="ar">AR</option>
+    </select>
+
+    <p id="zentraAssistantText"></p>
+
+    <button class="za-main" onclick="zentraSpeakAssistant()">▶ Anlat</button>
+    <button onclick="zentraStopAssistant()">⏹ Durdur</button>
+  </div>
+</div>
+
+<style>
+#zentraAssistantWidget{position:fixed;right:20px;bottom:20px;z-index:99999;font-family:Arial}
+#zentraAssistantButton{width:56px;height:56px;border-radius:50%;border:0;background:#66e7ff;color:#050814;font-size:22px;font-weight:900;box-shadow:0 14px 40px #0008}
+#zentraAssistantBox{display:none;width:320px;margin-bottom:12px;background:#11182e;color:#eef3ff;border:1px solid #2d3a66;border-radius:18px;padding:16px;box-shadow:0 22px 70px #000b}
+.za-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.za-head button{background:transparent;color:#eef3ff;border:0;font-size:22px}
+#zentraAssistantBox select,#zentraAssistantBox button{width:100%;padding:10px;margin-top:8px;border-radius:10px;border:1px solid #2d3a66;background:#0b1228;color:#eef3ff}
+#zentraAssistantBox .za-main{background:#66e7ff;color:#050814;font-weight:900}
+#zentraAssistantText{font-size:14px;line-height:1.45;color:#aab6d6;white-space:pre-wrap}
+</style>
+
+<script>
+let zentraAssistantLang="tr";
+
+const zentraAssistantContent={
+  tr:"ZENTRA Financial Trade'e hoş geldiniz. Bu sistem piyasayı göstermez. Karar disiplinini kurar. Veri işlenir. Risk ölçülür. Karar kaydedilir. Sonuç karşılaştırılır.",
+  en:"Welcome to ZENTRA Financial Trade. This system does not show the market. It builds decision discipline. Data is processed. Risk is measured. Decisions are recorded. Outcomes are compared.",
+  ar:"مرحبًا بك في زينترا فاينانشال تريد. هذا النظام لا يعرض السوق. بل يبني انضباط القرار. تتم معالجة البيانات. يتم قياس المخاطر. يتم تسجيل القرارات. تتم مقارنة النتائج."
+};
+
+function zentraToggleAssistant(){
+  const box=document.getElementById("zentraAssistantBox");
+  box.style.display=box.style.display==="block"?"none":"block";
+  zentraUpdateAssistantText();
+}
+
+function zentraSetAssistantLang(){
+  zentraAssistantLang=document.getElementById("zentraAssistantLang").value;
+  zentraUpdateAssistantText();
+}
+
+function zentraUpdateAssistantText(){
+  document.getElementById("zentraAssistantText").innerText=zentraAssistantContent[zentraAssistantLang];
+}
+
+function zentraSpeakAssistant(){
+  zentraStopAssistant();
+  const msg=new SpeechSynthesisUtterance(zentraAssistantContent[zentraAssistantLang]);
+  msg.lang=zentraAssistantLang==="tr"?"tr-TR":zentraAssistantLang==="ar"?"ar-SA":"en-US";
+  msg.rate=0.95;
+  msg.pitch=1;
+  msg.volume=1;
+  speechSynthesis.speak(msg);
+}
+
+function zentraStopAssistant(){
+  if(window.speechSynthesis) speechSynthesis.cancel();
+}
+</script>
