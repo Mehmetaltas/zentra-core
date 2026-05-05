@@ -1,0 +1,5 @@
+[
+  {"id":"BNK-001","type":"credit_application","customer":"SME Alpha","signals":{"kyc":"LOW","income_pressure":"MEDIUM","collateral_gap":"LOW","fraud":"LOW"}},
+  {"id":"BNK-002","type":"collection_case","customer":"Retail Beta","signals":{"kyc":"LOW","income_pressure":"HIGH","collateral_gap":"MEDIUM","fraud":"LOW"}},
+  {"id":"BNK-003","type":"portfolio_case","customer":"Corporate Gamma","signals":{"kyc":"MEDIUM","income_pressure":"MEDIUM","collateral_gap":"HIGH","fraud":"MEDIUM"}}
+]

@@ -1,0 +1,5 @@
+[
+  {"id":"TSF-001","type":"participant","customer":"Participant A","signals":{"payment_delay":"LOW","pool_liquidity":"MEDIUM","allocation_fairness":"LOW","contract_risk":"LOW"}},
+  {"id":"TSF-002","type":"pool","customer":"Pool B","signals":{"payment_delay":"HIGH","pool_liquidity":"HIGH","allocation_fairness":"MEDIUM","contract_risk":"MEDIUM"}},
+  {"id":"TSF-003","type":"allocation","customer":"Participant C","signals":{"payment_delay":"MEDIUM","pool_liquidity":"LOW","allocation_fairness":"HIGH","contract_risk":"LOW"}}
+]

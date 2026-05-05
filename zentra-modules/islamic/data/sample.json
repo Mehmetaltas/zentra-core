@@ -1,0 +1,5 @@
+[
+  {"id":"ISF-001","type":"murabaha_review","customer":"Client A","signals":{"contract_clarity":"LOW","suitability":"LOW","asset_risk":"MEDIUM","human_review":"MEDIUM"}},
+  {"id":"ISF-002","type":"ijara_review","customer":"Client B","signals":{"contract_clarity":"MEDIUM","suitability":"HIGH","asset_risk":"MEDIUM","human_review":"HIGH"}},
+  {"id":"ISF-003","type":"musharaka_review","customer":"Client C","signals":{"contract_clarity":"LOW","suitability":"MEDIUM","asset_risk":"HIGH","human_review":"HIGH"}}
+]

@@ -1,0 +1,111 @@
+{
+  "module": "banking",
+  "time": "2026-05-05T09:58:43.824Z",
+  "realExecution": false,
+  "licensedIntegration": false,
+  "status": "TESTED_WITH_SAMPLE_DATA",
+  "accepted": [
+    "BNK-001"
+  ],
+  "review": [
+    "BNK-002"
+  ],
+  "blocked": [
+    "BNK-003"
+  ],
+  "results": [
+    {
+      "id": "BNK-001",
+      "type": "credit_application",
+      "customer": "SME Alpha",
+      "signals": {
+        "kyc": "LOW",
+        "income_pressure": "MEDIUM",
+        "collateral_gap": "LOW",
+        "fraud": "LOW"
+      },
+      "riskScore": 21,
+      "status": "PASS",
+      "proof": [
+        {
+          "signal": "kyc",
+          "value": "LOW"
+        },
+        {
+          "signal": "income_pressure",
+          "value": "MEDIUM"
+        },
+        {
+          "signal": "collateral_gap",
+          "value": "LOW"
+        },
+        {
+          "signal": "fraud",
+          "value": "LOW"
+        }
+      ]
+    },
+    {
+      "id": "BNK-002",
+      "type": "collection_case",
+      "customer": "Retail Beta",
+      "signals": {
+        "kyc": "LOW",
+        "income_pressure": "HIGH",
+        "collateral_gap": "MEDIUM",
+        "fraud": "LOW"
+      },
+      "riskScore": 43,
+      "status": "REVIEW",
+      "proof": [
+        {
+          "signal": "kyc",
+          "value": "LOW"
+        },
+        {
+          "signal": "income_pressure",
+          "value": "HIGH"
+        },
+        {
+          "signal": "collateral_gap",
+          "value": "MEDIUM"
+        },
+        {
+          "signal": "fraud",
+          "value": "LOW"
+        }
+      ]
+    },
+    {
+      "id": "BNK-003",
+      "type": "portfolio_case",
+      "customer": "Corporate Gamma",
+      "signals": {
+        "kyc": "MEDIUM",
+        "income_pressure": "MEDIUM",
+        "collateral_gap": "HIGH",
+        "fraud": "MEDIUM"
+      },
+      "riskScore": 61,
+      "status": "BLOCK",
+      "proof": [
+        {
+          "signal": "kyc",
+          "value": "MEDIUM"
+        },
+        {
+          "signal": "income_pressure",
+          "value": "MEDIUM"
+        },
+        {
+          "signal": "collateral_gap",
+          "value": "HIGH"
+        },
+        {
+          "signal": "fraud",
+          "value": "MEDIUM"
+        }
+      ]
+    }
+  ]
+}

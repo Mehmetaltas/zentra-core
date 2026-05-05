@@ -1,0 +1,339 @@
+{
+  "time": "2026-05-05T09:58:43.805Z",
+  "mode": "LICENSE_READY_PAPER_ONLY",
+  "realExecution": false,
+  "modules": {
+    "banking": {
+      "module": "banking",
+      "time": "2026-05-05T09:58:43.824Z",
+      "realExecution": false,
+      "licensedIntegration": false,
+      "status": "TESTED_WITH_SAMPLE_DATA",
+      "accepted": [
+        "BNK-001"
+      ],
+      "review": [
+        "BNK-002"
+      ],
+      "blocked": [
+        "BNK-003"
+      ],
+      "results": [
+        {
+          "id": "BNK-001",
+          "type": "credit_application",
+          "customer": "SME Alpha",
+          "signals": {
+            "kyc": "LOW",
+            "income_pressure": "MEDIUM",
+            "collateral_gap": "LOW",
+            "fraud": "LOW"
+          },
+          "riskScore": 21,
+          "status": "PASS",
+          "proof": [
+            {
+              "signal": "kyc",
+              "value": "LOW"
+            },
+            {
+              "signal": "income_pressure",
+              "value": "MEDIUM"
+            },
+            {
+              "signal": "collateral_gap",
+              "value": "LOW"
+            },
+            {
+              "signal": "fraud",
+              "value": "LOW"
+            }
+          ]
+        },
+        {
+          "id": "BNK-002",
+          "type": "collection_case",
+          "customer": "Retail Beta",
+          "signals": {
+            "kyc": "LOW",
+            "income_pressure": "HIGH",
+            "collateral_gap": "MEDIUM",
+            "fraud": "LOW"
+          },
+          "riskScore": 43,
+          "status": "REVIEW",
+          "proof": [
+            {
+              "signal": "kyc",
+              "value": "LOW"
+            },
+            {
+              "signal": "income_pressure",
+              "value": "HIGH"
+            },
+            {
+              "signal": "collateral_gap",
+              "value": "MEDIUM"
+            },
+            {
+              "signal": "fraud",
+              "value": "LOW"
+            }
+          ]
+        },
+        {
+          "id": "BNK-003",
+          "type": "portfolio_case",
+          "customer": "Corporate Gamma",
+          "signals": {
+            "kyc": "MEDIUM",
+            "income_pressure": "MEDIUM",
+            "collateral_gap": "HIGH",
+            "fraud": "MEDIUM"
+          },
+          "riskScore": 61,
+          "status": "BLOCK",
+          "proof": [
+            {
+              "signal": "kyc",
+              "value": "MEDIUM"
+            },
+            {
+              "signal": "income_pressure",
+              "value": "MEDIUM"
+            },
+            {
+              "signal": "collateral_gap",
+              "value": "HIGH"
+            },
+            {
+              "signal": "fraud",
+              "value": "MEDIUM"
+            }
+          ]
+        }
+      ]
+    },
+    "tasarruf": {
+      "module": "tasarruf",
+      "time": "2026-05-05T09:58:43.826Z",
+      "realExecution": false,
+      "licensedIntegration": false,
+      "status": "TESTED_WITH_SAMPLE_DATA",
+      "accepted": [
+        "TSF-001"
+      ],
+      "review": [
+        "TSF-003"
+      ],
+      "blocked": [
+        "TSF-002"
+      ],
+      "results": [
+        {
+          "id": "TSF-001",
+          "type": "participant",
+          "customer": "Participant A",
+          "signals": {
+            "payment_delay": "LOW",
+            "pool_liquidity": "MEDIUM",
+            "allocation_fairness": "LOW",
+            "contract_risk": "LOW"
+          },
+          "riskScore": 21,
+          "status": "PASS",
+          "proof": [
+            {
+              "signal": "payment_delay",
+              "value": "LOW"
+            },
+            {
+              "signal": "pool_liquidity",
+              "value": "MEDIUM"
+            },
+            {
+              "signal": "allocation_fairness",
+              "value": "LOW"
+            },
+            {
+              "signal": "contract_risk",
+              "value": "LOW"
+            }
+          ]
+        },
+        {
+          "id": "TSF-002",
+          "type": "pool",
+          "customer": "Pool B",
+          "signals": {
+            "payment_delay": "HIGH",
+            "pool_liquidity": "HIGH",
+            "allocation_fairness": "MEDIUM",
+            "contract_risk": "MEDIUM"
+          },
+          "riskScore": 74,
+          "status": "BLOCK",
+          "proof": [
+            {
+              "signal": "payment_delay",
+              "value": "HIGH"
+            },
+            {
+              "signal": "pool_liquidity",
+              "value": "HIGH"
+            },
+            {
+              "signal": "allocation_fairness",
+              "value": "MEDIUM"
+            },
+            {
+              "signal": "contract_risk",
+              "value": "MEDIUM"
+            }
+          ]
+        },
+        {
+          "id": "TSF-003",
+          "type": "allocation",
+          "customer": "Participant C",
+          "signals": {
+            "payment_delay": "MEDIUM",
+            "pool_liquidity": "LOW",
+            "allocation_fairness": "HIGH",
+            "contract_risk": "LOW"
+          },
+          "riskScore": 43,
+          "status": "REVIEW",
+          "proof": [
+            {
+              "signal": "payment_delay",
+              "value": "MEDIUM"
+            },
+            {
+              "signal": "pool_liquidity",
+              "value": "LOW"
+            },
+            {
+              "signal": "allocation_fairness",
+              "value": "HIGH"
+            },
+            {
+              "signal": "contract_risk",
+              "value": "LOW"
+            }
+          ]
+        }
+      ]
+    },
+    "islamic": {
+      "module": "islamic",
+      "time": "2026-05-05T09:58:43.827Z",
+      "realExecution": false,
+      "licensedIntegration": false,
+      "status": "TESTED_WITH_SAMPLE_DATA",
+      "accepted": [],
+      "review": [
+        "ISF-001"
+      ],
+      "blocked": [
+        "ISF-002",
+        "ISF-003"
+      ],
+      "results": [
+        {
+          "id": "ISF-001",
+          "type": "murabaha_review",
+          "customer": "Client A",
+          "signals": {
+            "contract_clarity": "LOW",
+            "suitability": "LOW",
+            "asset_risk": "MEDIUM",
+            "human_review": "MEDIUM"
+          },
+          "riskScore": 30,
+          "status": "REVIEW",
+          "proof": [
+            {
+              "signal": "contract_clarity",
+              "value": "LOW"
+            },
+            {
+              "signal": "suitability",
+              "value": "LOW"
+            },
+            {
+              "signal": "asset_risk",
+              "value": "MEDIUM"
+            },
+            {
+              "signal": "human_review",
+              "value": "MEDIUM"
+            }
+          ]
+        },
+        {
+          "id": "ISF-002",
+          "type": "ijara_review",
+          "customer": "Client B",
+          "signals": {
+            "contract_clarity": "MEDIUM",
+            "suitability": "HIGH",
+            "asset_risk": "MEDIUM",
+            "human_review": "HIGH"
+          },
+          "riskScore": 74,
+          "status": "BLOCK",
+          "proof": [
+            {
+              "signal": "contract_clarity",
+              "value": "MEDIUM"
+            },
+            {
+              "signal": "suitability",
+              "value": "HIGH"
+            },
+            {
+              "signal": "asset_risk",
+              "value": "MEDIUM"
+            },
+            {
+              "signal": "human_review",
+              "value": "HIGH"
+            }
+          ]
+        },
+        {
+          "id": "ISF-003",
+          "type": "musharaka_review",
+          "customer": "Client C",
+          "signals": {
+            "contract_clarity": "LOW",
+            "suitability": "MEDIUM",
+            "asset_risk": "HIGH",
+            "human_review": "HIGH"
+          },
+          "riskScore": 65,
+          "status": "BLOCK",
+          "proof": [
+            {
+              "signal": "contract_clarity",
+              "value": "LOW"
+            },
+            {
+              "signal": "suitability",
+              "value": "MEDIUM"
+            },
+            {
+              "signal": "asset_risk",
+              "value": "HIGH"
+            },
+            {
+              "signal": "human_review",
+              "value": "HIGH"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

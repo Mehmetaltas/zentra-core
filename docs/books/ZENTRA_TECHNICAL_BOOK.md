@@ -182,3 +182,14 @@ Fixed:
 - app/index.html içinde zentra-commercial-core.js binding garantilendi.
 - tools/zentra_reality_check.sh içinde test user otomatik Expert plana yükseltilir.
 - Amaç: product action testlerinin free-plan gate'e takılmadan gerçek core akışını ölçmesi.
+
+## Banking / Tasarruf / Islamic Technical Update
+Added:
+- zentra-modules/banking
+- zentra-modules/tasarruf
+- zentra-modules/islamic
+- zentra-modules/shared/product-engine.js
+- zentra-modules/run-product-tests.js
+- banking/index.html
+- tasarruf/index.html
+- islamic-finance/index.html

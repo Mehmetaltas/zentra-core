@@ -1,0 +1,110 @@
+{
+  "module": "islamic",
+  "time": "2026-05-05T09:58:43.827Z",
+  "realExecution": false,
+  "licensedIntegration": false,
+  "status": "TESTED_WITH_SAMPLE_DATA",
+  "accepted": [],
+  "review": [
+    "ISF-001"
+  ],
+  "blocked": [
+    "ISF-002",
+    "ISF-003"
+  ],
+  "results": [
+    {
+      "id": "ISF-001",
+      "type": "murabaha_review",
+      "customer": "Client A",
+      "signals": {
+        "contract_clarity": "LOW",
+        "suitability": "LOW",
+        "asset_risk": "MEDIUM",
+        "human_review": "MEDIUM"
+      },
+      "riskScore": 30,
+      "status": "REVIEW",
+      "proof": [
+        {
+          "signal": "contract_clarity",
+          "value": "LOW"
+        },
+        {
+          "signal": "suitability",
+          "value": "LOW"
+        },
+        {
+          "signal": "asset_risk",
+          "value": "MEDIUM"
+        },
+        {
+          "signal": "human_review",
+          "value": "MEDIUM"
+        }
+      ]
+    },
+    {
+      "id": "ISF-002",
+      "type": "ijara_review",
+      "customer": "Client B",
+      "signals": {
+        "contract_clarity": "MEDIUM",
+        "suitability": "HIGH",
+        "asset_risk": "MEDIUM",
+        "human_review": "HIGH"
+      },
+      "riskScore": 74,
+      "status": "BLOCK",
+      "proof": [
+        {
+          "signal": "contract_clarity",
+          "value": "MEDIUM"
+        },
+        {
+          "signal": "suitability",
+          "value": "HIGH"
+        },
+        {
+          "signal": "asset_risk",
+          "value": "MEDIUM"
+        },
+        {
+          "signal": "human_review",
+          "value": "HIGH"
+        }
+      ]
+    },
+    {
+      "id": "ISF-003",
+      "type": "musharaka_review",
+      "customer": "Client C",
+      "signals": {
+        "contract_clarity": "LOW",
+        "suitability": "MEDIUM",
+        "asset_risk": "HIGH",
+        "human_review": "HIGH"
+      },
+      "riskScore": 65,
+      "status": "BLOCK",
+      "proof": [
+        {
+          "signal": "contract_clarity",
+          "value": "LOW"
+        },
+        {
+          "signal": "suitability",
+          "value": "MEDIUM"
+        },
+        {
+          "signal": "asset_risk",
+          "value": "HIGH"
+        },
+        {
+          "signal": "human_review",
+          "value": "HIGH"
+        }
+      ]
+    }
+  ]
+}
