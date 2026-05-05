@@ -1,14 +1,41 @@
 {
   "version": 2,
   "rewrites": [
-    { "source": "/", "destination": "/index.html" },
-    { "source": "/matrix", "destination": "/index.html" },
-    { "source": "/intel", "destination": "/public/intel/index.html" },
-    { "source": "/gate", "destination": "/public/gate/index.html" },
-    { "source": "/pricing", "destination": "/public/pricing/index.html" },
-    { "source": "/financial-trade", "destination": "/financial-trade/index.html" },
-    { "source": "/banking", "destination": "/banking/index.html" },
-    { "source": "/tasarruf", "destination": "/tasarruf/index.html" },
-    { "source": "/islamic-finance", "destination": "/islamic-finance/index.html" }
+    {
+      "source": "/",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/matrix",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/intel",
+      "destination": "/public/intel/index.html"
+    },
+    {
+      "source": "/gate",
+      "destination": "/public/gate/index.html"
+    },
+    {
+      "source": "/pricing",
+      "destination": "/public/pricing/index.html"
+    },
+    {
+      "source": "/banking",
+      "destination": "/banking/index.html"
+    },
+    {
+      "source": "/tasarruf",
+      "destination": "/tasarruf/index.html"
+    },
+    {
+      "source": "/islamic-finance",
+      "destination": "/islamic-finance/index.html"
+    },
+    {
+      "source": "/financial-trade",
+      "destination": "/financial-trade.html"
+    }
   ]
 }
