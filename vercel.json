@@ -35,7 +35,7 @@
     },
     {
       "source": "/financial-trade",
-      "destination": "/financial-trade.html"
+      "destination": "/public/financial-trade/index.html"
     }
   ]
 }
