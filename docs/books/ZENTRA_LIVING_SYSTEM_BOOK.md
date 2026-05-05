@@ -141,3 +141,6 @@ Commercial binding garanti edildi; test user reality check sırasında Expert pl
 
 ## Living System Trace
 Banking, Tasarruf and Islamic Finance product agents are now born with initial domain memory, sample data, proof tests and commercial cockpit shells. They will evolve through real licensed data and institutional integration.
+
+## Controlled Evolution Core
+ZENTRA now separates decomposition outputs into two channels: knowledge absorption and productization. Not every decomposed capability becomes a product. General AI absorbs general knowledge and programming/system intelligence. Academia AI decomposes and builds equipment arsenal. Intel AI receives productizable economic/decision equipment. Intel Market sells ZENTRA-free packages; Gate Market sells ZENTRA-powered packages.

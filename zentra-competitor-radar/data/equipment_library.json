@@ -1,0 +1,41 @@
+{
+  "version": "EQUIPMENT_RADAR_V1",
+  "updated": "2026-05-05",
+  "sources": [
+    "TradingView: chart, screener, alerts, paper trading, webhook",
+    "Bloomberg: AI research, data/news/analytics, portfolio risk",
+    "Zendesk/Intercom/Salesforce/Freshworks style: AI support, handoff, CRM, ticket, voice",
+    "Banking platforms: KYC, MFA, fraud, onboarding, compliance",
+    "ZENTRA internal decomposition"
+  ],
+  "equipment": [
+    {"id":"chart_engine","name":"Chart Engine","category":"financial_trade","required":true},
+    {"id":"screener","name":"Market Screener","category":"financial_trade","required":true},
+    {"id":"alerts","name":"Price / Signal Alerts","category":"financial_trade","required":true},
+    {"id":"paper_trading","name":"Paper Trading / Simulation","category":"financial_trade","required":true},
+    {"id":"webhook_alerts","name":"Webhook Alert Integration","category":"financial_trade","required":false},
+    {"id":"portfolio_risk","name":"Portfolio Risk Analytics","category":"financial_trade","required":true},
+    {"id":"ai_research","name":"AI Research Assistant","category":"intelligence","required":true},
+    {"id":"news_impact","name":"News / Event Impact","category":"intelligence","required":true},
+    {"id":"decision_autopsy","name":"Decision Autopsy","category":"zentra_moat","required":true},
+    {"id":"proof_warehouse","name":"Historical Proof Warehouse","category":"zentra_moat","required":true},
+    {"id":"learning_memory","name":"Learning Memory","category":"zentra_moat","required":true},
+    {"id":"agent_workforce","name":"Agent Workforce Dashboard","category":"operations","required":true},
+    {"id":"omnichannel_support","name":"Omnichannel Support","category":"customer_ops","required":true},
+    {"id":"human_handoff","name":"Human Handoff / Escalation","category":"customer_ops","required":true},
+    {"id":"ticketing","name":"Ticket / Incident System","category":"customer_ops","required":true},
+    {"id":"crm_memory","name":"CRM / Customer Memory","category":"customer_ops","required":true},
+    {"id":"voice_contact_center","name":"Voice Contact Center","category":"customer_ops","required":false},
+    {"id":"social_publishing","name":"Social / Newsletter Publishing","category":"growth","required":true},
+    {"id":"content_calendar","name":"Content Calendar","category":"growth","required":true},
+    {"id":"provider_registry","name":"Data Provider Registry","category":"data","required":true},
+    {"id":"licensed_data_guard","name":"Licensed Data Usage Guard","category":"data","required":true},
+    {"id":"csv_api_adapter","name":"CSV / API Integration Adapter","category":"integration","required":true},
+    {"id":"kyc_mfa","name":"KYC / MFA / Identity Layer","category":"banking","required":true},
+    {"id":"fraud_detection","name":"Fraud Detection","category":"banking","required":true},
+    {"id":"compliance_audit","name":"Compliance / Audit","category":"banking","required":true},
+    {"id":"accessibility","name":"Accessibility Support","category":"legal_support","required":true},
+    {"id":"legal_terms_privacy","name":"Legal / Terms / Privacy","category":"legal_support","required":true},
+    {"id":"maintenance_repair","name":"Maintenance / Repair Log","category":"operations","required":true}
+  ]
+}

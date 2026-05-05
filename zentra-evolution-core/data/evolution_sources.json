@@ -1,0 +1,93 @@
+{
+  "version": "CONTROLLED_EVOLUTION_V1",
+  "ecosystem": "ZENTRA Matrix Ecosystem",
+  "ai_companies": {
+    "general_ai": {
+      "name": "ZENTRA General AI",
+      "role": "General knowledge, programming, reasoning, system building and internal intelligence"
+    },
+    "academia_ai": {
+      "name": "ZENTRA Academia AI",
+      "role": "Decomposition, competitor analysis, equipment extraction and arsenal building"
+    },
+    "intel_ai": {
+      "name": "ZENTRA Intel AI",
+      "role": "Economic intelligence, decision systems and productizable modules"
+    }
+  },
+  "markets": {
+    "intel_market": "Standalone / ZENTRA-free packages",
+    "gate_market": "ZENTRA-powered packages"
+  },
+  "current_product_lines": [
+    "Financial Trade",
+    "Banking OS",
+    "Tasarruf / Alternative Finance OS",
+    "Islamic Finance OS"
+  ],
+  "sources": [
+    {
+      "source": "OpenAI-style systems",
+      "domain": "AI Core",
+      "purpose": "knowledge_absorption",
+      "productize": false,
+      "reason": "Used to improve reasoning, tool use, assistant logic and programming capability"
+    },
+    {
+      "source": "Gemini-style systems",
+      "domain": "Multimodal AI",
+      "purpose": "knowledge_absorption",
+      "productize": false,
+      "reason": "Used to understand multimodal, long-context and ecosystem design patterns"
+    },
+    {
+      "source": "TradingView-style systems",
+      "domain": "Financial Trade",
+      "purpose": "equipment_and_productization",
+      "productize": true,
+      "reason": "Chart, screener, alert, signal and watchlist equipment can become Financial Trade modules"
+    },
+    {
+      "source": "Bloomberg-style systems",
+      "domain": "Financial Intelligence",
+      "purpose": "equipment_and_productization",
+      "productize": true,
+      "reason": "Research, data, news, analytics and portfolio workflow can strengthen Intel AI and Gate Market"
+    },
+    {
+      "source": "Telegram-style systems",
+      "domain": "Communication",
+      "purpose": "equipment",
+      "productize": false,
+      "reason": "Used for alerting, distribution and founder reports; not necessarily sold as product"
+    },
+    {
+      "source": "Zendesk / Intercom-style systems",
+      "domain": "Customer Operations",
+      "purpose": "equipment_and_productization",
+      "productize": true,
+      "reason": "Support, ticketing, handoff and customer memory can become Assistant OS equipment"
+    },
+    {
+      "source": "Windows / Apple / Android-style UX",
+      "domain": "Operating System UX",
+      "purpose": "knowledge_absorption",
+      "productize": false,
+      "reason": "Used to improve cockpit, navigation, user flow and ecosystem interface"
+    },
+    {
+      "source": "Banking / Islamic / Alternative Finance platforms",
+      "domain": "Financial Infrastructure",
+      "purpose": "equipment_and_productization",
+      "productize": true,
+      "reason": "Relevant to Banking OS, Tasarruf OS and Islamic Finance OS"
+    },
+    {
+      "source": "Space / underground / underwater future systems",
+      "domain": "Future Expansion",
+      "purpose": "knowledge_absorption",
+      "productize": false,
+      "reason": "Kept as future expansion intelligence; productized only when ZENTRA path is stable"
+    }
+  ]
+}

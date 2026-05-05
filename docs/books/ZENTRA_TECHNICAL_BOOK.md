@@ -193,3 +193,10 @@ Added:
 - banking/index.html
 - tasarruf/index.html
 - islamic-finance/index.html
+
+## Controlled Evolution Technical
+Added:
+- zentra-evolution-core/data/evolution_sources.json
+- zentra-evolution-core/src/evolution-core.js
+- zentra-evolution-core/results/evolution_strategy.json
+Updated competitor radar to avoid automatic productization and to classify product candidates separately.

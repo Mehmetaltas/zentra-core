@@ -1,0 +1,262 @@
+[
+  {
+    "taskId": "GAP-001",
+    "equipmentId": "screener",
+    "name": "Market Screener",
+    "category": "financial_trade",
+    "state": "missing",
+    "priority": "HIGH",
+    "productizationRule": "PRODUCT_CANDIDATE",
+    "action": "Create or absorb Market Screener."
+  },
+  {
+    "taskId": "GAP-002",
+    "equipmentId": "webhook_alerts",
+    "name": "Webhook Alert Integration",
+    "category": "financial_trade",
+    "state": "missing",
+    "priority": "MEDIUM",
+    "productizationRule": "PRODUCT_CANDIDATE",
+    "action": "Create or absorb Webhook Alert Integration."
+  },
+  {
+    "taskId": "GAP-003",
+    "equipmentId": "news_impact",
+    "name": "News / Event Impact",
+    "category": "intelligence",
+    "state": "missing",
+    "priority": "HIGH",
+    "productizationRule": "KNOWLEDGE_OR_INFRASTRUCTURE",
+    "action": "Create or absorb News / Event Impact."
+  },
+  {
+    "taskId": "GAP-004",
+    "equipmentId": "proof_warehouse",
+    "name": "Historical Proof Warehouse",
+    "category": "zentra_moat",
+    "state": "missing",
+    "priority": "HIGH",
+    "productizationRule": "PRODUCT_CANDIDATE",
+    "action": "Create or absorb Historical Proof Warehouse."
+  },
+  {
+    "taskId": "GAP-005",
+    "equipmentId": "omnichannel_support",
+    "name": "Omnichannel Support",
+    "category": "customer_ops",
+    "state": "missing",
+    "priority": "HIGH",
+    "productizationRule": "PRODUCT_CANDIDATE",
+    "action": "Create or absorb Omnichannel Support."
+  },
+  {
+    "taskId": "GAP-006",
+    "equipmentId": "human_handoff",
+    "name": "Human Handoff / Escalation",
+    "category": "customer_ops",
+    "state": "missing",
+    "priority": "HIGH",
+    "productizationRule": "PRODUCT_CANDIDATE",
+    "action": "Create or absorb Human Handoff / Escalation."
+  },
+  {
+    "taskId": "GAP-007",
+    "equipmentId": "ticketing",
+    "name": "Ticket / Incident System",
+    "category": "customer_ops",
+    "state": "missing",
+    "priority": "HIGH",
+    "productizationRule": "PRODUCT_CANDIDATE",
+    "action": "Create or absorb Ticket / Incident System."
+  },
+  {
+    "taskId": "GAP-008",
+    "equipmentId": "crm_memory",
+    "name": "CRM / Customer Memory",
+    "category": "customer_ops",
+    "state": "missing",
+    "priority": "HIGH",
+    "productizationRule": "PRODUCT_CANDIDATE",
+    "action": "Create or absorb CRM / Customer Memory."
+  },
+  {
+    "taskId": "GAP-009",
+    "equipmentId": "voice_contact_center",
+    "name": "Voice Contact Center",
+    "category": "customer_ops",
+    "state": "missing",
+    "priority": "MEDIUM",
+    "productizationRule": "PRODUCT_CANDIDATE",
+    "action": "Create or absorb Voice Contact Center."
+  },
+  {
+    "taskId": "GAP-010",
+    "equipmentId": "content_calendar",
+    "name": "Content Calendar",
+    "category": "growth",
+    "state": "missing",
+    "priority": "HIGH",
+    "productizationRule": "KNOWLEDGE_OR_INFRASTRUCTURE",
+    "action": "Create or absorb Content Calendar."
+  },
+  {
+    "taskId": "GAP-011",
+    "equipmentId": "kyc_mfa",
+    "name": "KYC / MFA / Identity Layer",
+    "category": "banking",
+    "state": "missing",
+    "priority": "HIGH",
+    "productizationRule": "KNOWLEDGE_OR_INFRASTRUCTURE",
+    "action": "Create or absorb KYC / MFA / Identity Layer."
+  },
+  {
+    "taskId": "GAP-012",
+    "equipmentId": "chart_engine",
+    "name": "Chart Engine",
+    "category": "financial_trade",
+    "state": "partial",
+    "priority": "HIGH",
+    "productizationRule": "PRODUCT_CANDIDATE",
+    "action": "Upgrade Chart Engine from partial to active."
+  },
+  {
+    "taskId": "GAP-013",
+    "equipmentId": "alerts",
+    "name": "Price / Signal Alerts",
+    "category": "financial_trade",
+    "state": "partial",
+    "priority": "HIGH",
+    "productizationRule": "PRODUCT_CANDIDATE",
+    "action": "Upgrade Price / Signal Alerts from partial to active."
+  },
+  {
+    "taskId": "GAP-014",
+    "equipmentId": "portfolio_risk",
+    "name": "Portfolio Risk Analytics",
+    "category": "financial_trade",
+    "state": "partial",
+    "priority": "HIGH",
+    "productizationRule": "PRODUCT_CANDIDATE",
+    "action": "Upgrade Portfolio Risk Analytics from partial to active."
+  },
+  {
+    "taskId": "GAP-015",
+    "equipmentId": "ai_research",
+    "name": "AI Research Assistant",
+    "category": "intelligence",
+    "state": "partial",
+    "priority": "HIGH",
+    "productizationRule": "KNOWLEDGE_OR_INFRASTRUCTURE",
+    "action": "Upgrade AI Research Assistant from partial to active."
+  },
+  {
+    "taskId": "GAP-016",
+    "equipmentId": "decision_autopsy",
+    "name": "Decision Autopsy",
+    "category": "zentra_moat",
+    "state": "partial",
+    "priority": "HIGH",
+    "productizationRule": "PRODUCT_CANDIDATE",
+    "action": "Upgrade Decision Autopsy from partial to active."
+  },
+  {
+    "taskId": "GAP-017",
+    "equipmentId": "agent_workforce",
+    "name": "Agent Workforce Dashboard",
+    "category": "operations",
+    "state": "partial",
+    "priority": "HIGH",
+    "productizationRule": "KNOWLEDGE_OR_INFRASTRUCTURE",
+    "action": "Upgrade Agent Workforce Dashboard from partial to active."
+  },
+  {
+    "taskId": "GAP-018",
+    "equipmentId": "social_publishing",
+    "name": "Social / Newsletter Publishing",
+    "category": "growth",
+    "state": "partial",
+    "priority": "HIGH",
+    "productizationRule": "KNOWLEDGE_OR_INFRASTRUCTURE",
+    "action": "Upgrade Social / Newsletter Publishing from partial to active."
+  },
+  {
+    "taskId": "GAP-019",
+    "equipmentId": "provider_registry",
+    "name": "Data Provider Registry",
+    "category": "data",
+    "state": "partial",
+    "priority": "HIGH",
+    "productizationRule": "KNOWLEDGE_OR_INFRASTRUCTURE",
+    "action": "Upgrade Data Provider Registry from partial to active."
+  },
+  {
+    "taskId": "GAP-020",
+    "equipmentId": "licensed_data_guard",
+    "name": "Licensed Data Usage Guard",
+    "category": "data",
+    "state": "partial",
+    "priority": "HIGH",
+    "productizationRule": "KNOWLEDGE_OR_INFRASTRUCTURE",
+    "action": "Upgrade Licensed Data Usage Guard from partial to active."
+  },
+  {
+    "taskId": "GAP-021",
+    "equipmentId": "csv_api_adapter",
+    "name": "CSV / API Integration Adapter",
+    "category": "integration",
+    "state": "partial",
+    "priority": "HIGH",
+    "productizationRule": "KNOWLEDGE_OR_INFRASTRUCTURE",
+    "action": "Upgrade CSV / API Integration Adapter from partial to active."
+  },
+  {
+    "taskId": "GAP-022",
+    "equipmentId": "fraud_detection",
+    "name": "Fraud Detection",
+    "category": "banking",
+    "state": "partial",
+    "priority": "HIGH",
+    "productizationRule": "KNOWLEDGE_OR_INFRASTRUCTURE",
+    "action": "Upgrade Fraud Detection from partial to active."
+  },
+  {
+    "taskId": "GAP-023",
+    "equipmentId": "compliance_audit",
+    "name": "Compliance / Audit",
+    "category": "banking",
+    "state": "partial",
+    "priority": "HIGH",
+    "productizationRule": "KNOWLEDGE_OR_INFRASTRUCTURE",
+    "action": "Upgrade Compliance / Audit from partial to active."
+  },
+  {
+    "taskId": "GAP-024",
+    "equipmentId": "accessibility",
+    "name": "Accessibility Support",
+    "category": "legal_support",
+    "state": "partial",
+    "priority": "HIGH",
+    "productizationRule": "KNOWLEDGE_OR_INFRASTRUCTURE",
+    "action": "Upgrade Accessibility Support from partial to active."
+  },
+  {
+    "taskId": "GAP-025",
+    "equipmentId": "legal_terms_privacy",
+    "name": "Legal / Terms / Privacy",
+    "category": "legal_support",
+    "state": "partial",
+    "priority": "HIGH",
+    "productizationRule": "KNOWLEDGE_OR_INFRASTRUCTURE",
+    "action": "Upgrade Legal / Terms / Privacy from partial to active."
+  },
+  {
+    "taskId": "GAP-026",
+    "equipmentId": "maintenance_repair",
+    "name": "Maintenance / Repair Log",
+    "category": "operations",
+    "state": "partial",
+    "priority": "HIGH",
+    "productizationRule": "KNOWLEDGE_OR_INFRASTRUCTURE",
+    "action": "Upgrade Maintenance / Repair Log from partial to active."
+  }
+]
