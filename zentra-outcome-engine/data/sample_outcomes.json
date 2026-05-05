@@ -1,0 +1,7 @@
+{
+  "BTCUSDT": {"priceChangePct": 2.5},
+  "AAPL": {"priceChangePct": 0.8},
+  "SPY": {"priceChangePct": -0.3},
+  "BIST100": {"priceChangePct": 0.2},
+  "XAUUSD": {"priceChangePct": -1.1}
+}

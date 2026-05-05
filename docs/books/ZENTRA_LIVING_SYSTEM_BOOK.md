@@ -159,3 +159,6 @@ Market Intel handles economy, money, finance, sectors, products, customer needs 
 
 ## Faz 1/2/3 Product Support + Proof Tracking
 ZENTRA now includes client-intent intake, paper-only opportunity basket and proof tracking. The assistant can collect user intent, risk psychology and capital band, then route to paper-only opportunity tracking. This is not personal investment advice and no real execution is allowed.
+
+## Outcome / Delta / Score / Learning Loop
+ZENTRA now evaluates past decisions with outcome data, calculates delta and score, and updates learning memory automatically. This completes the decision → proof → learning cycle.

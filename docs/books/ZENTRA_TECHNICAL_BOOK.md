@@ -223,3 +223,10 @@ Added:
 - zentra-proof-tracking
 
 These connect client profile, paper-only opportunity basket and proof history to the system runner.
+
+## Outcome Engine
+Added zentra-outcome-engine:
+- outcome comparison
+- delta calculation
+- score generation
+- learning memory update
