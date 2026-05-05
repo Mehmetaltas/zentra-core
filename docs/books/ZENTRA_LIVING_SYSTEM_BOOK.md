@@ -147,3 +147,9 @@ ZENTRA now separates decomposition outputs into two channels: knowledge absorpti
 
 ## Academia Intake & Productization Rule
 Academia AI decomposition outputs are never copied directly. Each output is filtered, classified, compared with ZENTRA gaps and market needs, then either stored as filtered knowledge or processed into improved Intel/Gate product equipment.
+
+## Learning Core + Market Intel + Moat
+ZENTRA now captures raw memory, classifies information, extracts market needs and builds product opportunities. A moat layer ensures that accumulated decision memory, proof and learning cannot be copied.
+
+## Product Discovery Loop
+Market Intel now creates product candidates, opens product tasks and feeds the product roadmap. Raw insights remain stored, but product candidates are processed before entering Intel Market or Gate Market.

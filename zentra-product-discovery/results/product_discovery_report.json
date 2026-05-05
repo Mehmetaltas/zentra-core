@@ -1,0 +1,179 @@
+{
+  "time": "2026-05-05T12:18:55.355Z",
+  "status": "PRODUCT_DISCOVERY_ACTIVE",
+  "marketIntelSummary": {
+    "pains": [
+      {
+        "source": "user_feedback",
+        "text": "TradingView pahalı ve karmaşık",
+        "tag": "PAIN",
+        "confidence": "MEDIUM"
+      },
+      {
+        "source": "competitor",
+        "text": "Bloomberg güçlü ama pahalı",
+        "tag": "PAIN",
+        "confidence": "MEDIUM"
+      }
+    ],
+    "needs": [
+      {
+        "source": "market",
+        "text": "Kullanıcılar basit karar sistemi istiyor",
+        "tag": "NEED",
+        "confidence": "MEDIUM"
+      },
+      {
+        "source": "user",
+        "text": "Net karar ve risk görmek istiyorum",
+        "tag": "NEED",
+        "confidence": "MEDIUM"
+      }
+    ],
+    "opportunities": [
+      "Daha ucuz ve sade sistem üret",
+      "Net decision + risk göster"
+    ]
+  },
+  "productCandidates": [
+    {
+      "id": "DISC-001",
+      "source": "MARKET_INTEL",
+      "opportunity": "Daha ucuz ve sade sistem üret",
+      "productName": "Intel Lite Decision Pack",
+      "route": "Intel Market",
+      "status": "PRODUCT_CANDIDATE",
+      "zentraRule": "Raw insight is not copied directly; it is processed, improved and converted into ZENTRA format.",
+      "requiredProcessing": [
+        "check market need",
+        "check competitor weakness",
+        "match with ZENTRA gap",
+        "improve and expand",
+        "decide Intel Market or Gate Market route",
+        "create proof / report / assistant flow"
+      ]
+    },
+    {
+      "id": "DISC-002",
+      "source": "MARKET_INTEL",
+      "opportunity": "Net decision + risk göster",
+      "productName": "Risk Proof Pack",
+      "route": "Gate Market",
+      "status": "PRODUCT_CANDIDATE",
+      "zentraRule": "Raw insight is not copied directly; it is processed, improved and converted into ZENTRA format.",
+      "requiredProcessing": [
+        "check market need",
+        "check competitor weakness",
+        "match with ZENTRA gap",
+        "improve and expand",
+        "decide Intel Market or Gate Market route",
+        "create proof / report / assistant flow"
+      ]
+    }
+  ],
+  "generatedTasks": [
+    {
+      "id": "PRODUCT-TASK-001",
+      "title": "Build Intel Lite Decision Pack",
+      "source": "PRODUCT_DISCOVERY",
+      "priority": "MEDIUM",
+      "type": "PRODUCT_CANDIDATE",
+      "route": "Intel Market",
+      "action": "Create product shell, proof logic, market copy and assistant guidance for Intel Lite Decision Pack",
+      "status": "OPEN",
+      "founderFriendlyExplanation": "Intel Lite Decision Pack: piyasadan gelen ihtiyaca göre ürün adayı. Önce işlenecek, sonra Intel/Gate rotasına alınacak."
+    },
+    {
+      "id": "PRODUCT-TASK-002",
+      "title": "Build Risk Proof Pack",
+      "source": "PRODUCT_DISCOVERY",
+      "priority": "HIGH",
+      "type": "PRODUCT_CANDIDATE",
+      "route": "Gate Market",
+      "action": "Create product shell, proof logic, market copy and assistant guidance for Risk Proof Pack",
+      "status": "OPEN",
+      "founderFriendlyExplanation": "Risk Proof Pack: piyasadan gelen ihtiyaca göre ürün adayı. Önce işlenecek, sonra Intel/Gate rotasına alınacak."
+    }
+  ],
+  "combinedRoadmap": [
+    {
+      "id": "PRODUCT-TASK-001",
+      "title": "Build Intel Lite Decision Pack",
+      "source": "PRODUCT_DISCOVERY",
+      "priority": "MEDIUM",
+      "type": "PRODUCT_CANDIDATE",
+      "route": "Intel Market",
+      "action": "Create product shell, proof logic, market copy and assistant guidance for Intel Lite Decision Pack",
+      "status": "OPEN",
+      "founderFriendlyExplanation": "Intel Lite Decision Pack: piyasadan gelen ihtiyaca göre ürün adayı. Önce işlenecek, sonra Intel/Gate rotasına alınacak."
+    },
+    {
+      "id": "PRODUCT-TASK-002",
+      "title": "Build Risk Proof Pack",
+      "source": "PRODUCT_DISCOVERY",
+      "priority": "HIGH",
+      "type": "PRODUCT_CANDIDATE",
+      "route": "Gate Market",
+      "action": "Create product shell, proof logic, market copy and assistant guidance for Risk Proof Pack",
+      "status": "OPEN",
+      "founderFriendlyExplanation": "Risk Proof Pack: piyasadan gelen ihtiyaca göre ürün adayı. Önce işlenecek, sonra Intel/Gate rotasına alınacak."
+    },
+    {
+      "taskId": "GAP-001",
+      "equipmentId": "screener",
+      "name": "Market Screener",
+      "category": "financial_trade",
+      "state": "missing",
+      "priority": "HIGH",
+      "productizationRule": "PRODUCT_CANDIDATE",
+      "action": "Create or absorb Market Screener."
+    },
+    {
+      "taskId": "GAP-002",
+      "equipmentId": "webhook_alerts",
+      "name": "Webhook Alert Integration",
+      "category": "financial_trade",
+      "state": "missing",
+      "priority": "MEDIUM",
+      "productizationRule": "PRODUCT_CANDIDATE",
+      "action": "Create or absorb Webhook Alert Integration."
+    },
+    {
+      "taskId": "GAP-003",
+      "equipmentId": "news_impact",
+      "name": "News / Event Impact",
+      "category": "intelligence",
+      "state": "missing",
+      "priority": "HIGH",
+      "productizationRule": "KNOWLEDGE_OR_INFRASTRUCTURE",
+      "action": "Create or absorb News / Event Impact."
+    },
+    {
+      "taskId": "GAP-004",
+      "equipmentId": "proof_warehouse",
+      "name": "Historical Proof Warehouse",
+      "category": "zentra_moat",
+      "state": "missing",
+      "priority": "HIGH",
+      "productizationRule": "PRODUCT_CANDIDATE",
+      "action": "Create or absorb Historical Proof Warehouse."
+    },
+    {
+      "taskId": "GAP-005",
+      "equipmentId": "omnichannel_support",
+      "name": "Omnichannel Support",
+      "category": "customer_ops",
+      "state": "missing",
+      "priority": "HIGH",
+      "productizationRule": "PRODUCT_CANDIDATE",
+      "action": "Create or absorb Omnichannel Support."
+    }
+  ],
+  "rule": [
+    "Ham bilgi saklanır.",
+    "Ürünleşecekse önce işlenir.",
+    "Intel Market = ZENTRA’sız ürün.",
+    "Gate Market = ZENTRA elbisesi giydirilmiş ürün.",
+    "Founder onayı olmadan public launch yapılmaz."
+  ]
+}

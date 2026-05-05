@@ -1,0 +1,36 @@
+[
+  {
+    "id": "DISC-001",
+    "source": "MARKET_INTEL",
+    "opportunity": "Daha ucuz ve sade sistem üret",
+    "productName": "Intel Lite Decision Pack",
+    "route": "Intel Market",
+    "status": "PRODUCT_CANDIDATE",
+    "zentraRule": "Raw insight is not copied directly; it is processed, improved and converted into ZENTRA format.",
+    "requiredProcessing": [
+      "check market need",
+      "check competitor weakness",
+      "match with ZENTRA gap",
+      "improve and expand",
+      "decide Intel Market or Gate Market route",
+      "create proof / report / assistant flow"
+    ]
+  },
+  {
+    "id": "DISC-002",
+    "source": "MARKET_INTEL",
+    "opportunity": "Net decision + risk göster",
+    "productName": "Risk Proof Pack",
+    "route": "Gate Market",
+    "status": "PRODUCT_CANDIDATE",
+    "zentraRule": "Raw insight is not copied directly; it is processed, improved and converted into ZENTRA format.",
+    "requiredProcessing": [
+      "check market need",
+      "check competitor weakness",
+      "match with ZENTRA gap",
+      "improve and expand",
+      "decide Intel Market or Gate Market route",
+      "create proof / report / assistant flow"
+    ]
+  }
+]

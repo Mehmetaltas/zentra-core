@@ -203,3 +203,12 @@ Updated competitor radar to avoid automatic productization and to classify produ
 
 ## Intake/Productization Technical Rule
 Added zentra-academia-core/rules/INTAKE_PRODUCTIZATION_RULE.md. This rule governs General AI knowledge intake and Academia→Intel/Gate productization.
+
+## Product Discovery Technical
+Added:
+- zentra-product-discovery/src/product-discovery.js
+- zentra-product-discovery/results/product_discovery_report.json
+- zentra-product-discovery/products/product_candidates.json
+- zentra-product-discovery/roadmap/product_roadmap.json
+
+Task Engine now ingests Product Discovery generated tasks.

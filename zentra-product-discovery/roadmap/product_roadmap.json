@@ -1,0 +1,74 @@
+[
+  {
+    "id": "PRODUCT-TASK-001",
+    "title": "Build Intel Lite Decision Pack",
+    "source": "PRODUCT_DISCOVERY",
+    "priority": "MEDIUM",
+    "type": "PRODUCT_CANDIDATE",
+    "route": "Intel Market",
+    "action": "Create product shell, proof logic, market copy and assistant guidance for Intel Lite Decision Pack",
+    "status": "OPEN",
+    "founderFriendlyExplanation": "Intel Lite Decision Pack: piyasadan gelen ihtiyaca göre ürün adayı. Önce işlenecek, sonra Intel/Gate rotasına alınacak."
+  },
+  {
+    "id": "PRODUCT-TASK-002",
+    "title": "Build Risk Proof Pack",
+    "source": "PRODUCT_DISCOVERY",
+    "priority": "HIGH",
+    "type": "PRODUCT_CANDIDATE",
+    "route": "Gate Market",
+    "action": "Create product shell, proof logic, market copy and assistant guidance for Risk Proof Pack",
+    "status": "OPEN",
+    "founderFriendlyExplanation": "Risk Proof Pack: piyasadan gelen ihtiyaca göre ürün adayı. Önce işlenecek, sonra Intel/Gate rotasına alınacak."
+  },
+  {
+    "taskId": "GAP-001",
+    "equipmentId": "screener",
+    "name": "Market Screener",
+    "category": "financial_trade",
+    "state": "missing",
+    "priority": "HIGH",
+    "productizationRule": "PRODUCT_CANDIDATE",
+    "action": "Create or absorb Market Screener."
+  },
+  {
+    "taskId": "GAP-002",
+    "equipmentId": "webhook_alerts",
+    "name": "Webhook Alert Integration",
+    "category": "financial_trade",
+    "state": "missing",
+    "priority": "MEDIUM",
+    "productizationRule": "PRODUCT_CANDIDATE",
+    "action": "Create or absorb Webhook Alert Integration."
+  },
+  {
+    "taskId": "GAP-003",
+    "equipmentId": "news_impact",
+    "name": "News / Event Impact",
+    "category": "intelligence",
+    "state": "missing",
+    "priority": "HIGH",
+    "productizationRule": "KNOWLEDGE_OR_INFRASTRUCTURE",
+    "action": "Create or absorb News / Event Impact."
+  },
+  {
+    "taskId": "GAP-004",
+    "equipmentId": "proof_warehouse",
+    "name": "Historical Proof Warehouse",
+    "category": "zentra_moat",
+    "state": "missing",
+    "priority": "HIGH",
+    "productizationRule": "PRODUCT_CANDIDATE",
+    "action": "Create or absorb Historical Proof Warehouse."
+  },
+  {
+    "taskId": "GAP-005",
+    "equipmentId": "omnichannel_support",
+    "name": "Omnichannel Support",
+    "category": "customer_ops",
+    "state": "missing",
+    "priority": "HIGH",
+    "productizationRule": "PRODUCT_CANDIDATE",
+    "action": "Create or absorb Omnichannel Support."
+  }
+]
