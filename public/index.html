@@ -4,30 +4,31 @@
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
 <title>ZENTRA Matrix Ecosystem</title>
+
 <style>
 :root{
-  --bg:#050814;--panel:#0c1328;--card:rgba(17,26,53,.74);
-  --line:rgba(150,180,255,.22);--txt:#eef3ff;--muted:#aab6d6;
-  --cyan:#66e7ff;--blue:#7fb3ff;--violet:#8b5cff;--gold:#f5d76e;--green:#69e7ad;--red:#ff8f9c;
+  --bg:#050814;--txt:#eef3ff;--muted:#aab6d6;--card:rgba(17,26,53,.75);
+  --line:rgba(150,180,255,.22);--cyan:#66e7ff;--blue:#7fb3ff;--violet:#8b5cff;
+  --gold:#f5d76e;--green:#69e7ad;--red:#ff8f9c;
 }
 *{box-sizing:border-box}
-html{scroll-behavior:smooth}
 body{
   margin:0;color:var(--txt);font-family:Arial,Helvetica,sans-serif;overflow-x:hidden;
   background:
-    radial-gradient(circle at 18% 8%,rgba(102,231,255,.22),transparent 28%),
+    radial-gradient(circle at 18% 8%,rgba(102,231,255,.25),transparent 28%),
     radial-gradient(circle at 82% 16%,rgba(139,92,255,.24),transparent 24%),
     linear-gradient(180deg,#050814,#071020 46%,#050814);
 }
 canvas{position:fixed;inset:0;z-index:-3}
 body:before{
-  content:"";position:fixed;inset:-20%;z-index:-2;
+  content:"";position:fixed;inset:-25%;z-index:-2;
   background:
     repeating-linear-gradient(90deg,transparent 0 44px,rgba(127,179,255,.08) 45px 46px),
     repeating-linear-gradient(0deg,transparent 0 44px,rgba(127,179,255,.06) 45px 46px);
-  transform:rotate(-7deg);animation:gridMove 28s linear infinite;
+  transform:rotate(-7deg);animation:gridMove 30s linear infinite;
 }
 @keyframes gridMove{to{transform:rotate(-7deg) translate(90px,90px)}}
+a{color:var(--blue);text-decoration:none}
 header{
   position:sticky;top:0;z-index:20;padding:18px 26px;
   background:rgba(5,8,20,.72);backdrop-filter:blur(22px);
@@ -35,7 +36,6 @@ header{
 }
 .brand{font-weight:900;letter-spacing:.06em}
 nav{display:flex;gap:9px;flex-wrap:wrap;margin-top:12px}
-a{color:var(--blue);text-decoration:none}
 .pill{
   padding:9px 13px;border:1px solid var(--line);border-radius:999px;
   background:rgba(255,255,255,.055);color:var(--txt);transition:.25s
@@ -43,8 +43,8 @@ a{color:var(--blue);text-decoration:none}
 .pill:hover{transform:translateY(-2px);border-color:var(--cyan);box-shadow:0 0 26px rgba(102,231,255,.18)}
 main{padding:28px}
 .hero{
-  min-height:560px;position:relative;overflow:hidden;border:1px solid var(--line);
-  border-radius:32px;padding:38px;background:
+  min-height:620px;position:relative;overflow:hidden;border:1px solid var(--line);
+  border-radius:34px;padding:38px;background:
     radial-gradient(circle at 72% 42%,rgba(102,231,255,.22),transparent 22%),
     radial-gradient(circle at 45% 58%,rgba(139,92,255,.18),transparent 35%),
     linear-gradient(135deg,rgba(255,255,255,.09),rgba(255,255,255,.025));
@@ -56,51 +56,73 @@ main{padding:28px}
   animation:pulse 6s ease-in-out infinite;
 }
 @keyframes pulse{0%,100%{opacity:.28}50%{opacity:.85}}
-.hero-content{position:relative;z-index:3;max-width:850px}
+.hero-content{position:relative;z-index:3;max-width:880px}
 .kicker{color:var(--cyan);font-weight:900;letter-spacing:.14em;text-transform:uppercase;font-size:12px}
-h1{font-size:clamp(38px,7vw,76px);line-height:.98;margin:16px 0}
-.sub{font-size:20px;color:var(--muted);line-height:1.65;max-width:760px}
+h1{font-size:clamp(38px,7vw,78px);line-height:.98;margin:16px 0}
+h2{font-size:clamp(26px,4vw,42px)}
+.sub{font-size:20px;color:var(--muted);line-height:1.65;max-width:780px}
 .actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:24px}
 .btn{
   display:inline-block;padding:14px 19px;border-radius:16px;border:1px solid var(--line);
-  background:rgba(255,255,255,.07);color:var(--txt);font-weight:900;transition:.3s
+  background:rgba(255,255,255,.07);color:var(--txt);font-weight:900;transition:.3s;cursor:pointer
 }
 .btn.primary{background:linear-gradient(135deg,var(--cyan),var(--violet));color:#050814;border:0}
 .btn:hover{transform:translateY(-4px);box-shadow:0 20px 50px rgba(0,0,0,.35)}
-.orbit{position:absolute;right:5%;top:12%;width:330px;height:330px;border:1px solid rgba(102,231,255,.45);border-radius:50%;z-index:2}
+.orbit{position:absolute;right:5%;top:12%;width:340px;height:340px;border:1px solid rgba(102,231,255,.45);border-radius:50%;z-index:2}
 .orbit:before,.orbit:after{content:"";position:absolute;border-radius:50%;border:1px solid rgba(127,179,255,.25)}
 .orbit:before{inset:42px}.orbit:after{inset:88px;border-color:rgba(245,215,110,.42)}
 .dot{position:absolute;width:11px;height:11px;background:var(--cyan);border-radius:50%;box-shadow:0 0 24px var(--cyan);left:50%;top:-5px;animation:spin 10s linear infinite}
-@keyframes spin{from{transform:rotate(0deg) translateX(165px) rotate(0)}to{transform:rotate(360deg) translateX(165px) rotate(-360deg)}}
-.story{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-top:28px;position:relative;z-index:3}
-.step,.card{
-  background:var(--card);border:1px solid var(--line);border-radius:22px;padding:18px;
+@keyframes spin{from{transform:rotate(0deg) translateX(170px) rotate(0)}to{transform:rotate(360deg) translateX(170px) rotate(-360deg)}}
+.section{margin-top:42px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px}
+.card,.step,.assistant-box{
+  background:var(--card);border:1px solid var(--line);border-radius:24px;padding:20px;
   backdrop-filter:blur(18px);box-shadow:0 18px 50px rgba(0,0,0,.34);transition:.35s
 }
+.card:hover{transform:translateY(-9px);box-shadow:0 28px 70px rgba(0,0,0,.5)}
+.story{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-top:28px;position:relative;z-index:3}
 .step{animation:floaty 7s ease-in-out infinite}
 .step:nth-child(2){animation-delay:.4s}.step:nth-child(3){animation-delay:.8s}.step:nth-child(4){animation-delay:1.2s}.step:nth-child(5){animation-delay:1.6s}
 @keyframes floaty{50%{transform:translateY(-9px)}}
-.card:hover{transform:translateY(-9px);box-shadow:0 28px 70px rgba(0,0,0,.5)}
-.section{margin-top:38px}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px}
 .badge{display:inline-block;margin:4px 4px 0 0;padding:6px 10px;border-radius:999px;background:rgba(127,179,255,.16);border:1px solid var(--line);font-size:12px}
 .good{color:var(--green)}.warn{color:var(--gold)}.bad{color:var(--red)}.muted{color:var(--muted)}
 .flow{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}
 .flow span{padding:11px 13px;border:1px solid var(--line);border-radius:14px;background:rgba(5,8,20,.5)}
 .ticker{margin-top:26px;overflow:hidden;border:1px solid var(--line);border-radius:20px;background:rgba(5,8,20,.48)}
-.ticker-inner{display:flex;gap:22px;white-space:nowrap;animation:ticker 26s linear infinite;padding:15px}
+.ticker-inner{display:flex;gap:22px;white-space:nowrap;animation:ticker 28s linear infinite;padding:15px}
 @keyframes ticker{to{transform:translateX(-50%)}}
 .market-screen{
-  margin-top:22px;border:1px solid var(--line);border-radius:24px;padding:18px;
+  margin-top:22px;border:1px solid var(--line);border-radius:24px;padding:20px;
   background:linear-gradient(135deg,rgba(255,255,255,.08),rgba(255,255,255,.02));
 }
-.bars{display:flex;align-items:end;height:130px;gap:9px}
+.bars{display:flex;align-items:end;height:150px;gap:9px}
 .bar{flex:1;border-radius:10px 10px 0 0;background:linear-gradient(180deg,var(--cyan),var(--violet));animation:bars 3s ease-in-out infinite}
 .bar:nth-child(2){animation-delay:.2s}.bar:nth-child(3){animation-delay:.5s}.bar:nth-child(4){animation-delay:.8s}.bar:nth-child(5){animation-delay:1.1s}.bar:nth-child(6){animation-delay:1.4s}
 @keyframes bars{0%,100%{height:35%}50%{height:95%}}
+.slide-wrap{position:relative;overflow:hidden;min-height:240px}
+.slide{display:none;animation:fade .45s ease}
+.slide.active{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.assistant-toggle{
+  position:fixed;right:20px;bottom:20px;z-index:99;padding:13px 17px;border-radius:999px;
+  background:linear-gradient(135deg,var(--cyan),var(--violet));color:#050814;font-weight:900;
+  box-shadow:0 18px 50px rgba(0,0,0,.5);cursor:pointer
+}
+.assistant-panel{
+  display:none;position:fixed;right:20px;bottom:82px;width:min(360px,calc(100vw - 40px));z-index:100;
+  background:rgba(5,8,20,.92);border:1px solid var(--line);border-radius:24px;padding:16px;
+  backdrop-filter:blur(22px);box-shadow:0 24px 80px rgba(0,0,0,.58)
+}
+.avatar{
+  width:58px;height:58px;border-radius:50%;background:radial-gradient(circle,var(--cyan),var(--violet));
+  box-shadow:0 0 35px rgba(102,231,255,.55);animation:breathe 2.4s ease-in-out infinite
+}
+@keyframes breathe{50%{transform:scale(1.08);box-shadow:0 0 55px rgba(102,231,255,.9)}}
+.small{font-size:13px;color:var(--muted)}
 .footer{margin:40px 0 10px;color:var(--muted)}
 </style>
 </head>
+
 <body>
 <canvas id="stars"></canvas>
 
@@ -123,13 +145,12 @@ h1{font-size:clamp(38px,7vw,76px);line-height:.98;margin:16px 0}
     <div class="hero-content">
       <div class="kicker">Global Economic Telescope · Matrix · Lens</div>
       <h1>ZENTRA, piyasayı göstermez.<br>Karar akışını kurar.</h1>
-      <p class="sub">Veri · Risk · Sonuç · Öğrenme. Ekonomik evreni lenslerle izleyen, proof ve hafıza ile karar disiplinini kuran sistem.</p>
+      <p class="sub">Ekonomik evreni lenslerle izleyen; proof, hafıza, risk ve öğrenme ile karar disiplinini kuran sistem.</p>
       <div class="actions">
         <a class="btn primary" href="/gate">Gate Market</a>
         <a class="btn" href="/intel">Intel Market</a>
         <a class="btn" href="/financial-trade">Financial Trade</a>
       </div>
-
       <div class="story">
         <div class="step"><b>Data</b><br><span class="muted">Akış başlar</span></div>
         <div class="step"><b>Signal</b><br><span class="muted">İlk iz oluşur</span></div>
@@ -146,9 +167,29 @@ h1{font-size:clamp(38px,7vw,76px);line-height:.98;margin:16px 0}
   </div></div>
 
   <section class="section">
+    <h2>Sistem kendini anlatır</h2>
+    <div class="grid">
+      <div class="card slide-wrap">
+        <div class="slide active"><h3>Matrix</h3><p>Ekonomik evreni izleyen üst karar yüzeyi.</p><span class="badge">Telescope</span></div>
+        <div class="slide"><h3>Intel Market</h3><p>ZENTRA’sız bağımsız araç ve rapor katmanı.</p><span class="badge">Standalone</span></div>
+        <div class="slide"><h3>Gate Market</h3><p>ZENTRA’lı karar, risk, proof ve learning sistemi.</p><span class="badge">System</span></div>
+        <div class="slide"><h3>Financial Trade</h3><p>Trade kararını, riskini ve sonucunu yönetir.</p><span class="badge">Decision</span></div>
+      </div>
+
+      <div class="market-screen">
+        <h3>Canlı piyasa yüzü</h3>
+        <p class="muted">Grafik, risk, proof ve karar akışı hareketli yüzeyde izlenir.</p>
+        <div class="bars">
+          <div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
     <h2>Intel araçtır. Gate sistemdir.</h2>
     <div class="grid">
-      <div class="card"><h3>Intel Market <span class="badge">ZENTRA’sız</span></h3><p class="muted">Bağımsız ürün setleri: chart, signal, screener, report ve analiz araçları.</p><span class="badge">Tool</span><span class="badge">Report</span><span class="badge">Signal</span></div>
+      <div class="card"><h3>Intel Market <span class="badge">ZENTRA’sız</span></h3><p class="muted">Chart, signal, screener, report ve analiz araçları.</p><span class="badge">Tool</span><span class="badge">Report</span><span class="badge">Signal</span></div>
       <div class="card"><h3>Gate Market <span class="badge">ZENTRA’lı</span></h3><p class="muted">Decision, risk, proof, memory ve portfolio risk ile güçlendirilmiş sistem.</p><span class="badge">Decision</span><span class="badge">Risk</span><span class="badge">Learning</span></div>
     </div>
   </section>
@@ -156,20 +197,10 @@ h1{font-size:clamp(38px,7vw,76px);line-height:.98;margin:16px 0}
   <section class="section">
     <h2>Lens Ailesi</h2>
     <div class="grid">
-      <div class="card"><h3>Financial Trade Lens</h3><p>Trade kararını yönetir.</p></div>
-      <div class="card"><h3>Banking Lens</h3><p>Müşteri, kredi, tahsilat ve risk akışını kurar.</p></div>
-      <div class="card"><h3>Tasarruf Lens</h3><p>Havuz, tahsis ve likiditeyi izler.</p></div>
-      <div class="card"><h3>Islamic Finance Lens</h3><p>Uygunluk, sözleşme ve risk birlikte değerlendirilir.</p></div>
-    </div>
-  </section>
-
-  <section class="section">
-    <div class="market-screen">
-      <h2>Canlı Sistem Hissi</h2>
-      <p class="muted">Risk · Signal · Proof · Learning akışı hareketli piyasa yüzeyiyle izlenir.</p>
-      <div class="bars">
-        <div class="bar" style="height:35%"></div><div class="bar" style="height:55%"></div><div class="bar" style="height:75%"></div><div class="bar" style="height:45%"></div><div class="bar" style="height:85%"></div><div class="bar" style="height:60%"></div>
-      </div>
+      <div class="card"><h3>Financial Trade Lens</h3><p>Trade kararını yönetir.</p><button class="btn" onclick="guide('trade',false)">Anlat</button></div>
+      <div class="card"><h3>Banking Lens</h3><p>Müşteri, kredi, tahsilat ve risk akışını kurar.</p><button class="btn" onclick="guide('banking',false)">Anlat</button></div>
+      <div class="card"><h3>Tasarruf Lens</h3><p>Havuz, tahsis ve likiditeyi izler.</p><button class="btn" onclick="guide('tasarruf',false)">Anlat</button></div>
+      <div class="card"><h3>Islamic Finance Lens</h3><p>Uygunluk, sözleşme ve risk birlikte değerlendirilir.</p><button class="btn" onclick="guide('islamic',false)">Anlat</button></div>
     </div>
   </section>
 
@@ -181,236 +212,63 @@ h1{font-size:clamp(38px,7vw,76px);line-height:.98;margin:16px 0}
     </div>
   </section>
 
-  
-<section class="section">
-  <div class="card">
-    <h2>ZENTRA Assistant · MATRIX Narrator</h2>
-    <p class="muted">Sistem kendini anlatır. Sesli veya sessiz tanıtım modu.</p>
-
-    <div class="flow">
-      <button class="btn primary" onclick="startAssistant('tr','zentra')">ZENTRA TR</button>
-      <button class="btn" onclick="startAssistant('en','zentra')">ZENTRA EN</button>
-      <button class="btn" onclick="startAssistant('ar','zentra')">ZENTRA AR</button>
-      <button class="btn primary" onclick="startAssistant('tr','matrix')">MATRIX TR</button>
-      <button class="btn" onclick="silentTour()">Sessiz Tur</button>
-      <button class="btn" onclick="stopAssistant()">Durdur</button>
-    </div>
-
-    <div class="market-screen" id="assistantStage">
-      <h3 id="assistantTitle">ZENTRA canlı tanıtım hazır</h3>
-      <p id="assistantText" class="sub">Bir dil ve anlatıcı seç.</p>
-      <div class="bars">
-        <div class="bar" style="height:40%"></div>
-        <div class="bar" style="height:70%"></div>
-        <div class="bar" style="height:55%"></div>
-        <div class="bar" style="height:90%"></div>
-        <div class="bar" style="height:60%"></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="section">
-  <div class="grid">
-    <div class="card">
-      <h3>Social Media Assistant</h3>
-      <p>Günlük Free Feed, Academy notu ve Financial Trade tanıtımından sosyal medya post taslakları üretir.</p>
-      <span class="badge">LinkedIn</span>
-      <span class="badge">X</span>
-      <span class="badge">Newsletter</span>
-    </div>
-    <div class="card">
-      <h3>Sales Assistant</h3>
-      <p>Intel Market ve Gate Market farkını anlatır, kullanıcıyı doğru pakete yönlendirir.</p>
-      <span class="badge">Lead</span>
-      <span class="badge">Package</span>
-      <span class="badge">Cockpit</span>
-    </div>
-  </div>
-</section>
-
-<p class="footer">ZENTRA Matrix Ecosystem · Paper-only decision support surface.</p>
+  <p class="footer">ZENTRA Matrix Ecosystem · Paper-only decision support surface.</p>
 </main>
+
+<div class="assistant-toggle" onclick="toggleAssistant()">🎧 ZENTRA</div>
+<div class="assistant-panel" id="assistantPanel">
+  <div style="display:flex;gap:12px;align-items:center">
+    <div class="avatar"></div>
+    <div>
+      <b>ZENTRA / MATRIX Guide</b>
+      <div class="small">İsteğe bağlı tanıtım asistanı</div>
+    </div>
+  </div>
+  <p id="assistantText" class="muted">Bölüm seç. İstersen sesli, istersen sessiz anlatır.</p>
+  <div class="flow">
+    <button class="btn primary" onclick="guide('matrix',true)">Matrix</button>
+    <button class="btn" onclick="guide('intel',true)">Intel</button>
+    <button class="btn" onclick="guide('gate',true)">Gate</button>
+    <button class="btn" onclick="guide('trade',true)">F.Trade</button>
+    <button class="btn" onclick="guide('academy',true)">Academy</button>
+    <button class="btn" onclick="stopGuide()">Kapat</button>
+  </div>
+  <p class="small">Gerçek insan sesi için MP3 dosyaları /audio klasörüne eklendiğinde otomatik kullanılabilir.</p>
+</div>
 
 <script>
 const c=document.getElementById("stars"),ctx=c.getContext("2d");
 function resize(){c.width=innerWidth;c.height=innerHeight}resize();addEventListener("resize",resize);
-let p=Array.from({length:80},()=>({x:Math.random()*c.width,y:Math.random()*c.height,vx:(Math.random()-.5)*.45,vy:(Math.random()-.5)*.45,s:Math.random()*2+1}));
-function draw(){
- ctx.clearRect(0,0,c.width,c.height);ctx.fillStyle="rgba(127,179,255,.8)";
- for(const a of p){a.x+=a.vx;a.y+=a.vy;if(a.x<0||a.x>c.width)a.vx*=-1;if(a.y<0||a.y>c.height)a.vy*=-1;ctx.beginPath();ctx.arc(a.x,a.y,a.s,0,Math.PI*2);ctx.fill()}
- requestAnimationFrame(draw)
-}draw();
-</script>
+let p=Array.from({length:90},()=>({x:Math.random()*c.width,y:Math.random()*c.height,vx:(Math.random()-.5)*.45,vy:(Math.random()-.5)*.45,s:Math.random()*2+1}));
+function draw(){ctx.clearRect(0,0,c.width,c.height);ctx.fillStyle="rgba(127,179,255,.8)";for(const a of p){a.x+=a.vx;a.y+=a.vy;if(a.x<0||a.x>c.width)a.vx*=-1;if(a.y<0||a.y>c.height)a.vy*=-1;ctx.beginPath();ctx.arc(a.x,a.y,a.s,0,Math.PI*2);ctx.fill()}requestAnimationFrame(draw)}draw();
 
-<script>
-const assistantSlides = {
-  tr: [
-    ["Matrix", "ZENTRA Matrix Ecosystem, ekonomik evreni lenslerle izleyen karar işletim sistemidir."],
-    ["Intel Market", "Intel Market bağımsız araç setidir. Chart, signal, screener ve report sunar."],
-    ["Gate Market", "Gate Market ZENTRA ile güçlendirilmiş sistemdir. Decision, risk, proof ve learning katmanlarını birleştirir."],
-    ["Financial Trade Lens", "Financial Trade yalnızca trade göstermez. Trade kararını, riskini, sonucunu ve öğrenmesini yönetir."],
-    ["Proof", "Her karar kaydedilir. Sonuç ölçülür. Sistem öğrenir."],
-    ["Safety", "Gerçek emir yok. Broker yok. Public yatırım tavsiyesi yok. Paper-only güvenli çalışma modu aktiftir."]
-  ],
-  en: [
-    ["Matrix", "ZENTRA Matrix Ecosystem is a decision operating system observing the economic universe through lenses."],
-    ["Intel Market", "Intel Market is the standalone tool layer: chart, signal, screener and report."],
-    ["Gate Market", "Gate Market is the ZENTRA-powered system layer: decision, risk, proof and learning."],
-    ["Financial Trade Lens", "Financial Trade manages the decision behind the trade, not only the market view."],
-    ["Proof", "Every decision is recorded, measured and returned to learning."],
-    ["Safety", "No real orders. No broker connection. Paper-only decision support mode is active."]
-  ],
-  ar: [
-    ["Matrix", "منظومة زنترا تراقب الاقتصاد عبر عدسات وتبني مسار القرار."],
-    ["Intel Market", "سوق إنتل هو طبقة أدوات مستقلة: رسوم، إشارات، تقارير."],
-    ["Gate Market", "سوق غيت هو النظام المدعوم بزنترا: قرار، مخاطر، إثبات وتعلم."],
-    ["Financial Trade Lens", "عدسة التداول المالي لا تعرض السوق فقط، بل تدير منطق القرار."],
-    ["Proof", "كل قرار يُسجل، تُقاس نتيجته، ثم يعود إلى التعلم."],
-    ["Safety", "لا أوامر حقيقية. لا وسيط. النظام يعمل في وضع ورقي آمن."]
-  ]
+let slideIndex=0;
+setInterval(()=>{const slides=[...document.querySelectorAll(".slide")];slides.forEach(s=>s.classList.remove("active"));slideIndex=(slideIndex+1)%slides.length;slides[slideIndex].classList.add("active")},3600);
+
+const texts={
+ matrix:"ZENTRA Matrix, ekonomik evreni lenslerle izleyen karar işletim sistemidir.",
+ intel:"Intel Market, ZENTRA olmadan çalışan bağımsız araç ve rapor katmanıdır.",
+ gate:"Gate Market, ZENTRA ile güçlendirilmiş karar, risk, proof ve learning sistemidir.",
+ trade:"Financial Trade, trade kararını yönetir. Sinyali sonuç, risk ve öğrenme ile bağlar.",
+ banking:"Banking Lens, müşteri, kredi, tahsilat ve portföy risk akışını kurar.",
+ tasarruf:"Tasarruf Lens, havuz, tahsis, likidite ve sözleşme riskini izler.",
+ islamic:"Islamic Finance Lens, uygunluk, sözleşme, risk ve insan incelemesi gereken alanları düzenler.",
+ academy:"Academy, risk, sinyal, proof, backtest ve portföy disiplinini sade anlatır."
 };
-
-let tourTimer = null;
-
-function speak(text, lang, persona){
-  if(!window.speechSynthesis) return;
-  const u = new SpeechSynthesisUtterance(text);
-  u.lang = lang === "tr" ? "tr-TR" : lang === "ar" ? "ar-SA" : "en-US";
-  u.pitch = persona === "zentra" ? 1.15 : 0.85;
-  u.rate = 0.95;
-  speechSynthesis.cancel();
-  speechSynthesis.speak(u);
+function toggleAssistant(){const el=document.getElementById("assistantPanel");el.style.display=el.style.display==="block"?"none":"block"}
+function guide(key,voice){
+ const t=texts[key]||texts.matrix;
+ document.getElementById("assistantPanel").style.display="block";
+ document.getElementById("assistantText").textContent=t;
+ if(voice) speak(t);
 }
-
-function showSlide(slide){
-  document.getElementById("assistantTitle").textContent = slide[0];
-  document.getElementById("assistantText").textContent = slide[1];
+function speak(t){
+ if(window.speechSynthesis){
+  const u=new SpeechSynthesisUtterance(t);u.lang="tr-TR";u.rate=.94;u.pitch=1.08;
+  speechSynthesis.cancel();speechSynthesis.speak(u);
+ }
 }
-
-function startAssistant(lang, persona){
-  const slides = assistantSlides[lang] || assistantSlides.tr;
-  let i = 0;
-  clearInterval(tourTimer);
-  showSlide(slides[i]);
-  speak(slides[i][1], lang, persona);
-
-  tourTimer = setInterval(()=>{
-    i++;
-    if(i >= slides.length){ clearInterval(tourTimer); return; }
-    showSlide(slides[i]);
-    speak(slides[i][1], lang, persona);
-  }, 6500);
-}
-
-function silentTour(){
-  const slides = assistantSlides.tr;
-  let i = 0;
-  clearInterval(tourTimer);
-  speechSynthesis.cancel();
-  showSlide(slides[i]);
-  tourTimer = setInterval(()=>{
-    i++;
-    if(i >= slides.length){ clearInterval(tourTimer); return; }
-    showSlide(slides[i]);
-  }, 3500);
-}
-
-function stopAssistant(){
-  clearInterval(tourTimer);
-  if(window.speechSynthesis) speechSynthesis.cancel();
-}
-</script>
-
-
-<div id="assistantToggle" style="
-position:fixed;bottom:20px;right:20px;z-index:999;
-background:#0b1228;border:1px solid #2d3a66;
-border-radius:50px;padding:12px 16px;
-cursor:pointer;font-weight:bold">
-🎧 Tanıtımı Aç
-</div>
-
-<div id="assistantPanel" style="
-display:none;
-position:fixed;bottom:90px;right:20px;
-width:320px;z-index:999;
-background:#050814;border:1px solid #2d3a66;
-border-radius:20px;padding:16px">
-
-<h3>ZENTRA Assistant</h3>
-
-<div style="margin-bottom:10px">
-<button onclick="runGuide('matrix')" class="btn">Matrix</button>
-<button onclick="runGuide('intel')" class="btn">Intel</button>
-<button onclick="runGuide('gate')" class="btn">Gate</button>
-<button onclick="runGuide('trade')" class="btn">F.Trade</button>
-</div>
-
-<div style="margin-bottom:10px">
-<button onclick="setVoice('zentra')" class="btn primary">ZENTRA</button>
-<button onclick="setVoice('matrix')" class="btn">MATRIX</button>
-</div>
-
-<div style="margin-bottom:10px">
-<button onclick="muteGuide()" class="btn">Sessiz</button>
-<button onclick="stopGuide()" class="btn">Kapat</button>
-</div>
-
-<p id="assistantText">Hazır</p>
-</div>
-
-<script>
-let voiceType = "zentra"
-let muted = false
-
-function toggleAssistant(){
-  const p = document.getElementById("assistantPanel")
-  p.style.display = p.style.display === "none" ? "block" : "none"
-}
-
-document.getElementById("assistantToggle").onclick = toggleAssistant
-
-function setVoice(v){ voiceType = v }
-
-function speak(text){
-  if(muted) return
-  const u = new SpeechSynthesisUtterance(text)
-  u.pitch = voiceType==="zentra"?1.2:0.8
-  u.rate = 0.95
-  speechSynthesis.cancel()
-  speechSynthesis.speak(u)
-}
-
-function runGuide(section){
-  let text = ""
-
-  if(section==="matrix"){
-    text = "ZENTRA Matrix, ekonomik evreni izleyen ve karar akışını kuran sistemdir."
-  }
-  if(section==="intel"){
-    text = "Intel Market, ZENTRA olmadan çalışan araç setidir."
-  }
-  if(section==="gate"){
-    text = "Gate Market, ZENTRA ile güçlendirilmiş karar sistemidir."
-  }
-  if(section==="trade"){
-    text = "Financial Trade, trade kararını yönetir, sadece sinyal göstermez."
-  }
-
-  document.getElementById("assistantText").innerText = text
-  speak(text)
-}
-
-function muteGuide(){
-  muted = true
-  speechSynthesis.cancel()
-}
-
-function stopGuide(){
-  speechSynthesis.cancel()
-  document.getElementById("assistantPanel").style.display = "none"
-}
+function stopGuide(){if(window.speechSynthesis)speechSynthesis.cancel();document.getElementById("assistantPanel").style.display="none"}
 </script>
 </body>
 </html>
