@@ -38,10 +38,6 @@
       "destination": "/public/academy/index.html"
     },
     {
-      "source": "/financial-trade",
-      "destination": "/financial-trade.html"
-    },
-    {
       "source": "/banking",
       "destination": "/banking/index.html"
     },
@@ -80,6 +76,10 @@
     {
       "source": "/terms",
       "destination": "/legal.html"
+    },
+    {
+      "source": "/financial-trade",
+      "destination": "/financial-trade/index.html"
     }
   ]
 }
