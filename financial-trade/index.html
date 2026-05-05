@@ -143,79 +143,7 @@ function packageCheck(){
 
 
 
-<!-- ZENTRA ADVISOR HUMAN CLEAN -->
-<div id="advisorOS" style="position:fixed;right:18px;bottom:18px;z-index:999999;font-family:Arial">
-<button onclick="aToggle()" style="width:58px;height:58px;border-radius:50%;border:0;background:#66e7ff;color:#050814;font-size:22px;font-weight:900">💬</button>
-<div id="aBox" style="display:none;width:380px;margin-bottom:10px;background:#11182e;color:#eef3ff;border:1px solid #2d3a66;border-radius:18px;padding:16px;box-shadow:0 20px 70px #000b">
-<b>ZENTRA Danışman</b>
-<div id="aChat" style="height:260px;overflow:auto;background:#050814;border:1px solid #2d3a66;border-radius:14px;padding:12px;margin-top:10px;font-size:14px;line-height:1.5;color:#dce6ff"></div>
-<input id="aInput" placeholder="Merhaba, fırsatları görmek istiyorum..." style="width:100%;margin-top:10px;padding:10px;border-radius:10px;background:#0b1228;color:#eef3ff;border:1px solid #2d3a66">
-<button onclick="aSend()" style="width:100%;margin-top:8px;background:#66e7ff;color:#050814;font-weight:900;border:0;border-radius:10px;padding:10px">Gönder</button>
-</div>
-</div>
 
-<script>
-var A_STARTED=false;
-
-function aToggle(){
- aBox.style.display=aBox.style.display==="block"?"none":"block";
- if(!A_STARTED){
-  aBot("Merhaba. Hoş geldiniz. İsterseniz önce sizi tanıyayım, sonra Financial Trade içinde en doğru adımı birlikte seçelim.");
-  A_STARTED=true;
- }
-}
-
-function aBot(t){
- aChat.innerHTML+='<div style="margin:8px 0"><b style="color:#66e7ff">ZENTRA:</b> '+t+'</div>';
- aChat.scrollTop=aChat.scrollHeight;
-}
-
-function aUser(t){
- aChat.innerHTML+='<div style="margin:8px 0;text-align:right"><b style="color:#69e7ad">Siz:</b> '+t+'</div>';
- aChat.scrollTop=aChat.scrollHeight;
-}
-
-function aSend(){
- var msg=aInput.value.trim();
- if(!msg)return;
- aUser(msg);
- aInput.value="";
- var m=msg.toLowerCase();
- var r="";
-
- if(m.includes("merhaba")||m.includes("selam")||m.includes("merbaha")||m.includes("iyi")){
-  r="Merhaba. Size yardımcı olayım. Bu ekranda üç ana iş yapabiliriz: fırsat sepeti çıkarabiliriz, risk/karar akışını okuyabiliriz veya proof raporu oluşturabiliriz. Nereden başlamak istersiniz?";
- }
- else if(m.includes("başla")||m.includes("bilmiyorum")||m.includes("ne yap")){
-  if(typeof runAll==="function")runAll();
-  r="Tamam, temel akışı sizin için çalıştırdım. Profil, fırsat sepeti, karar ve proof raporu hazırlandı. Şimdi ekrandaki sonuçlara birlikte bakabiliriz.";
- }
- else if(m.includes("fırsat")||m.includes("sepet")){
-  makeBasket();
-  r="Fırsat sepetini hazırladım. Bu liste gerçek emir değildir; risk profilinize göre oluşturulmuş paper-only takip listesidir. Sonraki doğru adım risk ve karar akışını üretmek.";
- }
- else if(m.includes("risk")||m.includes("karar")){
-  makeDecision();
-  r="Risk ve karar akışını oluşturdum. ZENTRA burada sinyali tek başına karar saymaz; veriyi, riski ve sonucu birlikte değerlendirir.";
- }
- else if(m.includes("rapor")||m.includes("proof")||m.includes("kanıt")){
-  makeProof();
-  makeReport();
-  r="Proof raporu hazır. Bu rapor sistemin ne dediğini, sonucun ne olduğunu ve aradaki farkı görünür hâle getirir.";
- }
- else if(m.includes("paket")||m.includes("fiyat")||m.includes("ücret")){
-  r="Paket mantığı sade: Free bilgi ve sınırlı takip içindir. Pro fırsat sepeti ve proof için uygundur. Expert daha derin analiz ve rapor içindir. Institutional kurumsal kullanım içindir.";
- }
- else if(m.includes("tavsiye")||m.includes("güven")||m.includes("broker")||m.includes("emir")){
-  r="Net söyleyeyim: ZENTRA yatırım tavsiyesi vermez, gerçek emir oluşturmaz ve broker bağlantısı kurmaz. Bu ekran paper-only karar destek yüzeyidir.";
- }
- else{
-  r="Anladım. Bunu sizin için doğru yere bağlayayım: fırsatları görmek istiyorsanız 'fırsat', karar tarafı için 'risk', sonuç görmek için 'rapor' yazabilirsiniz.";
- }
-
- setTimeout(function(){aBot(r);},250);
-}
-</script>
 
 </body>
 </html>
