@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ZENTRA Founder Control Cockpit</title>
+<style>
+:root{--bg:#050814;--card:#11182e;--line:#2d3a66;--txt:#eef3ff;--muted:#aab6d6;--blue:#7fb3ff;--green:#69e7ad;--gold:#f5d76e;--red:#ff8f9c}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(circle at 18% 8%,#66e7ff22,transparent 28%),linear-gradient(180deg,#050814,#071020 55%,#050814);color:var(--txt);font-family:Arial;padding:26px}
+a{color:var(--blue);text-decoration:none}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+.card{background:rgba(17,24,46,.84);border:1px solid var(--line);border-radius:20px;padding:18px;margin:12px 0;box-shadow:0 18px 50px #0006}
+.btn{display:inline-block;padding:10px 14px;border-radius:12px;background:#101a35;border:1px solid var(--line);color:var(--txt);margin:4px;cursor:pointer}
+.primary{background:linear-gradient(135deg,#66e7ff,#8b5cff);color:#050814;border:0;font-weight:900}
+pre{white-space:pre-wrap;background:#050814;border:1px solid var(--line);border-radius:14px;padding:14px;overflow:auto;max-height:360px}
+input,textarea{width:100%;padding:12px;border-radius:12px;background:#0b1228;color:var(--txt);border:1px solid var(--line);margin:6px 0}
+.good{color:var(--green)}.warn{color:var(--gold)}.bad{color:var(--red)}.muted{color:var(--muted)}
+.lock{position:fixed;inset:0;background:#050814;z-index:99;display:flex;align-items:center;justify-content:center;padding:20px}
+.lockbox{max-width:420px;width:100%}
+</style>
+</head>
+<body>
+
+<div class="lock" id="lock">
+  <div class="card lockbox">
+    <h1>Founder Access</h1>
+    <p class="muted">Bu panel public değildir. Founder token ile açılır.</p>
+    <input id="token" placeholder="Founder token">
+    <button class="btn primary" onclick="unlock()">Aç</button>
+    <p class="muted">İlk token: <b>ZENTRA-FOUNDER</b></p>
+  </div>
+</div>
+
+<h1>ZENTRA Founder Control Cockpit</h1>
+<p class="muted">Living Core · Proof · Agents · Memory · Ops · Repair · Books · Next Action</p>
+
+<div class="grid">
+  <div class="card"><h3>Living Core</h3><p id="livingStatus" class="warn">Loading</p></div>
+  <div class="card"><h3>Financial Trade</h3><p id="ftStatus" class="warn">Loading</p></div>
+  <div class="card"><h3>Ops Engine</h3><p id="opsStatus" class="warn">Loading</p></div>
+  <div class="card"><h3>Agents</h3><p id="agentStatus" class="warn">Loading</p></div>
+</div>
+
+<div class="card">
+<h2>Founder Commands</h2>
+<button class="btn primary" onclick="loadAll()">Refresh State</button>
+<button class="btn" onclick="showNext()">Next Action</button>
+<button class="btn" onclick="makeFounderReport()">Founder Report</button>
+<button class="btn" onclick="repairChecklist()">Repair Checklist</button>
+<button class="btn" onclick="bookSync()">Books Sync Note</button>
+</div>
+
+<div class="grid">
+  <div class="card">
+    <h2>Latest Proof Registry</h2>
+    <pre id="proofBox">Loading...</pre>
+  </div>
+  <div class="card">
+    <h2>Living Memory</h2>
+    <pre id="memoryBox">Loading...</pre>
+  </div>
+</div>
+
+<div class="grid">
+  <div class="card">
+    <h2>Financial Trade Report</h2>
+    <pre id="ftBox">Loading...</pre>
+  </div>
+  <div class="card">
+    <h2>Banking / Tasarruf / Islamic Ops</h2>
+    <pre id="opsBox">Loading...</pre>
+  </div>
+</div>
+
+<div class="card">
+<h2>Agent Family</h2>
+<pre id="agentsBox">Loading...</pre>
+</div>
+
+<div class="card">
+<h2>Founder Worklog / Manual Note</h2>
+<textarea id="note" rows="5" placeholder="Bugünkü karar, hata, eksik, yapılacak..."></textarea>
+<button class="btn primary" onclick="saveNote()">Local Note Kaydet</button>
+<pre id="noteOut"></pre>
+</div>
+
+<div class="card">
+<h2>Output</h2>
+<pre id="output">Ready.</pre>
+</div>
+
+<script>
+function unlock(){
+  const t=document.getElementById("token").value.trim();
+  if(t==="ZENTRA-FOUNDER"){
+    localStorage.setItem("zentra_founder_token",t);
+    document.getElementById("lock").style.display="none";
+    loadAll();
+  }else alert("Token yanlış");
+}
+if(localStorage.getItem("zentra_founder_token")==="ZENTRA-FOUNDER"){
+  document.getElementById("lock").style.display="none";
+}
+
+async function j(path){
+  try{
+    const r=await fetch(path,{cache:"no-store"});
+    if(!r.ok) throw new Error("missing");
+    return await r.json();
+  }catch(e){return null}
+}
+function s(id,val){document.getElementById(id).textContent=typeof val==="string"?val:JSON.stringify(val,null,2)}
+
+async function loadAll(){
+  const proof=await j("../zentra-living-core/proof/latest_proof_registry.json");
+  const memory=await j("../zentra-living-core/memory/living_memory.json");
+  const agents=await j("../zentra-living-core/agents/agents.json");
+  const ft=await j("../zentra-backtest/results/auto_report.json");
+  const ops=await j("../zentra-ops/results/ops_report.json");
+  const evo=await j("../zentra-living-core/results/evolution_report.json");
+
+  s("proofBox",proof||"No proof registry found yet.");
+  s("memoryBox",memory||"No memory found yet.");
+  s("agentsBox",agents||"No agents found yet.");
+  s("ftBox",ft||"No Financial Trade report found yet.");
+  s("opsBox",ops||"No Ops report found yet.");
+
+  document.getElementById("livingStatus").innerHTML=evo?'<span class="good">ACTIVE</span>':'<span class="bad">NO REPORT</span>';
+  document.getElementById("ftStatus").innerHTML=ft?'<span class="good">BOUND</span>':'<span class="bad">MISSING</span>';
+  document.getElementById("opsStatus").innerHTML=ops?'<span class="good">TESTED</span>':'<span class="bad">MISSING</span>';
+  document.getElementById("agentStatus").innerHTML=agents?'<span class="good">'+agents.agents.length+' AGENTS</span>':'<span class="bad">MISSING</span>';
+
+  output.textContent="Founder state refreshed.";
+}
+
+function showNext(){
+  output.textContent=`NEXT ACTION
+
+1. Daily proof history arşivini büyüt
+2. Free/historical data kaynaklarını güçlendir
+3. Banking/Tasarruf/Islamic sample → historical dataset dönüşümü
+4. Founder paneli local-private tut
+5. Public siteyi yalnızca ürün/market yüzü olarak bırak
+6. Real auth/db/provider geldiğinde founder paneli token/backend ile sertleştir`;
+}
+
+function makeFounderReport(){
+  const txt=`ZENTRA FOUNDER REPORT
+
+Status:
+- Public Matrix: active
+- Assistant OS: active
+- Financial Trade proof: active/paper-only
+- Ops Banking/Tasarruf/Islamic: sample/historical test mode
+- Living Core: memory + agents + proof registry
+- Real execution: NO
+- Public access to founder core: NO
+
+Decision:
+Founder panel is private control cockpit. Public site remains market surface.`;
+  output.textContent=txt;
+}
+
+function repairChecklist(){
+  output.textContent=`REPAIR CHECKLIST
+
+- Check / route
+- Check /financial-trade route
+- Check /assistant route
+- Check Vercel status Ready
+- Check Function Invocations = 0
+- Check Telegram last report
+- Check zentra-living-core/logs/living.log
+- Check zentra-ops/logs/ops.log
+- Check zentra-backtest/logs/auto.log
+- Check latest proof registry exists`;
+}
+
+function bookSync(){
+  output.textContent=`BOOK SYNC NOTE
+
+Simple Book:
+Founder panel = private control cockpit.
+
+Technical Book:
+founder-panel/index.html reads local JSON proof/memory/agent reports.
+
+Living Book:
+ZENTRA Living Core and Founder Panel connect proof, memory, agents and next actions.`;
+}
+
+function saveNote(){
+  const note=document.getElementById("note").value;
+  const list=JSON.parse(localStorage.getItem("zentra_founder_notes")||"[]");
+  list.push({time:new Date().toISOString(),note});
+  localStorage.setItem("zentra_founder_notes",JSON.stringify(list,null,2));
+  noteOut.textContent=JSON.stringify(list.slice(-5),null,2);
+}
+loadAll();
+</script>
+</body>
+</html>
