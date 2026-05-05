@@ -1,0 +1,71 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>ZENTRA Login / Register</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<header>
+<h1>ZENTRA Login / Register</h1>
+<nav>
+<a href="../index.html">Matrix</a> |
+<a href="../pricing/index.html">Pricing</a> |
+<a href="../../protected/gate.html">Protected Gate</a>
+</nav>
+</header>
+
+<main>
+<div class="grid">
+<div class="card">
+<h2>Register</h2>
+<input id="rEmail" placeholder="email" style="width:100%;padding:10px;margin:5px 0">
+<input id="rPass" placeholder="password" type="password" style="width:100%;padding:10px;margin:5px 0">
+<select id="rPlan" style="width:100%;padding:10px;margin:5px 0">
+<option value="free">Free</option>
+<option value="pro">Pro</option>
+<option value="expert">Expert</option>
+<option value="institutional">Institutional</option>
+</select>
+<button onclick="registerUser()" style="padding:10px;width:100%">Register</button>
+</div>
+
+<div class="card">
+<h2>Login</h2>
+<input id="lEmail" placeholder="email" style="width:100%;padding:10px;margin:5px 0">
+<input id="lPass" placeholder="password" type="password" style="width:100%;padding:10px;margin:5px 0">
+<button onclick="loginUser()" style="padding:10px;width:100%">Login</button>
+</div>
+</div>
+
+<div class="card">
+<h2>Token</h2>
+<pre id="out">No token yet</pre>
+</div>
+</main>
+
+<script>
+async function post(url,data){
+  const r = await fetch(url,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(data)});
+  return await r.json();
+}
+async function registerUser(){
+  const data = await post("/api/register",{
+    email:document.getElementById("rEmail").value,
+    password:document.getElementById("rPass").value,
+    plan:document.getElementById("rPlan").value
+  });
+  if(data.token)localStorage.setItem("zentra_token",data.token);
+  document.getElementById("out").textContent=JSON.stringify(data,null,2);
+}
+async function loginUser(){
+  const data = await post("/api/login",{
+    email:document.getElementById("lEmail").value,
+    password:document.getElementById("lPass").value
+  });
+  if(data.token)localStorage.setItem("zentra_token",data.token);
+  document.getElementById("out").textContent=JSON.stringify(data,null,2);
+}
+</script>
+</body>
+</html>

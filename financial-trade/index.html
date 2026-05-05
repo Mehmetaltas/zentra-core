@@ -1,0 +1,41 @@
+<!doctype html><html><head><meta charset="utf-8"><title>ZENTRA Financial Trade Final</title><link rel="stylesheet" href="../assets/style.css"><script src="ft-app.js"></script></head>
+<body>
+<header>
+<h1>ZENTRA Financial Trade — Final Bound Cockpit</h1>
+<p class="muted">Commercial product surface · live JSON binding · paper-only execution</p>
+<nav>
+<a class="pill" href="../matrix/index.html">Matrix</a>
+<a class="pill" href="index.html">Overview</a>
+<a class="pill" href="asset-detail/index.html">Asset Detail</a>
+<a class="pill" href="portfolio/index.html">Portfolio</a>
+<a class="pill" href="decision-autopsy/index.html">Decision Autopsy</a>
+<a class="pill" href="proof/index.html">Proof</a>
+<a class="pill" href="alerts/index.html">Alerts</a>
+<a class="pill" href="reports/index.html">Reports</a>
+<a class="pill" href="../legal/index.html">Legal</a>
+</nav>
+</header>
+<main>
+<div class="grid">
+<div class="card"><h3>Status</h3><div class="kpi good" id="status">Loading</div></div>
+<div class="card"><h3>Total PnL</h3><div class="kpi good" id="pnl">Loading</div></div>
+<div class="card"><h3>Avg WinRate</h3><div class="kpi" id="winrate">Loading</div></div>
+<div class="card"><h3>Risk</h3><div class="kpi warn" id="risk">Loading</div></div>
+</div>
+
+<div class="card">
+<h2>Primary Portfolio</h2>
+<p><b>Primary:</b> <span id="primary">Loading</span></p>
+<p><b>Rejected / Watch:</b> <span id="rejected">Loading</span></p>
+<table class="table"><thead><tr><th>Asset</th><th>Weight</th><th>PnL</th><th>WinRate</th><th>ProfitFactor</th></tr></thead><tbody id="allocation"></tbody></table>
+</div>
+
+<div class="grid">
+<div class="card"><h3>Execution Simulation</h3><p class="bad">Real execution: NO</p><p>Mode: <span id="exec">PAPER_ONLY</span></p><a href="portfolio/index.html">Open execution plan →</a></div>
+<div class="card"><h3>Decision Autopsy</h3><p>Accepted/rejected logic and train/test behavior.</p><a href="decision-autopsy/index.html">Open autopsy →</a></div>
+<div class="card"><h3>Proof Pack</h3><p>All reports, memory and exports.</p><a href="proof/index.html">Open proof →</a></div>
+<div class="card"><h3>Reports</h3><p>HTML/JSON export center.</p><a href="reports/index.html">Open reports →</a></div>
+</div>
+
+<div class="card"><h2>Raw Live Report</h2><pre id="auto-json">Loading</pre></div>
+</main></body></html>

@@ -1,0 +1,7 @@
+body{margin:0;font-family:Arial;background:#070b16;color:#eef3ff}
+header{padding:24px;background:#10172d;border-bottom:1px solid #26345f}
+main{padding:24px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
+.card{background:#151b33;padding:20px;border-radius:16px;border:1px solid #2d365f}
+a{color:#8ab4ff;text-decoration:none}
+.lang{cursor:pointer;margin:5px;padding:5px 10px;border:1px solid #2d365f}

@@ -1,0 +1,7 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Portfolio Risk</title><link rel="stylesheet" href="../../assets/style.css"><script src="../ft-app.js"></script></head><body>
+<header><h1>Portfolio Risk + Execution Simulation</h1><nav><a class="pill" href="../index.html">Financial Trade</a><a class="pill" href="../reports/index.html">Reports</a></nav></header>
+<main>
+<div class="grid"><div class="card"><h3>Total PnL</h3><div class="kpi good" id="pnl">Loading</div></div><div class="card"><h3>WinRate</h3><div class="kpi" id="winrate">Loading</div></div><div class="card"><h3>ProfitFactor</h3><div class="kpi" id="pf">Loading</div></div><div class="card"><h3>Risk</h3><div class="kpi warn" id="risk">Loading</div></div></div>
+<div class="card"><h2>Allocation</h2><table class="table"><thead><tr><th>Asset</th><th>Weight</th><th>PnL</th><th>WinRate</th><th>PF</th></tr></thead><tbody id="allocation"></tbody></table></div>
+<div class="card"><h2>Execution Plan</h2><p class="bad">PAPER ONLY · No broker · No real order</p><table class="table"><thead><tr><th>Symbol</th><th>Action</th><th>Weight</th><th>Max Risk</th><th>Status</th><th>Approval</th></tr></thead><tbody id="orders"></tbody></table></div>
+</main></body></html>

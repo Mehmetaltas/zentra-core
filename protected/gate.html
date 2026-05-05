@@ -1,0 +1,50 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>ZENTRA Protected Gate</title>
+<link rel="stylesheet" href="../public/assets/style.css">
+</head>
+<body>
+<header><h1>ZENTRA Protected Cockpit Gate</h1></header>
+<main>
+<div class="card">
+<h2>Plan Gate</h2>
+<p>Required plan: <b>pro</b></p>
+<p id="status">Checking token...</p>
+</div>
+
+<div class="grid" id="links" style="display:none">
+<div class="card"><h2>Financial Trade</h2><a href="../financial-trade/index.html">Open cockpit →</a></div>
+<div class="card"><h2>Banking OS</h2><a href="../banking/index.html">Open cockpit →</a></div>
+<div class="card"><h2>Tasarruf OS</h2><a href="../tasarruf/index.html">Open cockpit →</a></div>
+<div class="card"><h2>Islamic Finance OS</h2><a href="../islamic-finance/index.html">Open cockpit →</a></div>
+</div>
+</main>
+
+<script>
+async function verify(){
+  const token = localStorage.getItem("zentra_token");
+  if(!token){
+    document.getElementById("status").innerHTML='No token. <a href="../public/auth/index.html">Login/Register</a>';
+    return;
+  }
+
+  const r = await fetch("/api/verify",{
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body:JSON.stringify({token,requiredPlan:"pro"})
+  });
+  const data = await r.json();
+
+  if(data.ok){
+    document.getElementById("status").textContent="Access granted: "+data.email+" / "+data.plan;
+    document.getElementById("links").style.display="grid";
+  }else{
+    document.getElementById("status").innerHTML="Access denied: "+data.error+' · <a href="../public/pricing/index.html">Upgrade plan</a>';
+  }
+}
+verify();
+</script>
+</body>
+</html>

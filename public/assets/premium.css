@@ -1,0 +1,78 @@
+/* ===== PREMIUM LAYER ===== */
+
+body{
+  perspective:1200px;
+}
+
+/* Glow */
+.glow{
+  position:absolute;
+  width:600px;
+  height:600px;
+  background:radial-gradient(circle,#7fb3ff33,transparent 60%);
+  filter:blur(80px);
+  z-index:0;
+}
+
+/* Floating cards */
+.card{
+  transition:all .4s ease;
+  transform-style:preserve-3d;
+}
+.card:hover{
+  transform:translateY(-10px) scale(1.02) rotateX(3deg);
+  box-shadow:0 20px 60px #000a;
+}
+
+/* Hero light pulse */
+.hero{
+  position:relative;
+  overflow:hidden;
+}
+.hero:after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:radial-gradient(circle at 50% 50%,#66e7ff22,transparent 40%);
+  animation:pulse 6s infinite;
+}
+@keyframes pulse{
+  0%{opacity:.2}
+  50%{opacity:.6}
+  100%{opacity:.2}
+}
+
+/* Text reveal */
+.reveal{
+  opacity:0;
+  transform:translateY(20px);
+  animation:fadeUp .8s forwards;
+}
+@keyframes fadeUp{
+  to{opacity:1;transform:none}
+}
+
+/* Stagger */
+.reveal:nth-child(1){animation-delay:.2s}
+.reveal:nth-child(2){animation-delay:.4s}
+.reveal:nth-child(3){animation-delay:.6s}
+.reveal:nth-child(4){animation-delay:.8s}
+
+/* Data pulse */
+.badge{
+  animation:blink 2.5s infinite;
+}
+@keyframes blink{
+  0%,100%{opacity:1}
+  50%{opacity:.6}
+}
+
+/* Background particles */
+canvas{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  z-index:-1;
+}
