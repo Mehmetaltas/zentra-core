@@ -200,3 +200,6 @@ Added:
 - zentra-evolution-core/src/evolution-core.js
 - zentra-evolution-core/results/evolution_strategy.json
 Updated competitor radar to avoid automatic productization and to classify product candidates separately.
+
+## Intake/Productization Technical Rule
+Added zentra-academia-core/rules/INTAKE_PRODUCTIZATION_RULE.md. This rule governs General AI knowledge intake and Academia→Intel/Gate productization.

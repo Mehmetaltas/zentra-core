@@ -144,3 +144,6 @@ Banking, Tasarruf and Islamic Finance product agents are now born with initial d
 
 ## Controlled Evolution Core
 ZENTRA now separates decomposition outputs into two channels: knowledge absorption and productization. Not every decomposed capability becomes a product. General AI absorbs general knowledge and programming/system intelligence. Academia AI decomposes and builds equipment arsenal. Intel AI receives productizable economic/decision equipment. Intel Market sells ZENTRA-free packages; Gate Market sells ZENTRA-powered packages.
+
+## Academia Intake & Productization Rule
+Academia AI decomposition outputs are never copied directly. Each output is filtered, classified, compared with ZENTRA gaps and market needs, then either stored as filtered knowledge or processed into improved Intel/Gate product equipment.
