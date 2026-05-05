@@ -1,0 +1,17 @@
+{
+  "version": "NOTIFICATION_POLICY_V1",
+  "mode": "PAPER_ONLY",
+  "realExecution": false,
+  "rules": [
+    "No investment advice",
+    "No real order",
+    "No broker execution",
+    "General notifications are market/feed level",
+    "Personal notifications use client profile, basket, proof and outcome"
+  ],
+  "channels": {
+    "telegram": true,
+    "email": false,
+    "push": false
+  }
+}

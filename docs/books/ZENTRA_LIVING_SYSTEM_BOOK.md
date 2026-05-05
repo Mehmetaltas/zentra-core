@@ -162,3 +162,6 @@ ZENTRA now includes client-intent intake, paper-only opportunity basket and proo
 
 ## Outcome / Delta / Score / Learning Loop
 ZENTRA now evaluates past decisions with outcome data, calculates delta and score, and updates learning memory automatically. This completes the decision → proof → learning cycle.
+
+## Notification Engine — General + Personal
+ZENTRA notification system now has two layers. General notifications serve Free Feed, market pulse, Academy and product/radar updates. Personal notifications use client profile, opportunity basket, proof tracking and outcome results. All notifications remain paper-only and non-advisory.

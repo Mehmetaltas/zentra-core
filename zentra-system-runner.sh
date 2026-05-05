@@ -11,6 +11,7 @@ node zentra-product-discovery/src/product-discovery.js >> zentra-system.log 2>&1
 node zentra-task-engine/src/task-engine.js >> zentra-system.log 2>&1
 node zentra-auto-exec/src/auto-exec.js >> zentra-system.log 2>&1
 
+node zentra-notification-core/src/notification-runner.js >> zentra-system.log 2>&1
 echo "ZENTRA SYSTEM RUN COMPLETE"
 node zentra-binding-core/src/binding-engine.js >> zentra-system.log 2>&1
 +

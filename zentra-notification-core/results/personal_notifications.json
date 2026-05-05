@@ -1,0 +1,32 @@
+{
+  "time": "2026-05-05T13:07:22.635Z",
+  "layer": "PERSONAL",
+  "count": 5,
+  "messages": [
+    {
+      "type": "PERSONAL_PROFILE",
+      "title": "Kişisel Profil",
+      "text": "Niyet: learn_and_track_opportunities\nRisk: MEDIUM\nSermaye bandı: LOW_MEDIUM\nAkış: eğitim + fırsat takibi + proof raporu"
+    },
+    {
+      "type": "PERSONAL_OPPORTUNITY",
+      "title": "Fırsat Sepeti: AAPL",
+      "text": "AAPL\nSkor: 70\nRisk: MEDIUM\nKarar: PAPER_OPPORTUNITY\nNot: Paper-only takip. Gerçek emir yok."
+    },
+    {
+      "type": "PERSONAL_OPPORTUNITY",
+      "title": "Fırsat Sepeti: SPY",
+      "text": "SPY\nSkor: 60\nRisk: LOW\nKarar: PAPER_OPPORTUNITY\nNot: Paper-only takip. Gerçek emir yok."
+    },
+    {
+      "type": "PERSONAL_OPPORTUNITY",
+      "title": "Fırsat Sepeti: BIST100",
+      "text": "BIST100\nSkor: 50\nRisk: MEDIUM\nKarar: WATCH\nNot: Paper-only takip. Gerçek emir yok."
+    },
+    {
+      "type": "PERSONAL_PROOF_TRACKING",
+      "title": "Proof Tracking",
+      "text": "Bugün sistemin ne dediği kaydedildi. Sonraki döngüde sonuç, delta, doğru/yanlış ve skor karşılaştırılır."
+    }
+  ]
+}

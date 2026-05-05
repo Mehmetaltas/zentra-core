@@ -230,3 +230,11 @@ Added zentra-outcome-engine:
 - delta calculation
 - score generation
 - learning memory update
+
+## Notification Engine Technical
+Added:
+- zentra-notification-core/policy/notification-policy.json
+- zentra-notification-core/src/general-notifications.js
+- zentra-notification-core/src/personal-notifications.js
+- zentra-notification-core/src/notification-runner.js
+- notification results and logs

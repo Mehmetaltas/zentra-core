@@ -1,0 +1,17 @@
+{
+  "time": "2026-05-05T13:07:21.505Z",
+  "layer": "GENERAL",
+  "count": 2,
+  "messages": [
+    {
+      "type": "GENERAL_MARKET_PULSE",
+      "title": "ZENTRA Free Feed",
+      "text": "Genel piyasa, risk iştahı, makro gündem ve ZENTRA lens notu takipte. Yatırım tavsiyesi değildir."
+    },
+    {
+      "type": "GENERAL_MARKET_OPPORTUNITY",
+      "title": "Market Intel",
+      "text": "Piyasa ihtiyaçlarından yeni fırsat alanları tespit edildi: Daha ucuz ve sade sistem üret | Net decision + risk göster"
+    }
+  ]
+}
