@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>ZENTRA Assistant OS</title>
+<style>
+body{margin:0;background:#050814;color:#eef3ff;font-family:Arial;padding:28px}
+a{color:#7fb3ff;text-decoration:none}
+.card{background:rgba(17,26,53,.78);border:1px solid rgba(150,180,255,.25);border-radius:22px;padding:20px;margin:14px 0}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px}
+.btn{display:inline-block;padding:11px 14px;border-radius:14px;border:1px solid #2d3a66;background:#101a35;color:#eef3ff;margin:4px;cursor:pointer}
+.primary{background:linear-gradient(135deg,#66e7ff,#8b5cff);color:#050814;font-weight:900}
+textarea,input,select{width:100%;padding:12px;border-radius:12px;background:#0b1228;color:#eef3ff;border:1px solid #2d3a66;margin:6px 0}
+pre{white-space:pre-wrap;background:#050814;border:1px solid #2d3a66;border-radius:14px;padding:14px}
+.bad{color:#ff8f9c}.good{color:#69e7ad}.muted{color:#aab6d6}
+</style>
+</head>
+<body>
+<h1>ZENTRA Customer & Operations Assistant OS</h1>
+<p class="muted">Müşteri karşılama · yönlendirme · satış · support · legal · sosyal medya · bakım · güvenlik</p>
+
+<div class="card">
+<h2>Canlı Karşılama</h2>
+<p>Asistan müşteriyi karşılar, ihtiyacı sorar ve doğru bölüme yönlendirir.</p>
+<select id="intent">
+<option value="financial">Financial Trade hakkında bilgi istiyorum</option>
+<option value="pricing">Paketleri öğrenmek istiyorum</option>
+<option value="gate">ZENTRA’lı Gate Market nedir?</option>
+<option value="intel">ZENTRA’sız Intel Market nedir?</option>
+<option value="support">Destek almak istiyorum</option>
+<option value="legal">Sözleşme / gizlilik / uyarılar</option>
+<option value="offer">Kurumsal teklif istiyorum</option>
+<option value="social">Sosyal medya / yayın</option>
+<option value="hr">İnsan kaynakları / iş birliği</option>
+<option value="security">Güvenlik / veri / cyber</option>
+</select>
+<button class="btn primary" onclick="route()">Yönlendir</button>
+<pre id="answer">Hazır.</pre>
+</div>
+
+<div class="grid">
+<div class="card"><h3>Market</h3><a class="btn" href="/intel">Intel Market</a><a class="btn" href="/gate">Gate Market</a><a class="btn" href="/pricing">Paketler</a></div>
+<div class="card"><h3>Cockpit</h3><a class="btn" href="/financial-trade">Financial Trade</a><a class="btn" href="/banking">Banking</a><a class="btn" href="/tasarruf">Tasarruf</a></div>
+<div class="card"><h3>Legal</h3><a class="btn" href="/legal">Legal</a><a class="btn" href="/privacy">Gizlilik</a><a class="btn" href="/terms">Sözleşme</a></div>
+<div class="card"><h3>Support</h3><a class="btn" href="/support">Support</a><a class="btn" href="/operations">Operations</a><a class="btn" href="/security">Security</a></div>
+</div>
+
+<div class="card">
+<h2>Teklif / Mail Taslağı</h2>
+<input id="lead" placeholder="Müşteri / kurum adı">
+<select id="package">
+<option>Financial Trade Pro</option>
+<option>Gate Market Institutional</option>
+<option>Banking OS</option>
+<option>Tasarruf / Alternative Finance OS</option>
+<option>Islamic Finance OS</option>
+</select>
+<button class="btn primary" onclick="makeOffer()">Teklif taslağı üret</button>
+<pre id="offerOut"></pre>
+</div>
+
+<div class="card">
+<h2>Sosyal Medya Görevleri</h2>
+<button class="btn" onclick="social('linkedin')">LinkedIn Post</button>
+<button class="btn" onclick="social('x')">X Post</button>
+<button class="btn" onclick="social('instagram')">Instagram Caption</button>
+<pre id="socialOut"></pre>
+</div>
+
+<script>
+const routes={
+ financial:{text:"Financial Trade, trade kararını yönetir. Sinyal, risk, proof ve learning katmanlarını birleştirir. Gerçek emir yok; paper-only karar destek çalışır.",link:"/financial-trade"},
+ pricing:{text:"Paketler Free, Pro, Expert ve Institutional olarak ayrılır. Payment aktif değildir; plan yapısı erişim modeli için hazırlanmıştır.",link:"/pricing"},
+ gate:{text:"Gate Market ZENTRA’lı sistemdir. Decision, risk, proof, memory ve learning ile güçlendirilir.",link:"/gate"},
+ intel:{text:"Intel Market ZENTRA’sız bağımsız araç katmanıdır: chart, signal, screener, report.",link:"/intel"},
+ support:{text:"Destek için arıza, kullanım, erişim, rapor ve hesap konularını sınıflandırır.",link:"/support"},
+ legal:{text:"Legal bölüm yatırım tavsiyesi değildir, paper-only, gizlilik, kullanım şartları ve sorumluluk sınırlarını içerir.",link:"/legal"},
+ offer:{text:"Kurumsal teklif için ürün, paket, kullanım alanı ve erişim seviyesi belirlenir.",link:"#offer"},
+ social:{text:"Sosyal medya görevi: Free Feed, Academy ve ürün anlatımlarından yayın taslağı üretilir.",link:"/social"},
+ hr:{text:"HR ve iş birliği alanı; ekip, rol, partner ve operasyon ihtiyaçlarını toplar.",link:"/hr"},
+ security:{text:"Security alanı; veri, erişim, audit, paper-only kilidi ve cyber kontrol görevlerini izler.",link:"/security"}
+};
+function route(){
+ const k=document.getElementById("intent").value;
+ const r=routes[k];
+ document.getElementById("answer").textContent=r.text+"\n\nGit: "+r.link;
+ if(window.speechSynthesis){
+  const u=new SpeechSynthesisUtterance(r.text);u.lang="tr-TR";u.rate=.92;u.pitch=1.05;speechSynthesis.cancel();speechSynthesis.speak(u);
+ }
+}
+function makeOffer(){
+ const lead=document.getElementById("lead").value||"Kurum";
+ const pack=document.getElementById("package").value;
+ const txt=`Konu: ZENTRA ${pack} Teklif Taslağı
+
+Merhaba ${lead},
+
+ZENTRA ${pack}, karar, risk, proof ve öğrenme katmanlarını tek işletim yüzünde birleştiren paper-only karar destek sistemidir.
+
+Kapsam:
+- Ürün tanıtımı
+- Cockpit erişim modeli
+- Proof/report akışı
+- Güvenlik ve legal uyarılar
+- Kurumsal kullanım senaryosu
+
+Not: Gerçek emir, broker bağlantısı veya yatırım tavsiyesi içermez.
+
+Saygılar,
+ZENTRA Team`;
+ document.getElementById("offerOut").textContent=txt;
+}
+function social(type){
+ let txt="";
+ if(type==="linkedin") txt="ZENTRA Matrix Ecosystem: piyasayı sadece göstermez; karar akışını kurar. Data → Signal → Decision → Proof → Learning.";
+ if(type==="x") txt="ZENTRA: Intel araçtır. Gate sistemdir. Financial Trade kararın riskini, sonucunu ve proof’unu yönetir.";
+ if(type==="instagram") txt="Veri, risk, proof ve öğrenme. ZENTRA Matrix, ekonomik evreni lenslerle izler.";
+ document.getElementById("socialOut").textContent=txt;
+}
+</script>
+</body>
+</html>
