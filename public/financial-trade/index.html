@@ -163,12 +163,96 @@ function packageCheck(){
 function runAll(){makeProfile();makeBasket();makeDecision();makeProof();makeReport();}
 </script>
 
+
+<!-- ZENTRA FINAL REAL MP3 VOICE ASSISTANT -->
+<div id="zentraFinalVoice" style="position:fixed;right:20px;bottom:20px;z-index:999999;font-family:Arial">
+  <button onclick="zfvToggle()" style="width:56px;height:56px;border-radius:50%;border:0;background:#66e7ff;color:#050814;font-size:22px;font-weight:900">🎙</button>
+  <div id="zfvBox" style="display:none;width:320px;margin-bottom:10px;background:#11182e;color:#eef3ff;border:1px solid #2d3a66;border-radius:18px;padding:14px">
+    <b>ZENTRA Assistant</b>
+    <p style="font-size:14px;color:#aab6d6">Gerçek ZENTRA sesi aktif.</p>
+    <button onclick="zfvPlayZentra()" style="width:100%;margin-top:8px;background:#66e7ff;color:#050814;font-weight:900">ZENTRA Konuş</button>
+    <button onclick="zfvPlayMatrix()" style="width:100%;margin-top:6px">MATRIX Konuş</button>
+    <button onclick="zfvStop()" style="width:100%;margin-top:6px">Durdur</button>
+  </div>
+</div>
+
+<script>
+let zfvAudio = null;
+
+function zfvToggle(){
+  const box = document.getElementById("zfvBox");
+  box.style.display = box.style.display === "block" ? "none" : "block";
+}
+
+function zfvStop(){
+  if(zfvAudio){
+    zfvAudio.pause();
+    zfvAudio.currentTime = 0;
+  }
+  if(window.speechSynthesis) speechSynthesis.cancel();
+}
+
+function zfvPlayZentra(){
+  zfvStop();
+  zfvAudio = new Audio("/audio/zentra_tr.mp3?v=real1");
+  zfvAudio.play();
+}
+
+function zfvPlayMatrix(){
+  zfvStop();
+  zfvAudio = new Audio("/audio/matrix_tr.mp3?v=real1");
+  zfvAudio.play();
+}
+</script>
+
 </body>
 </html>
 <!-- =========================================================
 ZENTRA GLOBAL ASSISTANT WIDGET
 TR / EN / AR + Voice + Optional Guide
-Paste this block before </body> in any HTML page.
+Paste this block before 
+<!-- ZENTRA FINAL REAL MP3 VOICE ASSISTANT -->
+<div id="zentraFinalVoice" style="position:fixed;right:20px;bottom:20px;z-index:999999;font-family:Arial">
+  <button onclick="zfvToggle()" style="width:56px;height:56px;border-radius:50%;border:0;background:#66e7ff;color:#050814;font-size:22px;font-weight:900">🎙</button>
+  <div id="zfvBox" style="display:none;width:320px;margin-bottom:10px;background:#11182e;color:#eef3ff;border:1px solid #2d3a66;border-radius:18px;padding:14px">
+    <b>ZENTRA Assistant</b>
+    <p style="font-size:14px;color:#aab6d6">Gerçek ZENTRA sesi aktif.</p>
+    <button onclick="zfvPlayZentra()" style="width:100%;margin-top:8px;background:#66e7ff;color:#050814;font-weight:900">ZENTRA Konuş</button>
+    <button onclick="zfvPlayMatrix()" style="width:100%;margin-top:6px">MATRIX Konuş</button>
+    <button onclick="zfvStop()" style="width:100%;margin-top:6px">Durdur</button>
+  </div>
+</div>
+
+<script>
+let zfvAudio = null;
+
+function zfvToggle(){
+  const box = document.getElementById("zfvBox");
+  box.style.display = box.style.display === "block" ? "none" : "block";
+}
+
+function zfvStop(){
+  if(zfvAudio){
+    zfvAudio.pause();
+    zfvAudio.currentTime = 0;
+  }
+  if(window.speechSynthesis) speechSynthesis.cancel();
+}
+
+function zfvPlayZentra(){
+  zfvStop();
+  zfvAudio = new Audio("/audio/zentra_tr.mp3?v=real1");
+  zfvAudio.play();
+}
+
+function zfvPlayMatrix(){
+  zfvStop();
+  zfvAudio = new Audio("/audio/matrix_tr.mp3?v=real1");
+  zfvAudio.play();
+}
+</script>
+
+</body> in any HTML page.
 ========================================================= -->
 
 <div id="zentraAssistantWidget">
@@ -229,7 +313,7 @@ function zentraUpdateAssistantText(){
   document.getElementById("zentraAssistantText").innerText=zentraAssistantContent[zentraAssistantLang];
 }
 
-function zentraSpeakAssistant(){
+function old_zentraSpeakAssistant_disabled(){
   zentraStopAssistant();
   const msg=new SpeechSynthesisUtterance(zentraAssistantContent[zentraAssistantLang]);
   msg.lang=zentraAssistantLang==="tr"?"tr-TR":zentraAssistantLang==="ar"?"ar-SA":"en-US";
@@ -284,7 +368,7 @@ function zaStop(){
   if(window.speechSynthesis) speechSynthesis.cancel();
 }
 
-async function zaSpeak(){
+async function old_zaSpeak_disabled(){
   zaStop();
   const text = zaContent[zaLang];
 
@@ -351,7 +435,7 @@ function zaStop(){
 }
 
 
-function zaSpeak(){
+function old_zaSpeak_disabled(){
   zaStop();
 
   var file = "zentra_tr.mp3";
