@@ -1,0 +1,26 @@
+ZENTRA SİSTEM DOĞRULAMA RAPORU
+
+Status: VALIDATED
+Mode: PAPER ONLY
+System Trust: 100%
+
+PASS: 11
+PARTIAL: 0
+MISSING: 0
+
+Kalite:
+• Report Engine V2 dili geçerli
+• Telegram proof stream geçerli
+• Daily archive aktif
+
+Kapanan / Aktif Bloklar:
+• Proof Organization
+• Final Combined Report
+• Telegram-ready Daily Stream
+• Live Terminal V1
+• Founder Proof Center
+• Daily Proof Archive
+• Raw Intelligence Layer Checks
+
+Rapor:
+zentra-system-validation/results/full_system_validation_report.txt

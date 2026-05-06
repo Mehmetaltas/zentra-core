@@ -1,0 +1,48 @@
+ZENTRA GÜNLÜK KANIT AKIŞI
+
+Mode: PAPER ONLY
+Trust Score: 80%
+
+Özet:
+• BTCUSD: BTCUSD tarafında pozitif takip görünümü korunuyor; volatilite nedeniyle takip disiplini önemli kalıyor.
+• BNBUSD: BNBUSD tarafında pozitif takip görünümü korunuyor; volatilite nedeniyle takip disiplini önemli kalıyor.
+• AAPL: AAPL tarafında yukarı yön korunuyor; ancak hacim tarafında güçlü genişleme henüz oluşmuş değil.
+• SPY: SPY tarafında zayıflayan momentum nedeniyle kontrollü izleme yaklaşımı korundu.
+• ETHUSD: ETHUSD tarafında hareket oluşsa da, sıkı filtre yeterli güven üretmediği için ana sepet dışında bırakıldı.
+
+Yarın:
+BTCUSD / BNBUSD momentum devamlılığı,
+AAPL hacim desteği,
+SPY / ETHUSD yeniden güçlenme işaretleri izlenecek.
+
+Rapor:
+zentra-proof-organization/results/final_combined_report.txt
+
+----------------------------
+
+ZENTRA SİSTEM DOĞRULAMA RAPORU
+
+Status: VALIDATED
+Mode: PAPER ONLY
+System Trust: 100%
+
+PASS: 11
+PARTIAL: 0
+MISSING: 0
+
+Kalite:
+• Report Engine V2 dili geçerli
+• Telegram proof stream geçerli
+• Daily archive aktif
+
+Kapanan / Aktif Bloklar:
+• Proof Organization
+• Final Combined Report
+• Telegram-ready Daily Stream
+• Live Terminal V1
+• Founder Proof Center
+• Daily Proof Archive
+• Raw Intelligence Layer Checks
+
+Rapor:
+zentra-system-validation/results/full_system_validation_report.txt
