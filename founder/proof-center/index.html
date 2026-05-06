@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ZENTRA Proof Center</title>
+<style>
+body{margin:0;background:#050814;color:#eef3ff;font-family:Arial;padding:28px}
+.card{background:#11182e;border:1px solid #2d3a66;border-radius:18px;padding:18px;margin:14px 0}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+pre{white-space:pre-wrap;background:#050814;border:1px solid #2d3a66;border-radius:12px;padding:12px;line-height:1.45}
+.bad{color:#ff8f9c}.good{color:#69e7ad}.muted{color:#aab6d6}
+</style>
+</head>
+<body>
+<h1>ZENTRA Founder Proof Center</h1>
+<p class="muted">Proof Organization · Outcome · Delta · Replay · Trust · Decision Memory</p>
+
+<div class="grid">
+<div class="card"><h2>Proof Status</h2><p class="good">ACTIVE</p><p>Mode: PAPER ONLY</p></div>
+<div class="card"><h2>Trust Score</h2><p id="trust" class="good">Loading...</p></div>
+<div class="card"><h2>Engines</h2><p>Proof · Outcome · Delta · Replay · Memory · Report V2</p></div>
+</div>
+
+<div class="card"><h2>Final Combined Report</h2><pre id="report">Loading...</pre></div>
+<div class="card"><h2>Technical Proof JSON</h2><pre id="tech">Loading...</pre></div>
+
+<script>
+async function load(){
+ try{
+  const r = await fetch("/../zentra-proof-organization/results/final_combined_report.txt");
+  document.getElementById("report").innerText = await r.text();
+ }catch(e){document.getElementById("report").innerText="Rapor dosyası localde hazır. Deploy path için public kopya gerekir."}
+ try{
+  const t = await fetch("/../zentra-proof-organization/results/technical_report.json");
+  const j = await t.json();
+  document.getElementById("trust").innerText = j.trustScore + "%";
+  document.getElementById("tech").innerText = JSON.stringify(j,null,2);
+ }catch(e){document.getElementById("tech").innerText="Technical JSON localde hazır."}
+}
+load();
+</script>
+</body>
+</html>

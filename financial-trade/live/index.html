@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ZENTRA Financial Trade Live Terminal</title>
+<style>
+body{margin:0;background:#050814;color:#eef3ff;font-family:Arial;padding:22px}
+.card{background:#11182e;border:1px solid #2d3a66;border-radius:18px;padding:16px;margin:12px 0}
+.grid{display:grid;grid-template-columns:2fr 1.2fr 1.2fr;gap:12px}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+pre{white-space:pre-wrap;background:#050814;border:1px solid #2d3a66;border-radius:12px;padding:12px}
+.bad{color:#ff8f9c}.good{color:#69e7ad}.muted{color:#aab6d6}
+.bar{height:160px;border-radius:14px;background:linear-gradient(135deg,#66e7ff33,#8b5cff22),repeating-linear-gradient(90deg,#ffffff10 0 2px,transparent 2px 22px)}
+</style>
+</head>
+<body>
+<h1>ZENTRA Financial Trade — Live Terminal V1</h1>
+<p class="muted">Market Standard Layer + ZENTRA Reading + Scenario Path + Decision Center</p>
+
+<div class="card">
+<b>BIST · GLOBAL · CRYPTO · FX · GOLD</b>
+<p>Market Mood: Selective Positive · Risk Appetite: Medium · Last Update: Auto</p>
+</div>
+
+<div class="grid">
+<div class="card">
+<h2>Market Standard Layer</h2>
+<div class="bar"></div>
+<p>Chart · Price · Volume · RSI · MACD · MA · Support / Resistance · Takas · Heatmap · News · Watchlist</p>
+</div>
+
+<div class="card">
+<h2>ZENTRA Reading Layer</h2>
+<p>Grafik kaldırılmaz. Grafik ve veri okunur.</p>
+<p>Hacim, momentum ve devamlılık birlikte izlenir.</p>
+<p class="good">Seçici takip modu aktif.</p>
+</div>
+
+<div class="card">
+<h2>Decision Center</h2>
+<p>Fırsat: İzlenebilir</p>
+<p>Risk: Orta</p>
+<p>Takip: Günlük</p>
+<p>Geçersizleşme: Destek altı zayıflama</p>
+</div>
+</div>
+
+<div class="grid2">
+<div class="card"><h2>Scenario Path</h2><pre>Şu an: İzleme bölgesi
+Yukarı: Senaryo güçlenir
+Aşağı: Risk artar
+Beklenen: Kısa vadeli takip</pre></div>
+<div class="card"><h2>Match Center</h2><pre>Şu An: Senaryo takipte
+Günün Akışı: Momentum izlendi
+Gün Sonu: Rapor hazırlanır</pre></div>
+<div class="card"><h2>Next Match Prep</h2><pre>Yarın: Momentum devamlılığı, hacim desteği ve zayıflama alanları izlenecek.</pre></div>
+</div>
+
+<div class="card"><h2>Final Combined Report</h2><pre id="report">Loading...</pre></div>
+
+<script>
+fetch("/proof/final_combined_report.txt").then(r=>r.text()).then(t=>report.innerText=t).catch(e=>report.innerText="Public proof report kopyası bekleniyor.");
+</script>
+</body>
+</html>

@@ -1,129 +1,82 @@
 [
   {
-    "id": "FT-001",
     "symbol": "BTCUSD",
-    "expected": "momentum_continuation",
-    "result": "continued_with_volatility",
+    "status": "Güçlü takip",
     "risk": "MEDIUM",
+    "expected": "Momentum devamı",
+    "result": "Volatiliteyle birlikte yön korundu",
     "confidence": 72,
-    "capitalBands": [
-      1000,
-      10000,
-      100000
-    ],
-    "notes": [
-      "momentum güçlü",
-      "volatilite yüksek",
-      "hacim takip edilmeli"
-    ],
     "outcomeScore": 1,
-    "delta": "Senaryo çalıştı fakat volatilite nedeniyle takip disiplini önemli kaldı.",
-    "capitalImpact": [
-      {
-        "capital": 1000,
-        "scenarioPercent": 2,
-        "potentialEffect": 20
-      },
-      {
-        "capital": 10000,
-        "scenarioPercent": 2,
-        "potentialEffect": 200
-      },
-      {
-        "capital": 100000,
-        "scenarioPercent": 2,
-        "potentialEffect": 2000
-      }
-    ],
+    "reading": "BTCUSD tarafında pozitif takip görünümü korunuyor; volatilite nedeniyle takip disiplini önemli kalıyor.",
     "replay": [
-      "Başlangıç: karar senaryosu kaydedildi.",
-      "Gün içi: fiyat, hacim ve momentum takip edildi.",
-      "Sonuç: beklenen ile gerçekleşen karşılaştırıldı.",
-      "Kapanış: karar hafızasına işlendi."
+      "Başlangıç: senaryo kaydedildi.",
+      "Gün içi: fiyat, hacim, momentum ve risk izlendi.",
+      "Kapanış: beklenen ile gerçekleşen karşılaştırıldı.",
+      "Hafıza: karar sonucu sisteme işlendi."
     ]
   },
   {
-    "id": "FT-002",
-    "symbol": "AAPL",
-    "expected": "controlled_upside_follow",
-    "result": "upside_held_but_volume_limited",
+    "symbol": "BNBUSD",
+    "status": "Güçlü takip",
     "risk": "MEDIUM",
-    "confidence": 68,
-    "capitalBands": [
-      1000,
-      10000,
-      100000
-    ],
-    "notes": [
-      "yukarı yön korundu",
-      "hacim güçlü genişlemedi"
-    ],
+    "expected": "Yukarı senaryo",
+    "result": "Senaryo büyük ölçüde korundu",
+    "confidence": 74,
     "outcomeScore": 1,
-    "delta": "Hareket yönü korundu ancak hacim desteği sınırlı kaldı.",
-    "capitalImpact": [
-      {
-        "capital": 1000,
-        "scenarioPercent": 1.2,
-        "potentialEffect": 12
-      },
-      {
-        "capital": 10000,
-        "scenarioPercent": 1.2,
-        "potentialEffect": 120
-      },
-      {
-        "capital": 100000,
-        "scenarioPercent": 1.2,
-        "potentialEffect": 1200
-      }
-    ],
+    "reading": "BNBUSD tarafında pozitif takip görünümü korunuyor; volatilite nedeniyle takip disiplini önemli kalıyor.",
     "replay": [
-      "Başlangıç: karar senaryosu kaydedildi.",
-      "Gün içi: fiyat, hacim ve momentum takip edildi.",
-      "Sonuç: beklenen ile gerçekleşen karşılaştırıldı.",
-      "Kapanış: karar hafızasına işlendi."
+      "Başlangıç: senaryo kaydedildi.",
+      "Gün içi: fiyat, hacim, momentum ve risk izlendi.",
+      "Kapanış: beklenen ile gerçekleşen karşılaştırıldı.",
+      "Hafıza: karar sonucu sisteme işlendi."
     ]
   },
   {
-    "id": "FT-003",
-    "symbol": "SPY",
-    "expected": "watch_zone",
-    "result": "momentum_weakened",
-    "risk": "LOW",
-    "confidence": 58,
-    "capitalBands": [
-      1000,
-      10000,
-      100000
-    ],
-    "notes": [
-      "izleme bölgesi",
-      "momentum zayıfladı"
-    ],
+    "symbol": "AAPL",
+    "status": "İzlenebilir fırsat",
+    "risk": "MEDIUM",
+    "expected": "Kontrollü yukarı takip",
+    "result": "Yön korundu ancak hacim sınırlı kaldı",
+    "confidence": 68,
     "outcomeScore": 1,
-    "delta": "İzleme kararı korunabilir; momentum zayıflaması agresif yaklaşımı desteklemedi.",
-    "capitalImpact": [
-      {
-        "capital": 1000,
-        "scenarioPercent": 0.6,
-        "potentialEffect": 6
-      },
-      {
-        "capital": 10000,
-        "scenarioPercent": 0.6,
-        "potentialEffect": 60
-      },
-      {
-        "capital": 100000,
-        "scenarioPercent": 0.6,
-        "potentialEffect": 600
-      }
-    ],
+    "reading": "AAPL tarafında yukarı yön korunuyor; ancak hacim tarafında güçlü genişleme henüz oluşmuş değil.",
     "replay": [
-      "Başlangıç: karar senaryosu kaydedildi.",
-      "Gün içi: fiyat, hacim ve momentum takip edildi.",
-      "Sonuç: beklenen ile gerçekleşen karşılaştırıldı.",
-      "Kapanış: karar hafızasına işlendi."
+      "Başlangıç: senaryo kaydedildi.",
+      "Gün içi: fiyat, hacim, momentum ve risk izlendi.",
+      "Kapanış: beklenen ile gerçekleşen karşılaştırıldı.",
+      "Hafıza: karar sonucu sisteme işlendi."
+    ]
+  },
+  {
+    "symbol": "SPY",
+    "status": "Bekle / izle",
+    "risk": "LOW",
+    "expected": "İzleme bölgesi",
+    "result": "Momentum zayıfladı",
+    "confidence": 58,
+    "outcomeScore": 1,
+    "reading": "SPY tarafında zayıflayan momentum nedeniyle kontrollü izleme yaklaşımı korundu.",
+    "replay": [
+      "Başlangıç: senaryo kaydedildi.",
+      "Gün içi: fiyat, hacim, momentum ve risk izlendi.",
+      "Kapanış: beklenen ile gerçekleşen karşılaştırıldı.",
+      "Hafıza: karar sonucu sisteme işlendi."
+    ]
+  },
+  {
+    "symbol": "ETHUSD",
+    "status": "Dışarıda bırakıldı",
+    "risk": "HIGH",
+    "expected": "Sıkı filtre",
+    "result": "Win şartı yeterli görülmedi",
+    "confidence": 51,
+    "outcomeScore": 0,
+    "reading": "ETHUSD tarafında hareket oluşsa da, sıkı filtre yeterli güven üretmediği için ana sepet dışında bırakıldı.",
+    "replay": [
+      "Başlangıç: senaryo kaydedildi.",
+      "Gün içi: fiyat, hacim, momentum ve risk izlendi.",
+      "Kapanış: beklenen ile gerçekleşen karşılaştırıldı.",
+      "Hafıza: karar sonucu sisteme işlendi."
     ]
   }
 ]

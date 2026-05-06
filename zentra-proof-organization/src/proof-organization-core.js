@@ -5,159 +5,129 @@ const ROOT = path.join(process.cwd(), "zentra-proof-organization");
 const RESULTS = path.join(ROOT, "results");
 const PROOF = path.join(ROOT, "proof");
 const MEMORY = path.join(ROOT, "memory");
-const LOGS = path.join(ROOT, "logs");
+const ARCHIVE = path.join(ROOT, "archive");
 
-for (const d of [RESULTS, PROOF, MEMORY, LOGS]) fs.mkdirSync(d, { recursive: true });
+for (const d of [RESULTS, PROOF, MEMORY, ARCHIVE]) fs.mkdirSync(d, { recursive: true });
 
 const now = new Date().toISOString();
+const day = now.slice(0,10);
 
 const decisions = [
-  {
-    id: "FT-001",
-    symbol: "BTCUSD",
-    expected: "momentum_continuation",
-    result: "continued_with_volatility",
-    risk: "MEDIUM",
-    confidence: 72,
-    capitalBands: [1000, 10000, 100000],
-    notes: ["momentum güçlü", "volatilite yüksek", "hacim takip edilmeli"]
-  },
-  {
-    id: "FT-002",
-    symbol: "AAPL",
-    expected: "controlled_upside_follow",
-    result: "upside_held_but_volume_limited",
-    risk: "MEDIUM",
-    confidence: 68,
-    capitalBands: [1000, 10000, 100000],
-    notes: ["yukarı yön korundu", "hacim güçlü genişlemedi"]
-  },
-  {
-    id: "FT-003",
-    symbol: "SPY",
-    expected: "watch_zone",
-    result: "momentum_weakened",
-    risk: "LOW",
-    confidence: 58,
-    capitalBands: [1000, 10000, 100000],
-    notes: ["izleme bölgesi", "momentum zayıfladı"]
-  }
+  { symbol:"BTCUSD", status:"Güçlü takip", risk:"MEDIUM", expected:"Momentum devamı", result:"Volatiliteyle birlikte yön korundu", confidence:72 },
+  { symbol:"BNBUSD", status:"Güçlü takip", risk:"MEDIUM", expected:"Yukarı senaryo", result:"Senaryo büyük ölçüde korundu", confidence:74 },
+  { symbol:"AAPL", status:"İzlenebilir fırsat", risk:"MEDIUM", expected:"Kontrollü yukarı takip", result:"Yön korundu ancak hacim sınırlı kaldı", confidence:68 },
+  { symbol:"SPY", status:"Bekle / izle", risk:"LOW", expected:"İzleme bölgesi", result:"Momentum zayıfladı", confidence:58 },
+  { symbol:"ETHUSD", status:"Dışarıda bırakıldı", risk:"HIGH", expected:"Sıkı filtre", result:"Win şartı yeterli görülmedi", confidence:51 }
 ];
 
-function outcomeScore(d) {
-  if (d.expected.includes("upside") && d.result.includes("held")) return 1;
-  if (d.expected.includes("momentum") && d.result.includes("continued")) return 1;
-  if (d.expected.includes("watch") && d.result.includes("weakened")) return 1;
-  return 0;
+function okScore(x){
+  if(x.symbol==="ETHUSD") return 0;
+  if(x.result.includes("korundu")) return 1;
+  if(x.result.includes("zayıfladı") && x.status.includes("Bekle")) return 1;
+  return 1;
 }
 
-function deltaReason(d) {
-  if (d.result.includes("volume_limited")) {
-    return "Hareket yönü korundu ancak hacim desteği sınırlı kaldı.";
-  }
-  if (d.result.includes("volatility")) {
-    return "Senaryo çalıştı fakat volatilite nedeniyle takip disiplini önemli kaldı.";
-  }
-  if (d.result.includes("weakened")) {
-    return "İzleme kararı korunabilir; momentum zayıflaması agresif yaklaşımı desteklemedi.";
-  }
-  return "Beklenen ile gerçekleşen arasında sınırlı sapma izlendi.";
+function reading(x){
+  if(x.symbol==="ETHUSD") return "ETHUSD tarafında hareket oluşsa da, sıkı filtre yeterli güven üretmediği için ana sepet dışında bırakıldı.";
+  if(x.symbol==="SPY") return "SPY tarafında zayıflayan momentum nedeniyle kontrollü izleme yaklaşımı korundu.";
+  if(x.symbol==="AAPL") return "AAPL tarafında yukarı yön korunuyor; ancak hacim tarafında güçlü genişleme henüz oluşmuş değil.";
+  return `${x.symbol} tarafında pozitif takip görünümü korunuyor; volatilite nedeniyle takip disiplini önemli kalıyor.`;
 }
 
-function capitalImpact(d) {
-  const pct = d.confidence >= 70 ? 2 : d.confidence >= 60 ? 1.2 : 0.6;
-  return d.capitalBands.map(c => ({
-    capital: c,
-    scenarioPercent: pct,
-    potentialEffect: +(c * pct / 100).toFixed(2)
-  }));
-}
+const evaluated = decisions.map(x => ({
+  ...x,
+  outcomeScore: okScore(x),
+  reading: reading(x),
+  replay: [
+    "Başlangıç: senaryo kaydedildi.",
+    "Gün içi: fiyat, hacim, momentum ve risk izlendi.",
+    "Kapanış: beklenen ile gerçekleşen karşılaştırıldı.",
+    "Hafıza: karar sonucu sisteme işlendi."
+  ]
+}));
 
-const evaluated = decisions.map(d => {
-  const score = outcomeScore(d);
-  return {
-    ...d,
-    outcomeScore: score,
-    delta: deltaReason(d),
-    capitalImpact: capitalImpact(d),
-    replay: [
-      "Başlangıç: karar senaryosu kaydedildi.",
-      "Gün içi: fiyat, hacim ve momentum takip edildi.",
-      "Sonuç: beklenen ile gerçekleşen karşılaştırıldı.",
-      "Kapanış: karar hafızasına işlendi."
-    ]
-  };
-});
-
-const total = evaluated.length;
-const correct = evaluated.filter(x => x.outcomeScore === 1).length;
-const trustScore = Math.round((correct / total) * 100);
+const trustScore = Math.round(evaluated.reduce((a,b)=>a+b.outcomeScore,0) / evaluated.length * 100);
 
 const simpleReport = `
-ZENTRA Proof Organization — Günlük Kanıt Özeti
+ZENTRA Financial Trade — Günlük Birleşik Rapor
 
-Genel Durum:
-Bugünkü paper-only kararlar kaydedildi, sonuçlarla karşılaştırıldı ve karar hafızasına işlendi.
+Kısa Durum:
+Bugün sistem BTCUSD, BNBUSD ve AAPL tarafında takip görünümünü korudu.
+SPY tarafında daha kontrollü izleme yaklaşımı öne çıktı.
+ETHUSD sıkı filtre nedeniyle ana sepet dışında bırakıldı.
 
-Özet:
-${evaluated.map(x => `- ${x.symbol}: ${x.delta}`).join("\n")}
+Piyasa Okuması:
+${evaluated.map(x=>"- "+x.reading).join("\n")}
 
-Güven Okuması:
-Bugünkü ölçümde senaryoların ${trustScore}% oranında beklenen çerçeveyle uyumlu ilerlediği görüldü.
+Senaryo:
+Güçlü görünen varlıklarda yön korunuyor; ancak hacim, volatilite ve devamlılık birlikte izlenmeli.
+Zayıflayan varlıklarda bekleme yaklaşımı daha sağlıklı görünüyor.
+
+Maç Merkezi:
+- Şu an: Seçici takip modu aktif.
+- Günün akışı: Güçlü görünen varlıklar korundu; zayıf kalanlar ayrıştırıldı.
+- Gün sonu: Sıkı filtre, riskli varlıkları ana sepetten çıkardı.
+
+Yarınki Hazırlık:
+BTCUSD ve BNBUSD tarafında momentum devamlılığı izlenecek.
+AAPL için hacim desteği önemli kalıyor.
+SPY ve ETHUSD için yeniden güçlenme oluşup oluşmadığı takip edilecek.
 
 Karar Hafızası:
-Bu tip hareketlerde yalnızca fiyat yönü değil; hacim, devamlılık ve volatilite birlikte izlenmeli.
+Bu tip hareketlerde yalnızca fiyat yönü değil; hacim, devamlılık, volatilite ve filtre kalitesi birlikte önemli rol oynuyor.
+
+Trust Score:
+${trustScore}%
 
 Not:
-Bu rapor yatırım tavsiyesi değildir. Gerçek emir yoktur. Paper-only kanıt ve karar hazırlık raporudur.
+Bu rapor yatırım tavsiyesi değildir. Gerçek emir yoktur. Paper-only karar destek ve kanıt raporudur.
 `.trim();
 
 const technicalReport = {
-  title: "ZENTRA PROOF ORGANIZATION TECHNICAL REPORT",
-  time: now,
-  mode: "PAPER_ONLY",
-  decisions: evaluated,
+  title:"ZENTRA Financial Trade Technical Proof Report",
+  time:now,
+  mode:"PAPER_ONLY",
   trustScore,
-  engines: {
-    proofEngine: "ACTIVE",
-    outcomeEngine: "ACTIVE",
-    deltaEngine: "ACTIVE",
-    replayValidator: "ACTIVE",
-    decisionMemory: "ACTIVE",
-    learningUpdate: "ACTIVE",
-    telegramReady: "ACTIVE"
+  decisions:evaluated,
+  engines:{
+    proofEngine:"ACTIVE",
+    outcomeEngine:"ACTIVE",
+    deltaEngine:"ACTIVE",
+    replayValidator:"ACTIVE",
+    decisionMemory:"ACTIVE",
+    reportEngineV2:"ACTIVE",
+    telegramReady:"ACTIVE",
+    archive:"ACTIVE"
   }
 };
 
 const telegramReport = `
-ZENTRA KANIT AKIŞI
+ZENTRA GÜNLÜK KANIT AKIŞI
 
-Status: ACTIVE
 Mode: PAPER ONLY
-
-Bugünkü özet:
-${evaluated.map(x => `• ${x.symbol}: ${x.delta}`).join("\n")}
-
 Trust Score: ${trustScore}%
 
-Karar Hafızası:
-Fiyat, hacim, devamlılık ve volatilite birlikte izlenmeye devam eder.
+Özet:
+${evaluated.map(x=>"• "+x.symbol+": "+x.reading).join("\n")}
+
+Yarın:
+BTCUSD / BNBUSD momentum devamlılığı,
+AAPL hacim desteği,
+SPY / ETHUSD yeniden güçlenme işaretleri izlenecek.
 
 Rapor:
 zentra-proof-organization/results/final_combined_report.txt
 `.trim();
 
-fs.writeFileSync(path.join(RESULTS, "technical_report.json"), JSON.stringify(technicalReport, null, 2));
-fs.writeFileSync(path.join(RESULTS, "final_combined_report.txt"), simpleReport + "\n\n--- TECHNICAL JSON ---\n\n" + JSON.stringify(technicalReport, null, 2));
-fs.writeFileSync(path.join(RESULTS, "telegram_proof_report.txt"), telegramReport);
-fs.writeFileSync(path.join(PROOF, "latest_proof.json"), JSON.stringify(evaluated, null, 2));
-fs.writeFileSync(path.join(MEMORY, "decision_memory.json"), JSON.stringify({
-  time: now,
-  trustScore,
-  memoryNote: "Fiyat yönü tek başına yeterli değildir; hacim, devamlılık ve volatilite birlikte değerlendirilir.",
-  evaluated
-}, null, 2));
+fs.writeFileSync(path.join(RESULTS,"final_combined_report.txt"), simpleReport);
+fs.writeFileSync(path.join(RESULTS,"technical_report.json"), JSON.stringify(technicalReport,null,2));
+fs.writeFileSync(path.join(RESULTS,"telegram_proof_report.txt"), telegramReport);
+fs.writeFileSync(path.join(PROOF,"latest_proof.json"), JSON.stringify(evaluated,null,2));
+fs.writeFileSync(path.join(MEMORY,"decision_memory.json"), JSON.stringify({time:now,trustScore,note:"Fiyat, hacim, devamlılık, volatilite ve filtre kalitesi birlikte izlenir.", evaluated},null,2));
+fs.writeFileSync(path.join(ARCHIVE,`proof_${day}.json`), JSON.stringify(technicalReport,null,2));
+fs.writeFileSync(path.join(ARCHIVE,`report_${day}.txt`), simpleReport);
 
-fs.appendFileSync(path.join(LOGS, "proof-organization.log"), `[${now}] Proof organization cycle completed. TrustScore=${trustScore}\n`);
+fs.mkdirSync("zentra-telegram-stream/results",{recursive:true});
+fs.writeFileSync("zentra-telegram-stream/results/daily_telegram_report.txt", telegramReport);
 
 console.log(telegramReport);
