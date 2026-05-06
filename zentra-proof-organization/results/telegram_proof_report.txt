@@ -1,0 +1,17 @@
+ZENTRA KANIT AKIŞI
+
+Status: ACTIVE
+Mode: PAPER ONLY
+
+Bugünkü özet:
+• BTCUSD: Senaryo çalıştı fakat volatilite nedeniyle takip disiplini önemli kaldı.
+• AAPL: Hareket yönü korundu ancak hacim desteği sınırlı kaldı.
+• SPY: İzleme kararı korunabilir; momentum zayıflaması agresif yaklaşımı desteklemedi.
+
+Trust Score: 100%
+
+Karar Hafızası:
+Fiyat, hacim, devamlılık ve volatilite birlikte izlenmeye devam eder.
+
+Rapor:
+zentra-proof-organization/results/final_combined_report.txt

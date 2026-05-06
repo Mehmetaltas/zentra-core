@@ -1,0 +1,165 @@
+ZENTRA Proof Organization — Günlük Kanıt Özeti
+
+Genel Durum:
+Bugünkü paper-only kararlar kaydedildi, sonuçlarla karşılaştırıldı ve karar hafızasına işlendi.
+
+Özet:
+- BTCUSD: Senaryo çalıştı fakat volatilite nedeniyle takip disiplini önemli kaldı.
+- AAPL: Hareket yönü korundu ancak hacim desteği sınırlı kaldı.
+- SPY: İzleme kararı korunabilir; momentum zayıflaması agresif yaklaşımı desteklemedi.
+
+Güven Okuması:
+Bugünkü ölçümde senaryoların 100% oranında beklenen çerçeveyle uyumlu ilerlediği görüldü.
+
+Karar Hafızası:
+Bu tip hareketlerde yalnızca fiyat yönü değil; hacim, devamlılık ve volatilite birlikte izlenmeli.
+
+Not:
+Bu rapor yatırım tavsiyesi değildir. Gerçek emir yoktur. Paper-only kanıt ve karar hazırlık raporudur.
+
+--- TECHNICAL JSON ---
+
+{
+  "title": "ZENTRA PROOF ORGANIZATION TECHNICAL REPORT",
+  "time": "2026-05-06T09:54:35.208Z",
+  "mode": "PAPER_ONLY",
+  "decisions": [
+    {
+      "id": "FT-001",
+      "symbol": "BTCUSD",
+      "expected": "momentum_continuation",
+      "result": "continued_with_volatility",
+      "risk": "MEDIUM",
+      "confidence": 72,
+      "capitalBands": [
+        1000,
+        10000,
+        100000
+      ],
+      "notes": [
+        "momentum güçlü",
+        "volatilite yüksek",
+        "hacim takip edilmeli"
+      ],
+      "outcomeScore": 1,
+      "delta": "Senaryo çalıştı fakat volatilite nedeniyle takip disiplini önemli kaldı.",
+      "capitalImpact": [
+        {
+          "capital": 1000,
+          "scenarioPercent": 2,
+          "potentialEffect": 20
+        },
+        {
+          "capital": 10000,
+          "scenarioPercent": 2,
+          "potentialEffect": 200
+        },
+        {
+          "capital": 100000,
+          "scenarioPercent": 2,
+          "potentialEffect": 2000
+        }
+      ],
+      "replay": [
+        "Başlangıç: karar senaryosu kaydedildi.",
+        "Gün içi: fiyat, hacim ve momentum takip edildi.",
+        "Sonuç: beklenen ile gerçekleşen karşılaştırıldı.",
+        "Kapanış: karar hafızasına işlendi."
+      ]
+    },
+    {
+      "id": "FT-002",
+      "symbol": "AAPL",
+      "expected": "controlled_upside_follow",
+      "result": "upside_held_but_volume_limited",
+      "risk": "MEDIUM",
+      "confidence": 68,
+      "capitalBands": [
+        1000,
+        10000,
+        100000
+      ],
+      "notes": [
+        "yukarı yön korundu",
+        "hacim güçlü genişlemedi"
+      ],
+      "outcomeScore": 1,
+      "delta": "Hareket yönü korundu ancak hacim desteği sınırlı kaldı.",
+      "capitalImpact": [
+        {
+          "capital": 1000,
+          "scenarioPercent": 1.2,
+          "potentialEffect": 12
+        },
+        {
+          "capital": 10000,
+          "scenarioPercent": 1.2,
+          "potentialEffect": 120
+        },
+        {
+          "capital": 100000,
+          "scenarioPercent": 1.2,
+          "potentialEffect": 1200
+        }
+      ],
+      "replay": [
+        "Başlangıç: karar senaryosu kaydedildi.",
+        "Gün içi: fiyat, hacim ve momentum takip edildi.",
+        "Sonuç: beklenen ile gerçekleşen karşılaştırıldı.",
+        "Kapanış: karar hafızasına işlendi."
+      ]
+    },
+    {
+      "id": "FT-003",
+      "symbol": "SPY",
+      "expected": "watch_zone",
+      "result": "momentum_weakened",
+      "risk": "LOW",
+      "confidence": 58,
+      "capitalBands": [
+        1000,
+        10000,
+        100000
+      ],
+      "notes": [
+        "izleme bölgesi",
+        "momentum zayıfladı"
+      ],
+      "outcomeScore": 1,
+      "delta": "İzleme kararı korunabilir; momentum zayıflaması agresif yaklaşımı desteklemedi.",
+      "capitalImpact": [
+        {
+          "capital": 1000,
+          "scenarioPercent": 0.6,
+          "potentialEffect": 6
+        },
+        {
+          "capital": 10000,
+          "scenarioPercent": 0.6,
+          "potentialEffect": 60
+        },
+        {
+          "capital": 100000,
+          "scenarioPercent": 0.6,
+          "potentialEffect": 600
+        }
+      ],
+      "replay": [
+        "Başlangıç: karar senaryosu kaydedildi.",
+        "Gün içi: fiyat, hacim ve momentum takip edildi.",
+        "Sonuç: beklenen ile gerçekleşen karşılaştırıldı.",
+        "Kapanış: karar hafızasına işlendi."
+      ]
+    }
+  ],
+  "trustScore": 100,
+  "engines": {
+    "proofEngine": "ACTIVE",
+    "outcomeEngine": "ACTIVE",
+    "deltaEngine": "ACTIVE",
+    "replayValidator": "ACTIVE",
+    "decisionMemory": "ACTIVE",
+    "learningUpdate": "ACTIVE",
+    "telegramReady": "ACTIVE"
+  }
+}

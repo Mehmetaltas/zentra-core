@@ -165,3 +165,19 @@ ZENTRA now evaluates past decisions with outcome data, calculates delta and scor
 
 ## Notification Engine — General + Personal
 ZENTRA notification system now has two layers. General notifications serve Free Feed, market pulse, Academy and product/radar updates. Personal notifications use client profile, opportunity basket, proof tracking and outcome results. All notifications remain paper-only and non-advisory.
+
+## ZENTRA Proof Organization Core Activated
+
+ZENTRA Proof Organization Core activated as paper-only background proof system.
+
+Active engines:
+- Proof Engine
+- Outcome Engine
+- Delta Engine
+- Replay Validator
+- Decision Memory
+- Learning Update
+- Telegram-ready Proof Stream
+
+Purpose:
+The system records decisions, compares outcomes, explains deltas, updates decision memory and prepares daily proof reports without real execution.
